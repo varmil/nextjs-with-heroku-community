@@ -1,6 +1,7 @@
 import 'rc-steps/assets/index.css'
 import 'rc-steps/assets/iconfont.css'
 import Steps, { Step } from 'rc-steps'
+import AdminRegisterForm from '../../components/organisms/AdminRegisterForm'
 
 const Index = () => (
   <div className="container" style={{ marginTop: 40 }}>
@@ -10,7 +11,7 @@ const Index = () => (
       これらの情報は後からいつでも修正することが可能です。
     </div>
 
-    <Steps current={1}>
+    <Steps current={1} style={{ marginBottom: 40 }}>
       <Step title="管理者情報" description={<span>管理者登録をします</span>} />
       <Step
         title="コミュニティ情報"
@@ -21,6 +22,8 @@ const Index = () => (
         description={<span>最適なデザイン決定のためのヒントを入力します</span>}
       />
     </Steps>
+
+    <AdminRegisterForm />
 
     <style global jsx>{`
       .rc-steps-horizontal:not(.rc-steps-label-vertical)
