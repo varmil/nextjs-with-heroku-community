@@ -1,6 +1,6 @@
 const Index = () => (
   <div>
-    <p>Hello World! this is try index.js</p>
+    <p>this is try stepper.js</p>
   </div>
 )
 export default Index

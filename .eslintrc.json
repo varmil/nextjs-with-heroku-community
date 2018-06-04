@@ -1,3 +1,7 @@
 {
-    "extends": "standard"
+  "extends": ["standard", "plugin:react/recommended"],
+  "rules": {
+    "space-before-function-paren": 0,
+    "react/react-in-jsx-scope": 0
+  }
 }
