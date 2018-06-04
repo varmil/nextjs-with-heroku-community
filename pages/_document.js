@@ -14,6 +14,7 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
+          <link rel="stylesheet" href="/_next/static/style.css" />
           <link
             href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
             rel="stylesheet"

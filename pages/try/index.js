@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 const Index = () => (
   <div id="tryIndex" className="">
     {/* <div className="row">
@@ -33,9 +35,11 @@ const Index = () => (
           </label>
         </div>
 
-        <button type="button" className="btn btn-warning btn-try">
-          無料で試してみる
-        </button>
+        <Link href="/try/stepper">
+          <button type="button" className="btn btn-warning btn-try">
+            無料で試してみる
+          </button>
+        </Link>
       </div>
     </div>
 
