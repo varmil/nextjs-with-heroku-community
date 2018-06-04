@@ -68,4 +68,5 @@ typings/
 # Serverless directories
 .serverless
 
-
+# custom
+.DS_Store
