@@ -53,27 +53,9 @@ const Index = () => (
       </div>
     </div>
 
-    <div className="mt-4 text-center" style={{ marginBottom: 80 }}>
-      <button type="button" className="btn btn-primary btn-lg">
-        次へ
-      </button>
-    </div>
-
-    <style global jsx>{`
-      .rc-steps-horizontal:not(.rc-steps-label-vertical)
-        .rc-steps-item-description {
-        max-width: 120px !important;
-      }
-    `}</style>
-
     <style jsx>{`
       .box {
         border: 3px #2b6db2 solid;
-      }
-
-      button {
-        padding: 10px 150px;
-        background: #2b6db2;
       }
     `}</style>
   </div>
