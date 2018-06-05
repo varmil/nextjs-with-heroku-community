@@ -72,7 +72,7 @@ export default class Stepper extends React.Component {
 
   render() {
     return (
-      <div className="container" style={{ marginTop: 40 }}>
+      <div className="container" style={{ marginTop: 40, maxWidth: 720 }}>
         <div className="panel" style={{ marginBottom: 40 }}>
           {this.createHeadMessage()}
         </div>
