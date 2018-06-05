@@ -1,31 +1,22 @@
+import TallTextInput from '../../components/atoms/TallTextInput'
+import HyphenInput from '../../components/molecules/HyphenInput'
+
 const Index = () => (
   <div className="box" style={{}}>
     <div className="my-3 px-3">会社情報</div>
     <hr className="my-1 mb-3" />
-    <div className="form form-group my-3 px-3">
+    <div className="form form-group my-3 px-5">
       <label htmlFor="CompanyName">会社名</label>
-      <input
-        type="email"
-        className="form-control"
-        id="CompanyName"
-        aria-describedby="emailHelp"
-      />
+      <TallTextInput style={{ marginBottom: 20 }} />
 
       <label htmlFor="CompanyNameYomi">会社名（ヨミガナ）</label>
-      <input
-        type="email"
-        className="form-control"
-        id="CompanyNameYomi"
-        aria-describedby="emailHelp"
-      />
+      <TallTextInput style={{ marginBottom: 20 }} />
 
-      <label htmlFor="CompanyNameYomi">電話番号</label>
-      <input
-        type="email"
-        className="form-control"
-        id="CompanyNameYomi"
-        aria-describedby="emailHelp"
-      />
+      <label htmlFor="PhoneNum">電話番号</label>
+      <HyphenInput values={[null, null, null]} style={{ marginBottom: 20 }} />
+
+      <label htmlFor="ZipCode">住所（郵便番号）</label>
+      <HyphenInput values={[null, null]} style={{ marginBottom: 20 }} />
     </div>
 
     <style global jsx>{`
