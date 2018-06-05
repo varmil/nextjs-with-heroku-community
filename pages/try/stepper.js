@@ -37,13 +37,44 @@ export default class Stepper extends React.Component {
     return contents
   }
 
+  createHeadMessage() {
+    let message = ''
+    switch (this.state.currentStep) {
+      case steps.ADMIN:
+        message = (
+          <span>
+            Communeへようこそ！<br />
+            管理者登録のために以下の情報を教えてください。<br />
+            これらの情報は後からいつでも修正することが可能です。
+          </span>
+        )
+        break
+      case steps.COMMUNITY:
+        message = (
+          <span>
+            コミュニティ情報を決めます。<br />
+            あとでいつでも変えられます。
+          </span>
+        )
+        break
+      case steps.DESIGN:
+        message = (
+          <span>
+            企業サイトURL / SNSサイトを入力してください。<br />
+            配色やフォント、フォロワー属性を読み取り、最適なデザインを<br />
+            自動生成することができます！（後ほど追加、編集が可能です。）
+          </span>
+        )
+        break
+    }
+    return message
+  }
+
   render() {
     return (
       <div className="container" style={{ marginTop: 40 }}>
         <div className="panel" style={{ marginBottom: 40 }}>
-          Communeへようこそ！<br />
-          管理者登録のために以下の情報を教えてください。<br />
-          これらの情報は後からいつでも修正することが可能です。
+          {this.createHeadMessage()}
         </div>
 
         <Steps current={this.state.currentStep} style={{ marginBottom: 40 }}>
