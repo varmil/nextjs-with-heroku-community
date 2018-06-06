@@ -95,7 +95,7 @@ class Stepper extends React.Component {
       // TODO: move to next page when HTTP request is finished
       setTimeout(() => {
         Router.push(NEXT_PAGE_SLUG)
-      }, 1000)
+      }, 1500)
     } else {
       // go to next step
       const step = this.state.currentStep + 1

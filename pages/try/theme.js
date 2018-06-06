@@ -1,13 +1,5 @@
 import React from 'react'
-import { animateScroll as scroll } from 'react-scroll'
-
-import 'rc-steps/assets/index.css'
-import 'rc-steps/assets/iconfont.css'
-import Steps, { Step } from 'rc-steps'
-import AdminRegisterForm from '../../components/templates/AdminRegisterForm'
-import CommunityRegisterForm from '../../components/templates/CommunityRegisterForm'
-import DesignRegisterForm from '../../components/templates/DesignRegisterForm'
-import LoadingModal from '../../components/organisms/LoadingModal'
+import AdminRegisterForm from '../../components/organisms/AdminHeader'
 
 const initialState = {}
 
@@ -19,8 +11,13 @@ export default class Stepper extends React.Component {
 
   render() {
     return (
-      <div className="container" style={{ marginTop: 40 }}>
-        hello world
+      <div>
+        <AdminRegisterForm />
+
+        <div className="container" style={{ marginTop: 40 }}>
+          hello world
+        </div>
+
         <style global jsx>{`
           .rc-steps-horizontal:not(.rc-steps-label-vertical)
             .rc-steps-item-description {
