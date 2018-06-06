@@ -4,9 +4,9 @@ import { animateScroll as scroll } from 'react-scroll'
 import 'rc-steps/assets/index.css'
 import 'rc-steps/assets/iconfont.css'
 import Steps, { Step } from 'rc-steps'
-import AdminRegisterForm from '../../components/organisms/AdminRegisterForm'
-import CommunityRegisterForm from '../../components/organisms/CommunityRegisterForm'
-import DesignRegisterForm from '../../components/organisms/DesignRegisterForm'
+import AdminRegisterForm from '../../components/templates/AdminRegisterForm'
+import CommunityRegisterForm from '../../components/templates/CommunityRegisterForm'
+import DesignRegisterForm from '../../components/templates/DesignRegisterForm'
 
 const steps = {
   ADMIN: 0,
