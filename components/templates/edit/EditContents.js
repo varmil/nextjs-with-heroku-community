@@ -11,7 +11,7 @@ export default class Stepper extends React.Component {
   render() {
     return (
       <div className={`${this.props.className}`} style={this.props.style}>
-        <main className="col-auto">
+        <main className="">
           <h1>Dashboard</h1>
 
           <h2>Section title</h2>
