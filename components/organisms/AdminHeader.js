@@ -24,7 +24,7 @@ const linkItemStyle = {
   fontSize: 28
 }
 
-export default class Example extends React.Component {
+export default class Header extends React.Component {
   render() {
     return (
       <div style={{ backgroundColor: Color.MAIN_BLUE }}>
