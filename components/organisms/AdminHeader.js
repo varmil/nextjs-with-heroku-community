@@ -27,7 +27,10 @@ const linkItemStyle = {
 export default class Header extends React.Component {
   render() {
     return (
-      <div style={{ backgroundColor: Color.MAIN_BLUE }}>
+      <div
+        className={this.props.className}
+        style={{ backgroundColor: Color.MAIN_BLUE }}
+      >
         <Navbar dark expand="sm" className="container">
           <NavbarBrand className="mr-5" href="/" style={brandStyle}>
             <img src="/static/img/logo-white.png" width="100" alt="" />

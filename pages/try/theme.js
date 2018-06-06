@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 import AdminHeader from '../../components/organisms/AdminHeader'
 import WhiteBreadcrumb from '../../components/organisms/WhiteBreadcrumb'
 import CommonFooter from '../../components/organisms/CommonFooter'
@@ -19,9 +20,9 @@ function Card(props) {
           Some quick example text to build on the card title and make up the
           bulk of the cards content.
         </p>
-        <a href="#" className="btn btn-primary w-100">
-          このデザインにする
-        </a>
+        <Link href="/try/edit">
+          <div className="btn btn-primary w-100">このデザインにする</div>
+        </Link>
       </div>
 
       <style jsx>{`
