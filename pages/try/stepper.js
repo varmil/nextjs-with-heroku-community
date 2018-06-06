@@ -1,4 +1,5 @@
 import React from 'react'
+import Router, { withRouter } from 'next/router'
 import { animateScroll as scroll } from 'react-scroll'
 
 import 'rc-steps/assets/index.css'
@@ -7,18 +8,31 @@ import Steps, { Step } from 'rc-steps'
 import AdminRegisterForm from '../../components/templates/AdminRegisterForm'
 import CommunityRegisterForm from '../../components/templates/CommunityRegisterForm'
 import DesignRegisterForm from '../../components/templates/DesignRegisterForm'
+import LoadingModal from '../../components/organisms/LoadingModal'
 
+const NEXT_PAGE_SLUG = '/try/theme'
 const steps = {
   ADMIN: 0,
   COMMUNITY: 1,
   DESIGN: 2
 }
-const initialState = { currentStep: steps.ADMIN }
+const initialState = {
+  currentStep: steps.ADMIN,
+  modalIsOpen: false
+}
 
-export default class Stepper extends React.Component {
+class Stepper extends React.Component {
   constructor(props) {
     super(props)
     this.state = initialState
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { router } = nextProps
+    return {
+      ...prevState,
+      currentStep: router.query.step ? +router.query.step : steps.ADMIN
+    }
   }
 
   createContents() {
@@ -70,6 +84,26 @@ export default class Stepper extends React.Component {
     return message
   }
 
+  onClickNextButton() {
+    const isFinalStep = this.state.currentStep === steps.DESIGN
+    if (isFinalStep) {
+      // open the modal if it is final step
+      this.setState({
+        ...this.state,
+        modalIsOpen: isFinalStep
+      })
+      // TODO: move to next page when HTTP request is finished
+      setTimeout(() => {
+        Router.push(NEXT_PAGE_SLUG)
+      }, 1000)
+    } else {
+      // go to next step
+      const step = this.state.currentStep + 1
+      Router.push({ pathname: window.location.pathname, query: { step } })
+      scroll.scrollToTop({ duration: 200 })
+    }
+  }
+
   render() {
     return (
       <div className="container" style={{ marginTop: 40, maxWidth: 720 }}>
@@ -100,17 +134,13 @@ export default class Stepper extends React.Component {
           <button
             type="button"
             className="btn btn-primary btn-lg"
-            onClick={() => {
-              this.setState({
-                ...this.state,
-                currentStep: this.state.currentStep + 1
-              })
-              scroll.scrollToTop({ duration: 200 })
-            }}
+            onClick={this.onClickNextButton.bind(this)}
           >
             {this.state.currentStep === steps.DESIGN ? '編集画面へ' : '次へ'}
           </button>
         </div>
+
+        <LoadingModal isOpen={this.state.modalIsOpen} />
 
         <style global jsx>{`
           .rc-steps-horizontal:not(.rc-steps-label-vertical)
@@ -135,3 +165,5 @@ export default class Stepper extends React.Component {
     )
   }
 }
+
+export default withRouter(Stepper)
