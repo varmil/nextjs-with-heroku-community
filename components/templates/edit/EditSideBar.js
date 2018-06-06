@@ -51,6 +51,28 @@ export default class Stepper extends React.Component {
           </li>
         </ul>
 
+        <ul
+          id="editor-size-controller"
+          data-size-default="1024"
+          className="sidebarDevice"
+        >
+          <li data-size="1024">
+            <a className="selected" title="PCサイズ" href="javascript:void(0);">
+              <i className="fas fa-desktop" />
+            </a>
+          </li>
+          <li data-size="768">
+            <a title="タブレットサイズ" href="javascript:void(0);">
+              <i className="fas fa-tablet-alt" />
+            </a>
+          </li>
+          <li data-size="320">
+            <a title="スマホサイズ" href="javascript:void(0);">
+              <i className="fas fa-mobile-alt" />
+            </a>
+          </li>
+        </ul>
+
         <ul className="nav nav-pills flex-column">
           <li className="nav-item">
             <a className="nav-link active" href="#">
@@ -207,6 +229,43 @@ export default class Stepper extends React.Component {
             display: block;
             padding: 12px 0;
             background-repeat: no-repeat;
+          }
+        `}</style>
+
+        {/* Editor size controller */}
+        <style jsx>{`
+          .sidebarDevice {
+            position: relative;
+            top: -1px;
+            overflow: hidden;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          }
+
+          .sidebarDevice li {
+            display: block;
+            float: left;
+            width: 33.3333%;
+            height: 60px;
+          }
+
+          .sidebarDevice a:hover,
+          .sidebarDevice a.selected {
+            color: #fff;
+            background-color: #0090a1;
+          }
+
+          .sidebarDevice a {
+            display: block;
+            height: 100%;
+            text-align: center;
+          }
+
+          .sidebarDevice .fa,
+          .sidebarDevice .far,
+          .sidebarDevice .fas {
+            font-size: 30px;
+            line-height: 60px;
           }
         `}</style>
       </nav>
