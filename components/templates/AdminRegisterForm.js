@@ -39,7 +39,7 @@ const Index = () => (
       <div className="form form-group my-3 px-5">
         <div className="row">
           <div className="col-6">
-            <label>性</label>
+            <label>姓</label>
             <TallTextInput style={mbStyle} />
           </div>
           <div className="col-6">
