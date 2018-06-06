@@ -1,4 +1,5 @@
 import React from 'react'
+import ToggleSideSecond from '../../molecules/edit/ToggleSideSecond'
 
 const initialState = {}
 
@@ -73,13 +74,41 @@ export default class Stepper extends React.Component {
           </li>
         </ul>
 
-        <ul className="nav nav-pills flex-column">
-          <li className="nav-item">
-            <a className="nav-link active" href="#">
-              Overview <span className="sr-only">(current)</span>
-            </a>
-          </li>
-        </ul>
+        <div>
+          <ToggleSideSecond icon="fa-object-group" text="レイアウト変更" />
+          <ToggleSideSecond
+            icon="fa-clipboard-list"
+            text="テーマカラー変更"
+            selected={true}
+          />
+          <ToggleSideSecond icon="fa-font" text="フォント変更" />
+          <ToggleSideSecond icon="fa-images" text="バナー追加" />
+          <ToggleSideSecond icon="fa-box" text="ボックス追加" />
+        </div>
+
+        <style global jsx>{`
+          .sidebar {
+            color: #fff !important;
+          }
+
+          .sidebar a {
+            color: #fff !important;
+            transition: background 0.12s ease-in;
+          }
+
+          a {
+            margin: 0;
+            padding: 0;
+            font-size: 100%;
+            vertical-align: baseline;
+            background: transparent;
+          }
+
+          a:link,
+          a:visited {
+            text-decoration: none !important;
+          }
+        `}</style>
 
         <style jsx>{`
           .sidebar {
@@ -91,22 +120,6 @@ export default class Stepper extends React.Component {
             padding: 0px;
             overflow-x: auto;
             overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-          }
-
-          .sidebar .nav {
-            margin-bottom: 20px;
-          }
-
-          .sidebar .nav-item {
-            width: 100%;
-          }
-
-          .sidebar .nav-item + .nav-item {
-            margin-left: 0;
-          }
-
-          .sidebar .nav-link {
-            border-radius: 0;
           }
 
           .bg-faded {
@@ -153,24 +166,6 @@ export default class Stepper extends React.Component {
             background-color: #0090a1;
             border-color: #0090a1;
             color: #fff;
-          }
-
-          .sidebar a {
-            color: #fff;
-            transition: background 0.12s ease-in;
-          }
-
-          a {
-            margin: 0;
-            padding: 0;
-            font-size: 100%;
-            vertical-align: baseline;
-            background: transparent;
-          }
-
-          a:link,
-          a:visited {
-            text-decoration: none;
           }
 
           .sidebarActions .fa,
