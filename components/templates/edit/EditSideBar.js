@@ -10,54 +10,54 @@ export default class Stepper extends React.Component {
 
   render() {
     return (
-      <div className="">
-        <nav className="bg-faded sidebar" style={{ width: this.props.width }}>
-          <ul className="sidebarActions">
-            <li title="⌘+s" className="">
-              <a href="javascript:void(0);" className="save">
-                <i className="far fa-save" />
-                <span className="saveBtn_txt">保存する</span>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0);" className="publish">
-                <i className="fas fa-globe" />
-                <span className="publishTxt">公開する</span>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0);">
-                <i className="fas fa-cog" />ページ情報編集
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0);">
-                <i className="fas fa-shoe-prints" />プレビュー
-              </a>
-            </li>
-          </ul>
+      <nav className="bg-faded sidebar" style={{ width: this.props.width }}>
+        <ul className="sidebarActions">
+          <li title="⌘+s" className="">
+            <a href="javascript:void(0);" className="save">
+              <i className="far fa-save" />
+              <span className="saveBtn_txt">保存する</span>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0);" className="publish">
+              <i className="fas fa-globe" />
+              <span className="publishTxt">公開する</span>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0);">
+              <i className="fas fa-cog" />ページ情報編集
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0);">
+              <i className="fas fa-shoe-prints" />プレビュー
+            </a>
+          </li>
+        </ul>
 
-          <ul className="sidebarUndoRedo">
-            <li title="⌘+z">
-              <a className="undo_btn grayout" href="javascript:void(0);">
-                操作を<br />1つ戻す
-              </a>
-            </li>
-            <li title="⌘+shift+z">
-              <a className="redo_btn grayout" href="javascript:void(0);">
-                操作を<br />1つ進める
-              </a>
-            </li>
-          </ul>
+        <ul className="sidebarUndoRedo">
+          <li title="⌘+z">
+            <a className="undo_btn grayout" href="javascript:void(0);">
+              <i className="fas fa-undo" />
+              操作を<br />1つ戻す
+            </a>
+          </li>
+          <li title="⌘+shift+z">
+            <a className="redo_btn grayout" href="javascript:void(0);">
+              <i className="fas fa-redo" />
+              操作を<br />1つ進める
+            </a>
+          </li>
+        </ul>
 
-          <ul className="nav nav-pills flex-column">
-            <li className="nav-item">
-              <a className="nav-link active" href="#">
-                Overview <span className="sr-only">(current)</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+        <ul className="nav nav-pills flex-column">
+          <li className="nav-item">
+            <a className="nav-link active" href="#">
+              Overview <span className="sr-only">(current)</span>
+            </a>
+          </li>
+        </ul>
 
         <style jsx>{`
           .sidebar {
@@ -90,8 +90,10 @@ export default class Stepper extends React.Component {
           .bg-faded {
             background-color: #05161a;
           }
+        `}</style>
 
-          /* peraichi flat4 */
+        {/* peraichi flat4 */}
+        <style jsx>{`
           .sidebar ul {
             padding-left: 0;
           }
@@ -99,6 +101,10 @@ export default class Stepper extends React.Component {
           ul,
           li {
             list-style-type: none;
+          }
+
+          .sidebarActions {
+            display: inline-block;
           }
 
           .sidebarActions li:nth-child(odd) {
@@ -165,15 +171,12 @@ export default class Stepper extends React.Component {
           }
 
           .sidebarUndoRedo li {
+            position: relative;
             display: block;
             float: left;
             width: 50%;
             line-height: 1.3;
-            font-size: 13px;
-          }
-
-          .sidebarUndoRedo li:first-child a.grayout {
-            background-position: 5px 16px;
+            font-size: 12px;
           }
 
           .sidebarUndoRedo a.grayout,
@@ -183,8 +186,30 @@ export default class Stepper extends React.Component {
             background-color: #072127;
             cursor: default;
           }
+
+          .sidebarUndoRedo li:first-child a {
+            padding-left: 20px;
+          }
+
+          .sidebarUndoRedo li:first-child a i {
+            position: absolute;
+            top: 20px;
+            left: 3px;
+          }
+
+          .sidebarUndoRedo li:nth-child(2) a i {
+            position: absolute;
+            top: 20px;
+            right: 8px;
+          }
+
+          .sidebarUndoRedo a {
+            display: block;
+            padding: 12px 0;
+            background-repeat: no-repeat;
+          }
         `}</style>
-      </div>
+      </nav>
     )
   }
 }

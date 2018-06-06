@@ -1,8 +1,8 @@
 import React from 'react'
-import AdminHeader from '../../components/organisms/AdminHeader'
-import WhiteBreadcrumb from '../../components/organisms/WhiteBreadcrumb'
-import EditSideBar from '../../components/templates/edit/EditSideBar'
-import EditContents from '../../components/templates/edit/EditContents'
+import AdminHeader from '../../../components/organisms/AdminHeader'
+import WhiteBreadcrumb from '../../../components/organisms/WhiteBreadcrumb'
+import EditSideBar from '../../../components/templates/edit/EditSideBar'
+import EditContents from '../../../components/templates/edit/EditContents'
 
 const initialState = {}
 

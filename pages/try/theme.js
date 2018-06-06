@@ -20,7 +20,7 @@ function Card(props) {
           Some quick example text to build on the card title and make up the
           bulk of the cards content.
         </p>
-        <Link href="/try/edit">
+        <Link href="/admin/site/edit">
           <div className="btn btn-primary w-100">このデザインにする</div>
         </Link>
       </div>
