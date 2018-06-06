@@ -2,12 +2,6 @@ import Link from 'next/link'
 
 const Index = () => (
   <div id="tryIndex" className="">
-    {/* <div className="row">
-      <div className="offset-md-3 col-md-6 text-center">
-        <div className="box">One of three columns</div>
-      </div>
-    </div> */}
-
     <div className="box text-center">
       <h1>
         <img src="/static/img/logo-white.png" alt="Commune" />

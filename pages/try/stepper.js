@@ -9,6 +9,7 @@ import AdminRegisterForm from '../../components/templates/AdminRegisterForm'
 import CommunityRegisterForm from '../../components/templates/CommunityRegisterForm'
 import DesignRegisterForm from '../../components/templates/DesignRegisterForm'
 import LoadingModal from '../../components/organisms/LoadingModal'
+import Color from '../../constants/Color'
 
 const NEXT_PAGE_SLUG = '/try/theme'
 const steps = {
@@ -152,13 +153,13 @@ class Stepper extends React.Component {
         <style jsx>{`
           .panel {
             padding: 30px;
-            border: 3px #2b6db2 solid;
+            border: 3px ${Color.MAIN_BLUE} solid;
             border-radius: 20px;
           }
 
           button {
             padding: 10px 150px;
-            background: #2b6db2;
+            background: ${Color.MAIN_BLUE};
           }
         `}</style>
       </div>

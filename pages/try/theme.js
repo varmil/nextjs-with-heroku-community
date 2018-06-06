@@ -1,5 +1,7 @@
 import React from 'react'
-import AdminRegisterForm from '../../components/organisms/AdminHeader'
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap'
+import AdminHeader from '../../components/organisms/AdminHeader'
+import WhiteBreadcrumb from '../../components/organisms/WhiteBreadcrumb'
 
 const initialState = {}
 
@@ -12,30 +14,30 @@ export default class Stepper extends React.Component {
   render() {
     return (
       <div>
-        <AdminRegisterForm />
+        <AdminHeader />
 
-        <div className="container" style={{ marginTop: 40 }}>
-          hello world
+        <WhiteBreadcrumb>
+          <li className="breadcrumb-item active">サイトデザイン</li>
+        </WhiteBreadcrumb>
+
+        <div style={{ backgroundColor: 'whitesmoke' }}>
+          <div className="container" style={{ paddingTop: 40 }}>
+            hello world
+          </div>
+
+          <style jsx>{`
+            .panel {
+              padding: 30px;
+              border: 3px #2b6db2 solid;
+              border-radius: 20px;
+            }
+
+            button {
+              padding: 10px 150px;
+              background: #2b6db2;
+            }
+          `}</style>
         </div>
-
-        <style global jsx>{`
-          .rc-steps-horizontal:not(.rc-steps-label-vertical)
-            .rc-steps-item-description {
-            max-width: 120px !important;
-          }
-        `}</style>
-        <style jsx>{`
-          .panel {
-            padding: 30px;
-            border: 3px #2b6db2 solid;
-            border-radius: 20px;
-          }
-
-          button {
-            padding: 10px 150px;
-            background: #2b6db2;
-          }
-        `}</style>
       </div>
     )
   }

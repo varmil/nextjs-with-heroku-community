@@ -12,6 +12,7 @@ import {
   DropdownMenu,
   DropdownItem
 } from 'reactstrap'
+import Color from '../../constants/Color'
 
 const brandStyle = {
   position: 'relative',
@@ -26,7 +27,7 @@ const linkItemStyle = {
 export default class Example extends React.Component {
   render() {
     return (
-      <div style={{ backgroundColor: '#2b6db2' }}>
+      <div style={{ backgroundColor: Color.MAIN_BLUE }}>
         <Navbar dark expand="sm" className="container">
           <NavbarBrand className="mr-5" href="/" style={brandStyle}>
             <img src="/static/img/logo-white.png" width="100" alt="" />
