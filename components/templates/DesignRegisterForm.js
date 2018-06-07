@@ -1,5 +1,3 @@
-import TallTextInput from '../../components/atoms/TallTextInput'
-
 function InputGroup(props) {
   return (
     <div className="input-group mb-3">

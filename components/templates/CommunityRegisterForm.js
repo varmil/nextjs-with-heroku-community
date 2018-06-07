@@ -1,5 +1,5 @@
 import React from 'react'
-import TallTextInput from '../../components/atoms/TallTextInput'
+import TallTextInput from 'components/atoms/TallTextInput'
 
 const mbStyle = { marginBottom: 20 }
 

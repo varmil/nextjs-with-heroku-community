@@ -1,5 +1,5 @@
-import TallTextInput from '../../components/atoms/TallTextInput'
-import HyphenInput from '../../components/molecules/HyphenInput'
+import TallTextInput from 'components/atoms/TallTextInput'
+import HyphenInput from 'components/molecules/HyphenInput'
 
 const mbStyle = { marginBottom: 20 }
 
