@@ -6,6 +6,7 @@ import TopPage from '../../../components/templates/edit/TopPage'
 
 const initialState = {}
 const SIDEBAR_WIDTH = 180
+const OFFSET_TOP_SIDEBAR = 106
 const OFFSET_TOP_MAINBODY = 145
 
 export default class Stepper extends React.Component {
@@ -27,11 +28,12 @@ export default class Stepper extends React.Component {
         </div>
 
         <div className="mainBody">
-          <SideBar width={SIDEBAR_WIDTH} offsetTop={OFFSET_TOP_MAINBODY} />
+          <SideBar width={SIDEBAR_WIDTH} offsetTop={OFFSET_TOP_SIDEBAR} />
           <TopPage
             style={{
               marginTop: OFFSET_TOP_MAINBODY,
               marginLeft: SIDEBAR_WIDTH,
+              marginBottom: 20,
               backgroundColor: 'white',
               minHeight: 900
             }}
