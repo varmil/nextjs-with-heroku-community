@@ -25,14 +25,24 @@ export default class Stepper extends React.Component {
         </div>
 
         <div className="mainBody">
-          <SideBar width={180} offsetTop={125} />
-          <TopPage style={{ marginTop: 125, marginLeft: 180 }} />
+          <SideBar width={180} offsetTop={145} />
+          <TopPage
+            style={{
+              marginTop: 145,
+              marginLeft: 180,
+              backgroundColor: 'white',
+              minHeight: 500
+            }}
+          />
         </div>
 
-        <style jsx>{`
-          .contentWrapper {
+        <style global jsx>{`
+          body {
+            background-color: whitesmoke;
           }
+        `}</style>
 
+        <style jsx>{`
           button {
             padding: 10px 150px;
             background: #2b6db2;
