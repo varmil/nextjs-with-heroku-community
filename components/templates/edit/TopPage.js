@@ -30,7 +30,7 @@ export default class TopPage extends React.Component {
 
   createSubBunners() {
     return (
-      <div className="container mt-2 mb-5">
+      <div className="container">
         <div className="row justify-content-center px-3">
           <SubBunner className="col-6 py-3" />
           <SubBunner className="col-6 py-3" />
@@ -68,7 +68,7 @@ export default class TopPage extends React.Component {
             {this.createBoxContents()}
           </div>
 
-          <div className="subBunner">{this.createSubBunners()}</div>
+          <div className="subBunner mt-5 mb-5">{this.createSubBunners()}</div>
         </main>
 
         <footer className="">

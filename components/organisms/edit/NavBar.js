@@ -33,15 +33,19 @@ export default class NavBar extends React.Component {
             </NavItem>
           </Nav>
 
-          <form className="form-inline my-2 my-lg-0">
-            <input
-              className="form-control mr-sm-2"
-              type="search"
-              placeholder="ユーザー名"
-            />
-            <button className="btn btn-primary my-2 my-sm-0" type="submit">
-              <i className="fas fa-search" />
-            </button>
+          <form className="form-inline my-2 pl-2">
+            <div className="input-group">
+              <div className="input-group-prepend">
+                <span className="input-group-text">
+                  <i className="fas fa-search" />
+                </span>
+              </div>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="ユーザー名"
+              />
+            </div>
           </form>
         </Navbar>
 

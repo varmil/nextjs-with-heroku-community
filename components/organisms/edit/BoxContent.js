@@ -6,6 +6,12 @@ export default class BoxHeader extends React.Component {
     return (
       <div className={props.className} style={props.style}>
         <div className={`card rounded-0`}>
+          <img
+            className="card-img-top"
+            src="https://www.webtoolnavi.com/www/wp-content/uploads/2016/06/fakeimg-2.png"
+            alt="Card image cap"
+          />
+
           <div className="card-header p-2">
             <div className="media">
               <img
@@ -22,11 +28,6 @@ export default class BoxHeader extends React.Component {
             </div>
           </div>
 
-          <img
-            className="card-img-top"
-            src="https://www.webtoolnavi.com/www/wp-content/uploads/2016/06/fakeimg-2.png"
-            alt="Card image cap"
-          />
           <div className="card-body p-2">
             <h5 className="card-title mb-1">{props.title || 'Template'}</h5>
             <p className="card-text">
@@ -67,8 +68,14 @@ export default class BoxHeader extends React.Component {
               object-fit: cover;
             }
 
+            .card-header {
+              background-color: initial;
+              border-bottom: none;
+            }
+
             .card-footer {
               color: gray;
+              font-size: 11px;
             }
           `}</style>
         </div>
