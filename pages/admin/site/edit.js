@@ -1,13 +1,13 @@
 import React from 'react'
-import AdminHeader from '../../../components/organisms/AdminHeader'
-import WhiteBreadcrumb from '../../../components/organisms/WhiteBreadcrumb'
-import SideBar from '../../../components/templates/edit/SideBar'
-import TopPage from '../../../components/templates/edit/TopPage'
+import AdminHeader from 'components/organisms/AdminHeader'
+import WhiteBreadcrumb from 'components/organisms/WhiteBreadcrumb'
+import SideBar from 'components/templates/site/edit/SideBar'
+import TopPage from 'components/templates/site/edit/TopPage'
 
 const initialState = {}
 const SIDEBAR_WIDTH = 180
 const OFFSET_TOP_SIDEBAR = 106
-const OFFSET_TOP_MAINBODY = 145
+const OFFSET_TOP_MAINBODY = 135
 
 export default class Stepper extends React.Component {
   constructor(props) {
@@ -35,7 +35,8 @@ export default class Stepper extends React.Component {
               marginLeft: SIDEBAR_WIDTH,
               marginBottom: 20,
               backgroundColor: 'white',
-              minHeight: 900
+              minHeight: 900,
+              boxShadow: '3px 0px 20px black'
             }}
           />
         </div>

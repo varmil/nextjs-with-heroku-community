@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default class toggleSideSecond extends React.Component {
+export default class ToggleSideSecond extends React.Component {
   addSelectedIfNeeded() {
     return this.props.selected ? 'selected' : ''
   }

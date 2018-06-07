@@ -1,5 +1,5 @@
 import React from 'react'
-import ToggleSideSecond from '../../molecules/edit/ToggleSideSecond'
+import ToggleSideSecond from 'components/molecules/site/edit/ToggleSideSecond'
 
 const initialState = {}
 

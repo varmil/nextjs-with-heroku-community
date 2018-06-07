@@ -1,11 +1,11 @@
 import React from 'react'
-import NavBar from '../../organisms/edit/NavBar'
-import MenuBar from '../../organisms/edit/MenuBar'
-import MainBanner from '../../organisms/edit/MainBanner'
-import BoxHeader from '../../organisms/edit/BoxHeader'
-import BoxContent from '../../organisms/edit/BoxContent'
-import SubBunner from '../../organisms/edit/SubBunner'
-import Footer from '../../organisms/edit/Footer'
+import NavBar from 'components/organisms/site/base/NavBar'
+import MenuBar from 'components/organisms/site/base/MenuBar'
+import MainBanner from 'components/organisms/site/base/MainBanner'
+import BoxHeader from 'components/organisms/site/base/BoxHeader'
+import BoxContent from 'components/organisms/site/base/BoxContent'
+import SubBunner from 'components/organisms/site/base/SubBunner'
+import Footer from 'components/organisms/site/base/Footer'
 
 const initialState = {}
 
