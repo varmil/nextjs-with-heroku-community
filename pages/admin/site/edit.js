@@ -33,7 +33,7 @@ export default class Stepper extends React.Component {
               marginTop: OFFSET_TOP_MAINBODY,
               marginLeft: SIDEBAR_WIDTH,
               backgroundColor: 'white',
-              minHeight: 500
+              minHeight: 900
             }}
           />
         </div>
