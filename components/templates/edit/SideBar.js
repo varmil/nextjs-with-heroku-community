@@ -3,7 +3,7 @@ import ToggleSideSecond from '../../molecules/edit/ToggleSideSecond'
 
 const initialState = {}
 
-export default class Stepper extends React.Component {
+export default class SideBar extends React.Component {
   constructor(props) {
     super(props)
     this.state = initialState

@@ -1,8 +1,8 @@
 import React from 'react'
 import AdminHeader from '../../../components/organisms/AdminHeader'
 import WhiteBreadcrumb from '../../../components/organisms/WhiteBreadcrumb'
-import EditSideBar from '../../../components/templates/edit/EditSideBar'
-import EditContents from '../../../components/templates/edit/EditContents'
+import SideBar from '../../../components/templates/edit/SideBar'
+import TopPage from '../../../components/templates/edit/TopPage'
 
 const initialState = {}
 
@@ -25,8 +25,8 @@ export default class Stepper extends React.Component {
         </div>
 
         <div className="mainBody">
-          <EditSideBar width={180} offsetTop={125} />
-          <EditContents style={{ marginTop: 125, marginLeft: 180 }} />
+          <SideBar width={180} offsetTop={125} />
+          <TopPage style={{ marginTop: 125, marginLeft: 180 }} />
         </div>
 
         <style jsx>{`
