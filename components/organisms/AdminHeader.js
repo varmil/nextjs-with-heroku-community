@@ -19,10 +19,8 @@ const brandStyle = {
   top: -2
 }
 
-const linkItemStyle = {
-  color: 'white',
-  fontSize: 28
-}
+const linkItemStyle = {}
+const iconSize = 42
 
 export default class Header extends React.Component {
   render() {
@@ -37,22 +35,37 @@ export default class Header extends React.Component {
           </NavbarBrand>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink className="linkItem" href="#" style={linkItemStyle}>
-                <i className="fas fa-square-full" />
-              </NavLink>
+              <div className="linkItem" href="#" style={linkItemStyle}>
+                <i className="fas fa-pencil-alt" />
+              </div>
             </NavItem>
             <NavItem>
-              <NavLink className="linkItem" href="#" style={linkItemStyle}>
-                <i className="fas fa-square-full" />
-              </NavLink>
+              <div className="linkItem" href="#" style={linkItemStyle}>
+                <i className="fas fa-user" />
+              </div>
             </NavItem>
             <NavItem>
-              <NavLink className="linkItem" href="#" style={linkItemStyle}>
-                <i className="fas fa-square-full" />
-              </NavLink>
+              <div className="linkItem" href="#" style={linkItemStyle}>
+                <i className="fas fa-chart-bar" />
+              </div>
+            </NavItem>
+            <NavItem>
+              <div className="linkItem" href="#" style={linkItemStyle}>
+                <i className="fas fa-envelope" />
+              </div>
+            </NavItem>
+            <NavItem>
+              <div className="linkItem" href="#" style={linkItemStyle}>
+                <i className="fas fa-exclamation-circle" />
+              </div>
+            </NavItem>
+            <NavItem>
+              <div className="linkItem" href="#" style={linkItemStyle}>
+                <i className="fas fa-heart" />
+              </div>
             </NavItem>
           </Nav>
-          <UncontrolledDropdown>
+          <UncontrolledDropdown className="pl-4">
             <DropdownToggle
               caret
               color="default"
@@ -73,6 +86,18 @@ export default class Header extends React.Component {
         </Navbar>
 
         <style jsx>{`
+          .linkItem {
+            color: ${Color.MAIN_BLUE};
+            font-size: 24px;
+            line-height: ${iconSize}px;
+            margin: 0px 13px;
+            background-color: white;
+            width: ${iconSize}px;
+            height: ${iconSize}px;
+            text-align: center;
+            border-radius: 10px;
+          }
+
           .dropdownText i {
             padding: 0 10px 0 0;
           }
