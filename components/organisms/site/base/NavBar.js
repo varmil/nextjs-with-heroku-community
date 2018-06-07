@@ -1,5 +1,8 @@
 import React from 'react'
 import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap'
+import CommunityLogo from './CommunityLogo'
+import AccountIcon from './AccountIcon'
+import NotificationIcon from './NotificationIcon'
 
 const brandStyle = {
   position: 'relative',
@@ -12,23 +15,32 @@ const linkItemStyle = {
 }
 
 export default class NavBar extends React.Component {
+  constructor(props) {
+    super(props)
+
+    // this is needed because this class is extended, and these are overwritten
+    this.communityLogo = CommunityLogo
+    this.accountIcon = AccountIcon
+    this.notificationIcon = NotificationIcon
+  }
+
   render() {
     return (
       <div className={this.props.className} style={this.props.style}>
         <Navbar dark expand="sm" className="container">
           <NavbarBrand className="mr-5" href="/" style={brandStyle}>
-            <img src="/static/img/logo-blue.png" width="100" alt="" />
+            {React.createElement(this.communityLogo)}
           </NavbarBrand>
 
           <Nav className="ml-auto" navbar>
             <NavItem>
               <NavLink className="linkItem" href="#" style={linkItemStyle}>
-                <i className="fas fa-bell text-primary" />
+                {React.createElement(this.accountIcon)}
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink className="linkItem" href="#" style={linkItemStyle}>
-                <i className="fas fa-user text-primary" />
+                {React.createElement(this.notificationIcon)}
               </NavLink>
             </NavItem>
           </Nav>

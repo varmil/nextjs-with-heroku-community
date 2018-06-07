@@ -1,6 +1,6 @@
 const Index = props => (
   <div>
-    <i className="fas fa-bell text-primary" />
+    <img src="/static/img/logo-blue.png" width="100" alt="" />
     <style jsx>{``}</style>
   </div>
 )
