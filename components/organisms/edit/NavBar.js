@@ -37,7 +37,7 @@ export default class NavBar extends React.Component {
             <input
               className="form-control mr-sm-2"
               type="search"
-              placeholder="username"
+              placeholder="ユーザー名"
             />
             <button className="btn btn-primary my-2 my-sm-0" type="submit">
               <i className="fas fa-search" />
