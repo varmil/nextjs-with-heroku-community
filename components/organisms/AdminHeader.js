@@ -53,8 +53,15 @@ export default class Header extends React.Component {
             </NavItem>
           </Nav>
           <UncontrolledDropdown>
-            <DropdownToggle caret color="default">
-              <span className="pr-4">Options</span>
+            <DropdownToggle
+              caret
+              color="default"
+              style={{ backgroundColor: 'white' }}
+            >
+              <span className="dropdownText pr-4">
+                <i className="fas fa-circle" />
+                <span>Options</span>
+              </span>
             </DropdownToggle>
             <DropdownMenu right>
               <DropdownItem>Option 1</DropdownItem>
@@ -65,7 +72,11 @@ export default class Header extends React.Component {
           </UncontrolledDropdown>
         </Navbar>
 
-        <style jsx>{``}</style>
+        <style jsx>{`
+          .dropdownText i {
+            padding: 0 10px 0 0;
+          }
+        `}</style>
       </div>
     )
   }
