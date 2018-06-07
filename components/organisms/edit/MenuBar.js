@@ -6,23 +6,23 @@ export default class MenuBar extends React.Component {
       <div className={this.props.className} style={this.props.style}>
         <div className="cs-header-menubar">
           <div className="container">
-            <ul className="cs-header-menubar-list" style={{ maxWidth: 1000 }}>
-              <li className="cs-header-menubar-list__item is-active">
+            <ul className="listContainer">
+              <li className="listItem is-active">
                 <a href="/">ホーム</a>
               </li>
-              <li className="cs-header-menubar-list__item ">
+              <li className="listItem ">
                 <a href="/talk/talk/">トークルーム</a>
               </li>
-              <li className="cs-header-menubar-list__item ">
+              <li className="listItem ">
                 <a href="/article/blog/">企業発信</a>
               </li>
-              <li className="cs-header-menubar-list__item ">
+              <li className="listItem ">
                 <a href="/recipe/recipe/">企業ストーリー</a>
               </li>
-              <li className="cs-header-menubar-list__item ">
+              <li className="listItem ">
                 <a href="/article/blog_story/">投票・アンケート</a>
               </li>
-              <li className="cs-header-menubar-list__item ">
+              <li className="listItem ">
                 <a href="/review/product/">お知らせ</a>
               </li>
             </ul>
@@ -35,14 +35,7 @@ export default class MenuBar extends React.Component {
             background: #633826;
           }
 
-          .cs-header-menubar__inner {
-            box-sizing: border-box;
-            margin-left: auto;
-            margin-right: auto;
-            max-width: 1000px;
-          }
-
-          .cs-header-menubar-list {
+          .listContainer {
             height: 44px;
             overflow: hidden;
           }
@@ -60,7 +53,7 @@ export default class MenuBar extends React.Component {
             font-weight: normal;
           }
 
-          .cs-header-menubar-list__item {
+          .listItem {
             display: table-cell;
           }
 
@@ -68,17 +61,17 @@ export default class MenuBar extends React.Component {
             list-style-type: none;
           }
 
-          .cs-header-menubar-list__item.is-active a {
+          .listItem.is-active a {
             background-color: #e71421;
           }
 
-          .cs-header-menubar-list__item a:active,
-          .cs-header-menubar-list__item a:hover {
+          .listItem a:active,
+          .listItem a:hover {
             background-color: #e71421;
             color: #fff;
           }
 
-          .cs-header-menubar-list__item a {
+          .listItem a {
             color: #fff;
             white-space: nowrap;
             text-overflow: ellipsis;
