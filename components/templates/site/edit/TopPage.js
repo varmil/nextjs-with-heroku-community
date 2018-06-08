@@ -19,10 +19,10 @@ export default class TopPage extends React.Component {
     return (
       <div className="container mt-2 mb-5">
         <div className="row justify-content-center px-3">
-          <BoxContent className="col-3 px-1" />
-          <BoxContent className="col-3 px-1" />
-          <BoxContent className="col-3 px-1" />
-          <BoxContent className="col-3 px-1" />
+          <BoxContent className="col-xs-12 col-sm-6 col-md-3 p-1" />
+          <BoxContent className="col-xs-12 col-sm-6 col-md-3 p-1" />
+          <BoxContent className="col-xs-12 col-sm-6 col-md-3 p-1" />
+          <BoxContent className="col-xs-12 col-sm-6 col-md-3 p-1" />
         </div>
       </div>
     )
