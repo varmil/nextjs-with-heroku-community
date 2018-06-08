@@ -3,8 +3,8 @@ import compose from 'lodash/fp/compose'
 import toEditable from './Editable'
 import withModal from './withModal'
 import Modal from 'components/templates/site/edit/LinkedImageModal'
-import AccountIcon from 'components/organisms/site/base/AccountIcon'
+import MenuItem from 'components/organisms/site/base/MenuItem'
 
-const Composed = compose(c => withModal(c, Modal), toEditable)(AccountIcon)
-const Index = props => <Composed headerText={'ロゴ編集'} />
+const Composed = compose(c => withModal(c, Modal), toEditable)(MenuItem)
+const Index = props => <Composed {...props} headerText={'ロゴ編集'} />
 export default Index

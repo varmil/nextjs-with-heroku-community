@@ -55,7 +55,7 @@ export default class NavBar extends React.Component {
               <input
                 type="text"
                 className="form-control"
-                placeholder="ユーザー名"
+                placeholder="キーワード"
               />
             </div>
           </form>
