@@ -11,7 +11,7 @@ const ImageContainer = props => {
       <style jsx>{`
         .row {
           height: 340px;
-          overflow: scroll;
+          overflow-y: scroll;
         }
       `}</style>
     </div>
