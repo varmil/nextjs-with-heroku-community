@@ -1,3 +1,4 @@
+import React from 'react'
 import BaseNavBar from 'components/organisms/site/base/NavBar'
 import CommunityLogo from './CommunityLogo'
 import AccountIcon from './AccountIcon'
@@ -15,12 +16,12 @@ import NotificationIcon from './NotificationIcon'
 // }
 
 const Index = props => (
-  <div>
+  <React.Fragment>
     <BaseNavBar
       communityLogo={CommunityLogo}
       accountIcon={AccountIcon}
       notificationIcon={NotificationIcon}
     />
-  </div>
+  </React.Fragment>
 )
 export default Index

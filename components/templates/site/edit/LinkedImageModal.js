@@ -56,9 +56,9 @@ const LinkEditor = props => {
       <div className="form-row align-items-center">
         <label className="col-sm-2 col-form-label">サイト内</label>
         <div className="col-sm-5">
-          <select id="inputState" className="form-control">
-            <option selected>選んでください...</option>
-            <option>...</option>
+          <select className="form-control">
+            <option value={1}>選んでください...</option>
+            <option value={2}>...</option>
           </select>
         </div>
       </div>
@@ -81,7 +81,7 @@ const modalStyle = {
 class LinkedImageModal extends React.Component {
   createExistingImages() {
     const images = range(10).map(i => (
-      <Image key={`image${i}`} className="mb-2" />
+      <Image key={`LinkedImageModalImage${i}`} className="mb-2" />
     ))
     return <ImageContainer className="mb-4" images={images} />
   }
@@ -99,7 +99,7 @@ class LinkedImageModal extends React.Component {
           <ModalHeader>{this.props.headerText}</ModalHeader>
           <ModalBody>
             <div className="container">
-              <button type="button" className="imgUploader_button mb-3">
+              <button type="button" className="imgUploaderButton mb-3">
                 <i className="fa fa-folder-open" /> 画像を選択してアップロード
               </button>
 
@@ -114,14 +114,12 @@ class LinkedImageModal extends React.Component {
             width: 100%;
           }
 
-          .imgUploader_button {
+          .imgUploaderButton {
             background-color: transparent;
             border: none;
             cursor: pointer;
             outline: none;
             padding: 0;
-            -webkit-appearance: none;
-            -moz-appearance: none;
             appearance: none;
             background: #f7f7f7;
             border-radius: 0;

@@ -74,8 +74,6 @@ export default class TopPage extends React.Component {
         <footer className="">
           <Footer />
         </footer>
-
-        <style jsx>{``}</style>
       </div>
     )
   }

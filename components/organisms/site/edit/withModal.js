@@ -43,8 +43,6 @@ export default function ppHOC(WrappedComponent, modal) {
               ...this.state,
               toggle: this.toggle.bind(this)
             }))()}
-
-          <style jsx>{``}</style>
         </div>
       )
     }

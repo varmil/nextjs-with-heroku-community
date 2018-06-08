@@ -60,8 +60,6 @@ export default class NavBar extends React.Component {
             </div>
           </form>
         </Navbar>
-
-        <style jsx>{``}</style>
       </div>
     )
   }
