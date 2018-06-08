@@ -11,6 +11,7 @@ export default function ppHOC(WrappedComponent) {
       return (
         <div
           className={`parent ${this.props.className || ''}`}
+          style={this.props.style || {}}
           onClick={e => {
             e.preventDefault()
             if (this.props.onTriggerModal) this.props.onTriggerModal()

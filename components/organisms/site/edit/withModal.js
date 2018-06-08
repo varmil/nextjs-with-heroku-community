@@ -1,7 +1,4 @@
 import React from 'react'
-import omit from 'lodash/omit'
-
-const OMIT_KEYS = ['style']
 
 // ここは汎用Modal処理のみ書いておいて、外からどのモーダルを展開するか渡す感じ
 // Modalと連携するPropsは、ここでnewPropsとしてWrappedComponentへ注入する
@@ -27,12 +24,10 @@ export default function ppHOC(WrappedComponent, modal) {
     }
 
     render() {
-      // omit specific keys
-      const omittedProps = omit(this.props, OMIT_KEYS)
       return (
         <React.Fragment>
           <WrappedComponent
-            {...omittedProps}
+            {...this.props}
             onTriggerModal={this.onTriggerModal.bind(this)}
           />
 
