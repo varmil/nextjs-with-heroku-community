@@ -10,8 +10,11 @@ export default function ppHOC(WrappedComponent) {
       const newProps = omit(this.props, OMIT_KEYS)
       return (
         <div
-          className={`parent ${this.props.className}`}
-          onClick={e => e.preventDefault()}
+          className={`parent ${this.props.className || ''}`}
+          onClick={e => {
+            e.preventDefault()
+            if (this.props.onTriggerModal) this.props.onTriggerModal()
+          }}
         >
           <WrappedComponent {...newProps} />
 
