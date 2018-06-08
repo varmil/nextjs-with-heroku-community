@@ -8,7 +8,7 @@ const Composed = compose(c => withModal(c, Modal), toEditable)(CommunityLogo)
 
 const Index = props => (
   <div>
-    <Composed headerText={'バナー編集'} />
+    <Composed headerText={'ロゴ編集'} />
   </div>
 )
 export default Index
