@@ -1,14 +1,26 @@
-import NavBar from 'components/organisms/site/base/NavBar'
+import BaseNavBar from 'components/organisms/site/base/NavBar'
 import CommunityLogo from './CommunityLogo'
 import AccountIcon from './AccountIcon'
 import NotificationIcon from './NotificationIcon'
 
-export default class EditableNavBar extends NavBar {
-  constructor(props) {
-    super(props)
+// NOTE: extends component cause hot load broken !
+// export default class NavBar extends BaseNavBar {
+//   constructor(props) {
+//     super(props)
+//
+//     this.communityLogo = CommunityLogo
+//     this.accountIcon = AccountIcon
+//     this.notificationIcon = NotificationIcon
+//   }
+// }
 
-    this.communityLogo = CommunityLogo
-    this.accountIcon = AccountIcon
-    this.notificationIcon = NotificationIcon
-  }
-}
+const Index = props => (
+  <div>
+    <BaseNavBar
+      communityLogo={CommunityLogo}
+      accountIcon={AccountIcon}
+      notificationIcon={NotificationIcon}
+    />
+  </div>
+)
+export default Index

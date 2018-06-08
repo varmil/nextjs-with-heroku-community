@@ -14,6 +14,7 @@ export default function ppHOC(WrappedComponent, modal) {
 
       // create here because we need to know props keys
       this.modal = React.createElement(modal)
+      console.info('parent props', this.props)
       console.info('modal props', this.modal.props)
     }
 
@@ -27,17 +28,18 @@ export default function ppHOC(WrappedComponent, modal) {
 
     render() {
       // omit specific keys
-      const newProps = omit(this.props, OMIT_KEYS)
+      const omittedProps = omit(this.props, OMIT_KEYS)
       return (
         <div className={`${this.props.className || ''}`}>
           <WrappedComponent
-            {...newProps}
+            {...omittedProps}
             onTriggerModal={this.onTriggerModal.bind(this)}
           />
 
           {/* handle custom modal */}
           {(() =>
             React.cloneElement(this.modal, {
+              ...this.props,
               ...this.state,
               toggle: this.toggle.bind(this)
             }))()}

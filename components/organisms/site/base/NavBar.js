@@ -18,10 +18,10 @@ export default class NavBar extends React.Component {
   constructor(props) {
     super(props)
 
-    // this is needed because this class is extended, and these are overwritten
-    this.communityLogo = CommunityLogo
-    this.accountIcon = AccountIcon
-    this.notificationIcon = NotificationIcon
+    // this is needed because this class is extended
+    this.communityLogo = props.communityLogo || CommunityLogo
+    this.accountIcon = props.accountIcon || AccountIcon
+    this.notificationIcon = props.notificationIcon || NotificationIcon
   }
 
   render() {
