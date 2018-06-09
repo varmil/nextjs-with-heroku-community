@@ -103,7 +103,10 @@ export default class EditMenuBlock extends React.Component {
             </div>
           </div>
 
-          <div className="editNav_delete">
+          <div
+            className="editNav_delete"
+            onClick={() => props.onDelete(props.id)}
+          >
             <div className="editNav_deleteBtn">
               <i className="fa fa-times" />
             </div>

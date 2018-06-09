@@ -1,61 +1,124 @@
 import React from 'react'
 
+// each color element
+const Element = props => {
+  return (
+    <li
+      color={props.color}
+      style={{ backgroundColor: props.color }}
+      className={props.className}
+      onClick={() => props.onClick(props.color, props.index)}
+    >
+      <style jsx>{`
+        li {
+          list-style-type: none;
+        }
+
+        li:nth-child(9n + 1) {
+          clear: left;
+        }
+
+        li {
+          float: left;
+          display: block;
+          width: 20px;
+          height: 20px;
+          margin: 0 10px 10px 0;
+          cursor: pointer;
+        }
+
+        li.selected:after {
+          content: '✔';
+          display: block;
+          width: 20px;
+          height: 20px;
+          line-height: 20px;
+          text-align: center;
+          color: #000;
+        }
+
+        li:nth-last-child(-n + 18):after {
+          color: #fff;
+        }
+      `}</style>
+    </li>
+  )
+}
+
+const COLORS = [
+  '#ffffff',
+  '#fee8e6',
+  '#fef2e6',
+  '#fff8db',
+  '#edf7d7',
+  '#ebfff4',
+  '#e9f7fd',
+  '#edf0ff',
+  '#fcf4ff',
+  '#e6e6e6',
+  '#ff8a7c',
+  '#ffcb9c',
+  '#ffe05a',
+  '#c0e76c',
+  '#a4f3c5',
+  '#b2ddf1',
+  '#c7cff5',
+  '#e1bfef',
+  '#b3b3b3',
+  '#eb4024',
+  '#f47e00',
+  '#f8ca00',
+  '#9dd219',
+  '#06b056',
+  '#3199df',
+  '#4258d8',
+  '#9c56b8',
+  '#666666',
+  '#c33925',
+  '#d55500',
+  '#ba9600',
+  '#76a900',
+  '#00752e',
+  '#006394',
+  '#01188e',
+  '#681d93',
+  '#000000',
+  '#670800',
+  '#813c00',
+  '#755e00',
+  '#456700',
+  '#004d1e',
+  '#004568',
+  '#000f69',
+  '#360a4d'
+]
+
 export default class BgColorPicker extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { selectedIndex: 0 }
+  }
+
+  onClick(color, index) {
+    this.setState({ ...this.state, selectedIndex: index })
+    this.props.onClick(color, index)
+  }
+
   render() {
     const props = this.props
 
     return (
-      <React.Fragment style={props.style}>
+      <React.Fragment>
         <ul id="editNav_bgColor" className="editNav_colorTipList">
-          <li
-            data-color="#ffffff"
-            style={{ backgroundColor: '#ffffff' }}
-            className="selected"
-          />
-          <li data-color="#fee8e6" style={{ backgroundColor: '#fee8e6' }} />
-          <li data-color="#fef2e6" style={{ backgroundColor: '#fef2e6' }} />
-          <li data-color="#fff8db" style={{ backgroundColor: '#fff8db' }} />
-          <li data-color="#edf7d7" style={{ backgroundColor: '#edf7d7' }} />
-          <li data-color="#ebfff4" style={{ backgroundColor: '#ebfff4' }} />
-          <li data-color="#e9f7fd" style={{ backgroundColor: '#e9f7fd' }} />
-          <li data-color="#edf0ff" style={{ backgroundColor: '#edf0ff' }} />
-          <li data-color="#fcf4ff" style={{ backgroundColor: '#fcf4ff' }} />
-          <li data-color="#e6e6e6" style={{ backgroundColor: '#e6e6e6' }} />
-          <li data-color="#ff8a7c" style={{ backgroundColor: '#ff8a7c' }} />
-          <li data-color="#ffcb9c" style={{ backgroundColor: '#ffcb9c' }} />
-          <li data-color="#ffe05a" style={{ backgroundColor: '#ffe05a' }} />
-          <li data-color="#c0e76c" style={{ backgroundColor: '#c0e76c' }} />
-          <li data-color="#a4f3c5" style={{ backgroundColor: '#a4f3c5' }} />
-          <li data-color="#b2ddf1" style={{ backgroundColor: '#b2ddf1' }} />
-          <li data-color="#c7cff5" style={{ backgroundColor: '#c7cff5' }} />
-          <li data-color="#e1bfef" style={{ backgroundColor: '#e1bfef' }} />
-          <li data-color="#b3b3b3" style={{ backgroundColor: '#b3b3b3' }} />
-          <li data-color="#eb4024" style={{ backgroundColor: '#eb4024' }} />
-          <li data-color="#f47e00" style={{ backgroundColor: '#f47e00' }} />
-          <li data-color="#f8ca00" style={{ backgroundColor: '#f8ca00' }} />
-          <li data-color="#9dd219" style={{ backgroundColor: '#9dd219' }} />
-          <li data-color="#06b056" style={{ backgroundColor: '#06b056' }} />
-          <li data-color="#3199df" style={{ backgroundColor: '#3199df' }} />
-          <li data-color="#4258d8" style={{ backgroundColor: '#4258d8' }} />
-          <li data-color="#9c56b8" style={{ backgroundColor: '#9c56b8' }} />
-          <li data-color="#666666" style={{ backgroundColor: '#666666' }} />
-          <li data-color="#c33925" style={{ backgroundColor: '#c33925' }} />
-          <li data-color="#d55500" style={{ backgroundColor: '#d55500' }} />
-          <li data-color="#ba9600" style={{ backgroundColor: '#ba9600' }} />
-          <li data-color="#76a900" style={{ backgroundColor: '#76a900' }} />
-          <li data-color="#00752e" style={{ backgroundColor: '#00752e' }} />
-          <li data-color="#006394" style={{ backgroundColor: '#006394' }} />
-          <li data-color="#01188e" style={{ backgroundColor: '#01188e' }} />
-          <li data-color="#681d93" style={{ backgroundColor: '#681d93' }} />
-          <li data-color="#000000" style={{ backgroundColor: '#000000' }} />
-          <li data-color="#670800" style={{ backgroundColor: '#670800' }} />
-          <li data-color="#813c00" style={{ backgroundColor: '#813c00' }} />
-          <li data-color="#755e00" style={{ backgroundColor: '#755e00' }} />
-          <li data-color="#456700" style={{ backgroundColor: '#456700' }} />
-          <li data-color="#004d1e" style={{ backgroundColor: '#004d1e' }} />
-          <li data-color="#004568" style={{ backgroundColor: '#004568' }} />
-          <li data-color="#000f69" style={{ backgroundColor: '#000f69' }} />
-          <li data-color="#360a4d" style={{ backgroundColor: '#360a4d' }} />
+          {COLORS.map((c, i) => (
+            <Element
+              key={c}
+              index={i}
+              color={c}
+              onClick={this.onClick.bind(this)}
+              className={this.state.selectedIndex === i ? 'selected' : ''}
+            />
+          ))}
         </ul>
 
         <style jsx>{`
@@ -64,32 +127,8 @@ export default class BgColorPicker extends React.Component {
             padding-left: 0;
           }
 
-          ul,
-          li {
+          ul {
             list-style-type: none;
-          }
-
-          .editNav_colorTipList > li:nth-child(9n + 1) {
-            clear: left;
-          }
-
-          .editNav_colorTipList > li {
-            float: left;
-            display: block;
-            width: 20px;
-            height: 20px;
-            margin: 0 10px 10px 0;
-            cursor: pointer;
-          }
-
-          .editNav_colorTipList > li.selected:after {
-            content: '✔';
-            display: block;
-            width: 20px;
-            height: 20px;
-            line-height: 20px;
-            text-align: center;
-            color: #000;
           }
         `}</style>
       </React.Fragment>
