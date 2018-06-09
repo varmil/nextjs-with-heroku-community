@@ -1,6 +1,7 @@
 import React from 'react'
 import range from 'lodash/range'
-import { Modal, ModalHeader, ModalBody } from 'reactstrap'
+import { ModalHeader, ModalBody } from 'reactstrap'
+import WideModal from 'components/organisms/modal/WideModal'
 
 // 2x2 image container
 const ImageContainer = props => {
@@ -73,10 +74,6 @@ const LinkEditor = props => {
   )
 }
 
-const modalStyle = {
-  maxWidth: '90%'
-}
-
 // ロゴやバナーなどリンクできる画像を編集するモーダル
 class LinkedImageModal extends React.Component {
   createExistingImages() {
@@ -88,13 +85,7 @@ class LinkedImageModal extends React.Component {
 
   render() {
     return (
-      <Modal
-        isOpen={this.props.isOpen || false}
-        backdrop={true}
-        centered={true}
-        toggle={this.props.toggle}
-        style={modalStyle}
-      >
+      <WideModal isOpen={this.props.isOpen || false} toggle={this.props.toggle}>
         <ModalHeader>{this.props.headerText}</ModalHeader>
         <ModalBody>
           <div className="container">
@@ -128,7 +119,7 @@ class LinkedImageModal extends React.Component {
             position: relative;
           }
         `}</style>
-      </Modal>
+      </WideModal>
     )
   }
 }

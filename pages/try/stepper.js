@@ -8,7 +8,7 @@ import Steps, { Step } from 'rc-steps'
 import AdminRegisterForm from 'components/templates/AdminRegisterForm'
 import CommunityRegisterForm from 'components/templates/CommunityRegisterForm'
 import DesignRegisterForm from 'components/templates/DesignRegisterForm'
-import LoadingModal from 'components/organisms/LoadingModal'
+import LoadingModal from 'components/organisms/modal/LoadingModal'
 import Color from 'constants/Color'
 
 const NEXT_PAGE_SLUG = '/try/theme'

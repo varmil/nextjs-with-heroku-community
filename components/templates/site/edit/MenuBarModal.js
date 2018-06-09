@@ -1,137 +1,176 @@
 // // TODO:
 import React from 'react'
-import range from 'lodash/range'
-import { Modal, ModalHeader, ModalBody } from 'reactstrap'
+import { ModalHeader, ModalBody } from 'reactstrap'
+import WideModal from 'components/organisms/modal/WideModal'
+import BgColorPicker from 'components/molecules/BgColorPicker'
+import EditMenuBlock from 'components/organisms/EditMenuBlock'
 
-// 2x2 image container
-const ImageContainer = props => {
-  return (
-    <div className={`row ${props.className}`}>
-      {props.images}
-
-      <style jsx>{`
-        .row {
-          height: 340px;
-          overflow-y: scroll;
-        }
-      `}</style>
-    </div>
-  )
-}
-
-const Image = props => {
-  return (
-    <div className={`col-md-6 col-lg-6 text-center ${props.className}`}>
-      <img src="https://dummyimage.com/500x180/000/fff.png" alt="a" />
-
-      <style jsx>{`
-        img {
-          width: 100%;
-          max-width: 600px;
-        }
-      `}</style>
-    </div>
-  )
-}
-
-const LinkEditor = props => {
-  return (
-    <React.Fragment>
-      <div className="form-row align-items-center mb-1">
-        <label className="col-sm-2 col-form-label">リンク先URL</label>
-        <div className="col-sm-5">
-          <input
-            type="url"
-            className="form-control"
-            placeholder="https://..."
-          />
-        </div>
-        <div className="col-sm-4">
-          <div className="form-check">
-            <input className="form-check-input" type="checkbox" />
-            <label className="form-check-label">別ウィンドウ</label>
-          </div>
-        </div>
-      </div>
-
-      <div className="form-row align-items-center">
-        <label className="col-sm-2 col-form-label">サイト内</label>
-        <div className="col-sm-5">
-          <select className="form-control">
-            <option value={1}>選んでください...</option>
-            <option value={2}>...</option>
-          </select>
-        </div>
-      </div>
-
-      <style jsx>{`
-        img {
-          width: 100%;
-          max-width: 600px;
-        }
-      `}</style>
-    </React.Fragment>
-  )
-}
-
-const modalStyle = {
-  maxWidth: '90%'
-}
-
-// ロゴやバナーなどリンクできる画像を編集するモーダル
-class LinkedImageModal extends React.Component {
-  createExistingImages() {
-    const images = range(10).map(i => (
-      <Image key={`LinkedImageModalImage${i}`} className="mb-2" />
-    ))
-    return <ImageContainer className="mb-4" images={images} />
-  }
-
+class MenuBarModal extends React.Component {
   render() {
     return (
-      <Modal
-        isOpen={this.props.isOpen || false}
-        backdrop={true}
-        centered={true}
-        toggle={this.props.toggle}
-        style={modalStyle}
-      >
+      <WideModal isOpen={this.props.isOpen || false} toggle={this.props.toggle}>
         <ModalHeader>{this.props.headerText}</ModalHeader>
         <ModalBody>
           <div className="container">
-            <button type="button" className="imgUploaderButton mb-3">
-              <i className="fa fa-folder-open" /> 画像を選択してアップロード
-            </button>
+            <div className="modalEdit_row-wide">
+              <div className="modalEdit_rowHead">背景色</div>
+              <div className="modalEdit_rowBody">
+                <BgColorPicker />
+              </div>
+            </div>
 
-            {this.createExistingImages()}
-            <LinkEditor />
+            <div className="modalEdit_row-wide">
+              <div className="modalEdit_rowHead">メニュー文字色</div>
+              <div className="modalEdit_rowBody">
+                <label>
+                  <input
+                    type="radio"
+                    name="menuTextColor"
+                    defaultValue="#333"
+                  />黒
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="menuTextColor"
+                    defaultValue="#fff"
+                  />白
+                </label>
+              </div>
+            </div>
+
+            <div className="modalEdit_row-wide">
+              <div className="modalEdit_rowHead">メニュー位置</div>
+              <div className="modalEdit_rowBody">
+                <label>
+                  <input type="radio" name="navAlign" defaultValue="left" />左寄せ
+                </label>
+                <label>
+                  <input type="radio" name="navAlign" defaultValue="center" />センター揃え
+                </label>
+                <label>
+                  <input type="radio" name="navAlign" defaultValue="right" />右寄せ
+                </label>
+              </div>
+            </div>
+
+            <div className="modalEdit_row-wide">
+              <div className="modalEdit_rowHead">メニュー</div>
+              <div className="modalEdit_rowBody">
+                <div id="editNav_menuGroup">
+                  <EditMenuBlock text={`ホーム`} url="" />
+                  <EditMenuBlock text={`ホーム`} />
+                </div>
+                <div id="editNav_add" className="editNav_add">
+                  <div id="editNav_addBtn" className="editNav_addBtn">
+                    <i className="fa fa-plus" />
+                  </div>
+                  <i className="fa fa-plus">
+                    <div className="editNav_addTooltip">メニューを追加</div>
+                  </i>
+                </div>
+                <i className="fa fa-plus" />
+              </div>
+            </div>
+            <div id="editNav_menuInstance">
+              <div className="editNav_menuBlock">
+                <div>
+                  <label className="editMenu_group">
+                    <div className="editMenu_text">テキスト</div>
+                    <div className="editMenu_controller">
+                      <input
+                        className="menuText"
+                        type="text"
+                        name="menuText"
+                        defaultValue
+                      />
+                    </div>
+                  </label>
+                </div>
+                <div className="editMenu_group">
+                  <div className="editMenu_text">リンク</div>
+                  <div className="editMenu_controller">
+                    <ul className="editMenu_selectLinkList">
+                      <li
+                        className="editMenu_selectLink internal"
+                        data-type="internal"
+                      >
+                        ページ内
+                      </li>
+                      <li
+                        className="editMenu_selectLink external"
+                        data-type="external"
+                      >
+                        別ページ
+                      </li>
+                    </ul>
+                    <div className="editMenu_menuLinkGroup">
+                      <div className="editMenu_link external">
+                        <input
+                          className="menuHref"
+                          type="text"
+                          name="menuHref"
+                          defaultValue
+                          placeholder="https://peraichi.com"
+                        />
+                        <label className="editMenu_target">
+                          <input type="checkbox" name="menuTarget" />別ウインドウ
+                        </label>
+                      </div>
+                      <div className="editMenu_link internal" />
+                    </div>
+                  </div>
+                  <div className="editNav_delete">
+                    <div className="editNav_deleteBtn">
+                      <i className="fa fa-times" />
+                    </div>
+                    <i className="fa fa-times" />
+                  </div>
+                  <i className="fa fa-times" />
+                </div>
+                <i className="fa fa-times" />
+              </div>
+              <i className="fa fa-times">
+                <div className="modalEdit_actionBtns">
+                  <a className="modal_btn-main save">保存</a>
+                  <a className="modal_btn-default cancel">キャンセル</a>
+                </div>
+              </i>
+            </div>
+            <i className="fa fa-times" />
           </div>
         </ModalBody>
 
         <style jsx>{`
-          img {
+          .modalEdit_row,
+          .modalEdit_row-wide {
+            display: table;
             width: 100%;
+            line-height: 1.5;
+            border-bottom: 1px dotted #ccc;
           }
 
-          .imgUploaderButton {
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            outline: none;
-            padding: 0;
-            appearance: none;
-            background: #f7f7f7;
-            border-radius: 0;
-            box-shadow: inset 0 0 0 2px #ccc;
-            font-size: 16px;
-            padding: 7px 15px;
-            transition: all 0.3s ease;
+          .modalEdit_rowHead {
+            display: table-cell;
+            width: 180px;
+            padding: 30px 20px 30px 10px;
+            vertical-align: top;
+            font-weight: 700;
+          }
+
+          .modalEdit_rowBody {
             position: relative;
+            display: table-cell;
+            padding: 30px 10px 30px 20px;
+          }
+
+          .modalEdit_rowBody label {
+            margin-right: 10px;
           }
         `}</style>
-      </Modal>
+      </WideModal>
     )
   }
 }
 
-export default LinkedImageModal
+export default MenuBarModal
