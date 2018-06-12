@@ -2,6 +2,7 @@ import React from 'react'
 import range from 'lodash/range'
 import { ModalHeader, ModalBody } from 'reactstrap'
 import WideModal from 'components/organisms/modal/WideModal'
+import LinkEditor from 'components/molecules/site/edit/LinkEditor'
 
 // 2x2 image container
 const ImageContainer = props => {
@@ -31,46 +32,6 @@ const Image = props => {
         }
       `}</style>
     </div>
-  )
-}
-
-const LinkEditor = props => {
-  return (
-    <React.Fragment>
-      <div className="form-row align-items-center mb-1">
-        <label className="col-sm-2 col-form-label">リンク先URL</label>
-        <div className="col-sm-5">
-          <input
-            type="url"
-            className="form-control"
-            placeholder="https://..."
-          />
-        </div>
-        <div className="col-sm-4">
-          <div className="form-check">
-            <input className="form-check-input" type="checkbox" />
-            <label className="form-check-label">別ウィンドウ</label>
-          </div>
-        </div>
-      </div>
-
-      <div className="form-row align-items-center">
-        <label className="col-sm-2 col-form-label">サイト内</label>
-        <div className="col-sm-5">
-          <select className="form-control">
-            <option value={1}>選んでください...</option>
-            <option value={2}>...</option>
-          </select>
-        </div>
-      </div>
-
-      <style jsx>{`
-        img {
-          width: 100%;
-          max-width: 600px;
-        }
-      `}</style>
-    </React.Fragment>
   )
 }
 

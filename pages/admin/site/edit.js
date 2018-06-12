@@ -13,6 +13,7 @@ const OFFSET_TOP_SIDEBAR = 106
 const OFFSET_TOP_MAINBODY = 135
 
 class Edit extends React.Component {
+  // TODO: this is example code
   static async getInitialProps(props) {
     const { store, isServer } = props.ctx
 
