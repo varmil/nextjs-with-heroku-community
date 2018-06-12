@@ -45,51 +45,49 @@ class MenuBarModal extends React.Component {
     return (
       <WideModal isOpen={this.props.isOpen || false} toggle={this.props.toggle}>
         <ModalHeader>{this.props.headerText}</ModalHeader>
-        <ModalBody>
-          <div className="container">
-            <div className="modalEdit_row-wide">
-              <div className="modalEdit_rowHead">背景色</div>
-              <div className="modalEdit_rowBody">
-                <BgColorPicker onClick={this.onClickBgColor.bind(this)} />
-              </div>
+        <ModalBody className="container">
+          <div className="modalEdit_row-wide">
+            <div className="modalEdit_rowHead">背景色</div>
+            <div className="modalEdit_rowBody">
+              <BgColorPicker onClick={this.onClickBgColor.bind(this)} />
             </div>
+          </div>
 
-            <div className="modalEdit_row-wide">
-              <div className="modalEdit_rowHead">メニュー文字色</div>
-              <div className="modalEdit_rowBody">
-                <label>
-                  <input type="radio" defaultValue="#333" />黒
-                </label>
-                <label>
-                  <input type="radio" defaultValue="#fff" />白
-                </label>
-              </div>
+          <div className="modalEdit_row-wide">
+            <div className="modalEdit_rowHead">メニュー文字色</div>
+            <div className="modalEdit_rowBody">
+              <label>
+                <input type="radio" defaultValue="#333" />黒
+              </label>
+              <label>
+                <input type="radio" defaultValue="#fff" />白
+              </label>
             </div>
+          </div>
 
-            <div className="modalEdit_row-wide">
-              <div className="modalEdit_rowHead">メニュー位置</div>
-              <div className="modalEdit_rowBody">
-                <label>
-                  <input type="radio" name="navAlign" defaultValue="left" />左寄せ
-                </label>
-                <label>
-                  <input type="radio" name="navAlign" defaultValue="center" />センター揃え
-                </label>
-                <label>
-                  <input type="radio" name="navAlign" defaultValue="right" />右寄せ
-                </label>
-              </div>
+          <div className="modalEdit_row-wide">
+            <div className="modalEdit_rowHead">メニュー位置</div>
+            <div className="modalEdit_rowBody">
+              <label>
+                <input type="radio" name="navAlign" defaultValue="left" />左寄せ
+              </label>
+              <label>
+                <input type="radio" name="navAlign" defaultValue="center" />センター揃え
+              </label>
+              <label>
+                <input type="radio" name="navAlign" defaultValue="right" />右寄せ
+              </label>
             </div>
+          </div>
 
-            <div className="modalEdit_row-wide">
-              <div className="modalEdit_rowHead">メニュー</div>
-              <div className="modalEdit_rowBody">
-                <div id="editNav_menuGroup">
-                  {/* <EditMenuBlock text={`ホーム`} url="" /> */}
-                  {this.state.editMenuBlocks}
-                </div>
-                <EditMenuAdd onClick={this.onClickMenuAdd.bind(this)} />
+          <div className="modalEdit_row-wide">
+            <div className="modalEdit_rowHead">メニュー</div>
+            <div className="modalEdit_rowBody">
+              <div id="editNav_menuGroup">
+                {/* <EditMenuBlock text={`ホーム`} url="" /> */}
+                {this.state.editMenuBlocks}
               </div>
+              <EditMenuAdd onClick={this.onClickMenuAdd.bind(this)} />
             </div>
           </div>
         </ModalBody>

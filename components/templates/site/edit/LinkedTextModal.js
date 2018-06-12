@@ -6,14 +6,19 @@ import WideModal from 'components/organisms/modal/WideModal'
 import { createExistingImages } from 'components/molecules/site/edit/ImageShower'
 
 // ロゴやバナーなどリンクできる画像を編集するモーダル
-class LinkedImageModal extends React.Component {
+class LinkedTextModal extends React.Component {
   render() {
     return (
       <WideModal isOpen={this.props.isOpen || false} toggle={this.props.toggle}>
         <ModalHeader>{this.props.headerText}</ModalHeader>
         <ModalBody className="container">
           <div className="form-group row">
-            <label className="col-sm-2 col-form-label">デザイン編集</label>
+            <label className="col-sm-2 col-form-label">テキスト編集</label>
+            <div className="col-sm-10">TODO</div>
+          </div>
+
+          <div className="form-group row">
+            <label className="col-sm-2 col-form-label">デザイン</label>
             <div className="col-sm-10">
               <ImageUploadButton className="mb-3" />
               {createExistingImages()}
@@ -32,4 +37,4 @@ class LinkedImageModal extends React.Component {
   }
 }
 
-export default LinkedImageModal
+export default LinkedTextModal

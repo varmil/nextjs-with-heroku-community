@@ -20,75 +20,75 @@ export default class LinkEditor extends React.Component {
     const props = this.props
     return (
       <React.Fragment>
-        <div className="editMenu_group">
-          <div className="editMenu_text">リンク</div>
-          <div className="editMenu_controller">
-            <ul className="editMenu_selectLinkList">
-              <li
-                className={`editMenu_selectLink ${this.addSelectedIfMatch(
-                  STATE.INTERNAL
-                )}`}
-                onClick={() =>
-                  this.setState({ ...this.state, linkState: STATE.INTERNAL })
-                }
-              >
-                サイト内
-              </li>
-              <li
-                className={`editMenu_selectLink ${this.addSelectedIfMatch(
-                  STATE.EXTERNAL
-                )}`}
-                onClick={() =>
-                  this.setState({ ...this.state, linkState: STATE.EXTERNAL })
-                }
-              >
-                URL
-              </li>
-            </ul>
+        {/* <div className="editMenu_group">
+          <div className="editMenu_text">リンク</div> */}
+        <div className="editMenu_controller">
+          <ul className="editMenu_selectLinkList">
+            <li
+              className={`editMenu_selectLink ${this.addSelectedIfMatch(
+                STATE.INTERNAL
+              )}`}
+              onClick={() =>
+                this.setState({ ...this.state, linkState: STATE.INTERNAL })
+              }
+            >
+              サイト内
+            </li>
+            <li
+              className={`editMenu_selectLink ${this.addSelectedIfMatch(
+                STATE.EXTERNAL
+              )}`}
+              onClick={() =>
+                this.setState({ ...this.state, linkState: STATE.EXTERNAL })
+              }
+            >
+              URL
+            </li>
+          </ul>
 
-            <div className="editMenu_menuLinkGroup">
-              {/* URL */}
-              <div
-                className="editMenu_link external"
-                style={{
-                  display:
-                    this.state.linkState === STATE.EXTERNAL ? 'block' : 'none'
-                }}
-              >
-                <input
-                  className="menuHref"
-                  type="text"
-                  name="menuHref"
-                  value={props.url || ''}
-                  placeholder="https://..."
-                />
-                <label className="editMenu_target">
-                  <input type="checkbox" name="menuTarget" />別ウインドウ
-                </label>
-              </div>
+          <div className="editMenu_menuLinkGroup">
+            {/* URL */}
+            <div
+              className="editMenu_link external"
+              style={{
+                display:
+                  this.state.linkState === STATE.EXTERNAL ? 'block' : 'none'
+              }}
+            >
+              <input
+                className="menuHref"
+                type="text"
+                name="menuHref"
+                value={props.url || ''}
+                placeholder="https://..."
+              />
+              <label className="editMenu_target">
+                <input type="checkbox" name="menuTarget" />別ウインドウ
+              </label>
+            </div>
 
-              {/* in the site */}
-              <div
-                className="editMenu_link internal"
-                style={{
-                  display:
-                    this.state.linkState === STATE.INTERNAL ? 'block' : 'none'
-                }}
-              >
-                <select>
-                  <option value>▼サイト内リンクを選択する</option>
-                  <option value="#section-18">
-                    第1ブロック: ナビゲーション・ロゴ(上部に固定)
-                  </option>
-                  <option value="#section-73">
-                    第2ブロック: 右画像（1列）テキスト中央
-                  </option>
-                  <option value="#section-68">第8ブロック: テーブル</option>
-                </select>
-              </div>
+            {/* in the site */}
+            <div
+              className="editMenu_link internal"
+              style={{
+                display:
+                  this.state.linkState === STATE.INTERNAL ? 'block' : 'none'
+              }}
+            >
+              <select>
+                <option value>▼サイト内リンクを選択する</option>
+                <option value="#section-18">
+                  第1ブロック: ナビゲーション・ロゴ(上部に固定)
+                </option>
+                <option value="#section-73">
+                  第2ブロック: 右画像（1列）テキスト中央
+                </option>
+                <option value="#section-68">第8ブロック: テーブル</option>
+              </select>
             </div>
           </div>
         </div>
+        {/* </div> */}
 
         <style jsx>{`
           ul,

@@ -7,11 +7,6 @@ import MenuBar from 'components/organisms/site/base/MenuBar'
 // MenuItem is not Editable, because ManuBar Modal includes MenuItem setting
 // import MenuItem from './MenuItem'
 
-const Composed = compose(
-  c => withModal(c, Modal),
-  toEditable
-)(MenuBar)
-const Index = props => (
-  <Composed /* menuItem={MenuItem} */ headerText={'メニューバー編集'} />
-)
+const Composed = compose(c => withModal(c, Modal), toEditable)(MenuBar)
+const Index = props => <Composed {...props} headerText={'メニューバー編集'} />
 export default Index

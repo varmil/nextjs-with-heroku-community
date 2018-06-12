@@ -6,5 +6,5 @@ import Modal from 'components/templates/site/edit/LinkedImageModal'
 import AccountIcon from 'components/organisms/site/base/AccountIcon'
 
 const Composed = compose(c => withModal(c, Modal), toEditable)(AccountIcon)
-const Index = props => <Composed headerText={'ロゴ編集'} />
+const Index = props => <Composed {...props} headerText={'ロゴ編集'} />
 export default Index
