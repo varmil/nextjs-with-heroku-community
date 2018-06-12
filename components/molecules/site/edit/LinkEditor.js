@@ -1,4 +1,8 @@
 import React from 'react'
+import {
+  MultipleToggleGroup,
+  MultipleToggle
+} from 'components/atoms/MultipleToggle'
 
 const STATE = {
   INTERNAL: 0,
@@ -13,38 +17,30 @@ export default class LinkEditor extends React.Component {
   }
 
   addSelectedIfMatch(state) {
-    return state === this.state.linkState ? 'selected' : ''
+    return state === this.state.linkState
   }
 
   render() {
     const props = this.props
     return (
       <React.Fragment>
-        {/* <div className="editMenu_group">
-          <div className="editMenu_text">リンク</div> */}
         <div className="editMenu_controller">
-          <ul className="editMenu_selectLinkList">
-            <li
-              className={`editMenu_selectLink ${this.addSelectedIfMatch(
-                STATE.INTERNAL
-              )}`}
+          <MultipleToggleGroup className="mr-3">
+            <MultipleToggle
+              selected={this.addSelectedIfMatch(STATE.INTERNAL)}
               onClick={() =>
                 this.setState({ ...this.state, linkState: STATE.INTERNAL })
               }
-            >
-              サイト内
-            </li>
-            <li
-              className={`editMenu_selectLink ${this.addSelectedIfMatch(
-                STATE.EXTERNAL
-              )}`}
+              text="サイト内"
+            />
+            <MultipleToggle
+              selected={this.addSelectedIfMatch(STATE.EXTERNAL)}
               onClick={() =>
                 this.setState({ ...this.state, linkState: STATE.EXTERNAL })
               }
-            >
-              URL
-            </li>
-          </ul>
+              text="URL"
+            />
+          </MultipleToggleGroup>
 
           <div className="editMenu_menuLinkGroup">
             {/* URL */}
@@ -88,25 +84,8 @@ export default class LinkEditor extends React.Component {
             </div>
           </div>
         </div>
-        {/* </div> */}
 
         <style jsx>{`
-          ul,
-          li {
-            list-style-type: none;
-          }
-
-          .editMenu_group {
-            display: table;
-            margin-bottom: 10px;
-          }
-
-          .editMenu_text {
-            display: table-cell;
-            vertical-align: middle;
-            width: 120px;
-          }
-
           .editMenu_controller {
             display: table-cell;
           }
@@ -124,41 +103,6 @@ export default class LinkEditor extends React.Component {
 
           .editMenu_controller [name='menuText'] {
             width: 400px;
-          }
-
-          .editMenu_selectLinkList {
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: 10px;
-            padding-left: 0;
-            position: relative;
-            top: 8px;
-          }
-
-          .editMenu_selectLink {
-            float: left;
-            width: 70px;
-            padding: 6px 0;
-            text-align: center;
-            background-color: #ccc;
-            cursor: pointer;
-            color: #999;
-            font-size: 12px;
-            transition: all 0.25s ease;
-          }
-
-          .editMenu_selectLink.selected,
-          .editMenu_selectLink:hover {
-            background-color: #0090a1;
-            color: #fff;
-          }
-
-          .editMenu_selectLink:nth-child(1) {
-            border-radius: 5px 0 0 5px;
-          }
-
-          .editMenu_selectLink:nth-child(2) {
-            border-radius: 0 5px 5px 0;
           }
 
           .editMenu_menuLinkGroup {

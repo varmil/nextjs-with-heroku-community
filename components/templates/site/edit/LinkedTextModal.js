@@ -2,13 +2,12 @@ import React from 'react'
 import { ModalHeader, ModalBody } from 'reactstrap'
 import { EditorState } from 'draft-js'
 import { Editor } from 'react-draft-wysiwyg'
-import ImageUploadButton from 'components/atoms/ImageUploadButton'
+import DesignImageEdit from 'components/organisms/editor_parts/form/DesignImageEdit'
 import LinkEditor from 'components/molecules/site/edit/LinkEditor'
 import WideModal from 'components/organisms/modal/WideModal'
-import { createExistingImages } from 'components/molecules/site/edit/ImageShower'
 import 'node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 
-// ロゴやバナーなどリンクできる画像を編集するモーダル
+// テキスト編集可能なモーダル
 class LinkedTextModal extends React.Component {
   constructor(props) {
     super(props)
@@ -35,19 +34,14 @@ class LinkedTextModal extends React.Component {
             <div className="col-sm-10">
               <Editor
                 editorState={editorState}
-                wrapperClassName="draft-wrapper"
-                editorClassName="draft-editor"
+                editorStyle={{ border: '1px solid #f1f1f1', minHeight: 90 }}
                 onEditorStateChange={this.onEditorStateChange.bind(this)}
               />
             </div>
           </div>
 
           <div className="form-group row">
-            <label className="col-sm-2 col-form-label">デザイン</label>
-            <div className="col-sm-10">
-              <ImageUploadButton className="mb-3" />
-              {createExistingImages()}
-            </div>
+            <DesignImageEdit />
           </div>
 
           <div className="form-group row">
@@ -57,12 +51,6 @@ class LinkedTextModal extends React.Component {
             </div>
           </div>
         </ModalBody>
-
-        <style jsx>{`
-          .draft-editor {
-            border: 1px solid #f1f1f1;
-          }
-        `}</style>
       </WideModal>
     )
   }

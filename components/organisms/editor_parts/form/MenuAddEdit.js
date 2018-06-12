@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default class EditMenuAdd extends React.Component {
+export default class MenuAddEdit extends React.Component {
   render() {
     const props = this.props
 

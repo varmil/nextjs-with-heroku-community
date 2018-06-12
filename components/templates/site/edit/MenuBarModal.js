@@ -4,8 +4,8 @@ import uniqueId from 'lodash/uniqueId'
 import { ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
 import WideModal from 'components/organisms/modal/WideModal'
 import BgColorPicker from 'components/molecules/BgColorPicker'
-import EditMenuBlock from 'components/organisms/EditMenuBlock'
-import EditMenuAdd from 'components/organisms/EditMenuAdd'
+import MenuBlockEdit from 'components/organisms/editor_parts/form/MenuBlockEdit'
+import MenuAddEdit from 'components/organisms/editor_parts/form/MenuAddEdit'
 
 class MenuBarModal extends React.Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class MenuBarModal extends React.Component {
     this.setState({
       ...state,
       editMenuBlocks: state.editMenuBlocks.concat(
-        <EditMenuBlock
+        <MenuBlockEdit
           text={`id is ${id}`}
           id={id}
           key={id}
@@ -84,10 +84,10 @@ class MenuBarModal extends React.Component {
             <div className="modalEdit_rowHead">メニュー</div>
             <div className="modalEdit_rowBody">
               <div id="editNav_menuGroup">
-                {/* <EditMenuBlock text={`ホーム`} url="" /> */}
+                {/* <MenuBlockEdit text={`ホーム`} url="" /> */}
                 {this.state.editMenuBlocks}
               </div>
-              <EditMenuAdd onClick={this.onClickMenuAdd.bind(this)} />
+              <MenuAddEdit onClick={this.onClickMenuAdd.bind(this)} />
             </div>
           </div>
         </ModalBody>

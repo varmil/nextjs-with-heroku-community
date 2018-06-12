@@ -1,7 +1,7 @@
 import React from 'react'
 import LinkEditor from 'components/molecules/site/edit/LinkEditor'
 
-export default class EditMenuBlock extends React.Component {
+export default class MenuBlockEdit extends React.Component {
   render() {
     const props = this.props
 
