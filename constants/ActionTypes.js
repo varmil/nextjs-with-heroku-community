@@ -3,13 +3,8 @@ import { createTypes, async } from './redux-action-types'
 export const Example = createTypes(
   'example',
   'FAILURE',
-  'INCREMENT',
-  'DECREMENT',
-  'RESET',
   'LOAD_DATA',
-  'LOAD_DATA_SUCCESS',
-  'START_CLOCK',
-  'TICK_CLOCK'
+  'LOAD_DATA_SUCCESS'
 )
 
 export const User = createTypes(
