@@ -26,41 +26,44 @@ export default class NavBar extends React.Component {
 
   render() {
     return (
-      <div className={this.props.className} style={this.props.style}>
-        <Navbar dark expand="sm" className="container">
-          <NavbarBrand className="mr-5" href="/" style={brandStyle}>
-            {React.createElement(this.communityLogo)}
-          </NavbarBrand>
+      <Navbar
+        dark
+        expand="sm"
+        className={`container ${this.props.className}`}
+        style={this.props.style}
+      >
+        <NavbarBrand className="mr-5" href="/" style={brandStyle}>
+          {React.createElement(this.communityLogo)}
+        </NavbarBrand>
 
-          <Nav className="ml-auto" navbar>
-            <NavItem>
-              <NavLink className="linkItem" href="#" style={linkItemStyle}>
-                {React.createElement(this.accountIcon)}
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink className="linkItem" href="#" style={linkItemStyle}>
-                {React.createElement(this.notificationIcon)}
-              </NavLink>
-            </NavItem>
-          </Nav>
+        <Nav className="ml-auto" navbar>
+          <NavItem>
+            <NavLink className="linkItem" href="#" style={linkItemStyle}>
+              {React.createElement(this.accountIcon)}
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink className="linkItem" href="#" style={linkItemStyle}>
+              {React.createElement(this.notificationIcon)}
+            </NavLink>
+          </NavItem>
+        </Nav>
 
-          <form className="form-inline my-2 pl-2">
-            <div className="input-group">
-              <div className="input-group-prepend">
-                <span className="input-group-text">
-                  <i className="fas fa-search" />
-                </span>
-              </div>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="キーワード"
-              />
+        <form className="form-inline my-2 pl-2">
+          <div className="input-group">
+            <div className="input-group-prepend">
+              <span className="input-group-text">
+                <i className="fas fa-search" />
+              </span>
             </div>
-          </form>
-        </Navbar>
-      </div>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="キーワード"
+            />
+          </div>
+        </form>
+      </Navbar>
     )
   }
 }

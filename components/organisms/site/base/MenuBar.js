@@ -11,27 +11,28 @@ export default class MenuBar extends React.Component {
 
   render() {
     return (
-      <div className={this.props.className} style={this.props.style}>
-        <div className="cs-header-menubar">
-          <div className="container">
-            <ul className="listContainer">
-              {React.cloneElement(this.menuItem, {
-                text: 'ホーム',
-                active: true
-              })}
-              {React.cloneElement(this.menuItem, { text: 'トークルーム' })}
-              {React.cloneElement(this.menuItem, { text: '企業発信' })}
-              {React.cloneElement(this.menuItem, { text: '企業ストーリー' })}
-              {React.cloneElement(this.menuItem, { text: '投票・アンケート' })}
-              {React.cloneElement(this.menuItem, { text: 'お知らせ' })}
-            </ul>
-          </div>
+      <div
+        className={`cs-header-menubar ${this.props.className}`}
+        style={{ ...this.props.style, backgroundColor: '' }}
+      >
+        <div className="container">
+          <ul className="listContainer">
+            {React.cloneElement(this.menuItem, {
+              text: 'ホーム',
+              active: true
+            })}
+            {React.cloneElement(this.menuItem, { text: 'トークルーム' })}
+            {React.cloneElement(this.menuItem, { text: '企業発信' })}
+            {React.cloneElement(this.menuItem, { text: '企業ストーリー' })}
+            {React.cloneElement(this.menuItem, { text: '投票・アンケート' })}
+            {React.cloneElement(this.menuItem, { text: 'お知らせ' })}
+          </ul>
         </div>
 
         <style jsx>{`
           .cs-header-menubar {
             width: 100%;
-            background: #633826;
+            background-color: #633826;
           }
 
           .listContainer {
