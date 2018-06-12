@@ -1,4 +1,4 @@
-import { actionTypes } from 'actions/example'
+import { Example } from 'constants/ActionTypes'
 
 const initialState = {
   count: 0,
@@ -10,37 +10,37 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case actionTypes.FAILURE:
+    case Example.FAILURE:
       return {
         ...state,
         ...{ error: action.error }
       }
 
-    case actionTypes.INCREMENT:
+    case Example.INCREMENT:
       return {
         ...state,
         ...{ count: state.count + 1 }
       }
 
-    case actionTypes.DECREMENT:
+    case Example.DECREMENT:
       return {
         ...state,
         ...{ count: state.count - 1 }
       }
 
-    case actionTypes.RESET:
+    case Example.RESET:
       return {
         ...state,
         ...{ count: initialState.count }
       }
 
-    case actionTypes.LOAD_DATA_SUCCESS:
+    case Example.LOAD_DATA_SUCCESS:
       return {
         ...state,
         ...{ placeholderData: action.data }
       }
 
-    case actionTypes.TICK_CLOCK:
+    case Example.TICK_CLOCK:
       return {
         ...state,
         ...{ lastUpdate: action.ts, light: !!action.light }

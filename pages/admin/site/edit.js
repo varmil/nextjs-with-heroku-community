@@ -4,12 +4,26 @@ import WhiteBreadcrumb from 'components/organisms/WhiteBreadcrumb'
 import SideBar from 'components/templates/site/edit/SideBar'
 import TopPage from 'components/templates/site/edit/TopPage'
 
+import { connect } from 'react-redux'
+import { loadData } from 'actions/example'
+
 const initialState = {}
 const SIDEBAR_WIDTH = 180
 const OFFSET_TOP_SIDEBAR = 106
 const OFFSET_TOP_MAINBODY = 135
 
-export default class Stepper extends React.Component {
+class Edit extends React.Component {
+  static async getInitialProps(props) {
+    const { store, isServer } = props.ctx
+
+    if (!store.getState().placeholderData) {
+      console.info('data is empty, so fetch data')
+      store.dispatch(loadData())
+    }
+
+    return { isServer }
+  }
+
   constructor(props) {
     super(props)
     this.state = initialState
@@ -57,3 +71,5 @@ export default class Stepper extends React.Component {
     )
   }
 }
+
+export default connect()(Edit)

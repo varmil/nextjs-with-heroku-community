@@ -1,26 +1,20 @@
-/* global fetch */
-
-import { delay } from 'redux-saga'
-import { all, call, put, take, takeLatest } from 'redux-saga/effects'
+// import { delay } from 'redux-saga'
+import { all, call, put, takeLatest } from 'redux-saga/effects'
 import es6promise from 'es6-promise'
-import 'isomorphic-unfetch'
+import 'isomorphic-unfetch' /* global fetch */
 
-import {
-  actionTypes,
-  failure,
-  loadDataSuccess,
-  tickClock
-} from 'actions/example'
+import { Example } from 'constants/ActionTypes'
+import { failure, loadDataSuccess } from 'actions/example'
 
 es6promise.polyfill()
 
-function* runClockSaga() {
-  yield take(actionTypes.START_CLOCK)
-  while (true) {
-    yield put(tickClock(false))
-    yield call(delay, 1000)
-  }
-}
+// function* runClockSaga() {
+//   yield take(actionTypes.START_CLOCK)
+//   while (true) {
+//     yield put(tickClock(false))
+//     yield call(delay, 1000)
+//   }
+// }
 
 function* loadDataSaga() {
   try {
@@ -34,8 +28,8 @@ function* loadDataSaga() {
 
 function* rootSaga() {
   yield all([
-    call(runClockSaga),
-    takeLatest(actionTypes.LOAD_DATA, loadDataSaga)
+    // call(runClockSaga),
+    takeLatest(Example.LOAD_DATA, loadDataSaga)
   ])
 }
 
