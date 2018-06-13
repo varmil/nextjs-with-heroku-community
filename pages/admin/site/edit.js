@@ -2,7 +2,7 @@ import React from 'react'
 import AdminHeader from 'components/organisms/AdminHeader'
 import WhiteBreadcrumb from 'components/organisms/WhiteBreadcrumb'
 import SideBar from 'components/templates/site/edit/SideBar'
-import TopPage from 'components/templates/site/edit/TopPage'
+import TopPage from 'components/templates/site/page/TopPage'
 
 import { connect } from 'react-redux'
 import { loadData } from 'actions/example'
@@ -47,6 +47,7 @@ class Edit extends React.Component {
           <SideBar width={SIDEBAR_WIDTH} offsetTop={OFFSET_TOP_SIDEBAR} />
           <TopPage
             {...props}
+            edit={true}
             style={{
               marginTop: OFFSET_TOP_MAINBODY,
               marginLeft: SIDEBAR_WIDTH,

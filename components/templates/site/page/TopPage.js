@@ -1,12 +1,5 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
-// import NavBar from 'components/organisms/site/edit/NavBar'
-// import MenuBar from 'components/organisms/site/edit/MenuBar'
-// import MainBanner from 'components/organisms/site/edit/MainBanner'
-// import BoxHeader from 'components/organisms/site/edit/BoxHeader'
-// import BoxContent from 'components/organisms/site/edit/BoxContent'
-// import SubBanner from 'components/organisms/site/edit/SubBanner'
-// import Footer from 'components/organisms/site/edit/Footer'
 import { setMenuBarStyle, setMenuBarItem } from 'actions/site'
 
 const initialState = {}
@@ -20,13 +13,23 @@ export default class TopPage extends React.Component {
 
   // NOTE: dynamic import should be done in render(), not constructor()
   dynamicImport() {
-    NavBar = dynamic(import('components/organisms/site/edit/NavBar'))
-    MenuBar = dynamic(import('components/organisms/site/edit/MenuBar'))
-    MainBanner = dynamic(import('components/organisms/site/edit/MainBanner'))
-    BoxHeader = dynamic(import('components/organisms/site/edit/BoxHeader'))
-    BoxContent = dynamic(import('components/organisms/site/edit/BoxContent'))
-    SubBanner = dynamic(import('components/organisms/site/edit/SubBanner'))
-    Footer = dynamic(import('components/organisms/site/edit/Footer'))
+    if (this.props.edit) {
+      NavBar = dynamic(import('components/organisms/site/edit/NavBar'))
+      MenuBar = dynamic(import('components/organisms/site/edit/MenuBar'))
+      MainBanner = dynamic(import('components/organisms/site/edit/MainBanner'))
+      BoxHeader = dynamic(import('components/organisms/site/edit/BoxHeader'))
+      BoxContent = dynamic(import('components/organisms/site/edit/BoxContent'))
+      SubBanner = dynamic(import('components/organisms/site/edit/SubBanner'))
+      Footer = dynamic(import('components/organisms/site/edit/Footer'))
+    } else {
+      NavBar = dynamic(import('components/organisms/site/base/NavBar'))
+      MenuBar = dynamic(import('components/organisms/site/base/MenuBar'))
+      MainBanner = dynamic(import('components/organisms/site/base/MainBanner'))
+      BoxHeader = dynamic(import('components/organisms/site/base/BoxHeader'))
+      BoxContent = dynamic(import('components/organisms/site/base/BoxContent'))
+      SubBanner = dynamic(import('components/organisms/site/base/SubBanner'))
+      Footer = dynamic(import('components/organisms/site/base/Footer'))
+    }
   }
 
   createBoxContents() {
@@ -61,8 +64,8 @@ export default class TopPage extends React.Component {
   }
 
   render() {
-    const props = this.props
     this.dynamicImport()
+    const props = this.props
     return (
       <div className={`${props.className}`} style={props.style}>
         <header className="">
