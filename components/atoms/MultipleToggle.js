@@ -18,10 +18,9 @@ export class MultipleToggleGroup extends React.Component {
           .editMenu_selectLinkList {
             display: inline-block;
             vertical-align: middle;
-            // margin-right: 10px;
             padding-left: 0;
             position: relative;
-            top: 8px;
+            top: 4px;
           }
         `}</style>
       </React.Fragment>

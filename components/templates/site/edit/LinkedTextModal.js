@@ -1,7 +1,7 @@
 import React from 'react'
 import { ModalHeader, ModalBody } from 'reactstrap'
 import { EditorState } from 'draft-js'
-import { Editor } from 'react-draft-wysiwyg'
+import TextEditor from 'components/atoms/TextEditor'
 import DesignImageEdit from 'components/organisms/editor_parts/form/DesignImageEdit'
 import LinkEditor from 'components/molecules/site/edit/LinkEditor'
 import WideModal from 'components/organisms/modal/WideModal'
@@ -32,9 +32,8 @@ class LinkedTextModal extends React.Component {
           <div className="form-group row">
             <label className="col-sm-2 col-form-label">テキスト編集</label>
             <div className="col-sm-10">
-              <Editor
+              <TextEditor
                 editorState={editorState}
-                editorStyle={{ border: '1px solid #f1f1f1', minHeight: 90 }}
                 onEditorStateChange={this.onEditorStateChange.bind(this)}
               />
             </div>
