@@ -1,4 +1,5 @@
 import React from 'react'
+import range from 'lodash/range'
 import dynamic from 'next/dynamic'
 import { setMenuBarStyle, setMenuBarItem } from 'actions/site'
 
@@ -49,10 +50,9 @@ export default class TopPage extends React.Component {
     return (
       <div className="container">
         <div className="row justify-content-center px-3">
-          <SubBanner className="col-6 py-3" />
-          <SubBanner className="col-6 py-3" />
-          <SubBanner className="col-6 py-3" />
-          <SubBanner className="col-6 py-3" />
+          {range(this.props.common.subBanner.count).map(i => (
+            <SubBanner key={i} className="col-6 py-3" />
+          ))}
         </div>
       </div>
     )
@@ -75,7 +75,10 @@ export default class TopPage extends React.Component {
             style={props.common.menuBar.style}
             item={props.common.menuBar.item}
           />
-          <MainBanner className="mb-5" />
+
+          {range(props.common.mainBanner.count).map(i => (
+            <MainBanner key={i} className="mb-5" />
+          ))}
         </header>
 
         <main className="">
@@ -96,7 +99,7 @@ export default class TopPage extends React.Component {
             {this.createBoxContents()}
           </div>
 
-          <div className="subBunner mt-5 mb-5">{this.createSubBanners()}</div>
+          <div className="subBanner mt-5 mb-5">{this.createSubBanners()}</div>
         </main>
 
         <footer className="">

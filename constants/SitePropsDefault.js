@@ -32,3 +32,11 @@ export const MenuBar = {
     }
   ]
 }
+
+export const MainBanner = {
+  count: 1
+}
+
+export const SubBanner = {
+  count: 4
+}

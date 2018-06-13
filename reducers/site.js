@@ -1,11 +1,17 @@
 import { handleActions } from 'redux-actions'
-import { MenuBar as MenuBarDefault } from 'constants/SitePropsDefault'
+import {
+  MenuBar as MenuBarDefault,
+  MainBanner as MainBannerDefault,
+  SubBanner as SubBannerDefault
+} from 'constants/SitePropsDefault'
 import { SiteCommon, SiteTop } from 'constants/ActionTypes'
 import update from 'immutability-helper'
 
 const initialState = {
   common: {
-    menuBar: MenuBarDefault
+    menuBar: MenuBarDefault,
+    mainBanner: MainBannerDefault,
+    subBanner: SubBannerDefault
   },
   top: {}
 }
