@@ -41,7 +41,7 @@ export default class DesignImageEdit extends React.Component {
                       linkState: STATE.EXISTING
                     })
                   }
-                  text="既存画像"
+                  text="ライブラリ"
                 />
                 <MultipleToggle
                   selected={this.addSelectedIfMatch(STATE.COMMUNE_LIB)}
@@ -51,7 +51,7 @@ export default class DesignImageEdit extends React.Component {
                       linkState: STATE.COMMUNE_LIB
                     })
                   }
-                  text="ライブラリ"
+                  text="テンプレート"
                 />
               </MultipleToggleGroup>
             </div>
