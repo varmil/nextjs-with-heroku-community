@@ -1,6 +1,7 @@
 {
   "presets": ["next/babel"],
   "plugins": [
+    "syntax-dynamic-import",
     [
       "module-resolver",
       {
