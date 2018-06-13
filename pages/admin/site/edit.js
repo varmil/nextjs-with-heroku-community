@@ -5,7 +5,7 @@ import SideBar from 'components/templates/site/edit/SideBar'
 import TopPage from 'components/templates/site/edit/TopPage'
 
 import { connect } from 'react-redux'
-import { loadData } from 'actions/example'
+// import { loadData } from 'actions/example'
 
 const initialState = {}
 const SIDEBAR_WIDTH = 180
@@ -17,12 +17,12 @@ class Edit extends React.Component {
   static async getInitialProps(props) {
     const { store, isServer } = props.ctx
 
-    if (!store.getState().placeholderData) {
-      console.info('data is empty, so fetch data')
-      store.dispatch(loadData())
-    }
+    // if (!store.getState().placeholderData) {
+    //   console.info('data is empty, so fetch data')
+    //   store.dispatch(loadData())
+    // }
 
-    return { isServer }
+    return { isServer /* site: store.getState().site */ }
   }
 
   constructor(props) {
@@ -31,6 +31,8 @@ class Edit extends React.Component {
   }
 
   render() {
+    const props = this.props
+    console.info(props)
     return (
       <div className="container-fluid">
         <div className="fixed-top">
@@ -45,6 +47,7 @@ class Edit extends React.Component {
         <div className="mainBody">
           <SideBar width={SIDEBAR_WIDTH} offsetTop={OFFSET_TOP_SIDEBAR} />
           <TopPage
+            {...props}
             style={{
               marginTop: OFFSET_TOP_MAINBODY,
               marginLeft: SIDEBAR_WIDTH,
@@ -73,4 +76,7 @@ class Edit extends React.Component {
   }
 }
 
-export default connect()(Edit)
+export default connect(state => ({
+  common: state.site.common,
+  top: state.site.top
+}))(Edit)

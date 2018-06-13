@@ -1,7 +1,7 @@
 import React from 'react'
 import omit from 'lodash/omit'
 
-const OMIT_KEYS = ['className', 'style']
+const OMIT_KEYS = ['className']
 
 export default function ppHOC(WrappedComponent) {
   return class PP extends React.Component {
@@ -11,7 +11,6 @@ export default function ppHOC(WrappedComponent) {
       return (
         <div
           className={`parent ${this.props.className || ''}`}
-          style={this.props.style || {}}
           onClick={e => {
             e.preventDefault()
             if (this.props.onTriggerModal) this.props.onTriggerModal()

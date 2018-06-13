@@ -6,6 +6,7 @@ import BoxHeader from 'components/organisms/site/edit/BoxHeader'
 import BoxContent from 'components/organisms/site/edit/BoxContent'
 import SubBanner from 'components/organisms/site/edit/SubBanner'
 import Footer from 'components/organisms/site/edit/Footer'
+import { setMenuBar } from 'actions/site'
 
 const initialState = {}
 
@@ -41,12 +42,22 @@ export default class TopPage extends React.Component {
     )
   }
 
+  onSaveMenuBar(state) {
+    console.info('saved!', state)
+    this.props.dispatch(setMenuBar(state))
+  }
+
   render() {
+    const props = this.props
+    console.log(props)
     return (
-      <div className={`${this.props.className}`} style={this.props.style}>
+      <div className={`${props.className}`} style={props.style}>
         <header className="">
           <NavBar />
-          <MenuBar />
+          <MenuBar
+            onSave={this.onSaveMenuBar.bind(this)}
+            style={props.common.menuBar.style}
+          />
           <MainBanner className="mb-5" />
         </header>
 

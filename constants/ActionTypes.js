@@ -1,21 +1,36 @@
 import { createTypes, async } from './redux-action-types'
 
-export const Example = createTypes(
-  'example',
-  'FAILURE',
-  'LOAD_DATA',
-  'LOAD_DATA_SUCCESS'
+export const Site = createTypes('site/', 'TEST')
+
+// （Edit, View）全ページ共通で使用するデータ
+export const SiteCommon = createTypes(
+  'site/common/',
+  'SET_LOGO',
+  'SET_ACCOUNT_ICON',
+  'SET_MENUBAR',
+  'SET_FOOTER'
 )
 
+// （Edit, View）トップページ
+export const SiteTop = createTypes(
+  'site/top/',
+  'SET_MAIN_BANNER',
+  'SET_BOX_TITLE'
+)
+
+// -----
+// -----
+// -----
+
 export const User = createTypes(
-  'user',
+  'user/',
   async('FETCH'),
   async('FETCH_OWNER'),
   'SET',
   'SET_ID'
 )
 
-export const Auth = createTypes('auth', 'SET_IS_PREPARED', 'SET_IS_LOGGED_IN')
+export const Auth = createTypes('auth/', 'SET_IS_PREPARED', 'SET_IS_LOGGED_IN')
 
 export const SearchForm = createTypes(
   'form',
@@ -62,6 +77,13 @@ export const Crud = createTypes(
   async('SAVE'),
   async('UPDATE'),
   async('REMOVE')
+)
+
+export const Example = createTypes(
+  'example/',
+  'FAILURE',
+  'LOAD_DATA',
+  'LOAD_DATA_SUCCESS'
 )
 
 /*

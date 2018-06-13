@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import example from './example'
-// import auth from './auth'
+import site from './site'
 // import area from './area'
 // import searchForm from './searchForm'
 // import restaurants from './restaurants'
@@ -11,8 +11,8 @@ import example from './example'
 export const exampleInitialState = undefined
 
 const rootReducer = combineReducers({
-  example
-  // auth,
+  example,
+  site
   // area,
   // searchForm,
   // restaurants,

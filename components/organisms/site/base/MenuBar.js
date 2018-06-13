@@ -12,8 +12,9 @@ export default class MenuBar extends React.Component {
   render() {
     return (
       <div
+        id="menuBar"
         className={`cs-header-menubar ${this.props.className}`}
-        style={{ ...this.props.style, backgroundColor: '' }}
+        style={{ ...this.props.style }}
       >
         <div className="container">
           <ul className="listContainer">
@@ -28,6 +29,13 @@ export default class MenuBar extends React.Component {
             {React.cloneElement(this.menuItem, { text: 'お知らせ' })}
           </ul>
         </div>
+
+        {/* apply style for children */}
+        <style global jsx>{`
+          #menuBar.cs-header-menubar a {
+            color: ${this.props.style.color};
+          }
+        `}</style>
 
         <style jsx>{`
           .cs-header-menubar {

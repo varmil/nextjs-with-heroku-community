@@ -10,11 +10,30 @@ import MenuAddEdit from 'components/organisms/editor_parts/form/MenuAddEdit'
 class MenuBarModal extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { editMenuBlocks: [] }
+    this.state = {
+      // menu items
+      editMenuBlocks: [],
+
+      style: {
+        color: '',
+        backgroundColor: '',
+        textAlign: ''
+      }
+    }
   }
 
-  onClickBgColor(color, index) {
-    console.info(color, index)
+  onChangeBgColor(color, index) {
+    this.setState({
+      ...this.state,
+      style: { ...this.state.style, backgroundColor: color }
+    })
+  }
+
+  onChangeColor(e) {
+    this.setState({
+      ...this.state,
+      style: { ...this.state.style, color: e.currentTarget.value }
+    })
   }
 
   onClickMenuAdd() {
@@ -42,14 +61,15 @@ class MenuBarModal extends React.Component {
   }
 
   render() {
+    const props = this.props
     return (
-      <WideModal isOpen={this.props.isOpen || false} toggle={this.props.toggle}>
-        <ModalHeader>{this.props.headerText}</ModalHeader>
+      <WideModal isOpen={props.isOpen || false} toggle={props.toggle}>
+        <ModalHeader>{props.headerText}</ModalHeader>
         <ModalBody className="container">
           <div className="modalEdit_row-wide">
             <div className="modalEdit_rowHead">背景色</div>
             <div className="modalEdit_rowBody">
-              <BgColorPicker onClick={this.onClickBgColor.bind(this)} />
+              <BgColorPicker onClick={this.onChangeBgColor.bind(this)} />
             </div>
           </div>
 
@@ -57,10 +77,20 @@ class MenuBarModal extends React.Component {
             <div className="modalEdit_rowHead">メニュー文字色</div>
             <div className="modalEdit_rowBody">
               <label>
-                <input type="radio" defaultValue="#333" />黒
+                <input
+                  type="radio"
+                  defaultValue="#333"
+                  name="color"
+                  onClick={this.onChangeColor.bind(this)}
+                />黒
               </label>
               <label>
-                <input type="radio" defaultValue="#fff" />白
+                <input
+                  type="radio"
+                  defaultValue="#fff"
+                  name="color"
+                  onClick={this.onChangeColor.bind(this)}
+                />白
               </label>
             </div>
           </div>
@@ -95,14 +125,17 @@ class MenuBarModal extends React.Component {
           <Button
             className="w-25 ml-auto"
             color="primary"
-            onClick={this.props.toggle}
+            onClick={() => {
+              props.toggle() // close modal
+              props.onSave(this.state) // save data
+            }}
           >
             保存
           </Button>
           <Button
             className="w-25 mr-auto"
             color="secondary"
-            onClick={this.props.toggle}
+            onClick={props.toggle}
           >
             キャンセル
           </Button>
