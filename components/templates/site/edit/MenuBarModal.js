@@ -1,6 +1,7 @@
 import React from 'react'
 import remove from 'lodash/remove'
 import uniqueId from 'lodash/uniqueId'
+import update from 'immutability-helper'
 import { ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
 import WideModal from 'components/organisms/modal/WideModal'
 import BgColorPicker from 'components/molecules/BgColorPicker'
@@ -23,17 +24,27 @@ class MenuBarModal extends React.Component {
   }
 
   onChangeBgColor(color, index) {
-    this.setState({
-      ...this.state,
-      style: { ...this.state.style, backgroundColor: color }
-    })
+    this.setState(
+      update(this.state, {
+        style: { backgroundColor: { $set: color } }
+      })
+    )
   }
 
   onChangeColor(e) {
-    this.setState({
-      ...this.state,
-      style: { ...this.state.style, color: e.currentTarget.value }
-    })
+    this.setState(
+      update(this.state, {
+        style: { color: { $set: e.currentTarget.value } }
+      })
+    )
+  }
+
+  onChangeAlign(e) {
+    this.setState(
+      update(this.state, {
+        style: { textAlign: { $set: e.currentTarget.value } }
+      })
+    )
   }
 
   onClickMenuAdd() {
@@ -99,13 +110,28 @@ class MenuBarModal extends React.Component {
             <div className="modalEdit_rowHead">メニュー位置</div>
             <div className="modalEdit_rowBody">
               <label>
-                <input type="radio" name="navAlign" defaultValue="left" />左寄せ
+                <input
+                  type="radio"
+                  name="navAlign"
+                  defaultValue="left"
+                  onClick={this.onChangeAlign.bind(this)}
+                />左寄せ
               </label>
               <label>
-                <input type="radio" name="navAlign" defaultValue="center" />センター揃え
+                <input
+                  type="radio"
+                  name="navAlign"
+                  defaultValue="center"
+                  onClick={this.onChangeAlign.bind(this)}
+                />センター揃え
               </label>
               <label>
-                <input type="radio" name="navAlign" defaultValue="right" />右寄せ
+                <input
+                  type="radio"
+                  name="navAlign"
+                  defaultValue="right"
+                  onClick={this.onChangeAlign.bind(this)}
+                />右寄せ
               </label>
             </div>
           </div>

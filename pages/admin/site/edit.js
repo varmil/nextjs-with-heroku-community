@@ -5,7 +5,7 @@ import SideBar from 'components/templates/site/edit/SideBar'
 import TopPage from 'components/templates/site/edit/TopPage'
 
 import { connect } from 'react-redux'
-// import { loadData } from 'actions/example'
+import { loadData } from 'actions/example'
 
 const initialState = {}
 const SIDEBAR_WIDTH = 180
@@ -14,13 +14,13 @@ const OFFSET_TOP_MAINBODY = 135
 
 class Edit extends React.Component {
   // TODO: this is example code
+  // we may have to return site props here, not connect()
   static async getInitialProps(props) {
     const { store, isServer } = props.ctx
 
-    // if (!store.getState().placeholderData) {
-    //   console.info('data is empty, so fetch data')
-    //   store.dispatch(loadData())
-    // }
+    if (!store.getState().placeholderData) {
+      store.dispatch(loadData())
+    }
 
     return { isServer /* site: store.getState().site */ }
   }
@@ -32,7 +32,6 @@ class Edit extends React.Component {
 
   render() {
     const props = this.props
-    console.info(props)
     return (
       <div className="container-fluid">
         <div className="fixed-top">

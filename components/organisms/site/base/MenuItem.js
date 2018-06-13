@@ -4,7 +4,7 @@ const Index = props => (
 
     <style jsx>{`
       .listItem {
-        display: table-cell;
+        display: inline-block;
       }
 
       li {

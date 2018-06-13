@@ -1,5 +1,6 @@
 import { handleActions } from 'redux-actions'
 import { SiteCommon, SiteTop } from 'constants/ActionTypes'
+import update from 'immutability-helper'
 
 const initialState = {
   common: {
@@ -14,19 +15,17 @@ export default handleActions(
       ...state,
       ...action.payload
     }),
-    [SiteCommon.SET_MENUBAR]: (state, action) => ({
-      ...state,
-      ...setMenuBar(action)
-    })
+    [SiteCommon.SET_MENUBAR]: (state, action) => {
+      return update(state, setMenuBar(action))
+    }
   },
   initialState
 )
 
 function setMenuBar(action) {
-  console.log('this is reducer', action)
   return {
     common: {
-      menuBar: { style: action.payload.style }
+      menuBar: { style: { $set: action.payload.style } }
     }
   }
 }
