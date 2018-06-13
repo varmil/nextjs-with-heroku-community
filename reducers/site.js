@@ -4,28 +4,42 @@ import update from 'immutability-helper'
 
 const initialState = {
   common: {
-    menuBar: { style: {} }
+    menuBar: { style: {}, item: [] }
   },
   top: {}
 }
 
 export default handleActions(
   {
+    /**
+     * COMMON
+     */
     [SiteCommon.SET_LOGO]: (state, action) => ({
       ...state,
       ...action.payload
     }),
-    [SiteCommon.SET_MENUBAR]: (state, action) => {
-      return update(state, setMenuBar(action))
+    [SiteCommon.SET_MENUBAR_STYLE]: (state, action) => {
+      return update(state, setMenuBarStyle(action))
+    },
+    [SiteCommon.SET_MENUBAR_ITEM]: (state, action) => {
+      return update(state, setMenuBarItem(action))
     }
   },
   initialState
 )
 
-function setMenuBar(action) {
+function setMenuBarStyle(action) {
   return {
     common: {
-      menuBar: { style: { $set: action.payload.style } }
+      menuBar: { style: { $set: action.payload } }
+    }
+  }
+}
+
+function setMenuBarItem(action) {
+  return {
+    common: {
+      menuBar: { item: { $set: action.payload } }
     }
   }
 }

@@ -10,30 +10,26 @@ export default class MenuBar extends React.Component {
   }
 
   render() {
+    const props = this.props
+    console.info(props)
     return (
       <div
         id="menuBar"
-        className={`cs-header-menubar ${this.props.className}`}
-        style={{ ...this.props.style }}
+        className={`cs-header-menubar ${props.className}`}
+        style={{ ...props.style }}
       >
         <div className="container">
           <ul className="listContainer">
-            {React.cloneElement(this.menuItem, {
-              text: 'ホーム',
-              active: true
-            })}
-            {React.cloneElement(this.menuItem, { text: 'トークルーム' })}
-            {React.cloneElement(this.menuItem, { text: '企業発信' })}
-            {React.cloneElement(this.menuItem, { text: '企業ストーリー' })}
-            {React.cloneElement(this.menuItem, { text: '投票・アンケート' })}
-            {React.cloneElement(this.menuItem, { text: 'お知らせ' })}
+            {props.item.map(e =>
+              React.cloneElement(this.menuItem, { ...e, key: e.id })
+            )}
           </ul>
         </div>
 
         {/* apply style for children */}
         <style global jsx>{`
           #menuBar.cs-header-menubar a {
-            color: ${this.props.style.color};
+            color: ${props.style.color};
           }
         `}</style>
 

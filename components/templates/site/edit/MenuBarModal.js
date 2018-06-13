@@ -13,7 +13,7 @@ class MenuBarModal extends React.Component {
     super(props)
     this.state = {
       // menu items
-      editMenuBlocks: [],
+      item: [],
 
       style: {
         color: '',
@@ -21,6 +21,8 @@ class MenuBarModal extends React.Component {
         textAlign: ''
       }
     }
+
+    console.log('ppp', props)
   }
 
   onChangeBgColor(color, index) {
@@ -52,14 +54,10 @@ class MenuBarModal extends React.Component {
     const id = uniqueId('memuItem_')
     this.setState({
       ...state,
-      editMenuBlocks: state.editMenuBlocks.concat(
-        <MenuBlockEdit
-          text={`id is ${id}`}
-          id={id}
-          key={id}
-          onDelete={this.onClickMenuDelete.bind(this)}
-        />
-      )
+      item: state.item.concat({
+        id: id,
+        text: `id is ${id}`
+      })
     })
   }
 
@@ -67,7 +65,7 @@ class MenuBarModal extends React.Component {
     const state = this.state
     this.setState({
       ...state,
-      editMenuBlocks: remove(state.editMenuBlocks, (v, i) => v.props.id !== id)
+      item: remove(state.item, (v, i) => v.id !== id)
     })
   }
 
@@ -140,8 +138,13 @@ class MenuBarModal extends React.Component {
             <div className="modalEdit_rowHead">メニュー</div>
             <div className="modalEdit_rowBody">
               <div id="editNav_menuGroup">
-                {/* <MenuBlockEdit text={`ホーム`} url="" /> */}
-                {this.state.editMenuBlocks}
+                {this.state.item.map(e => (
+                  <MenuBlockEdit
+                    {...e}
+                    key={e.id}
+                    onDelete={this.onClickMenuDelete.bind(this)}
+                  />
+                ))}
               </div>
               <MenuAddEdit onClick={this.onClickMenuAdd.bind(this)} />
             </div>

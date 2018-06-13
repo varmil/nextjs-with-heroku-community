@@ -7,7 +7,8 @@ export const SiteCommon = createTypes(
   'site/common/',
   'SET_LOGO',
   'SET_ACCOUNT_ICON',
-  'SET_MENUBAR',
+  'SET_MENUBAR_STYLE',
+  'SET_MENUBAR_ITEM',
   'SET_FOOTER'
 )
 
