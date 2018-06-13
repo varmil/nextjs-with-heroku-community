@@ -15,6 +15,7 @@ export default class MenuBlockEdit extends React.Component {
                 className="menuText"
                 type="text"
                 value={props.text || ''}
+                onChange={e => props.onChange(e, props.index)}
               />
             </div>
           </div>
@@ -28,7 +29,7 @@ export default class MenuBlockEdit extends React.Component {
 
           <div
             className="editNav_delete"
-            onClick={() => props.onDelete(props.id)}
+            onClick={() => props.onDelete(props.index)}
           >
             <div className="editNav_deleteBtn">
               <i className="fa fa-times" />

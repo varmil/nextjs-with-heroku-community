@@ -1,10 +1,11 @@
 import { handleActions } from 'redux-actions'
+import { MenuBar as MenuBarDefault } from 'constants/SitePropsDefault'
 import { SiteCommon, SiteTop } from 'constants/ActionTypes'
 import update from 'immutability-helper'
 
 const initialState = {
   common: {
-    menuBar: { style: {}, item: [] }
+    menuBar: MenuBarDefault
   },
   top: {}
 }

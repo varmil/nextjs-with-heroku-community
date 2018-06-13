@@ -11,7 +11,6 @@ export default class MenuBar extends React.Component {
 
   render() {
     const props = this.props
-    console.info(props)
     return (
       <div
         id="menuBar"

@@ -43,7 +43,6 @@ export default class TopPage extends React.Component {
   }
 
   onSaveMenuBar(state) {
-    console.info('saved!', state)
     this.props.dispatch(setMenuBarStyle(state.style))
     this.props.dispatch(setMenuBarItem(state.item))
   }

@@ -1,5 +1,4 @@
 import React from 'react'
-import remove from 'lodash/remove'
 import uniqueId from 'lodash/uniqueId'
 import update from 'immutability-helper'
 import { ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
@@ -12,17 +11,9 @@ class MenuBarModal extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      // menu items
-      item: [],
-
-      style: {
-        color: '',
-        backgroundColor: '',
-        textAlign: ''
-      }
+      item: props.item,
+      style: props.style
     }
-
-    console.log('ppp', props)
   }
 
   onChangeBgColor(color, index) {
@@ -56,17 +47,23 @@ class MenuBarModal extends React.Component {
       ...state,
       item: state.item.concat({
         id: id,
-        text: `id is ${id}`
+        index: state.item.length,
+        text: `${id}`
       })
     })
   }
 
-  onClickMenuDelete(id) {
-    const state = this.state
-    this.setState({
-      ...state,
-      item: remove(state.item, (v, i) => v.id !== id)
-    })
+  onChangeMenuText(e, index) {
+    this.setState(
+      update(this.state, {
+        item: { [index]: { text: { $set: e.target.value } } }
+      })
+    )
+  }
+
+  onClickMenuDelete(index) {
+    // NOTE: DO NOT use remove(), cause bug
+    this.setState(update(this.state, { item: { $splice: [[index, 1]] } }))
   }
 
   render() {
@@ -142,6 +139,7 @@ class MenuBarModal extends React.Component {
                   <MenuBlockEdit
                     {...e}
                     key={e.id}
+                    onChange={this.onChangeMenuText.bind(this)}
                     onDelete={this.onClickMenuDelete.bind(this)}
                   />
                 ))}
