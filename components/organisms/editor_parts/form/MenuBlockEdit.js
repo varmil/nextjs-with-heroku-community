@@ -8,19 +8,23 @@ export default class MenuBlockEdit extends React.Component {
     return (
       <React.Fragment>
         <div className="editNav_menuBlock">
-          <label className="editMenu_group">
-            <div className="editMenu_text">テキスト</div>
-            <div className="editMenu_controller">
+          <div className="form-group row">
+            <label className="col-sm-2 col-form-label">テキスト</label>
+            <div className="col-sm-10">
               <input
                 className="menuText"
                 type="text"
-                name="menuText"
                 value={props.text || ''}
               />
             </div>
-          </label>
+          </div>
 
-          <LinkEditor />
+          <div className="form-group row">
+            <label className="col-sm-2 col-form-label">リンク</label>
+            <div className="col-sm-10">
+              <LinkEditor />
+            </div>
+          </div>
 
           <div
             className="editNav_delete"
@@ -67,6 +71,7 @@ export default class MenuBlockEdit extends React.Component {
             padding: 7px 10px;
             font-size: 16px;
             border: 1px solid #ccc;
+            width: 400px;
           }
 
           .editMenu_controller [name='menuText'] {
