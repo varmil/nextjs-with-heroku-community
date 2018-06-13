@@ -11,6 +11,9 @@ const STATE = {
   COMMUNE_LIB: 1
 }
 
+// 本当は画像パスを帰すようなAPIをサーバに実装して、ここではそのpropsを受け取る
+const IMAGE_SRCS = ['https://dummyimage.com/500x180/000/fff.png']
+
 // ロゴやバナーなどリンクできる画像を編集するモーダル
 export default class DesignImageEdit extends React.Component {
   constructor(props) {
@@ -56,7 +59,7 @@ export default class DesignImageEdit extends React.Component {
               </MultipleToggleGroup>
             </div>
           </div>
-          {createExistingImages()}
+          {createExistingImages(IMAGE_SRCS)}
         </div>
       </React.Fragment>
     )

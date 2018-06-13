@@ -1,3 +1,4 @@
+// Modal内で使う画像ビューワ
 import range from 'lodash/range'
 
 /**
@@ -23,7 +24,7 @@ export const ImageContainer = props => {
 export const Image = props => {
   return (
     <div className={`col-md-6 col-lg-6 text-center ${props.className}`}>
-      <img src="https://dummyimage.com/500x180/000/fff.png" alt="a" />
+      <img src={props.src} alt="image" />
 
       <style jsx>{`
         img {
@@ -39,9 +40,9 @@ export const Image = props => {
  * Util functions
  */
 
-export function createExistingImages() {
-  const images = range(10).map(i => (
-    <Image key={`LinkedImageModalImage${i}`} className="mb-2" />
+export function createExistingImages(srcs) {
+  const images = range(srcs.length).map(i => (
+    <Image key={`LIModalImg${i}`} className="mb-2" src={srcs[i]} />
   ))
   return <ImageContainer className="mb-4" images={images} />
 }
