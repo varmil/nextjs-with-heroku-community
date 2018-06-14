@@ -7,9 +7,9 @@ export let setNotificationIcon = createAction(
   e => e
 )
 export let setAccountIcon = createAction(SiteCommon.SET_ACCOUNT_ICON, e => e)
-
 export let setMenuBarStyle = createAction(SiteCommon.SET_MENUBAR_STYLE, e => e)
 export let setMenuBarItem = createAction(SiteCommon.SET_MENUBAR_ITEM, e => e)
+export let setFooter = createAction(SiteCommon.SET_FOOTER, e => e)
 
 export let setMainBanner = createAction(SiteTop.SET_MAIN_BANNER, e => e)
 export let setBoxHeader = createAction(SiteTop.SET_BOX_HEADER, e => e)

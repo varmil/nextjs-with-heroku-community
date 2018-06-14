@@ -6,7 +6,8 @@ import {
   setMenuBarItem,
   setMainBanner,
   setBoxHeader,
-  setSubBanner
+  setSubBanner,
+  setFooter
 } from 'actions/site'
 
 import NavBar from 'components/templates/site/container/EditableNavBar'
@@ -107,6 +108,11 @@ export default class TopPage extends React.Component {
   onClickSBModalImage(src, index) {
     this.props.dispatch(setSubBanner({ src, index }))
   }
+
+  onSaveFooter(state) {
+    console.log('onSaveFooter', state)
+    this.props.dispatch(setFooter(state))
+  }
   /**
    * Edit Handler END
    */
@@ -153,9 +159,10 @@ export default class TopPage extends React.Component {
           <div className="subBanner mt-5 mb-5">{this.createSubBanners()}</div>
         </main>
 
-        <footer className="">
-          <Footer />
-        </footer>
+        <Footer
+          {...props.common.footer}
+          onSave={this.onSaveFooter.bind(this)}
+        />
       </div>
     )
   }

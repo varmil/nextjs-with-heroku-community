@@ -6,7 +6,8 @@ import {
   MenuBar as MenuBarDefault,
   MainBanner as MainBannerDefault,
   Boxes as BoxesDefault,
-  SubBanner as SubBannerDefault
+  SubBanner as SubBannerDefault,
+  Footer as FooterDefault
 } from 'constants/SitePropsDefault'
 import { SiteCommon, SiteTop } from 'constants/ActionTypes'
 import update from 'immutability-helper'
@@ -16,7 +17,8 @@ const initialState = {
     logo: LogoDefault,
     notificationIcon: NotificationIconDefault,
     accountIcon: AccountIconDefault,
-    menuBar: MenuBarDefault
+    menuBar: MenuBarDefault,
+    footer: FooterDefault
   },
   top: {
     mainBanner: MainBannerDefault,
@@ -50,6 +52,11 @@ export default handleActions(
     },
     [SiteCommon.SET_MENUBAR_ITEM]: (state, action) => {
       return update(state, setMenuBarItem(action))
+    },
+    [SiteCommon.SET_FOOTER]: (state, action) => {
+      return update(state, {
+        common: { footer: { $merge: action.payload } }
+      })
     },
 
     /**

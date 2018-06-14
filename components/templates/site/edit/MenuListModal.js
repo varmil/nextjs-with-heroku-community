@@ -7,7 +7,7 @@ import ColorPicker from 'components/molecules/ColorPicker'
 import MenuBlockEdit from 'components/organisms/editor_parts/form/MenuBlockEdit'
 import MenuAddEdit from 'components/organisms/editor_parts/form/MenuAddEdit'
 
-class MenuBarModal extends React.Component {
+class MenuListModal extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -201,4 +201,4 @@ class MenuBarModal extends React.Component {
   }
 }
 
-export default MenuBarModal
+export default MenuListModal

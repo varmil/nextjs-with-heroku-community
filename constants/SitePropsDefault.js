@@ -71,6 +71,17 @@ export const Boxes = [
     contents: [
       /* 投稿内容。TOPに必要な分だけ */
     ]
+  },
+  {
+    id: '',
+    type: '',
+    index: 0,
+    header: {
+      defaultText: '企業発信',
+      contentState: null,
+      src: '/static/stub/logo-white.png'
+    },
+    contents: []
   }
 ]
 
@@ -80,4 +91,39 @@ export const SubBanner = {
     src: 'https://dummyimage.com/500x180/000/fff.png',
     href: ''
   }))
+}
+
+export const Footer = {
+  style: {
+    color: '#fff',
+    backgroundColor: Color.MAIN_BLUE,
+    textAlign: 'center'
+  },
+  item: [
+    {
+      index: 0,
+      text: 'トークルーム',
+      href: ''
+    },
+    {
+      index: 1,
+      text: '企業発信',
+      href: ''
+    },
+    {
+      index: 2,
+      text: '企業ストーリー',
+      href: ''
+    },
+    {
+      index: 3,
+      text: '投票・アンケート',
+      href: ''
+    },
+    {
+      index: 4,
+      text: 'お知らせ',
+      href: ''
+    }
+  ]
 }
