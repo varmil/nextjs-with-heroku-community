@@ -1,13 +1,21 @@
 import React from 'react'
 import { Editor } from 'react-draft-wysiwyg'
-import { EditorState, convertToRaw } from 'draft-js'
+import { EditorState, convertFromRaw, convertToRaw } from 'draft-js'
 
 export default class TextEditor extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      editorState: EditorState.createEmpty()
+
+    let editorState
+    try {
+      editorState = EditorState.createWithContent(
+        convertFromRaw(JSON.parse(props.value))
+      )
+    } catch (e) {
+      editorState = EditorState.createEmpty()
     }
+
+    this.state = { editorState }
   }
 
   onEditorStateChange(editorState) {

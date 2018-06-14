@@ -1,6 +1,6 @@
 import React from 'react'
 import range from 'lodash/range'
-import dynamic from 'next/dynamic'
+// import dynamic from 'next/dynamic'
 import {
   setMenuBarStyle,
   setMenuBarItem,
@@ -16,8 +16,6 @@ import BoxHeader from 'components/organisms/site/edit/BoxHeader'
 import BoxContent from 'components/organisms/site/edit/BoxContent'
 import SubBanner from 'components/organisms/site/edit/SubBanner'
 import Footer from 'components/organisms/site/edit/Footer'
-
-import { convertToRaw } from 'draft-js'
 
 const initialState = {}
 // let NavBar, MenuBar, MainBanner, BoxHeader, BoxContent, SubBanner, Footer

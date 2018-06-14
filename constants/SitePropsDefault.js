@@ -63,7 +63,7 @@ export const Boxes = [
     type: '', // TALK or SURVEY or REVIEW
     index: 0,
     header: {
-      defaultText: 'トークルーム',
+      defaultText: 'トークルーム', // use after box adding
       contentState: null, // draft-js
       src: '' // 背景画像ソース
     },

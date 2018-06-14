@@ -19,7 +19,10 @@ class LinkedTextModal extends React.Component {
           <div className="form-group row">
             <label className="col-sm-2 col-form-label">テキスト編集</label>
             <div className="col-sm-10">
-              <TextEditor onChangeText={props.onChangeText} />
+              <TextEditor
+                value={props.contentState}
+                onChangeText={props.onChangeText}
+              />
             </div>
           </div>
 
