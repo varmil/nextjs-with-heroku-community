@@ -1,6 +1,6 @@
 import React from 'react'
 import { ModalHeader, ModalBody } from 'reactstrap'
-import BgColorPicker from 'components/molecules/BgColorPicker'
+import ColorPicker from 'components/molecules/ColorPicker'
 import WideModal from 'components/organisms/modal/WideModal'
 
 // ロゴやバナーなどリンクできる画像を編集するモーダル
@@ -13,7 +13,7 @@ class IconModal extends React.Component {
           <div className="form-group row">
             <label className="col-sm-2 col-form-label">カラー変更</label>
             <div className="col-sm-10">
-              <BgColorPicker onClick={this.props.onChangeColor} />
+              <ColorPicker onClick={this.props.onChangeColor} />
             </div>
           </div>
         </ModalBody>

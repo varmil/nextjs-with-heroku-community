@@ -3,7 +3,7 @@ import uniqueId from 'lodash/uniqueId'
 import update from 'immutability-helper'
 import { ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
 import WideModal from 'components/organisms/modal/WideModal'
-import BgColorPicker from 'components/molecules/BgColorPicker'
+import ColorPicker from 'components/molecules/ColorPicker'
 import MenuBlockEdit from 'components/organisms/editor_parts/form/MenuBlockEdit'
 import MenuAddEdit from 'components/organisms/editor_parts/form/MenuAddEdit'
 
@@ -75,7 +75,7 @@ class MenuBarModal extends React.Component {
           <div className="modalEdit_row-wide">
             <div className="modalEdit_rowHead">背景色</div>
             <div className="modalEdit_rowBody">
-              <BgColorPicker onClick={this.onChangeBgColor.bind(this)} />
+              <ColorPicker onClick={this.onChangeBgColor.bind(this)} />
             </div>
           </div>
 

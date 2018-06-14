@@ -93,7 +93,7 @@ const COLORS = [
   '#360a4d'
 ]
 
-export default class BgColorPicker extends React.Component {
+export default class ColorPicker extends React.Component {
   constructor(props) {
     super(props)
     this.state = { selectedIndex: 0 }
