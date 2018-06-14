@@ -46,7 +46,7 @@ class MenuBarModal extends React.Component {
     this.setState({
       ...state,
       item: state.item.concat({
-        id: id,
+        // id: id,
         index: state.item.length,
         text: `${id}`
       })
@@ -135,10 +135,10 @@ class MenuBarModal extends React.Component {
             <div className="modalEdit_rowHead">メニュー</div>
             <div className="modalEdit_rowBody">
               <div id="editNav_menuGroup">
-                {this.state.item.map(e => (
+                {this.state.item.map((e, i) => (
                   <MenuBlockEdit
                     {...e}
-                    key={e.id}
+                    key={i}
                     onChange={this.onChangeMenuText.bind(this)}
                     onDelete={this.onClickMenuDelete.bind(this)}
                   />

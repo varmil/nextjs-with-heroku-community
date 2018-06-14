@@ -21,31 +21,26 @@ export const MenuBar = {
   },
   item: [
     {
-      id: 'memuItemDefault_1',
       index: 0,
       text: 'トークルーム',
       href: ''
     },
     {
-      id: 'memuItemDefault_2',
       index: 1,
       text: '企業発信',
       href: ''
     },
     {
-      id: 'memuItemDefault_3',
       index: 2,
       text: '企業ストーリー',
       href: ''
     },
     {
-      id: 'memuItemDefault_4',
       index: 3,
       text: '投票・アンケート',
       href: ''
     },
     {
-      id: 'memuItemDefault_5',
       index: 4,
       text: 'お知らせ',
       href: ''

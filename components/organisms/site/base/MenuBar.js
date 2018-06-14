@@ -19,8 +19,8 @@ export default class MenuBar extends React.Component {
       >
         <div className="container">
           <ul className="listContainer">
-            {props.item.map(e =>
-              React.cloneElement(this.menuItem, { ...e, key: e.id })
+            {props.item.map((e, i) =>
+              React.cloneElement(this.menuItem, { ...e, key: i })
             )}
           </ul>
         </div>
