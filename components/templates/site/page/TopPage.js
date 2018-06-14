@@ -1,18 +1,23 @@
 import React from 'react'
 import range from 'lodash/range'
 import dynamic from 'next/dynamic'
-import { setMenuBarStyle, setMenuBarItem, setMainBanner } from 'actions/site'
+import {
+  setMenuBarStyle,
+  setMenuBarItem,
+  setMainBanner,
+  setSubBanner
+} from 'actions/site'
 
-// import NavBar from 'components/organisms/site/edit/NavBar'
-// import MenuBar from 'components/organisms/site/edit/MenuBar'
-// import MainBanner from 'components/organisms/site/edit/MainBanner'
-// import BoxHeader from 'components/organisms/site/edit/BoxHeader'
-// import BoxContent from 'components/organisms/site/edit/BoxContent'
-// import SubBanner from 'components/organisms/site/edit/SubBanner'
-// import Footer from 'components/organisms/site/edit/Footer'
+import NavBar from 'components/organisms/site/edit/NavBar'
+import MenuBar from 'components/organisms/site/edit/MenuBar'
+import MainBanner from 'components/organisms/site/edit/MainBanner'
+import BoxHeader from 'components/organisms/site/edit/BoxHeader'
+import BoxContent from 'components/organisms/site/edit/BoxContent'
+import SubBanner from 'components/organisms/site/edit/SubBanner'
+import Footer from 'components/organisms/site/edit/Footer'
 
 const initialState = {}
-let NavBar, MenuBar, MainBanner, BoxHeader, BoxContent, SubBanner, Footer
+// let NavBar, MenuBar, MainBanner, BoxHeader, BoxContent, SubBanner, Footer
 
 export default class TopPage extends React.Component {
   constructor(props) {
@@ -42,7 +47,7 @@ export default class TopPage extends React.Component {
   }
 
   componentWillMount() {
-    this.dynamicImport()
+    // this.dynamicImport()
   }
 
   createBoxContents() {
@@ -62,8 +67,13 @@ export default class TopPage extends React.Component {
     return (
       <div className="container">
         <div className="row justify-content-center px-3">
-          {range(this.props.top.subBanner.count).map(i => (
-            <SubBanner key={i} className="col-6 py-3" />
+          {range(this.props.top.subBanner.item.length).map(i => (
+            <SubBanner
+              key={i}
+              className="col-6 py-3"
+              src={this.props.top.subBanner.item[i].src}
+              onClickModalImage={src => this.onClickSBModalImage(src, i)}
+            />
           ))}
         </div>
       </div>
@@ -75,8 +85,12 @@ export default class TopPage extends React.Component {
     this.props.dispatch(setMenuBarItem(state.item))
   }
 
-  onClickModalImage(src, index) {
+  onClickMBModalImage(src, index) {
     this.props.dispatch(setMainBanner({ src, index }))
+  }
+
+  onClickSBModalImage(src, index) {
+    this.props.dispatch(setSubBanner({ src, index }))
   }
 
   render() {
@@ -91,12 +105,12 @@ export default class TopPage extends React.Component {
             item={props.common.menuBar.item}
           />
 
-          {range(props.top.mainBanner.count).map(i => (
+          {range(props.top.mainBanner.item.length).map(i => (
             <MainBanner
               key={i}
               className="mb-5"
               src={props.top.mainBanner.item[i].src}
-              onClickModalImage={src => this.onClickModalImage(src, i)}
+              onClickModalImage={src => this.onClickMBModalImage(src, i)}
             />
           ))}
         </header>

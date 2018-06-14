@@ -16,6 +16,7 @@ export const SiteCommon = createTypes(
 export const SiteTop = createTypes(
   'site/top/',
   'SET_MAIN_BANNER',
+  'SET_SUB_BANNER',
   'SET_BOX_TITLE'
 )
 

@@ -1,3 +1,5 @@
+import range from 'lodash/range'
+
 export const MenuBar = {
   style: {
     color: '#fff',
@@ -34,7 +36,6 @@ export const MenuBar = {
 }
 
 export const MainBanner = {
-  count: 1,
   item: [
     {
       index: 0,
@@ -44,5 +45,8 @@ export const MainBanner = {
 }
 
 export const SubBanner = {
-  count: 4
+  item: range(4).map(i => ({
+    index: i,
+    src: 'https://dummyimage.com/500x180/000/fff.png'
+  }))
 }

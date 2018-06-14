@@ -43,6 +43,15 @@ export default handleActions(
           }
         }
       })
+    },
+    [SiteTop.SET_SUB_BANNER]: (state, action) => {
+      return update(state, {
+        top: {
+          subBanner: {
+            item: { [action.payload.index]: { $set: action.payload } }
+          }
+        }
+      })
     }
   },
   initialState

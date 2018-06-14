@@ -5,16 +5,14 @@ export default class SubBanner extends React.Component {
     return (
       <div className={`${this.props.className}`} style={this.props.style}>
         <div className="container">
-          <img
-            src="https://dummyimage.com/500x180/000/fff.png"
-            alt="main banner"
-          />
+          <img src={this.props.src} alt="sub banner" />
         </div>
 
         <style jsx>{`
           img {
             width: 100%;
-            object-fit: cover;
+            height: 180px;
+            object-fit: contain;
           }
         `}</style>
       </div>
