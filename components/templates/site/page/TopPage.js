@@ -5,6 +5,7 @@ import {
   setMenuBarStyle,
   setMenuBarItem,
   setMainBanner,
+  setBoxHeader,
   setSubBanner
 } from 'actions/site'
 
@@ -15,6 +16,8 @@ import BoxHeader from 'components/organisms/site/edit/BoxHeader'
 import BoxContent from 'components/organisms/site/edit/BoxContent'
 import SubBanner from 'components/organisms/site/edit/SubBanner'
 import Footer from 'components/organisms/site/edit/Footer'
+
+import { convertToRaw } from 'draft-js'
 
 const initialState = {}
 // let NavBar, MenuBar, MainBanner, BoxHeader, BoxContent, SubBanner, Footer
@@ -80,18 +83,36 @@ export default class TopPage extends React.Component {
     )
   }
 
+  /**
+   * Edit Handler START
+   */
   onSaveMenuBar(state) {
     this.props.dispatch(setMenuBarStyle(state.style))
     this.props.dispatch(setMenuBarItem(state.item))
   }
 
+  // Main Banner
   onClickMBModalImage(src, index) {
     this.props.dispatch(setMainBanner({ src, index }))
   }
 
+  onChangeBoxHeaderText(json, index) {
+    console.log('text changed', json, index)
+    this.props.dispatch(setBoxHeader({ contentState: json, index }))
+  }
+
+  onClickBoxHeaderImage(src, index) {
+    console.log('image changed', src)
+    this.props.dispatch(setBoxHeader({ src, index }))
+  }
+
+  // Sub Banner
   onClickSBModalImage(src, index) {
     this.props.dispatch(setSubBanner({ src, index }))
   }
+  /**
+   * Edit Handler END
+   */
 
   render() {
     const props = this.props
@@ -117,20 +138,18 @@ export default class TopPage extends React.Component {
 
         <main className="">
           <div className="box">
-            <BoxHeader text="トークルーム" />
-            {this.createBoxContents()}
-
-            <BoxHeader text="企業発信" />
-            {this.createBoxContents()}
-
-            <BoxHeader text="企業ストーリー" />
-            {this.createBoxContents()}
-
-            <BoxHeader text="投票・アンケート" />
-            {this.createBoxContents()}
-
-            <BoxHeader text="お知らせ" />
-            {this.createBoxContents()}
+            {range(props.top.boxes.length).map(i => (
+              <React.Fragment key={i}>
+                <BoxHeader
+                  key={i}
+                  defaultText={props.top.boxes[i].header.defaultText}
+                  contentState={props.top.boxes[i].header.contentState}
+                  onChangeText={e => this.onChangeBoxHeaderText(e, i)}
+                  onClickModalImage={src => this.onClickBoxHeaderImage(src, i)}
+                />
+                {this.createBoxContents()}
+              </React.Fragment>
+            ))}
           </div>
 
           <div className="subBanner mt-5 mb-5">{this.createSubBanners()}</div>

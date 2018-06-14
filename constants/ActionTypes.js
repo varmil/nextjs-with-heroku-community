@@ -18,7 +18,7 @@ export const SiteTop = createTypes(
   'site/top/',
   'SET_MAIN_BANNER',
   'SET_SUB_BANNER',
-  'SET_BOX_TITLE'
+  'SET_BOX_HEADER'
 )
 
 // -----

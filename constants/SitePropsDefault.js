@@ -57,6 +57,22 @@ export const MainBanner = {
   ]
 }
 
+export const Boxes = [
+  {
+    id: '', // サーバで管理しているスレッドID
+    type: '', // TALK or SURVEY or REVIEW
+    index: 0,
+    header: {
+      defaultText: 'トークルーム',
+      contentState: null, // draft-js
+      src: '' // 背景画像ソース
+    },
+    contents: [
+      /* 投稿内容。TOPに必要な分だけ */
+    ]
+  }
+]
+
 export const SubBanner = {
   item: range(4).map(i => ({
     index: i,

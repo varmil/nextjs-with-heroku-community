@@ -5,6 +5,7 @@ import {
   AccountIcon as AccountIconDefault,
   MenuBar as MenuBarDefault,
   MainBanner as MainBannerDefault,
+  Boxes as BoxesDefault,
   SubBanner as SubBannerDefault
 } from 'constants/SitePropsDefault'
 import { SiteCommon, SiteTop } from 'constants/ActionTypes'
@@ -19,6 +20,7 @@ const initialState = {
   },
   top: {
     mainBanner: MainBannerDefault,
+    boxes: BoxesDefault,
     subBanner: SubBannerDefault
   }
 }
@@ -58,6 +60,15 @@ export default handleActions(
         top: {
           mainBanner: {
             item: { [action.payload.index]: { $set: action.payload } }
+          }
+        }
+      })
+    },
+    [SiteTop.SET_BOX_HEADER]: (state, action) => {
+      return update(state, {
+        top: {
+          boxes: {
+            [action.payload.index]: { header: { $merge: action.payload } }
           }
         }
       })

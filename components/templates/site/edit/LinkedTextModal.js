@@ -9,38 +9,22 @@ import 'node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 
 // テキスト編集可能なモーダル
 class LinkedTextModal extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      editorState: EditorState.createEmpty()
-    }
-  }
-
-  onEditorStateChange(editorState) {
-    this.setState({
-      editorState
-    })
-  }
-
   render() {
-    const { editorState } = this.state
+    const props = this.props
 
     return (
-      <WideModal isOpen={this.props.isOpen || false} toggle={this.props.toggle}>
-        <ModalHeader>{this.props.headerText}</ModalHeader>
+      <WideModal isOpen={props.isOpen || false} toggle={props.toggle}>
+        <ModalHeader>{props.headerText}</ModalHeader>
         <ModalBody className="container">
           <div className="form-group row">
             <label className="col-sm-2 col-form-label">テキスト編集</label>
             <div className="col-sm-10">
-              <TextEditor
-                editorState={editorState}
-                onEditorStateChange={this.onEditorStateChange.bind(this)}
-              />
+              <TextEditor onChangeText={props.onChangeText} />
             </div>
           </div>
 
           <div className="form-group row">
-            <DesignImageEdit />
+            <DesignImageEdit onClickImage={props.onClickModalImage} />
           </div>
 
           <div className="form-group row">
