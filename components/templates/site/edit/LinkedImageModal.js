@@ -12,7 +12,7 @@ class LinkedImageModal extends React.Component {
         <ModalHeader>{this.props.headerText}</ModalHeader>
         <ModalBody className="container">
           <div className="form-group row">
-            <DesignImageEdit />
+            <DesignImageEdit onClickImage={this.props.onClickModalImage} />
           </div>
 
           <div className="form-group row">

@@ -1,7 +1,15 @@
 import React from 'react'
 import range from 'lodash/range'
 import dynamic from 'next/dynamic'
-import { setMenuBarStyle, setMenuBarItem } from 'actions/site'
+import { setMenuBarStyle, setMenuBarItem, setMainBanner } from 'actions/site'
+
+// import NavBar from 'components/organisms/site/edit/NavBar'
+// import MenuBar from 'components/organisms/site/edit/MenuBar'
+// import MainBanner from 'components/organisms/site/edit/MainBanner'
+// import BoxHeader from 'components/organisms/site/edit/BoxHeader'
+// import BoxContent from 'components/organisms/site/edit/BoxContent'
+// import SubBanner from 'components/organisms/site/edit/SubBanner'
+// import Footer from 'components/organisms/site/edit/Footer'
 
 const initialState = {}
 let NavBar, MenuBar, MainBanner, BoxHeader, BoxContent, SubBanner, Footer
@@ -12,7 +20,7 @@ export default class TopPage extends React.Component {
     this.state = initialState
   }
 
-  // NOTE: dynamic import should be done in render(), not constructor()
+  // NOTE: dynamic import should be done before render(), not render() or constructor()
   dynamicImport() {
     if (this.props.edit) {
       NavBar = dynamic(import('components/organisms/site/edit/NavBar'))
@@ -33,6 +41,10 @@ export default class TopPage extends React.Component {
     }
   }
 
+  componentWillMount() {
+    this.dynamicImport()
+  }
+
   createBoxContents() {
     return (
       <div className="container mt-2 mb-5">
@@ -50,7 +62,7 @@ export default class TopPage extends React.Component {
     return (
       <div className="container">
         <div className="row justify-content-center px-3">
-          {range(this.props.common.subBanner.count).map(i => (
+          {range(this.props.top.subBanner.count).map(i => (
             <SubBanner key={i} className="col-6 py-3" />
           ))}
         </div>
@@ -63,8 +75,11 @@ export default class TopPage extends React.Component {
     this.props.dispatch(setMenuBarItem(state.item))
   }
 
+  onClickModalImage(src, index) {
+    this.props.dispatch(setMainBanner({ src, index }))
+  }
+
   render() {
-    this.dynamicImport()
     const props = this.props
     return (
       <div className={`${props.className}`} style={props.style}>
@@ -76,8 +91,13 @@ export default class TopPage extends React.Component {
             item={props.common.menuBar.item}
           />
 
-          {range(props.common.mainBanner.count).map(i => (
-            <MainBanner key={i} className="mb-5" />
+          {range(props.top.mainBanner.count).map(i => (
+            <MainBanner
+              key={i}
+              className="mb-5"
+              src={props.top.mainBanner.item[i].src}
+              onClickModalImage={src => this.onClickModalImage(src, i)}
+            />
           ))}
         </header>
 

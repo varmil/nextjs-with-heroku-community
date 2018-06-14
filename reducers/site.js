@@ -9,11 +9,12 @@ import update from 'immutability-helper'
 
 const initialState = {
   common: {
-    menuBar: MenuBarDefault,
+    menuBar: MenuBarDefault
+  },
+  top: {
     mainBanner: MainBannerDefault,
     subBanner: SubBannerDefault
-  },
-  top: {}
+  }
 }
 
 export default handleActions(
@@ -30,6 +31,18 @@ export default handleActions(
     },
     [SiteCommon.SET_MENUBAR_ITEM]: (state, action) => {
       return update(state, setMenuBarItem(action))
+    },
+    /**
+     * TOP
+     */
+    [SiteTop.SET_MAIN_BANNER]: (state, action) => {
+      return update(state, {
+        top: {
+          mainBanner: {
+            item: { [action.payload.index]: { $set: action.payload } }
+          }
+        }
+      })
     }
   },
   initialState

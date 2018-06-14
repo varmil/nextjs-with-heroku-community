@@ -9,7 +9,7 @@ import range from 'lodash/range'
 export const ImageContainer = props => {
   return (
     <div className={`row ${props.className}`}>
-      {props.images}
+      {props.children}
 
       <style jsx>{`
         .row {
@@ -24,12 +24,16 @@ export const ImageContainer = props => {
 export const Image = props => {
   return (
     <div className={`col-md-6 col-lg-6 text-center ${props.className}`}>
-      <img src={props.src} alt="image" />
+      <img src={props.src} alt="img" onClick={e => props.onClick(props.src)} />
 
       <style jsx>{`
         img {
           width: 100%;
           max-width: 600px;
+          height: 180px;
+          object-fit: contain;
+          background-color: whitesmoke;
+          cursor: pointer;
         }
       `}</style>
     </div>
@@ -40,9 +44,14 @@ export const Image = props => {
  * Util functions
  */
 
-export function createExistingImages(srcs) {
+export function createExistingImages(srcs, onClick) {
   const images = range(srcs.length).map(i => (
-    <Image key={`LIModalImg${i}`} className="mb-2" src={srcs[i]} />
+    <Image
+      key={`LIModalImg${i}`}
+      className="mb-2"
+      src={srcs[i]}
+      onClick={onClick}
+    />
   ))
-  return <ImageContainer className="mb-4" images={images} />
+  return <ImageContainer className="mb-4">{images}</ImageContainer>
 }

@@ -12,7 +12,17 @@ const STATE = {
 }
 
 // 本当は画像パスを帰すようなAPIをサーバに実装して、ここではそのpropsを受け取る
-const IMAGE_SRCS = ['https://dummyimage.com/500x180/000/fff.png']
+const IMAGE_SRCS = [
+  'https://dummyimage.com/1140x220/000/fff.png',
+  'https://dummyimage.com/500x180/000/fff.png',
+  '/static/stub/logo-blue.png',
+  '/static/stub/logo-white.png',
+  '/static/stub/logo.png',
+  '/static/stub/p770x405.png',
+  '/static/stub/p800x390.png',
+  '/static/stub/p1326x860.png',
+  '/static/stub/p1626x1530.png'
+]
 
 // ロゴやバナーなどリンクできる画像を編集するモーダル
 export default class DesignImageEdit extends React.Component {
@@ -59,7 +69,7 @@ export default class DesignImageEdit extends React.Component {
               </MultipleToggleGroup>
             </div>
           </div>
-          {createExistingImages(IMAGE_SRCS)}
+          {createExistingImages(IMAGE_SRCS, this.props.onClickImage)}
         </div>
       </React.Fragment>
     )

@@ -34,7 +34,13 @@ export const MenuBar = {
 }
 
 export const MainBanner = {
-  count: 1
+  count: 1,
+  item: [
+    {
+      index: 0,
+      src: 'https://dummyimage.com/1140x220/000/fff.png'
+    }
+  ]
 }
 
 export const SubBanner = {
