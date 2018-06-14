@@ -23,27 +23,32 @@ export const MenuBar = {
     {
       id: 'memuItemDefault_1',
       index: 0,
-      text: 'トークルーム'
+      text: 'トークルーム',
+      href: ''
     },
     {
       id: 'memuItemDefault_2',
       index: 1,
-      text: '企業発信'
+      text: '企業発信',
+      href: ''
     },
     {
       id: 'memuItemDefault_3',
       index: 2,
-      text: '企業ストーリー'
+      text: '企業ストーリー',
+      href: ''
     },
     {
       id: 'memuItemDefault_4',
       index: 3,
-      text: '投票・アンケート'
+      text: '投票・アンケート',
+      href: ''
     },
     {
       id: 'memuItemDefault_5',
       index: 4,
-      text: 'お知らせ'
+      text: 'お知らせ',
+      href: ''
     }
   ]
 }
@@ -52,14 +57,15 @@ export const MainBanner = {
   item: [
     {
       index: 0,
-      src: 'https://dummyimage.com/1140x220/000/fff.png'
+      src: 'https://dummyimage.com/1140x220/000/fff.png',
+      href: ''
     }
   ]
 }
 
 export const Boxes = [
   {
-    id: '', // サーバで管理しているスレッドID
+    id: '', // サーバで管理しているスレッドID（URLに使う？）
     type: '', // TALK or SURVEY or REVIEW
     index: 0,
     header: {
@@ -76,6 +82,7 @@ export const Boxes = [
 export const SubBanner = {
   item: range(4).map(i => ({
     index: i,
-    src: 'https://dummyimage.com/500x180/000/fff.png'
+    src: 'https://dummyimage.com/500x180/000/fff.png',
+    href: ''
   }))
 }
