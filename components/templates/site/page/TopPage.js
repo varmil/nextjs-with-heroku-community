@@ -26,25 +26,25 @@ export default class TopPage extends React.Component {
   }
 
   // NOTE: dynamic import should be done before render(), not render() or constructor()
-  dynamicImport() {
-    if (this.props.edit) {
-      NavBar = dynamic(import('components/organisms/site/edit/NavBar'))
-      MenuBar = dynamic(import('components/organisms/site/edit/MenuBar'))
-      MainBanner = dynamic(import('components/organisms/site/edit/MainBanner'))
-      BoxHeader = dynamic(import('components/organisms/site/edit/BoxHeader'))
-      BoxContent = dynamic(import('components/organisms/site/edit/BoxContent'))
-      SubBanner = dynamic(import('components/organisms/site/edit/SubBanner'))
-      Footer = dynamic(import('components/organisms/site/edit/Footer'))
-    } else {
-      NavBar = dynamic(import('components/organisms/site/base/NavBar'))
-      MenuBar = dynamic(import('components/organisms/site/base/MenuBar'))
-      MainBanner = dynamic(import('components/organisms/site/base/MainBanner'))
-      BoxHeader = dynamic(import('components/organisms/site/base/BoxHeader'))
-      BoxContent = dynamic(import('components/organisms/site/base/BoxContent'))
-      SubBanner = dynamic(import('components/organisms/site/base/SubBanner'))
-      Footer = dynamic(import('components/organisms/site/base/Footer'))
-    }
-  }
+  // dynamicImport() {
+  //   if (this.props.edit) {
+  //     NavBar = dynamic(import('components/organisms/site/edit/NavBar'))
+  //     MenuBar = dynamic(import('components/organisms/site/edit/MenuBar'))
+  //     MainBanner = dynamic(import('components/organisms/site/edit/MainBanner'))
+  //     BoxHeader = dynamic(import('components/organisms/site/edit/BoxHeader'))
+  //     BoxContent = dynamic(import('components/organisms/site/edit/BoxContent'))
+  //     SubBanner = dynamic(import('components/organisms/site/edit/SubBanner'))
+  //     Footer = dynamic(import('components/organisms/site/edit/Footer'))
+  //   } else {
+  //     NavBar = dynamic(import('components/organisms/site/base/NavBar'))
+  //     MenuBar = dynamic(import('components/organisms/site/base/MenuBar'))
+  //     MainBanner = dynamic(import('components/organisms/site/base/MainBanner'))
+  //     BoxHeader = dynamic(import('components/organisms/site/base/BoxHeader'))
+  //     BoxContent = dynamic(import('components/organisms/site/base/BoxContent'))
+  //     SubBanner = dynamic(import('components/organisms/site/base/SubBanner'))
+  //     Footer = dynamic(import('components/organisms/site/base/Footer'))
+  //   }
+  // }
 
   componentWillMount() {
     // this.dynamicImport()
@@ -97,7 +97,7 @@ export default class TopPage extends React.Component {
     const props = this.props
     return (
       <div className={`${props.className}`} style={props.style}>
-        <header className="">
+        <header>
           <NavBar />
           <MenuBar
             onSave={this.onSaveMenuBar.bind(this)}

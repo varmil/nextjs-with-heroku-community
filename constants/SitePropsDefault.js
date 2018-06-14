@@ -1,9 +1,22 @@
 import range from 'lodash/range'
+import Color from 'constants/Color'
+
+export const Logo = {
+  src: '/static/stub/logo-blue.png'
+}
+
+export const AccountIcon = {
+  color: Color.MAIN_BLUE
+}
+
+export const NotificationIcon = {
+  color: Color.MAIN_BLUE
+}
 
 export const MenuBar = {
   style: {
-    color: '#fff',
-    backgroundColor: '#666666',
+    color: '#333',
+    backgroundColor: '#fff',
     textAlign: 'left'
   },
   item: [

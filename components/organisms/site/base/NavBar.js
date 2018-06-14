@@ -1,5 +1,7 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap'
+import { setLogo, setNotificationIcon, setAccountIcon } from 'actions/site'
 import CommunityLogo from './CommunityLogo'
 import AccountIcon from './AccountIcon'
 import NotificationIcon from './NotificationIcon'
@@ -14,7 +16,7 @@ const linkItemStyle = {
   fontSize: 28
 }
 
-export default class NavBar extends React.Component {
+class NavBar extends React.Component {
   constructor(props) {
     super(props)
 
@@ -24,27 +26,50 @@ export default class NavBar extends React.Component {
     this.notificationIcon = props.notificationIcon || NotificationIcon
   }
 
+  onClickLogoModalImage(src) {
+    this.props.dispatch(setLogo({ src }))
+  }
+
+  onChangeNotfIconColor(color, index) {
+    this.props.dispatch(setNotificationIcon({ color }))
+  }
+
+  onChangeAccIconColor(color, index) {
+    this.props.dispatch(setAccountIcon({ color }))
+  }
+
   render() {
+    const props = this.props
+    const common = props.common
     return (
       <Navbar
         dark
         expand="sm"
-        className={`container ${this.props.className}`}
-        style={this.props.style}
+        className={`container ${props.className}`}
+        style={props.style}
       >
         <NavbarBrand className="mr-5" href="/" style={brandStyle}>
-          {React.createElement(this.communityLogo)}
+          {React.createElement(this.communityLogo, {
+            src: common.logo.src,
+            onClickModalImage: src => this.onClickLogoModalImage(src)
+          })}
         </NavbarBrand>
 
         <Nav className="ml-auto" navbar>
           <NavItem>
             <NavLink className="linkItem" href="#" style={linkItemStyle}>
-              {React.createElement(this.accountIcon)}
+              {React.createElement(this.notificationIcon, {
+                color: common.notificationIcon.color,
+                onChangeColor: this.onChangeNotfIconColor.bind(this)
+              })}
             </NavLink>
           </NavItem>
           <NavItem>
             <NavLink className="linkItem" href="#" style={linkItemStyle}>
-              {React.createElement(this.notificationIcon)}
+              {React.createElement(this.accountIcon, {
+                color: common.accountIcon.color,
+                onChangeColor: this.onChangeAccIconColor.bind(this)
+              })}
             </NavLink>
           </NavItem>
         </Nav>
@@ -67,3 +92,7 @@ export default class NavBar extends React.Component {
     )
   }
 }
+
+export default connect(state => ({
+  common: state.site.common
+}))(NavBar)
