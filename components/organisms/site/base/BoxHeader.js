@@ -5,7 +5,11 @@ export default class BoxHeader extends React.Component {
   render() {
     const props = this.props
     return (
-      <div className={`container ${props.className}`} style={props.style}>
+      <div
+        id="p"
+        className={`container ${props.className}`}
+        style={props.style}
+      >
         <div className="bg rounded-0">
           <div className="container">
             <div className="row justify-content-center">
@@ -23,9 +27,14 @@ export default class BoxHeader extends React.Component {
         </div>
 
         <style jsx>{`
+          #p {
+          }
+
           .bg {
             padding: 0;
-            background-color: antiquewhite;
+            background-color: #f1f1f1;
+            background-image: url("${props.src}");
+            background-size: contain;
           }
 
           .icon {

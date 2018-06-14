@@ -65,7 +65,7 @@ export const Boxes = [
     header: {
       defaultText: 'トークルーム', // use after box adding
       contentState: null, // draft-js
-      src: '' // 背景画像ソース
+      src: '/static/stub/logo-white.png' // 背景画像ソース
     },
     contents: [
       /* 投稿内容。TOPに必要な分だけ */

@@ -95,7 +95,6 @@ export default class TopPage extends React.Component {
   }
 
   onChangeBoxHeaderText(json, index) {
-    console.log('text changed', json, index)
     this.props.dispatch(setBoxHeader({ contentState: json, index }))
   }
 
@@ -140,6 +139,7 @@ export default class TopPage extends React.Component {
               <React.Fragment key={i}>
                 <BoxHeader
                   key={i}
+                  src={props.top.boxes[i].header.src}
                   defaultText={props.top.boxes[i].header.defaultText}
                   contentState={props.top.boxes[i].header.contentState}
                   onChangeText={e => this.onChangeBoxHeaderText(e, i)}
