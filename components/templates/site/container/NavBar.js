@@ -2,9 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap'
 import { setLogo, setNotificationIcon, setAccountIcon } from 'actions/site'
-import CommunityLogo from './CommunityLogo'
-import AccountIcon from './AccountIcon'
-import NotificationIcon from './NotificationIcon'
+import CommunityLogo from 'components/organisms/site/base/CommunityLogo'
+import AccountIcon from 'components/organisms/site/base/AccountIcon'
+import NotificationIcon from 'components/organisms/site/base/NotificationIcon'
 
 const brandStyle = {
   position: 'relative',

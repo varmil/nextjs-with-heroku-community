@@ -8,7 +8,7 @@ import {
   setSubBanner
 } from 'actions/site'
 
-import NavBar from 'components/organisms/site/edit/NavBar'
+import NavBar from 'components/templates/site/container/EditableNavBar'
 import MenuBar from 'components/organisms/site/edit/MenuBar'
 import MainBanner from 'components/organisms/site/edit/MainBanner'
 import BoxHeader from 'components/organisms/site/edit/BoxHeader'
