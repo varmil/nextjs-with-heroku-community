@@ -120,7 +120,7 @@ export default class TopPage extends React.Component {
   render() {
     const props = this.props
     return (
-      <div className={`${props.className}`} style={props.style}>
+      <React.Fragment>
         <header>
           <NavBar />
           <MenuBar
@@ -163,7 +163,7 @@ export default class TopPage extends React.Component {
           {...props.common.footer}
           onSave={this.onSaveFooter.bind(this)}
         />
-      </div>
+      </React.Fragment>
     )
   }
 }

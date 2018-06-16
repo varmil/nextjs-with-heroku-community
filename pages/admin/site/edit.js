@@ -3,6 +3,7 @@ import AdminHeader from 'components/organisms/AdminHeader'
 import WhiteBreadcrumb from 'components/organisms/WhiteBreadcrumb'
 import SideBar from 'components/templates/site/container/SideBar'
 import TopPage from 'components/templates/site/page/TopPage'
+import Device from 'constants/Device'
 
 import { connect } from 'react-redux'
 import { loadData } from 'actions/example'
@@ -30,6 +31,43 @@ class Edit extends React.Component {
     this.state = initialState
   }
 
+  addDeviceStyle() {
+    const base = {
+      marginTop: OFFSET_TOP_MAINBODY,
+      marginBottom: 20,
+      backgroundColor: 'white',
+      minHeight: 900,
+      boxShadow: '3px 0px 20px black'
+    }
+
+    let merged
+    switch (this.props.preview.device) {
+      case Device.PC:
+        merged = {
+          marginLeft: SIDEBAR_WIDTH
+        }
+        break
+      case Device.TABLET:
+        merged = {
+          position: 'absolute',
+          left: '50%',
+          width: 768,
+          marginLeft: -290
+        }
+        break
+      case Device.MOBILE:
+        merged = {
+          position: 'absolute',
+          left: '50%',
+          width: 375,
+          marginLeft: -66
+        }
+        break
+    }
+
+    return { ...base, ...merged }
+  }
+
   render() {
     const props = this.props
     return (
@@ -45,18 +83,9 @@ class Edit extends React.Component {
 
         <div className="mainBody">
           <SideBar width={SIDEBAR_WIDTH} offsetTop={OFFSET_TOP_SIDEBAR} />
-          <TopPage
-            {...props}
-            edit={true}
-            style={{
-              marginTop: OFFSET_TOP_MAINBODY,
-              marginLeft: SIDEBAR_WIDTH,
-              marginBottom: 20,
-              backgroundColor: 'white',
-              minHeight: 900,
-              boxShadow: '3px 0px 20px black'
-            }}
-          />
+          <div style={this.addDeviceStyle()}>
+            <TopPage {...props} edit={true} />
+          </div>
         </div>
 
         <style global jsx>{`
@@ -77,6 +106,7 @@ class Edit extends React.Component {
 }
 
 export default connect(state => ({
+  preview: state.site.preview,
   common: state.site.common,
   top: state.site.top
 }))(Edit)
