@@ -1,7 +1,7 @@
 import React from 'react'
 import AdminHeader from 'components/organisms/AdminHeader'
 import WhiteBreadcrumb from 'components/organisms/WhiteBreadcrumb'
-import SideBar from 'components/templates/site/edit/SideBar'
+import SideBar from 'components/templates/site/container/SideBar'
 import TopPage from 'components/templates/site/page/TopPage'
 
 import { connect } from 'react-redux'
