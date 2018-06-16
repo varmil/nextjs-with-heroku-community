@@ -1,4 +1,5 @@
 import { handleActions } from 'redux-actions'
+import update from 'immutability-helper'
 import {
   Logo as LogoDefault,
   NotificationIcon as NotificationIconDefault,
@@ -9,10 +10,14 @@ import {
   SubBanner as SubBannerDefault,
   Footer as FooterDefault
 } from 'constants/SitePropsDefault'
-import { SiteCommon, SiteTop } from 'constants/ActionTypes'
-import update from 'immutability-helper'
+import { SitePreview, SiteCommon, SiteTop } from 'constants/ActionTypes'
+import Device from 'constants/Device'
 
 const initialState = {
+  preview: {
+    device: Device.MOBILE
+  },
+
   common: {
     logo: LogoDefault,
     notificationIcon: NotificationIconDefault,
@@ -29,6 +34,15 @@ const initialState = {
 
 export default handleActions(
   {
+    /**
+     * PREVIEW
+     */
+    [SitePreview.SET_DEVICE]: (state, action) => {
+      return update(state, {
+        preview: { $set: action.payload }
+      })
+    },
+
     /**
      * COMMON
      */

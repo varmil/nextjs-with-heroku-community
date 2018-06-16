@@ -1,6 +1,7 @@
 import { createTypes, async } from './redux-action-types'
 
-export const Site = createTypes('site/', 'TEST')
+// （編集プレビュー）
+export const SitePreview = createTypes('site/preview/', 'SET_DEVICE')
 
 // （Edit, View）全ページ共通で使用するデータ
 export const SiteCommon = createTypes(

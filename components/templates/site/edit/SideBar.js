@@ -1,12 +1,77 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { setDevice } from 'actions/site'
 import ToggleSideSecond from 'components/molecules/site/edit/ToggleSideSecond'
+import Device from 'constants/Device'
 
 const initialState = {}
 
-export default class SideBar extends React.Component {
+// editor size controller
+const SideBarDevice = props => {
+  let iconString
+  switch (props.type) {
+    case Device.PC:
+      iconString = 'fa-desktop'
+      break
+    case Device.TABLET:
+      iconString = 'fa-tablet-alt'
+      break
+    case Device.MOBILE:
+      iconString = 'fa-mobile-alt'
+      break
+  }
+
+  const selectedClass = props.selected ? 'selected' : ''
+
+  return (
+    <li onClick={() => props.onClick(props.type)}>
+      <a className={`${selectedClass}`} href="javascript:void(0);">
+        <i className={`fas ${iconString}`} />
+      </a>
+
+      <style jsx>{`
+        li {
+          display: block;
+          float: left;
+          width: 33.3333%;
+          height: 60px;
+        }
+
+        a:hover,
+        a.selected {
+          color: #fff;
+          background-color: #0090a1;
+        }
+
+        a {
+          display: block;
+          height: 100%;
+          text-align: center;
+        }
+
+        .fa,
+        .far,
+        .fas {
+          font-size: 30px;
+          line-height: 60px;
+        }
+      `}</style>
+    </li>
+  )
+}
+
+class SideBar extends React.Component {
   constructor(props) {
     super(props)
     this.state = initialState
+  }
+
+  isSelectedDevice(type) {
+    return type === this.props.preview.device
+  }
+
+  onClickDevice(type) {
+    this.props.dispatch(setDevice({ device: type }))
   }
 
   render() {
@@ -52,26 +117,22 @@ export default class SideBar extends React.Component {
           </li>
         </ul>
 
-        <ul
-          id="editor-size-controller"
-          data-size-default="1024"
-          className="sidebarDevice"
-        >
-          <li data-size="1024">
-            <a className="selected" title="PCサイズ" href="javascript:void(0);">
-              <i className="fas fa-desktop" />
-            </a>
-          </li>
-          <li data-size="768">
-            <a title="タブレットサイズ" href="javascript:void(0);">
-              <i className="fas fa-tablet-alt" />
-            </a>
-          </li>
-          <li data-size="320">
-            <a title="スマホサイズ" href="javascript:void(0);">
-              <i className="fas fa-mobile-alt" />
-            </a>
-          </li>
+        <ul id="editor-size-controller" className="sidebarDevice">
+          <SideBarDevice
+            selected={this.isSelectedDevice(Device.PC)}
+            type={Device.PC}
+            onClick={this.onClickDevice.bind(this)}
+          />
+          <SideBarDevice
+            selected={this.isSelectedDevice(Device.TABLET)}
+            type={Device.TABLET}
+            onClick={this.onClickDevice.bind(this)}
+          />
+          <SideBarDevice
+            selected={this.isSelectedDevice(Device.MOBILE)}
+            type={Device.MOBILE}
+            onClick={this.onClickDevice.bind(this)}
+          />
         </ul>
 
         <div>
@@ -236,34 +297,12 @@ export default class SideBar extends React.Component {
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
           }
-
-          .sidebarDevice li {
-            display: block;
-            float: left;
-            width: 33.3333%;
-            height: 60px;
-          }
-
-          .sidebarDevice a:hover,
-          .sidebarDevice a.selected {
-            color: #fff;
-            background-color: #0090a1;
-          }
-
-          .sidebarDevice a {
-            display: block;
-            height: 100%;
-            text-align: center;
-          }
-
-          .sidebarDevice .fa,
-          .sidebarDevice .far,
-          .sidebarDevice .fas {
-            font-size: 30px;
-            line-height: 60px;
-          }
         `}</style>
       </nav>
     )
   }
 }
+
+export default connect(state => ({
+  preview: state.site.preview
+}))(SideBar)
