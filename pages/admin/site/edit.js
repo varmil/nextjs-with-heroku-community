@@ -19,9 +19,9 @@ class Edit extends React.Component {
   static async getInitialProps(props) {
     const { store, isServer } = props.ctx
 
-    if (!store.getState().placeholderData) {
-      store.dispatch(loadData())
-    }
+    // if (!store.getState().placeholderData) {
+    //   store.dispatch(loadData())
+    // }
 
     return { isServer /* site: store.getState().site */ }
   }

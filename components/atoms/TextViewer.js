@@ -3,6 +3,13 @@ import { EditorState, ContentState, convertFromRaw } from 'draft-js'
 import { Editor } from 'react-draft-wysiwyg'
 
 export default class TextViewer extends React.Component {
+  constructor(props) {
+    super(props)
+    // work around for SSR
+    // https://github.com/zeit/next.js/issues/1722
+    this.state = { editor: false }
+  }
+
   createEditorState() {
     let editorState
     try {
@@ -17,7 +24,13 @@ export default class TextViewer extends React.Component {
     return editorState
   }
 
+  componentDidMount() {
+    this.setState({ ...this.state, editor: true })
+  }
+
   render() {
+    if (!this.state.editor) return null
+
     return (
       <Editor
         toolbarHidden
