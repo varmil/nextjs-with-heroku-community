@@ -44,7 +44,6 @@ class NavBar extends React.Component {
     return (
       <Navbar
         dark
-        expand="sm"
         className={`container ${props.className}`}
         style={props.style}
       >
@@ -55,7 +54,7 @@ class NavBar extends React.Component {
           })}
         </NavbarBrand>
 
-        <Nav className="ml-auto" navbar>
+        {/* <Nav className="ml-auto" navbar>
           <NavItem>
             <NavLink className="linkItem" href="#" style={linkItemStyle}>
               {React.createElement(this.notificationIcon, {
@@ -72,7 +71,7 @@ class NavBar extends React.Component {
               })}
             </NavLink>
           </NavItem>
-        </Nav>
+        </Nav> */}
 
         <form className="form-inline my-2 pl-2">
           <div className="input-group">
