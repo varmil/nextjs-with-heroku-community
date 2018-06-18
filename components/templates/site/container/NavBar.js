@@ -9,7 +9,7 @@ import NotificationIcon from 'components/organisms/site/base/NotificationIcon'
 
 const brandStyle = {
   position: 'relative',
-  top: -2
+  top: 2
 }
 
 const linkItemStyle = {
@@ -48,49 +48,26 @@ class NavBar extends React.Component {
         <Navbar
           dark
           className={`container ${props.className}`}
-          style={props.style}
+          style={{ padding: '1rem', ...props.style }}
         >
-          <NavbarBrand className="mr-5" href="/" style={brandStyle}>
+          <NavbarBrand className="mx-auto" href="/" style={brandStyle}>
             {React.createElement(this.communityLogo, {
               src: common.logo.src,
               onClickModalImage: src => this.onClickLogoModalImage(src)
             })}
           </NavbarBrand>
 
-          {/* <Nav className="ml-auto" navbar>
-          <NavItem>
-            <NavLink className="linkItem" href="#" style={linkItemStyle}>
-              {React.createElement(this.notificationIcon, {
-                color: common.notificationIcon.color,
-                onChangeColor: this.onChangeNotfIconColor.bind(this)
-              })}
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink className="linkItem" href="#" style={linkItemStyle}>
-              {React.createElement(this.accountIcon, {
-                color: common.accountIcon.color,
-                onChangeColor: this.onChangeAccIconColor.bind(this)
-              })}
-            </NavLink>
-          </NavItem>
-        </Nav> */}
-
-          <form className="form-inline my-2 pl-2">
-            <div className="input-group">
-              <div className="input-group-prepend">
-                <span className="input-group-text">
-                  <i className="fas fa-search" />
-                </span>
-              </div>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="キーワード"
-              />
-            </div>
-          </form>
+          <i className="searchIcon fas fa-search" />
         </Navbar>
+
+        <style jsx>{`
+          .searchIcon {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 25px;
+          }
+        `}</style>
       </React.Fragment>
     )
   }

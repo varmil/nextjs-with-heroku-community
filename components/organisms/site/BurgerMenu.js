@@ -6,8 +6,8 @@ const styles = {
     position: 'absolute',
     width: '30px',
     height: '26px',
-    left: '20px',
-    top: '20px'
+    left: '25px',
+    top: '30px'
   },
   bmBurgerBars: {
     background: '#373a47'
