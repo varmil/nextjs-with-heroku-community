@@ -16,15 +16,13 @@ const OFFSET_TOP_MAINBODY = 135
 class Edit extends React.Component {
   // TODO: this is example code
   // we may have to return site props here, not connect()
-  static async getInitialProps(props) {
-    const { store, isServer } = props.ctx
-
-    // if (!store.getState().placeholderData) {
-    //   store.dispatch(loadData())
-    // }
-
-    return { isServer /* site: store.getState().site */ }
-  }
+  // static async getInitialProps(props) {
+  // const { store, isServer } = props.ctx
+  // if (!store.getState().placeholderData) {
+  //   store.dispatch(loadData())
+  // }
+  // return { isServer /* site: store.getState().site */ }
+  // }
 
   constructor(props) {
     super(props)
@@ -46,6 +44,7 @@ class Edit extends React.Component {
     switch (this.props.preview.device) {
       case Device.PC:
         merged = {
+          position: 'relative',
           marginLeft: SIDEBAR_WIDTH
         }
         break
