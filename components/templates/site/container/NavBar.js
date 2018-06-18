@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import BurgerMenu from 'components/organisms/site/BurgerMenu'
 import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap'
 import { setLogo, setNotificationIcon, setAccountIcon } from 'actions/site'
 import CommunityLogo from 'components/organisms/site/base/CommunityLogo'
@@ -42,19 +43,21 @@ class NavBar extends React.Component {
     const props = this.props
     const common = props.common
     return (
-      <Navbar
-        dark
-        className={`container ${props.className}`}
-        style={props.style}
-      >
-        <NavbarBrand className="mr-5" href="/" style={brandStyle}>
-          {React.createElement(this.communityLogo, {
-            src: common.logo.src,
-            onClickModalImage: src => this.onClickLogoModalImage(src)
-          })}
-        </NavbarBrand>
+      <React.Fragment>
+        <BurgerMenu />
+        <Navbar
+          dark
+          className={`container ${props.className}`}
+          style={props.style}
+        >
+          <NavbarBrand className="mr-5" href="/" style={brandStyle}>
+            {React.createElement(this.communityLogo, {
+              src: common.logo.src,
+              onClickModalImage: src => this.onClickLogoModalImage(src)
+            })}
+          </NavbarBrand>
 
-        {/* <Nav className="ml-auto" navbar>
+          {/* <Nav className="ml-auto" navbar>
           <NavItem>
             <NavLink className="linkItem" href="#" style={linkItemStyle}>
               {React.createElement(this.notificationIcon, {
@@ -73,21 +76,22 @@ class NavBar extends React.Component {
           </NavItem>
         </Nav> */}
 
-        <form className="form-inline my-2 pl-2">
-          <div className="input-group">
-            <div className="input-group-prepend">
-              <span className="input-group-text">
-                <i className="fas fa-search" />
-              </span>
+          <form className="form-inline my-2 pl-2">
+            <div className="input-group">
+              <div className="input-group-prepend">
+                <span className="input-group-text">
+                  <i className="fas fa-search" />
+                </span>
+              </div>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="キーワード"
+              />
             </div>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="キーワード"
-            />
-          </div>
-        </form>
-      </Navbar>
+          </form>
+        </Navbar>
+      </React.Fragment>
     )
   }
 }

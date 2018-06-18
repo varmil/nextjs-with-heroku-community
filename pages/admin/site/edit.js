@@ -1,5 +1,4 @@
 import React from 'react'
-import BurgerMenu from 'components/organisms/site/BurgerMenu'
 import AdminHeader from 'components/organisms/AdminHeader'
 import WhiteBreadcrumb from 'components/organisms/WhiteBreadcrumb'
 import SideBar from 'components/templates/site/container/SideBar'
@@ -88,7 +87,6 @@ class Edit extends React.Component {
           <SideBar width={SIDEBAR_WIDTH} offsetTop={OFFSET_TOP_SIDEBAR} />
 
           <div style={this.addDeviceStyle()}>
-            <BurgerMenu />
             <TopPage {...props} edit={true} />
           </div>
         </div>
