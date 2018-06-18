@@ -16,8 +16,8 @@ class LinkedImageModal extends React.Component {
           </div>
 
           <div className="form-group row">
-            <label className="col-sm-2 col-form-label">リンク</label>
-            <div className="col-sm-10">
+            <label className="col-2 col-form-label">リンク</label>
+            <div className="col-10">
               <LinkEditor />
             </div>
           </div>

@@ -8,7 +8,7 @@ export default class Footer extends React.Component {
     // 1列あたり5アイテム
     const rowNumber = Math.ceil(props.item.length / 5)
     const rows = range(rowNumber).map(i => (
-      <div key={i} className="col-xs-12 col-sm-4 col-md-4">
+      <div key={i} className="col-12">
         <ul className="list-unstyled quick-links">
           {props.item.slice(5 * i, 5 * (i + 1)).map((e, i) => (
             <li key={i}>

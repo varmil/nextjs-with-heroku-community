@@ -17,8 +17,8 @@ class LinkedTextModal extends React.Component {
         <ModalHeader>{props.headerText}</ModalHeader>
         <ModalBody className="container">
           <div className="form-group row">
-            <label className="col-sm-2 col-form-label">テキスト編集</label>
-            <div className="col-sm-10">
+            <label className="col-2 col-form-label">テキスト編集</label>
+            <div className="col-10">
               <TextEditor
                 value={props.contentState}
                 onChangeText={props.onChangeText}
@@ -31,8 +31,8 @@ class LinkedTextModal extends React.Component {
           </div>
 
           <div className="form-group row">
-            <label className="col-sm-2 col-form-label">リンク</label>
-            <div className="col-sm-10">
+            <label className="col-2 col-form-label">リンク</label>
+            <div className="col-10">
               <LinkEditor />
             </div>
           </div>

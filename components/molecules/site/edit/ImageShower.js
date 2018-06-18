@@ -23,7 +23,7 @@ export const ImageContainer = props => {
 
 export const Image = props => {
   return (
-    <div className={`col-md-6 col-lg-6 text-center ${props.className}`}>
+    <div className={`col-6 text-center ${props.className}`}>
       <img src={props.src} alt="img" onClick={e => props.onClick(props.src)} />
 
       <style jsx>{`

@@ -11,8 +11,8 @@ class IconModal extends React.Component {
         <ModalHeader>{this.props.headerText}</ModalHeader>
         <ModalBody className="container">
           <div className="form-group row">
-            <label className="col-sm-2 col-form-label">カラー変更</label>
-            <div className="col-sm-10">
+            <label className="col-2 col-form-label">カラー変更</label>
+            <div className="col-10">
               <ColorPicker onClick={this.props.onChangeColor} />
             </div>
           </div>

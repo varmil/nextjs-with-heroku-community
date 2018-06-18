@@ -38,10 +38,10 @@ export default class DesignImageEdit extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <label className="col-sm-2 col-form-label">デザイン編集</label>
-        <div className="col-sm-10">
+        <label className="col-2 col-form-label">デザイン編集</label>
+        <div className="col-10">
           <div className="row">
-            <div className="col-sm-6">
+            <div className="col-6">
               <ImageUploadButton className="mb-3" />
             </div>
             <div className="ml-auto mr-5">

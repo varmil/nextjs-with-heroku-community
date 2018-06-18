@@ -79,10 +79,7 @@ export default class Stepper extends React.Component {
 
             <div className="row mb-5">
               {cardList.map((card, i) => (
-                <div
-                  className="col-md-6 col-lg-4 my-3"
-                  key={`templatesDiv${i}`}
-                >
+                <div className="col-6 my-3" key={`templatesDiv${i}`}>
                   {card}
                 </div>
               ))}

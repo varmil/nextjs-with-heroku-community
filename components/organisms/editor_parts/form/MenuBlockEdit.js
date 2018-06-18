@@ -9,8 +9,8 @@ export default class MenuBlockEdit extends React.Component {
       <React.Fragment>
         <div className="editNav_menuBlock">
           <div className="form-group row">
-            <label className="col-sm-2 col-form-label">テキスト</label>
-            <div className="col-sm-10">
+            <label className="col-2 col-form-label">テキスト</label>
+            <div className="col-10">
               <input
                 className="menuText"
                 type="text"
@@ -21,8 +21,8 @@ export default class MenuBlockEdit extends React.Component {
           </div>
 
           <div className="form-group row">
-            <label className="col-sm-2 col-form-label">リンク</label>
-            <div className="col-sm-10">
+            <label className="col-2 col-form-label">リンク</label>
+            <div className="col-10">
               <LinkEditor />
             </div>
           </div>

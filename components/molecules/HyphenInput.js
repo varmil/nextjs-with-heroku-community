@@ -10,7 +10,7 @@ export default class HyphenInput extends React.Component {
         <div className="row box">
           {props.values.map((v, i) => {
             return (
-              <div className="col-xs-3" key={`HyphenInput-${i}`}>
+              <div className="col-3" key={`HyphenInput-${i}`}>
                 <TallTextInput type="tel" />
               </div>
             )
@@ -23,17 +23,17 @@ export default class HyphenInput extends React.Component {
             margin: 0 auto;
           }
 
-          .box .col-xs-3 {
+          .box .col-3 {
             width: 25%;
             max-width: 150px;
             position: relative;
           }
 
-          .box .col-xs-3:not(:last-child) {
+          .box .col-3:not(:last-child) {
             margin-right: 16px;
           }
 
-          .box .col-xs-3:not(:nth-child(1))::before {
+          .box .col-3:not(:nth-child(1))::before {
             content: '-';
             position: absolute;
             left: -12px;
