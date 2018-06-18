@@ -1,6 +1,5 @@
 import React from 'react'
 import { ModalHeader, ModalBody } from 'reactstrap'
-import { EditorState } from 'draft-js'
 import TextEditor from 'components/atoms/TextEditor'
 import DesignImageEdit from 'components/organisms/editor_parts/form/DesignImageEdit'
 import LinkEditor from 'components/molecules/site/edit/LinkEditor'

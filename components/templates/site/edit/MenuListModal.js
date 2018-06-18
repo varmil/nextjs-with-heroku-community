@@ -1,8 +1,9 @@
 import React from 'react'
 import uniqueId from 'lodash/uniqueId'
 import update from 'immutability-helper'
-import { ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
+import { ModalHeader, ModalBody, Button } from 'reactstrap'
 import WideModal from 'components/organisms/modal/WideModal'
+import ModalFooterSaveCancel from 'components/molecules/site/edit/ModalFooterSaveCancel'
 import ColorPicker from 'components/molecules/ColorPicker'
 import MenuBlockEdit from 'components/organisms/editor_parts/form/MenuBlockEdit'
 import MenuAddEdit from 'components/organisms/editor_parts/form/MenuAddEdit'
@@ -148,25 +149,13 @@ class MenuListModal extends React.Component {
             </div>
           </div>
         </ModalBody>
-        <ModalFooter className="mt-0 mb-4" style={{ border: 'none' }}>
-          <Button
-            className="w-25 ml-auto"
-            color="primary"
-            onClick={() => {
-              props.toggle() // close modal
-              props.onSave(this.state) // save data
-            }}
-          >
-            保存
-          </Button>
-          <Button
-            className="w-25 mr-auto"
-            color="secondary"
-            onClick={props.toggle}
-          >
-            キャンセル
-          </Button>
-        </ModalFooter>
+        <ModalFooterSaveCancel
+          onSave={() => {
+            props.toggle() // close modal
+            props.onSave(this.state) // save data
+          }}
+          onCancel={props.toggle}
+        />
 
         <style jsx>{`
           .modalEdit_row,
