@@ -1,14 +1,14 @@
 import React from 'react'
 import { ModalHeader, ModalBody } from 'reactstrap'
+import withSaveCancelFooter from 'components/organisms/modal/withSaveCancelFooter'
 import DesignImageEdit from 'components/organisms/editor_parts/form/DesignImageEdit'
 import LinkEditor from 'components/molecules/site/edit/LinkEditor'
-import WideModal from 'components/organisms/modal/WideModal'
 
 // ロゴやバナーなどリンクできる画像を編集するモーダル
 class LinkedImageModal extends React.Component {
   render() {
     return (
-      <WideModal isOpen={this.props.isOpen || false} toggle={this.props.toggle}>
+      <React.Fragment>
         <ModalHeader>{this.props.headerText}</ModalHeader>
         <ModalBody className="container">
           <div className="form-group row">
@@ -22,9 +22,9 @@ class LinkedImageModal extends React.Component {
             </div>
           </div>
         </ModalBody>
-      </WideModal>
+      </React.Fragment>
     )
   }
 }
 
-export default LinkedImageModal
+export default withSaveCancelFooter(LinkedImageModal)

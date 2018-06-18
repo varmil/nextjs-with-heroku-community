@@ -1,9 +1,9 @@
 import React from 'react'
 import { ModalHeader, ModalBody } from 'reactstrap'
 import TextEditor from 'components/atoms/TextEditor'
+import withSaveCancelFooter from 'components/organisms/modal/withSaveCancelFooter'
 import DesignImageEdit from 'components/organisms/editor_parts/form/DesignImageEdit'
 import LinkEditor from 'components/molecules/site/edit/LinkEditor'
-import WideModal from 'components/organisms/modal/WideModal'
 import 'node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 
 // テキスト編集可能なモーダル
@@ -12,7 +12,7 @@ class LinkedTextModal extends React.Component {
     const props = this.props
 
     return (
-      <WideModal isOpen={props.isOpen || false} toggle={props.toggle}>
+      <React.Fragment>
         <ModalHeader>{props.headerText}</ModalHeader>
         <ModalBody className="container">
           <div className="form-group row">
@@ -36,9 +36,9 @@ class LinkedTextModal extends React.Component {
             </div>
           </div>
         </ModalBody>
-      </WideModal>
+      </React.Fragment>
     )
   }
 }
 
-export default LinkedTextModal
+export default withSaveCancelFooter(LinkedTextModal)

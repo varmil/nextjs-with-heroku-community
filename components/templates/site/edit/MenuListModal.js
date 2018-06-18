@@ -1,9 +1,8 @@
 import React from 'react'
 import uniqueId from 'lodash/uniqueId'
 import update from 'immutability-helper'
-import { ModalHeader, ModalBody, Button } from 'reactstrap'
-import WideModal from 'components/organisms/modal/WideModal'
-import ModalFooterSaveCancel from 'components/molecules/site/edit/ModalFooterSaveCancel'
+import { ModalHeader, ModalBody } from 'reactstrap'
+import withSaveCancelFooter from 'components/organisms/modal/withSaveCancelFooter'
 import ColorPicker from 'components/molecules/ColorPicker'
 import MenuBlockEdit from 'components/organisms/editor_parts/form/MenuBlockEdit'
 import MenuAddEdit from 'components/organisms/editor_parts/form/MenuAddEdit'
@@ -70,7 +69,7 @@ class MenuListModal extends React.Component {
   render() {
     const props = this.props
     return (
-      <WideModal isOpen={props.isOpen || false} toggle={props.toggle}>
+      <React.Fragment>
         <ModalHeader>{props.headerText}</ModalHeader>
         <ModalBody className="container">
           <div className="modalEdit_row-wide">
@@ -149,13 +148,6 @@ class MenuListModal extends React.Component {
             </div>
           </div>
         </ModalBody>
-        <ModalFooterSaveCancel
-          onSave={() => {
-            props.toggle() // close modal
-            props.onSave(this.state) // save data
-          }}
-          onCancel={props.toggle}
-        />
 
         <style jsx>{`
           .modalEdit_row,
@@ -185,9 +177,9 @@ class MenuListModal extends React.Component {
             margin-right: 10px;
           }
         `}</style>
-      </WideModal>
+      </React.Fragment>
     )
   }
 }
 
-export default MenuListModal
+export default withSaveCancelFooter(MenuListModal)

@@ -1,13 +1,13 @@
 import React from 'react'
 import { ModalHeader, ModalBody } from 'reactstrap'
+import withSaveCancelFooter from 'components/organisms/modal/withSaveCancelFooter'
 import ColorPicker from 'components/molecules/ColorPicker'
-import WideModal from 'components/organisms/modal/WideModal'
 
 // ロゴやバナーなどリンクできる画像を編集するモーダル
 class IconModal extends React.Component {
   render() {
     return (
-      <WideModal isOpen={this.props.isOpen || false} toggle={this.props.toggle}>
+      <React.Fragment>
         <ModalHeader>{this.props.headerText}</ModalHeader>
         <ModalBody className="container">
           <div className="form-group row">
@@ -17,9 +17,9 @@ class IconModal extends React.Component {
             </div>
           </div>
         </ModalBody>
-      </WideModal>
+      </React.Fragment>
     )
   }
 }
 
-export default IconModal
+export default withSaveCancelFooter(IconModal)
