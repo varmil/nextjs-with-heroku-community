@@ -2,7 +2,9 @@ import range from 'lodash/range'
 import Color from 'constants/Color'
 
 export const Logo = {
-  src: '/static/stub/logo-blue.png'
+  contentState: null,
+  src: '/static/stub/logo-blue.png',
+  backgroundColor: '#f5f5f5'
 }
 
 export const AccountIcon = {
@@ -52,8 +54,9 @@ export const MainBanner = {
   item: [
     {
       index: 0,
+      contentState: null,
       src: 'https://dummyimage.com/1140x220/000/fff.png',
-      backgroundColor: '#f5f5f5',
+      backgroundColor: '#fff',
       href: ''
     }
   ]
@@ -91,6 +94,7 @@ export const Boxes = [
 export const SubBanner = {
   item: range(4).map(i => ({
     index: i,
+    contentState: null,
     src: 'https://dummyimage.com/500x180/000/fff.png',
     backgroundColor: '#f5f5f5',
     href: ''

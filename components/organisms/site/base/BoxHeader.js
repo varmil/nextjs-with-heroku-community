@@ -37,9 +37,6 @@ export default class BoxHeader extends React.Component {
 
           .bg {
             padding: 0;
-            // background-color: ${props.backgroundColor};
-            // background-image: url("${props.src}");
-            // background-size: contain;
           }
 
           .icon {

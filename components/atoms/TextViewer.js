@@ -15,7 +15,7 @@ export default class TextViewer extends React.Component {
     try {
       const content = this.props.value
         ? convertFromRaw(JSON.parse(this.props.value))
-        : ContentState.createFromText(this.props.defaultText)
+        : ContentState.createFromText(this.props.defaultText || '')
       editorState = EditorState.createWithContent(content)
     } catch (e) {
       editorState = EditorState.createEmpty()

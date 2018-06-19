@@ -16,7 +16,7 @@ import MainBanner from 'components/organisms/site/edit/MainBanner'
 import BoxHeader from 'components/organisms/site/edit/BoxHeader'
 import BoxContent from 'components/organisms/site/edit/BoxContent'
 import SubBanner from 'components/organisms/site/edit/SubBanner'
-import Footer from 'components/organisms/site/edit/Footer'
+// import Footer from 'components/organisms/site/edit/Footer'
 
 const initialState = {}
 // let NavBar, MenuBar, MainBanner, BoxHeader, BoxContent, SubBanner, Footer
@@ -97,8 +97,8 @@ export default class TopPage extends React.Component {
   }
 
   // Main Banner
-  onClickMBModalImage(src, index) {
-    this.props.dispatch(setMainBanner({ src, index }))
+  onSaveMainBanner(state, index) {
+    this.props.dispatch(setMainBanner({ ...state, index }))
   }
 
   // Sub Banner
@@ -115,6 +115,8 @@ export default class TopPage extends React.Component {
 
   render() {
     const props = this.props
+    const mainBanner = props.top.mainBanner
+
     return (
       <React.Fragment>
         <header>
@@ -125,13 +127,15 @@ export default class TopPage extends React.Component {
             item={props.common.menuBar.item}
           />
 
-          {range(props.top.mainBanner.item.length).map(i => (
+          {range(mainBanner.item.length).map(i => (
             <MainBanner
               key={i}
               className="mb-5"
-              src={props.top.mainBanner.item[i].src}
-              href={props.top.mainBanner.item[i].href}
-              onClickModalImage={src => this.onClickMBModalImage(src, i)}
+              contentState={mainBanner.item[i].contentState}
+              src={mainBanner.item[i].src}
+              backgroundColor={mainBanner.item[i].backgroundColor}
+              href={mainBanner.item[i].href}
+              onSave={state => this.onSaveMainBanner(state, i)}
             />
           ))}
         </header>
@@ -142,9 +146,9 @@ export default class TopPage extends React.Component {
               <React.Fragment key={i}>
                 <BoxHeader
                   key={i}
-                  src={props.top.boxes[i].header.src}
                   defaultText={props.top.boxes[i].header.defaultText}
                   contentState={props.top.boxes[i].header.contentState}
+                  src={props.top.boxes[i].header.src}
                   backgroundColor={props.top.boxes[i].header.backgroundColor}
                   onSave={state => this.onSaveBoxHeader(state, i)}
                 />
@@ -156,10 +160,10 @@ export default class TopPage extends React.Component {
           <div className="subBanner mt-5 mb-5">{this.createSubBanners()}</div>
         </main>
 
-        <Footer
+        {/* <Footer
           {...props.common.footer}
           onSave={this.onSaveFooter.bind(this)}
-        />
+        /> */}
       </React.Fragment>
     )
   }
