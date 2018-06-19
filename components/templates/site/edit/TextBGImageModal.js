@@ -4,19 +4,31 @@ import { ModalHeader, ModalBody } from 'reactstrap'
 import TextEditor from 'components/atoms/TextEditor'
 import withSaveCancelFooter from 'components/organisms/modal/withSaveCancelFooter'
 import DesignImageEdit from 'components/organisms/editor_parts/form/DesignImageEdit'
-import 'node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
+import LinkEditor from 'components/molecules/site/edit/LinkEditor'
 
-// テキスト編集可能なモーダル
+// テキスト編集可能なモーダル。
+// src             --> 背景画像
+// backgroundColor --> 背景色
+// href            --> リンク
 class LinkedTextModal extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
+
+    // base state
+    let initialState = {
       contentState: props.contentState,
-      src: props.src
+      src: props.src,
+      backgroundColor: props.backgroundColor
     }
+    // optional state
+    if (props.href !== undefined) {
+      initialState = { ...initialState, href: props.href }
+    }
+
+    this.state = initialState
   }
 
-  onChangeText(json, index) {
+  onChangeText(json) {
     this.setState(
       update(this.state, {
         contentState: { $set: json }
@@ -24,11 +36,32 @@ class LinkedTextModal extends React.Component {
     )
   }
 
-  onClickImage(src, index) {
+  onClickImage(src) {
     this.setState(
       update(this.state, {
         src: { $set: src }
       })
+    )
+  }
+
+  onClickBGColor(color, colorIndex) {
+    this.setState(
+      update(this.state, {
+        backgroundColor: { $set: color }
+      })
+    )
+  }
+
+  createLinkEditorIfNeeded() {
+    if (this.props.href === undefined) return null
+
+    return (
+      <div className="form-group row">
+        <label className="col-2 col-form-label">リンク</label>
+        <div className="col-10">
+          <LinkEditor />
+        </div>
+      </div>
     )
   }
 
@@ -51,8 +84,14 @@ class LinkedTextModal extends React.Component {
           </div>
 
           <div className="form-group row">
-            <DesignImageEdit onClickImage={this.onClickImage.bind(this)} />
+            <DesignImageEdit
+              onClickImage={this.onClickImage.bind(this)}
+              onClickBGColor={this.onClickBGColor.bind(this)}
+              secondToggleType={DesignImageEdit.TYPE_BACKGROUND_COLOR()}
+            />
           </div>
+
+          {this.createLinkEditorIfNeeded()}
         </ModalBody>
       </React.Fragment>
     )

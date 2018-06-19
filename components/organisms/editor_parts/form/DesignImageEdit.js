@@ -4,11 +4,13 @@ import {
   MultipleToggleGroup,
   MultipleToggle
 } from 'components/atoms/MultipleToggle'
+import ColorPicker from 'components/molecules/ColorPicker'
 import { createExistingImages } from 'components/molecules/site/edit/ImageShower'
 
 const STATE = {
   EXISTING: 0,
-  COMMUNE_LIB: 1
+  COMMUNE_LIB_IMAGE: 1,
+  BACKGROUND_COLOR: 2
 }
 
 // 本当は画像パスを帰すようなAPIをサーバに実装して、ここではそのpropsを受け取る
@@ -26,16 +28,40 @@ const IMAGE_SRCS = [
 
 // ロゴやバナーなどリンクできる画像を編集するモーダル
 export default class DesignImageEdit extends React.Component {
+  static TYPE_EXISTING() {
+    return { id: STATE.EXISTING, text: 'ライブラリ' }
+  }
+
+  static TYPE_COMMUNE_LIB_IMAGE() {
+    return { id: STATE.COMMUNE_LIB_IMAGE, text: 'テンプレート' }
+  }
+
+  static TYPE_BACKGROUND_COLOR() {
+    return { id: STATE.BACKGROUND_COLOR, text: '背景色' }
+  }
+
   constructor(props) {
     super(props)
-    this.state = { linkState: STATE.EXISTING }
+    this.state = { toggleState: STATE.EXISTING }
   }
 
   addSelectedIfMatch(state) {
-    return state === this.state.linkState
+    return state === this.state.toggleState
+  }
+
+  createContents() {
+    switch (this.state.toggleState) {
+      case STATE.EXISTING:
+        return createExistingImages(IMAGE_SRCS, this.props.onClickImage)
+      case STATE.COMMUNE_LIB_IMAGE:
+        return null
+      case STATE.BACKGROUND_COLOR:
+        return <ColorPicker onClick={this.props.onClickBGColor} />
+    }
   }
 
   render() {
+    const props = this.props
     return (
       <React.Fragment>
         <label className="col-2 col-form-label">デザイン編集</label>
@@ -51,25 +77,26 @@ export default class DesignImageEdit extends React.Component {
                   onClick={() =>
                     this.setState({
                       ...this.state,
-                      linkState: STATE.EXISTING
+                      toggleState: STATE.EXISTING
                     })
                   }
-                  text="ライブラリ"
+                  text={DesignImageEdit.TYPE_EXISTING().text}
                 />
                 <MultipleToggle
-                  selected={this.addSelectedIfMatch(STATE.COMMUNE_LIB)}
+                  selected={this.addSelectedIfMatch(props.secondToggleType.id)}
                   onClick={() =>
                     this.setState({
                       ...this.state,
-                      linkState: STATE.COMMUNE_LIB
+                      toggleState: props.secondToggleType.id
                     })
                   }
-                  text="テンプレート"
+                  text={props.secondToggleType.text}
                 />
               </MultipleToggleGroup>
             </div>
           </div>
-          {createExistingImages(IMAGE_SRCS, this.props.onClickImage)}
+
+          {this.createContents()}
         </div>
       </React.Fragment>
     )

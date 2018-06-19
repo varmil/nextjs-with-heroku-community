@@ -53,6 +53,7 @@ export const MainBanner = {
     {
       index: 0,
       src: 'https://dummyimage.com/1140x220/000/fff.png',
+      backgroundColor: '#f5f5f5',
       href: ''
     }
   ]
@@ -66,7 +67,8 @@ export const Boxes = [
     header: {
       defaultText: 'トークルーム', // use after box adding
       contentState: null, // draft-js
-      src: '/static/stub/logo-white.png' // 背景画像ソース
+      src: '/static/stub/logo-white.png', // 背景画像ソース
+      backgroundColor: '#f5f5f5'
     },
     contents: [
       /* 投稿内容。TOPに必要な分だけ */
@@ -79,7 +81,8 @@ export const Boxes = [
     header: {
       defaultText: '企業発信',
       contentState: null,
-      src: '/static/stub/logo-white.png'
+      src: '/static/stub/logo-white.png',
+      backgroundColor: '#f5f5f5'
     },
     contents: []
   }
@@ -89,6 +92,7 @@ export const SubBanner = {
   item: range(4).map(i => ({
     index: i,
     src: 'https://dummyimage.com/500x180/000/fff.png',
+    backgroundColor: '#f5f5f5',
     href: ''
   }))
 }

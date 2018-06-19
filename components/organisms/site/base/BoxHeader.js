@@ -1,14 +1,16 @@
 import React from 'react'
+import { getTextRGB } from 'utils/editor'
 import TextViewer from 'components/atoms/TextViewer'
 
 export default class BoxHeader extends React.Component {
   render() {
     const props = this.props
+
     return (
       <div
         id="p"
         className={`container ${props.className}`}
-        style={props.style}
+        style={{ ...props.style }}
       >
         <div className="bg rounded-0">
           <div className="container">
@@ -28,17 +30,21 @@ export default class BoxHeader extends React.Component {
 
         <style jsx>{`
           #p {
-          }
-
-          .bg {
-            padding: 0;
-            background-color: #f1f1f1;
+            background-color: ${props.backgroundColor};
             background-image: url("${props.src}");
             background-size: contain;
           }
 
+          .bg {
+            padding: 0;
+            // background-color: ${props.backgroundColor};
+            // background-image: url("${props.src}");
+            // background-size: contain;
+          }
+
           .icon {
             line-height: 76px;
+            color: ${getTextRGB(props.contentState) || 'black'}
           }
         `}</style>
       </div>

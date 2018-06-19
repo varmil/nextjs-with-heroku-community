@@ -53,5 +53,14 @@ export function createExistingImages(srcs, onClick) {
       onClick={onClick}
     />
   ))
-  return <ImageContainer className="mb-4">{images}</ImageContainer>
+  return (
+    <ImageContainer className="mb-4">
+      <Image
+        className="mb-2"
+        src={`/static/img/transparent.png`}
+        onClick={onClick}
+      />
+      {images}
+    </ImageContainer>
+  )
 }

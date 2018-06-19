@@ -66,14 +66,16 @@ export default class TopPage extends React.Component {
   }
 
   createSubBanners() {
+    const subBanner = this.props.top.subBanner
     return (
       <div className="container">
         <div className="row justify-content-center px-3">
-          {range(this.props.top.subBanner.item.length).map(i => (
+          {range(subBanner.item.length).map(i => (
             <SubBanner
               key={i}
               className="col-6 py-3"
-              src={this.props.top.subBanner.item[i].src}
+              src={subBanner.item[i].src}
+              href={subBanner.item[i].href}
               onClickModalImage={src => this.onClickSBModalImage(src, i)}
             />
           ))}
@@ -128,6 +130,7 @@ export default class TopPage extends React.Component {
               key={i}
               className="mb-5"
               src={props.top.mainBanner.item[i].src}
+              href={props.top.mainBanner.item[i].href}
               onClickModalImage={src => this.onClickMBModalImage(src, i)}
             />
           ))}
@@ -142,6 +145,7 @@ export default class TopPage extends React.Component {
                   src={props.top.boxes[i].header.src}
                   defaultText={props.top.boxes[i].header.defaultText}
                   contentState={props.top.boxes[i].header.contentState}
+                  backgroundColor={props.top.boxes[i].header.backgroundColor}
                   onSave={state => this.onSaveBoxHeader(state, i)}
                 />
                 {this.createBoxContents()}
