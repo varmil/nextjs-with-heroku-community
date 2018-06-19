@@ -27,16 +27,8 @@ class NavBar extends React.Component {
     this.notificationIcon = props.notificationIcon || NotificationIcon
   }
 
-  onClickLogoModalImage(src) {
-    this.props.dispatch(setLogo({ src }))
-  }
-
-  onChangeNotfIconColor(color, index) {
-    this.props.dispatch(setNotificationIcon({ color }))
-  }
-
-  onChangeAccIconColor(color, index) {
-    this.props.dispatch(setAccountIcon({ color }))
+  onSaveLogo(state) {
+    this.props.dispatch(setLogo({ ...state }))
   }
 
   render() {
@@ -53,7 +45,7 @@ class NavBar extends React.Component {
           <NavbarBrand className="mx-auto" href="/" style={brandStyle}>
             {React.createElement(this.communityLogo, {
               src: common.logo.src,
-              onClickModalImage: src => this.onClickLogoModalImage(src)
+              onSave: state => this.onSaveLogo(state)
             })}
           </NavbarBrand>
 

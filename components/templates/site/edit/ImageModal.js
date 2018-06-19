@@ -1,4 +1,5 @@
 import React from 'react'
+import update from 'immutability-helper'
 import { ModalHeader, ModalBody } from 'reactstrap'
 import withSaveCancelFooter from 'components/organisms/modal/withSaveCancelFooter'
 import DesignImageEdit from 'components/organisms/editor_parts/form/DesignImageEdit'
@@ -6,6 +7,19 @@ import DesignImageEdit from 'components/organisms/editor_parts/form/DesignImageE
 
 // バナー。リンク設定不可。画像編集のみのモーダル
 class ImageModal extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { src: props.src }
+  }
+
+  onClickImage(src) {
+    this.setState(
+      update(this.state, {
+        src: { $set: src }
+      })
+    )
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -13,7 +27,7 @@ class ImageModal extends React.Component {
         <ModalBody className="container">
           <div className="form-group row">
             <DesignImageEdit
-              onClickImage={this.props.onClickModalImage}
+              onClickImage={this.onClickImage.bind(this)}
               secondToggleType={DesignImageEdit.TYPE_COMMUNE_LIB_IMAGE()}
             />
           </div>

@@ -10,7 +10,7 @@ import LinkEditor from 'components/molecules/site/edit/LinkEditor'
 // src             --> 背景画像
 // backgroundColor --> 背景色
 // href            --> リンク
-class LinkedTextModal extends React.Component {
+class TextBGImageModal extends React.Component {
   constructor(props) {
     super(props)
 
@@ -98,4 +98,4 @@ class LinkedTextModal extends React.Component {
   }
 }
 
-export default withSaveCancelFooter(LinkedTextModal)
+export default withSaveCancelFooter(TextBGImageModal)

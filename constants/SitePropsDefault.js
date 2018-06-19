@@ -2,9 +2,7 @@ import range from 'lodash/range'
 import Color from 'constants/Color'
 
 export const Logo = {
-  contentState: null,
-  src: '/static/stub/logo-blue.png',
-  backgroundColor: '#f5f5f5'
+  src: '/static/stub/logo-blue.png'
 }
 
 export const AccountIcon = {
