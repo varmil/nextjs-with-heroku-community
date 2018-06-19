@@ -2,7 +2,7 @@ import React from 'react'
 import compose from 'lodash/fp/compose'
 import toEditable from './Editable'
 import withModal from './withModal'
-import Modal from 'components/templates/site/edit/LinkedImageModal'
+import Modal from 'components/templates/site/edit/TextBGImageModal'
 import SubBanner from 'components/organisms/site/base/SubBanner'
 
 const Composed = compose(c => withModal(c, Modal), toEditable)(SubBanner)

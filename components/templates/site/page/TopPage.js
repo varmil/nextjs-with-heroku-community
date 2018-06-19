@@ -90,18 +90,13 @@ export default class TopPage extends React.Component {
     this.props.dispatch(setMenuBarItem(state.item))
   }
 
+  onSaveBoxHeader(state, index) {
+    this.props.dispatch(setBoxHeader({ ...state, index }))
+  }
+
   // Main Banner
   onClickMBModalImage(src, index) {
     this.props.dispatch(setMainBanner({ src, index }))
-  }
-
-  onChangeBoxHeaderText(json, index) {
-    this.props.dispatch(setBoxHeader({ contentState: json, index }))
-  }
-
-  onClickBoxHeaderImage(src, index) {
-    console.log('image changed', src)
-    this.props.dispatch(setBoxHeader({ src, index }))
   }
 
   // Sub Banner
@@ -110,7 +105,6 @@ export default class TopPage extends React.Component {
   }
 
   onSaveFooter(state) {
-    console.log('onSaveFooter', state)
     this.props.dispatch(setFooter(state))
   }
   /**
@@ -148,8 +142,7 @@ export default class TopPage extends React.Component {
                   src={props.top.boxes[i].header.src}
                   defaultText={props.top.boxes[i].header.defaultText}
                   contentState={props.top.boxes[i].header.contentState}
-                  onChangeText={e => this.onChangeBoxHeaderText(e, i)}
-                  onClickModalImage={src => this.onClickBoxHeaderImage(src, i)}
+                  onSave={state => this.onSaveBoxHeader(state, i)}
                 />
                 {this.createBoxContents()}
               </React.Fragment>
