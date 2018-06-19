@@ -7,7 +7,7 @@ export default class MainBanner extends React.Component {
   render() {
     const props = this.props
     return (
-      <a className="bg container" href={props.href}>
+      <a className={`bg container ${props.className}`} href={props.href}>
         <TextViewer value={props.contentState} />
 
         <style jsx>{`

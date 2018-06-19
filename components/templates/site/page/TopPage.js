@@ -1,6 +1,6 @@
 import React from 'react'
 import range from 'lodash/range'
-// import dynamic from 'next/dynamic'
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import {
   setMenuBarStyle,
   setMenuBarItem,
@@ -9,17 +9,19 @@ import {
   setSubBanner
   // setFooter
 } from 'actions/site'
+import BurgerMenu from 'components/organisms/site/BurgerMenu'
+import dynamic from 'next/dynamic'
 
-import NavBar from 'components/templates/site/container/EditableNavBar'
-import MenuBar from 'components/organisms/site/edit/MenuBar'
-import MainBanner from 'components/organisms/site/edit/MainBanner'
-import BoxHeader from 'components/organisms/site/edit/BoxHeader'
-import BoxContent from 'components/organisms/site/base/BoxContent'
-import SubBanner from 'components/organisms/site/edit/SubBanner'
+// import NavBar from 'components/templates/site/container/EditableNavBar'
+// import MenuBar from 'components/organisms/site/edit/MenuBar'
+// import MainBanner from 'components/organisms/site/edit/MainBanner'
+// import BoxHeader from 'components/organisms/site/edit/BoxHeader'
+// import BoxContent from 'components/organisms/site/base/BoxContent'
+// import SubBanner from 'components/organisms/site/edit/SubBanner'
 // import Footer from 'components/organisms/site/edit/Footer'
 
 const initialState = {}
-// let NavBar, MenuBar, MainBanner, BoxHeader, BoxContent, SubBanner, Footer
+let NavBar, MenuBar, MainBanner, BoxHeader, BoxContent, SubBanner
 
 export default class TopPage extends React.Component {
   constructor(props) {
@@ -28,28 +30,28 @@ export default class TopPage extends React.Component {
   }
 
   // NOTE: dynamic import should be done before render(), not render() or constructor()
-  // dynamicImport() {
-  //   if (this.props.edit) {
-  //     NavBar = dynamic(import('components/organisms/site/edit/NavBar'))
-  //     MenuBar = dynamic(import('components/organisms/site/edit/MenuBar'))
-  //     MainBanner = dynamic(import('components/organisms/site/edit/MainBanner'))
-  //     BoxHeader = dynamic(import('components/organisms/site/edit/BoxHeader'))
-  //     BoxContent = dynamic(import('components/organisms/site/edit/BoxContent'))
-  //     SubBanner = dynamic(import('components/organisms/site/edit/SubBanner'))
-  //     Footer = dynamic(import('components/organisms/site/edit/Footer'))
-  //   } else {
-  //     NavBar = dynamic(import('components/organisms/site/base/NavBar'))
-  //     MenuBar = dynamic(import('components/organisms/site/base/MenuBar'))
-  //     MainBanner = dynamic(import('components/organisms/site/base/MainBanner'))
-  //     BoxHeader = dynamic(import('components/organisms/site/base/BoxHeader'))
-  //     BoxContent = dynamic(import('components/organisms/site/base/BoxContent'))
-  //     SubBanner = dynamic(import('components/organisms/site/base/SubBanner'))
-  //     Footer = dynamic(import('components/organisms/site/base/Footer'))
-  //   }
-  // }
+  dynamicImport() {
+    if (this.props.edit) {
+      NavBar = dynamic(
+        import('components/templates/site/container/EditableNavBar')
+      )
+      MenuBar = dynamic(import('components/organisms/site/edit/MenuBar'))
+      MainBanner = dynamic(import('components/organisms/site/edit/MainBanner'))
+      BoxHeader = dynamic(import('components/organisms/site/edit/BoxHeader'))
+      BoxContent = dynamic(import('components/organisms/site/base/BoxContent'))
+      SubBanner = dynamic(import('components/organisms/site/edit/SubBanner'))
+    } else {
+      NavBar = dynamic(import('components/templates/site/container/NavBar'))
+      MenuBar = dynamic(import('components/organisms/site/base/MenuBar'))
+      MainBanner = dynamic(import('components/organisms/site/base/MainBanner'))
+      BoxHeader = dynamic(import('components/organisms/site/base/BoxHeader'))
+      BoxContent = dynamic(import('components/organisms/site/base/BoxContent'))
+      SubBanner = dynamic(import('components/organisms/site/base/SubBanner'))
+    }
+  }
 
   componentWillMount() {
-    // this.dynamicImport()
+    this.dynamicImport()
   }
 
   // http://blog.keisuke11.com/webdesign/horizontal-scroll/
@@ -156,6 +158,11 @@ export default class TopPage extends React.Component {
     return (
       <React.Fragment>
         <header>
+          {(() => {
+            // dont use side menu because this cannot be hidden
+            return props.edit ? null : <BurgerMenu />
+          })()}
+
           <NavBar />
           <MenuBar
             onSave={this.onSaveMenuBar.bind(this)}
@@ -176,7 +183,7 @@ export default class TopPage extends React.Component {
           ))}
         </header>
 
-        <main className="">
+        <main className="main">
           <div className="box">
             {range(props.top.boxes.length).map(i => (
               <React.Fragment key={i}>
@@ -200,6 +207,12 @@ export default class TopPage extends React.Component {
           {...props.common.footer}
           onSave={this.onSaveFooter.bind(this)}
         /> */}
+
+        <style jsx>{`
+          .main {
+            overflow: hidden;
+          }
+        `}</style>
       </React.Fragment>
     )
   }

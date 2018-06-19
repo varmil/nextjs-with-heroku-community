@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { reducer as burgerMenu } from 'redux-burger-menu'
 import example from './example'
 import site from './site'
 // import area from './area'
@@ -11,6 +12,7 @@ import site from './site'
 export const exampleInitialState = undefined
 
 const rootReducer = combineReducers({
+  burgerMenu,
   example,
   site
   // area,

@@ -1,14 +1,16 @@
 import React from 'react'
 import { slide as Menu } from 'react-burger-menu'
+import { decorator as reduxBurgerMenu } from 'redux-burger-menu'
+const ReduxBurgerMenu = reduxBurgerMenu(Menu)
 
 const styles = {
-  bmBurgerButton: {
-    position: 'absolute',
-    width: '30px',
-    height: '26px',
-    left: '25px',
-    top: '30px'
-  },
+  // bmBurgerButton: {
+  //   position: 'absolute',
+  //   width: '30px',
+  //   height: '26px',
+  //   left: '25px',
+  //   top: '30px'
+  // },
   bmBurgerBars: {
     background: '#373a47'
   },
@@ -20,7 +22,6 @@ const styles = {
     background: '#bdc3c7'
   },
   bmMenuWrap: {
-    position: 'absolute',
     zIndex: 1003
   },
   bmMenu: {
@@ -39,19 +40,17 @@ const styles = {
     display: 'inline-block'
   },
   bmOverlay: {
-    position: 'absolute',
     background: 'rgba(0, 0, 0, 0.3)'
   }
 }
 
-export default class BurgerMenu extends React.Component {
+class BurgerMenu extends React.Component {
   render() {
     return (
-      <Menu
+      <ReduxBurgerMenu
         // pageWrapId={'page-wrapss'}
         // outerContainerId={'outer-container'}
-        // customBurgerIcon={<i className="fas fa-bars" />}
-        isOpen={false}
+        customBurgerIcon={false}
         styles={styles}
       >
         <a id="home" className="menu-item" href="/">
@@ -66,7 +65,9 @@ export default class BurgerMenu extends React.Component {
         <a onClick={this.showSettings} className="">
           Settings
         </a>
-      </Menu>
+      </ReduxBurgerMenu>
     )
   }
 }
+
+export default BurgerMenu
