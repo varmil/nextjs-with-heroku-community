@@ -35,14 +35,14 @@ export default class TopPage extends React.Component {
       NavBar = dynamic(
         import('components/templates/site/container/EditableNavBar')
       )
-      MenuBar = dynamic(import('components/organisms/site/edit/MenuBar'))
+      // MenuBar = dynamic(import('components/organisms/site/edit/MenuBar'))
       MainBanner = dynamic(import('components/organisms/site/edit/MainBanner'))
       BoxHeader = dynamic(import('components/organisms/site/edit/BoxHeader'))
       BoxContent = dynamic(import('components/organisms/site/base/BoxContent'))
       SubBanner = dynamic(import('components/organisms/site/edit/SubBanner'))
     } else {
       NavBar = dynamic(import('components/templates/site/container/NavBar'))
-      MenuBar = dynamic(import('components/organisms/site/base/MenuBar'))
+      // MenuBar = dynamic(import('components/organisms/site/base/MenuBar'))
       MainBanner = dynamic(import('components/organisms/site/base/MainBanner'))
       BoxHeader = dynamic(import('components/organisms/site/base/BoxHeader'))
       BoxContent = dynamic(import('components/organisms/site/base/BoxContent'))
@@ -164,11 +164,8 @@ export default class TopPage extends React.Component {
           })()}
 
           <NavBar />
-          <MenuBar
-            onSave={this.onSaveMenuBar.bind(this)}
-            style={props.common.menuBar.style}
-            item={props.common.menuBar.item}
-          />
+
+          {/* TODO MenuBar */}
 
           {range(mainBanner.item.length).map(i => (
             <MainBanner

@@ -20,6 +20,7 @@ export default class SubBanner extends React.Component {
             padding-top: 30px;
             padding-bottom: 30px;
             max-height: ${MAX_HEIGHT};
+            min-height: 116px;
             overflow: hidden;
           }
 
