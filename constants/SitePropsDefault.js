@@ -68,8 +68,8 @@ export const Boxes = [
     header: {
       defaultText: 'トークルーム', // use after box adding
       contentState: null, // draft-js
-      src: '/static/stub/logo-white.png', // 背景画像ソース
-      backgroundColor: '#f5f5f5'
+      src: '', // 背景画像ソース
+      backgroundColor: '#333'
     },
     contents: [
       /* 投稿内容。TOPに必要な分だけ */
@@ -82,8 +82,8 @@ export const Boxes = [
     header: {
       defaultText: '企業発信',
       contentState: null,
-      src: '/static/stub/logo-white.png',
-      backgroundColor: '#f5f5f5'
+      src: '',
+      backgroundColor: '#333'
     },
     contents: []
   }

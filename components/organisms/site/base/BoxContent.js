@@ -5,13 +5,7 @@ export default class BoxHeader extends React.Component {
     const props = this.props
     return (
       <div className={props.className} style={props.style}>
-        <div className={`card rounded-0`}>
-          <img
-            className="card-img-top"
-            src="https://www.webtoolnavi.com/www/wp-content/uploads/2016/06/fakeimg-2.png"
-            alt="Card image cap"
-          />
-
+        <div className={`card`}>
           <div className="card-header p-2">
             <div className="media">
               <img
@@ -35,6 +29,12 @@ export default class BoxHeader extends React.Component {
             </p>
           </div>
 
+          <img
+            className="card-img-top"
+            src="https://www.webtoolnavi.com/www/wp-content/uploads/2016/06/fakeimg-2.png"
+            alt="Card image cap"
+          />
+
           <div className="card-footer p-2">
             <span className="mr-3">
               <i className="far fa-heart" /> 100
@@ -48,6 +48,7 @@ export default class BoxHeader extends React.Component {
             p {
               font-size: 12px;
               color: gray;
+              white-space: normal;
             }
 
             .media-body span {
@@ -60,6 +61,10 @@ export default class BoxHeader extends React.Component {
 
             h6 {
               font-size: 11px;
+            }
+
+            .card {
+              border-radius: 10px;
             }
 
             .card-img-top {

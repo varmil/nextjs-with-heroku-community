@@ -30,9 +30,14 @@ export default class BoxHeader extends React.Component {
 
         <style jsx>{`
           #p {
+            height: 76px;
             background-color: ${props.backgroundColor};
             background-image: url("${props.src}");
             background-size: contain;
+          }
+
+          h4 {
+            color: white;
           }
 
           .bg {
@@ -41,7 +46,7 @@ export default class BoxHeader extends React.Component {
 
           .icon {
             line-height: 76px;
-            color: ${getTextRGB(props.contentState) || 'black'}
+            color: ${getTextRGB(props.contentState) || 'white'}
           }
         `}</style>
       </div>

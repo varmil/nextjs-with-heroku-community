@@ -6,15 +6,15 @@ import {
   setMenuBarItem,
   setMainBanner,
   setBoxHeader,
-  setSubBanner,
-  setFooter
+  setSubBanner
+  // setFooter
 } from 'actions/site'
 
 import NavBar from 'components/templates/site/container/EditableNavBar'
 import MenuBar from 'components/organisms/site/edit/MenuBar'
 import MainBanner from 'components/organisms/site/edit/MainBanner'
 import BoxHeader from 'components/organisms/site/edit/BoxHeader'
-import BoxContent from 'components/organisms/site/edit/BoxContent'
+import BoxContent from 'components/organisms/site/base/BoxContent'
 import SubBanner from 'components/organisms/site/edit/SubBanner'
 // import Footer from 'components/organisms/site/edit/Footer'
 
@@ -52,15 +52,48 @@ export default class TopPage extends React.Component {
     // this.dynamicImport()
   }
 
+  // http://blog.keisuke11.com/webdesign/horizontal-scroll/
   createBoxContents() {
     return (
-      <div className="container mt-2 mb-3">
-        <div className="row justify-content-center px-3">
-          <BoxContent className="col-12 p-1" />
-          <BoxContent className="col-12 p-1" />
-          <BoxContent className="col-12 p-1" />
-          <BoxContent className="col-12 p-1" />
-        </div>
+      <div className="horizontal_scroll_wrap mt-2 mb-4">
+        <ul className="scroll_lst">
+          <li className="scroll_item">
+            <BoxContent className="" />
+          </li>
+          <li className="scroll_item">
+            <BoxContent className="" />
+          </li>
+          <li className="scroll_item">
+            <BoxContent className="" />
+          </li>
+          <li className="scroll_item">
+            <BoxContent className="" />
+          </li>
+        </ul>
+
+        <style jsx>{`
+          .horizontal_scroll_wrap {
+            // height: 300px;
+            overflow-y: hidden;
+            margin: 0;
+          }
+          .scroll_lst {
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            padding: 0;
+            padding-left: 10px;
+          }
+          .scroll_item {
+            margin-right: 10px;
+            display: inline-block;
+            width: 220px;
+          }
+          .scroll_item:first-child {
+            margin-left: 10px;
+          }
+        `}</style>
       </div>
     )
   }
