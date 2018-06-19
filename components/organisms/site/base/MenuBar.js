@@ -1,62 +1,95 @@
 import React from 'react'
-import MenuItem from './MenuItem'
 
 export default class MenuBar extends React.Component {
-  constructor(props) {
-    super(props)
-
-    // this is needed because this class is extended
-    this.menuItem = React.createElement(props.menuItem || MenuItem)
-  }
-
   render() {
     const props = this.props
     return (
-      <div
-        id="menuBar"
-        className={`cs-header-menubar ${props.className}`}
-        style={{ ...props.style }}
-      >
-        <div className="container">
-          <ul className="listContainer">
-            {props.item.map((e, i) =>
-              React.cloneElement(this.menuItem, { ...e, key: i })
-            )}
+      <React.Fragment>
+        <div className="cs-header-navbar__toolbar">
+          <ul className="cs-header-toolbar">
+            <li className="cs-header-toolbar__item liNotify">
+              <div className="divInner">
+                <a href="/user/add">
+                  <span className="spanText">
+                    <i id="ai" className="fas fa-bell" />
+                  </span>
+                </a>
+              </div>
+            </li>
+            <li className="cs-header-toolbar__item liAccount">
+              <div className="divInner">
+                <a href="/auth/login">
+                  <span className="spanText">
+                    <i id="ai" className="fas fa-user" />
+                  </span>
+                </a>
+              </div>
+            </li>
           </ul>
         </div>
 
-        {/* apply style for children */}
-        <style global jsx>{`
-          #menuBar.cs-header-menubar a {
+        <style jsx>{`
+          a {
             color: ${props.style.color};
           }
-        `}</style>
 
-        <style jsx>{`
-          .cs-header-menubar {
-            width: 100%;
-            background-color: #633826;
+          .liAccount .divInner:before {
+            background-color: ${props.style.color};
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 4px;
+            width: 1px;
+            height: 28px;
           }
 
-          .listContainer {
+          .cs-header-navbar__toolbar {
+            clear: both;
             height: 44px;
-            overflow: hidden;
+          }
+
+          .cs-header-toolbar {
+            background-color: ${props.style.backgroundColor};
+          }
+
+          .cs-header-toolbar {
+            display: table;
+            width: 100%;
           }
 
           ul,
           ol {
+            margin: 0;
             padding-left: 0;
           }
 
-          ul,
-          ol,
-          dl {
-            margin: 0;
-            font-size: 1em;
-            font-weight: normal;
+          .cs-header-toolbar__item {
+            width: 33%;
+            padding: 5px 5px 5px 6px;
+            display: table-cell;
+            vertical-align: middle;
+          }
+
+          li {
+            list-style-type: none;
+          }
+
+          .divInner {
+            position: relative;
+            height: 34px;
+            border-radius: 4px;
+            font-size: 22px;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+          }
+
+          .liNotify .spanText,
+          .liAccount .spanText {
+            line-height: 22px;
           }
         `}</style>
-      </div>
+      </React.Fragment>
     )
   }
 }

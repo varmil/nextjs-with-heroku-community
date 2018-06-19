@@ -3,7 +3,7 @@ import range from 'lodash/range'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import {
   setMenuBarStyle,
-  setMenuBarItem,
+  // setMenuBarItem,
   setMainBanner,
   setBoxHeader,
   setSubBanner
@@ -27,6 +27,8 @@ export default class TopPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = initialState
+
+    this.dynamicImport()
   }
 
   // NOTE: dynamic import should be done before render(), not render() or constructor()
@@ -35,14 +37,14 @@ export default class TopPage extends React.Component {
       NavBar = dynamic(
         import('components/templates/site/container/EditableNavBar')
       )
-      // MenuBar = dynamic(import('components/organisms/site/edit/MenuBar'))
+      MenuBar = dynamic(import('components/organisms/site/edit/MenuBar'))
       MainBanner = dynamic(import('components/organisms/site/edit/MainBanner'))
       BoxHeader = dynamic(import('components/organisms/site/edit/BoxHeader'))
       BoxContent = dynamic(import('components/organisms/site/base/BoxContent'))
       SubBanner = dynamic(import('components/organisms/site/edit/SubBanner'))
     } else {
       NavBar = dynamic(import('components/templates/site/container/NavBar'))
-      // MenuBar = dynamic(import('components/organisms/site/base/MenuBar'))
+      MenuBar = dynamic(import('components/organisms/site/base/MenuBar'))
       MainBanner = dynamic(import('components/organisms/site/base/MainBanner'))
       BoxHeader = dynamic(import('components/organisms/site/base/BoxHeader'))
       BoxContent = dynamic(import('components/organisms/site/base/BoxContent'))
@@ -50,9 +52,7 @@ export default class TopPage extends React.Component {
     }
   }
 
-  componentWillMount() {
-    this.dynamicImport()
-  }
+  componentWillMount() {}
 
   // http://blog.keisuke11.com/webdesign/horizontal-scroll/
   createBoxContents() {
@@ -103,20 +103,18 @@ export default class TopPage extends React.Component {
   createSubBanners() {
     const subBanner = this.props.top.subBanner
     return (
-      <div className="container">
-        <div className="row justify-content-center px-3">
-          {range(subBanner.item.length).map(i => (
-            <SubBanner
-              key={i}
-              className="col-12 mb-2"
-              contentState={subBanner.item[i].contentState}
-              src={subBanner.item[i].src}
-              backgroundColor={subBanner.item[i].backgroundColor}
-              href={subBanner.item[i].href}
-              onSave={state => this.onSaveSubBanner(state, i)}
-            />
-          ))}
-        </div>
+      <div className="">
+        {range(subBanner.item.length).map(i => (
+          <SubBanner
+            key={i}
+            className="mb-2"
+            contentState={subBanner.item[i].contentState}
+            src={subBanner.item[i].src}
+            backgroundColor={subBanner.item[i].backgroundColor}
+            href={subBanner.item[i].href}
+            onSave={state => this.onSaveSubBanner(state, i)}
+          />
+        ))}
       </div>
     )
   }
@@ -125,8 +123,7 @@ export default class TopPage extends React.Component {
    * Edit Handler START
    */
   onSaveMenuBar(state) {
-    this.props.dispatch(setMenuBarStyle(state.style))
-    this.props.dispatch(setMenuBarItem(state.item))
+    this.props.dispatch(setMenuBarStyle({ ...state }))
   }
 
   onSaveBoxHeader(state, index) {
@@ -166,11 +163,15 @@ export default class TopPage extends React.Component {
           <NavBar />
 
           {/* TODO MenuBar */}
+          <MenuBar
+            onSave={this.onSaveMenuBar.bind(this)}
+            style={props.common.menuBar.style}
+          />
 
           {range(mainBanner.item.length).map(i => (
             <MainBanner
               key={i}
-              className="mb-5"
+              className="mt-2 mb-3"
               contentState={mainBanner.item[i].contentState}
               src={mainBanner.item[i].src}
               backgroundColor={mainBanner.item[i].backgroundColor}

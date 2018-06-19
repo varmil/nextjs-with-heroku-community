@@ -13,39 +13,46 @@ export const NotificationIcon = {
   color: Color.MAIN_BLUE
 }
 
+// export const MenuBarPC = {
+//   style: {
+//     color: '#333',
+//     backgroundColor: '#fff',
+//     textAlign: 'left'
+//   },
+//   item: [
+//     {
+//       index: 0,
+//       text: 'トークルーム',
+//       href: ''
+//     },
+//     {
+//       index: 1,
+//       text: '企業発信',
+//       href: ''
+//     },
+//     {
+//       index: 2,
+//       text: '企業ストーリー',
+//       href: ''
+//     },
+//     {
+//       index: 3,
+//       text: '投票・アンケート',
+//       href: ''
+//     },
+//     {
+//       index: 4,
+//       text: 'お知らせ',
+//       href: ''
+//     }
+//   ]
+// }
+
 export const MenuBar = {
   style: {
-    color: '#333',
-    backgroundColor: '#fff',
-    textAlign: 'left'
-  },
-  item: [
-    {
-      index: 0,
-      text: 'トークルーム',
-      href: ''
-    },
-    {
-      index: 1,
-      text: '企業発信',
-      href: ''
-    },
-    {
-      index: 2,
-      text: '企業ストーリー',
-      href: ''
-    },
-    {
-      index: 3,
-      text: '投票・アンケート',
-      href: ''
-    },
-    {
-      index: 4,
-      text: 'お知らせ',
-      href: ''
-    }
-  ]
+    color: '#fff',
+    backgroundColor: '#000'
+  }
 }
 
 export const MainBanner = {
