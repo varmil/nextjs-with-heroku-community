@@ -54,7 +54,7 @@ export default class TopPage extends React.Component {
 
   createBoxContents() {
     return (
-      <div className="container mt-2 mb-5">
+      <div className="container mt-2 mb-3">
         <div className="row justify-content-center px-3">
           <BoxContent className="col-12 p-1" />
           <BoxContent className="col-12 p-1" />
@@ -73,10 +73,12 @@ export default class TopPage extends React.Component {
           {range(subBanner.item.length).map(i => (
             <SubBanner
               key={i}
-              className="col-6 py-3"
+              className="col-12 mb-2"
+              contentState={subBanner.item[i].contentState}
               src={subBanner.item[i].src}
+              backgroundColor={subBanner.item[i].backgroundColor}
               href={subBanner.item[i].href}
-              onClickModalImage={src => this.onClickSBModalImage(src, i)}
+              onSave={state => this.onSaveSubBanner(state, i)}
             />
           ))}
         </div>
@@ -102,13 +104,14 @@ export default class TopPage extends React.Component {
   }
 
   // Sub Banner
-  onClickSBModalImage(src, index) {
-    this.props.dispatch(setSubBanner({ src, index }))
+  onSaveSubBanner(state, index) {
+    this.props.dispatch(setSubBanner({ ...state, index }))
   }
 
-  onSaveFooter(state) {
-    this.props.dispatch(setFooter(state))
-  }
+  // onSaveFooter(state) {
+  //   this.props.dispatch(setFooter(state))
+  // }
+
   /**
    * Edit Handler END
    */
@@ -157,7 +160,7 @@ export default class TopPage extends React.Component {
             ))}
           </div>
 
-          <div className="subBanner mt-5 mb-5">{this.createSubBanners()}</div>
+          <div className="subBanner mt-3 mb-5">{this.createSubBanners()}</div>
         </main>
 
         {/* <Footer

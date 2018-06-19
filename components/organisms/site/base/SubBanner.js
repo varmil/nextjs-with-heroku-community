@@ -1,21 +1,44 @@
 import React from 'react'
+import TextViewer from 'components/atoms/TextViewer'
+
+const MAX_HEIGHT = '250px'
 
 export default class SubBanner extends React.Component {
   render() {
+    const props = this.props
     return (
-      <div className={`${this.props.className}`} style={this.props.style}>
-        <div className="container">
-          <img src={this.props.src} alt="sub banner" />
-        </div>
+      <a className="bg container" href={props.href}>
+        <TextViewer value={props.contentState} />
 
         <style jsx>{`
-          img {
-            width: 100%;
-            height: 180px;
-            object-fit: contain;
+          a{
+            color: initial;
           }
+
+          .container {
+            display: block;
+            padding-top: 30px;
+            padding-bottom: 30px;
+            max-height: ${MAX_HEIGHT};
+            overflow: hidden;
+          }
+
+          .bg {
+            background-color: ${props.backgroundColor};
+            background-image: url("${props.src}");
+            background-size: cover;
+            background-position: center;
+          }
+
+          // .bgImg {
+          //   width: 100%;
+          //   object-fit: cover;
+          //   position: relative;
+          //   top: 0;
+          //   left: 0;
+          // }
         `}</style>
-      </div>
+      </a>
     )
   }
 }
