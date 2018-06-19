@@ -1,5 +1,6 @@
 import range from 'lodash/range'
 import Color from 'constants/Color'
+import update from 'immutability-helper'
 
 export const Logo = {
   src: '/static/stub/logo-blue.png'
@@ -67,33 +68,30 @@ export const MainBanner = {
   ]
 }
 
-export const Boxes = [
-  {
-    id: '', // サーバで管理しているスレッドID（URLに使う？）
-    type: '', // TALK or SURVEY or REVIEW
-    index: 0,
-    header: {
-      defaultText: 'トークルーム', // use after box adding
-      contentState: null, // draft-js
-      src: '', // 背景画像ソース
-      backgroundColor: '#333'
-    },
-    contents: [
-      /* 投稿内容。TOPに必要な分だけ */
-    ]
+const boxesBase = range(3).map(i => ({
+  id: '', // サーバで管理しているスレッドID（URLに使う？）
+  type: '', // TALK or SURVEY or REVIEW
+  index: i,
+  header: {
+    defaultText: 'トークルーム', // use after box adding
+    contentState: null, // draft-js
+    src: '', // 背景画像ソース
+    backgroundColor: '#333'
   },
-  {
-    id: '',
-    type: '',
-    index: 0,
-    header: {
-      defaultText: '企業発信',
-      contentState: null,
-      src: '',
-      backgroundColor: '#333'
-    },
-    contents: []
-  }
+  contents: [
+    /* 投稿内容。TOPに必要な分だけ */
+  ]
+}))
+export const Boxes = [
+  update(boxesBase[0], {
+    header: { defaultText: { $set: 'TALK ROOM' } }
+  }),
+  update(boxesBase[1], {
+    header: { defaultText: { $set: 'YOUR VOICE' } }
+  }),
+  update(boxesBase[2], {
+    header: { defaultText: { $set: 'NEWS' } }
+  })
 ]
 
 export const SubBanner = {
