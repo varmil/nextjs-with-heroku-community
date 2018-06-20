@@ -157,7 +157,9 @@ export default class TopPage extends React.Component {
             onSave={this.onSaveMenuBar.bind(this)}
             style={props.common.menuBar.style}
           />
+        </header>
 
+        <main className="main">
           {range(mainBanner.item.length).map(i => (
             <MainBanner
               key={i}
@@ -169,24 +171,20 @@ export default class TopPage extends React.Component {
               onSave={state => this.onSaveMainBanner(state, i)}
             />
           ))}
-        </header>
 
-        <main className="main">
-          <div className="box">
-            {range(props.top.boxes.length).map(i => (
-              <React.Fragment key={i}>
-                <BoxHeader
-                  key={i}
-                  defaultText={props.top.boxes[i].header.defaultText}
-                  contentState={props.top.boxes[i].header.contentState}
-                  src={props.top.boxes[i].header.src}
-                  backgroundColor={props.top.boxes[i].header.backgroundColor}
-                  onSave={state => this.onSaveBoxHeader(state, i)}
-                />
-                {this.createBoxContents()}
-              </React.Fragment>
-            ))}
-          </div>
+          {range(props.top.boxes.length).map(i => (
+            <React.Fragment key={i}>
+              <BoxHeader
+                key={i}
+                defaultText={props.top.boxes[i].header.defaultText}
+                contentState={props.top.boxes[i].header.contentState}
+                src={props.top.boxes[i].header.src}
+                backgroundColor={props.top.boxes[i].header.backgroundColor}
+                onSave={state => this.onSaveBoxHeader(state, i)}
+              />
+              {this.createBoxContents()}
+            </React.Fragment>
+          ))}
 
           <div className="subBanner mt-3 mb-5">{this.createSubBanners()}</div>
         </main>

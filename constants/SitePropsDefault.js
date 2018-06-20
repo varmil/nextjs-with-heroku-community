@@ -73,7 +73,7 @@ const boxesBase = range(3).map(i => ({
   type: '', // TALK or SURVEY or REVIEW
   index: i,
   header: {
-    defaultText: 'トークルーム', // use after box adding
+    defaultText: '', // use after box adding
     contentState: null, // draft-js
     src: '', // 背景画像ソース
     backgroundColor: '#333'

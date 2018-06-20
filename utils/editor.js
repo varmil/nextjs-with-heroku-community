@@ -15,6 +15,14 @@ export const getTextRGB = contentState => {
 
   // format for CSS color prop
   const rgb = colorStyle.style.replace('color-', '')
-  console.log(rgb)
   return rgb
+}
+
+// draft-js
+export const getText = contentState => {
+  // parse contentState
+  const json = JSON.parse(contentState)
+  if (!json || !json.blocks[0]) return
+
+  return json.blocks[0].text
 }

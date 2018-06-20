@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 import { connect } from 'react-redux'
 import { setDevice } from 'actions/site'
 import ToggleSideSecond from 'components/molecules/site/edit/ToggleSideSecond'
@@ -96,9 +97,11 @@ class SideBar extends React.Component {
             </a>
           </li>
           <li>
-            <a href="javascript:void(0);">
-              <i className="fas fa-shoe-prints" />プレビュー
-            </a>
+            <Link href="/view/top">
+              <a>
+                <i className="fas fa-shoe-prints" />プレビュー
+              </a>
+            </Link>
           </li>
         </ul>
 

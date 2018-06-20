@@ -1,4 +1,7 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import AvatarAndName from 'components/molecules/AvatarAndName'
+import { getText } from 'utils/editor'
 import { slide as Menu } from 'react-burger-menu'
 import { decorator as reduxBurgerMenu } from 'redux-burger-menu'
 const ReduxBurgerMenu = reduxBurgerMenu(Menu)
@@ -25,15 +28,15 @@ const styles = {
     zIndex: 1003
   },
   bmMenu: {
-    background: '#373a47',
-    padding: '2.5em 1.5em 0',
+    background: '#fff',
+    padding: '2.5em 10px 0',
     fontSize: '1.15em'
   },
   bmMorphShape: {
     fill: '#373a47'
   },
   bmItemList: {
-    color: '#b8b7ad',
+    color: '#000',
     padding: '0.8em'
   },
   bmItem: {
@@ -46,28 +49,57 @@ const styles = {
 
 class BurgerMenu extends React.Component {
   render() {
+    const props = this.props
     return (
-      <ReduxBurgerMenu
-        // pageWrapId={'page-wrapss'}
-        // outerContainerId={'outer-container'}
-        customBurgerIcon={false}
-        styles={styles}
-      >
-        <a id="home" className="menu-item" href="/">
-          Home
-        </a>
-        <a id="about" className="menu-item" href="/about">
-          About
-        </a>
-        <a id="contact" className="menu-item" href="/contact">
-          Contact
-        </a>
-        <a onClick={this.showSettings} className="">
-          Settings
-        </a>
+      <ReduxBurgerMenu customBurgerIcon={false} styles={styles}>
+        <section className="mb-5">
+          <AvatarAndName name={'Your Name Here'} />
+        </section>
+
+        <section className="mb-5">
+          <h5>Commune Community</h5>
+          <div className="ml-4">
+            {props.top.boxes.map((box, i) => (
+              <a key={i} href="" className="link">
+                {getText(box.header.contentState) || box.header.defaultText}
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section className="mb-5">
+          <h5>Site Information</h5>
+          <div className="ml-4">
+            <a href="" className="link">
+              お問い合わせ
+            </a>
+            <a href="" className="link">
+              会員規約
+            </a>
+            <a href="" className="link">
+              プライバシーポリシー
+            </a>
+            <a href="" className="link">
+              ログアウト
+            </a>
+          </div>
+        </section>
+
+        <style jsx>{`
+          a {
+            color: black;
+            margin: 5px 0;
+          }
+
+          .link {
+            display: block;
+          }
+        `}</style>
       </ReduxBurgerMenu>
     )
   }
 }
 
-export default BurgerMenu
+export default connect(state => ({
+  top: state.site.top
+}))(BurgerMenu)
