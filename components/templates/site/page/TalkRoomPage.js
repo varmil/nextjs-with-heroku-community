@@ -1,30 +1,14 @@
 import React from 'react'
 import range from 'lodash/range'
 import Link from 'next/link'
-import Select from 'react-select'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { setMainBanner, setBoxHeader, setSubBanner } from 'actions/site'
+import CategorySelect from 'components/molecules/CategorySelect'
+import PostSortButtons from 'components/molecules/PostSortButtons'
 import BoxHeader from 'components/organisms/site/base/BoxHeader'
 import BoxContent from 'components/organisms/site/BoxContent'
 import Header from 'components/templates/site/container/Header'
 import dynamic from 'next/dynamic'
-
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' }
-]
-
-const colourStyles = {
-  control: styles => ({
-    ...styles,
-    backgroundColor: 'white',
-    // border: 'none',
-    width: 190,
-    margin: '0 auto',
-    fontSize: 12
-  })
-}
 
 const initialState = {}
 let SubBanner
@@ -44,67 +28,29 @@ export default class TalkRoomPage extends React.Component {
     }
   }
 
-  // http://blog.keisuke11.com/webdesign/horizontal-scroll/
   createBoxContents() {
     return (
-      <div className="horizontal_scroll_wrap mt-2 mb-4">
-        <ul className="scroll_lst">
-          <li className="scroll_item">
-            <BoxContent className="" />
-          </li>
-          <li className="scroll_item">
-            <BoxContent className="" />
-          </li>
-          <li className="scroll_item">
-            <BoxContent className="" />
-          </li>
-          <li className="scroll_item">
-            <BoxContent className="" />
-          </li>
-        </ul>
+      <div className="wrap my-4">
+        <div className="c">
+          <BoxContent />
+        </div>
+        <div className="c">
+          <BoxContent />
+        </div>
+        <div className="c">
+          <BoxContent />
+        </div>
 
         <style jsx>{`
-          .horizontal_scroll_wrap {
-            // height: 300px;
-            overflow-y: hidden;
-            margin: 0;
+          .wrap {
+            width: 90%;
+            margin: 0 auto;
           }
-          .scroll_lst {
-            overflow-x: auto;
-            overflow-y: hidden;
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
-            padding: 0;
-            padding-left: 10px;
-          }
-          .scroll_item {
-            margin-right: 10px;
-            display: inline-block;
-            width: 220px;
-          }
-          .scroll_item:first-child {
-            margin-left: 10px;
+
+          .c {
+            margin: 20px 0;
           }
         `}</style>
-      </div>
-    )
-  }
-
-  createSubBanners() {
-    const subBanner = this.props.top.subBanner
-    return (
-      <div className="">
-        {range(subBanner.item.length).map(i => (
-          <SubBanner
-            key={i}
-            className="mb-2"
-            contentState={subBanner.item[i].contentState}
-            src={subBanner.item[i].src}
-            backgroundColor={subBanner.item[i].backgroundColor}
-            href={subBanner.item[i].href}
-            onSave={state => this.onSaveSubBanner(state, i)}
-          />
-        ))}
       </div>
     )
   }
@@ -112,19 +58,19 @@ export default class TalkRoomPage extends React.Component {
   /**
    * Edit Handler START
    */
-  onSaveBoxHeader(state, index) {
-    this.props.dispatch(setBoxHeader({ ...state, index }))
-  }
-
-  // Main Banner
-  onSaveMainBanner(state, index) {
-    this.props.dispatch(setMainBanner({ ...state, index }))
-  }
-
-  // Sub Banner
-  onSaveSubBanner(state, index) {
-    this.props.dispatch(setSubBanner({ ...state, index }))
-  }
+  // onSaveBoxHeader(state, index) {
+  //   this.props.dispatch(setBoxHeader({ ...state, index }))
+  // }
+  //
+  // // Main Banner
+  // onSaveMainBanner(state, index) {
+  //   this.props.dispatch(setMainBanner({ ...state, index }))
+  // }
+  //
+  // // Sub Banner
+  // onSaveSubBanner(state, index) {
+  //   this.props.dispatch(setSubBanner({ ...state, index }))
+  // }
 
   /**
    * Edit Handler END
@@ -162,41 +108,17 @@ export default class TalkRoomPage extends React.Component {
             </Link>
           </section>
 
-          <section className="cat container py-3 my-1">
+          <section className="cat container pt-3 mt-1">
             <Link>
-              <Select
-                placeholder={'全カテゴリ'}
-                styles={colourStyles}
-                options={options}
-                isSearchable={false}
-              />
+              <CategorySelect />
             </Link>
           </section>
 
           <section className="contents container py-3 my-1">
-            <div className="text-center">
-              <button type="button" className="btn btn-primary mx-2">
-                更新順
-              </button>
-              <button type="button" className="btn btn-primary mx-2">
-                コメント順
-              </button>
-            </div>
-          </section>
+            <PostSortButtons />
 
-          {range(props.top.boxes.length).map(i => (
-            <React.Fragment key={i}>
-              <BoxHeader
-                key={i}
-                defaultText={props.top.boxes[i].header.defaultText}
-                contentState={props.top.boxes[i].header.contentState}
-                src={props.top.boxes[i].header.src}
-                backgroundColor={props.top.boxes[i].header.backgroundColor}
-                onSave={state => this.onSaveBoxHeader(state, i)}
-              />
-              {this.createBoxContents()}
-            </React.Fragment>
-          ))}
+            {this.createBoxContents()}
+          </section>
         </main>
 
         <style jsx>{`
@@ -222,10 +144,6 @@ export default class TalkRoomPage extends React.Component {
             right: 20px;
             top: 22px;
             font-size: 30px;
-          }
-
-          .contents button {
-            width: 110px;
           }
         `}</style>
       </React.Fragment>

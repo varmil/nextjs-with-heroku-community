@@ -1,10 +1,10 @@
 import React from 'react'
 
-export default class BoxHeader extends React.Component {
+export default class BoxContent extends React.Component {
   render() {
     const props = this.props
     return (
-      <div className={props.className} style={props.style}>
+      <div style={props.style}>
         <div className={`card`}>
           <div className="card-header p-2">
             <div className="media">
