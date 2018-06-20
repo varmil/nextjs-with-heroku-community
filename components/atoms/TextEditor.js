@@ -42,6 +42,7 @@ export default class TextEditor extends React.Component {
             options: [
               'inline',
               'fontSize',
+              'fontFamily',
               'colorPicker',
               'list',
               'textAlign',
@@ -52,6 +53,17 @@ export default class TextEditor extends React.Component {
             },
             textAlign: {
               options: ['left', 'center', 'right']
+            },
+            fontFamily: {
+              options: [
+                'Arial',
+                'Georgia',
+                'Impact',
+                'Tahoma',
+                'Times New Roman',
+                'Verdana',
+                'Monotype Corsiva'
+              ]
             }
           }}
           editorState={this.state.editorState}
