@@ -153,7 +153,6 @@ export default class TopPage extends React.Component {
 
           <NavBar />
 
-          {/* TODO MenuBar */}
           <MenuBar
             onSave={this.onSaveMenuBar.bind(this)}
             style={props.common.menuBar.style}
