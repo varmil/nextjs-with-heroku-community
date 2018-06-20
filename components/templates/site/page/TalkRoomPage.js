@@ -1,18 +1,15 @@
 import React from 'react'
 import range from 'lodash/range'
+import Link from 'next/link'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-import {
-  setMainBanner,
-  setBoxHeader,
-  setSubBanner
-  // setFooter
-} from 'actions/site'
+import { setMainBanner, setBoxHeader, setSubBanner } from 'actions/site'
+import BoxHeader from 'components/organisms/site/base/BoxHeader'
 import BoxContent from 'components/organisms/site/BoxContent'
 import Header from 'components/templates/site/container/Header'
 import dynamic from 'next/dynamic'
 
 const initialState = {}
-let BoxHeader, SubBanner
+let SubBanner
 
 export default class TalkRoomPage extends React.Component {
   constructor(props) {
@@ -21,13 +18,10 @@ export default class TalkRoomPage extends React.Component {
     this.dynamicImport()
   }
 
-  // NOTE: dynamic import should be done before render(), not render() or constructor()
   dynamicImport() {
     if (this.props.edit) {
-      BoxHeader = dynamic(import('components/organisms/site/edit/BoxHeader'))
       SubBanner = dynamic(import('components/organisms/site/edit/SubBanner'))
     } else {
-      BoxHeader = dynamic(import('components/organisms/site/base/BoxHeader'))
       SubBanner = dynamic(import('components/organisms/site/base/SubBanner'))
     }
   }
@@ -127,7 +121,39 @@ export default class TalkRoomPage extends React.Component {
         <Header edit={props.edit} />
 
         <main>
-          <section>{talkRoom.desc.contentState}</section>
+          <section className="">
+            <BoxHeader
+              icon={false}
+              defaultText={props.top.boxes[0].header.defaultText}
+              contentState={props.top.boxes[0].header.contentState}
+              src={props.top.boxes[0].header.src}
+              backgroundColor={props.top.boxes[0].header.backgroundColor}
+            />
+          </section>
+
+          <section className="desc container py-3 my-1 font-weight-bold">
+            {talkRoom.desc.text}
+          </section>
+
+          <section className="inputForm container py-3 my-1">
+            <Link>
+              <div className="inner p-4">
+                <span>{talkRoom.inputForm.text}</span>
+                <i className="fas fa-image" />
+              </div>
+            </Link>
+          </section>
+
+          <section className="contents container py-3 my-1">
+            <div className="text-center">
+              <button type="button" className="btn btn-primary mx-2">
+                更新順
+              </button>
+              <button type="button" className="btn btn-primary mx-2">
+                コメント順
+              </button>
+            </div>
+          </section>
 
           {range(props.top.boxes.length).map(i => (
             <React.Fragment key={i}>
@@ -143,6 +169,36 @@ export default class TalkRoomPage extends React.Component {
             </React.Fragment>
           ))}
         </main>
+
+        <style jsx>{`
+          .desc {
+            border-bottom: solid gray 1px;
+          }
+
+          .inputForm .inner {
+            position: relative;
+            color: gray;
+            border: 2px solid gray;
+            border-radius: 25px;
+          }
+
+          span {
+            display: inline-block;
+            width: 80%;
+            font-size: 12px;
+          }
+
+          .inputForm .inner i {
+            position: absolute;
+            right: 20px;
+            top: 22px;
+            font-size: 30px;
+          }
+
+          .contents button {
+            width: 110px;
+          }
+        `}</style>
       </React.Fragment>
     )
   }

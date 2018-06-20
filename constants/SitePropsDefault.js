@@ -157,7 +157,8 @@ export const Welcome = {
  * TALK ROOM
  */
 export const TalkRoomDescDefault = {
-  contentState: null
+  text:
+    'コーディネートから新アイテムまで服の話題を中心に気軽に会話のできる場所です。'
 }
 
 export const TalkRoomInputFormDefault = {
