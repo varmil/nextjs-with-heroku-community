@@ -34,6 +34,7 @@
     "react-draft-wysiwyg": "^1.12.13",
     "react-redux": "5.0.7",
     "react-scroll": "^1.7.9",
+    "react-select": "^2.0.0-beta.6",
     "reactstrap": "^6.1.0",
     "redux": "4.0.0",
     "redux-actions": "^2.4.0",
