@@ -8,9 +8,15 @@ import {
   MainBanner as MainBannerDefault,
   Boxes as BoxesDefault,
   SubBanner as SubBannerDefault,
-  Footer as FooterDefault
+  Footer as FooterDefault,
+  Welcome as WelcomeDefault
 } from 'constants/SitePropsDefault'
-import { SitePreview, SiteCommon, SiteTop } from 'constants/ActionTypes'
+import {
+  SitePreview,
+  SiteCommon,
+  SiteTop,
+  SiteWelcome
+} from 'constants/ActionTypes'
 import Device from 'constants/Device'
 
 const initialState = {
@@ -25,11 +31,14 @@ const initialState = {
     menuBar: MenuBarDefault,
     footer: FooterDefault
   },
+
   top: {
     mainBanner: MainBannerDefault,
     boxes: BoxesDefault,
     subBanner: SubBannerDefault
-  }
+  },
+
+  welcome: WelcomeDefault
 }
 
 export default handleActions(
@@ -100,6 +109,17 @@ export default handleActions(
           subBanner: {
             item: { [action.payload.index]: { $set: action.payload } }
           }
+        }
+      })
+    },
+
+    /**
+     * WELCOME
+     */
+    [SiteWelcome.SET_WELCOME]: (state, action) => {
+      return update(state, {
+        welcome: {
+          $set: action.payload
         }
       })
     }

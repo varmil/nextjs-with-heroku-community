@@ -10,18 +10,11 @@ import {
   // setFooter
 } from 'actions/site'
 import BurgerMenu from 'components/organisms/site/BurgerMenu'
+import BoxContent from 'components/organisms/site/BoxContent'
 import dynamic from 'next/dynamic'
 
-// import NavBar from 'components/templates/site/container/EditableNavBar'
-// import MenuBar from 'components/organisms/site/edit/MenuBar'
-// import MainBanner from 'components/organisms/site/edit/MainBanner'
-// import BoxHeader from 'components/organisms/site/edit/BoxHeader'
-// import BoxContent from 'components/organisms/site/base/BoxContent'
-// import SubBanner from 'components/organisms/site/edit/SubBanner'
-// import Footer from 'components/organisms/site/edit/Footer'
-
 const initialState = {}
-let NavBar, MenuBar, MainBanner, BoxHeader, BoxContent, SubBanner
+let NavBar, MenuBar, MainBanner, BoxHeader, SubBanner
 
 export default class TopPage extends React.Component {
   constructor(props) {
@@ -40,14 +33,12 @@ export default class TopPage extends React.Component {
       MenuBar = dynamic(import('components/organisms/site/edit/MenuBar'))
       MainBanner = dynamic(import('components/organisms/site/edit/MainBanner'))
       BoxHeader = dynamic(import('components/organisms/site/edit/BoxHeader'))
-      BoxContent = dynamic(import('components/organisms/site/base/BoxContent'))
       SubBanner = dynamic(import('components/organisms/site/edit/SubBanner'))
     } else {
       NavBar = dynamic(import('components/templates/site/container/NavBar'))
       MenuBar = dynamic(import('components/organisms/site/base/MenuBar'))
       MainBanner = dynamic(import('components/organisms/site/base/MainBanner'))
       BoxHeader = dynamic(import('components/organisms/site/base/BoxHeader'))
-      BoxContent = dynamic(import('components/organisms/site/base/BoxContent'))
       SubBanner = dynamic(import('components/organisms/site/base/SubBanner'))
     }
   }

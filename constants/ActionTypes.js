@@ -22,6 +22,9 @@ export const SiteTop = createTypes(
   'SET_BOX_HEADER'
 )
 
+// （Edit, View）Welcome
+export const SiteWelcome = createTypes('site/welcome/', 'SET_WELCOME')
+
 // -----
 // -----
 // -----

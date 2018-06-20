@@ -138,3 +138,10 @@ export const Footer = {
     }
   ]
 }
+
+export const Welcome = {
+  contentState:
+    '{"blocks":[{"key":"a5fvj","text":"             Welcome to\\n    SAMPLE\\n        FAN\\nCOMMUNITY\\n                          Update your lifestyle","type":"unstyled","depth":0,"inlineStyleRanges":[{"offset":0,"length":104,"style":"ITALIC"},{"offset":0,"length":57,"style":"color-rgb(239,239,239)"},{"offset":83,"length":21,"style":"color-rgb(239,239,239)"},{"offset":0,"length":24,"style":"fontsize-24"},{"offset":24,"length":33,"style":"fontsize-48"},{"offset":57,"length":26,"style":"fontsize-14"},{"offset":83,"length":21,"style":"fontsize-12"}],"entityRanges":[],"data":{"text-align":"center"}}],"entityMap":{}}',
+  src: '/static/img/welcome-bg.png',
+  backgroundColor: '#f5f5f5'
+}

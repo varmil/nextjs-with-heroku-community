@@ -17,6 +17,7 @@ const STATE = {
 const IMAGE_SRCS = [
   'https://dummyimage.com/1140x220/000/fff.png',
   'https://dummyimage.com/500x180/000/fff.png',
+  '/static/img/welcome-bg.png',
   '/static/stub/logo-blue.png',
   '/static/stub/logo-white.png',
   '/static/stub/logo.png',

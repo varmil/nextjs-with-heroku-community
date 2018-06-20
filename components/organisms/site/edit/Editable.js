@@ -10,6 +10,7 @@ export default function ppHOC(WrappedComponent) {
       const newProps = omit(this.props, OMIT_KEYS)
       return (
         <div
+          id="editableContainer"
           className={`parent ${this.props.className || ''}`}
           onClick={e => {
             e.preventDefault()

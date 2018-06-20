@@ -34,7 +34,7 @@ class Edit extends React.Component {
       marginTop: OFFSET_TOP_MAINBODY,
       marginBottom: 20,
       backgroundColor: 'white',
-      minHeight: 900,
+      minHeight: 667,
       boxShadow: '3px 0px 20px black',
       // this is needed for burger menu
       overflow: 'hidden'
@@ -86,7 +86,9 @@ class Edit extends React.Component {
         <div className="mainBody">
           <SideBar width={SIDEBAR_WIDTH} offsetTop={OFFSET_TOP_SIDEBAR} />
 
-          <div style={this.addDeviceStyle()}>{this.props.children}</div>
+          <div id="editBody" style={this.addDeviceStyle()}>
+            {this.props.children}
+          </div>
         </div>
 
         <style global jsx>{`
