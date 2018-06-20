@@ -360,16 +360,8 @@ class SideBar extends React.Component {
 
         {/* page link */}
         <style jsx>{`
-          .pageItem {
-            cursor: pointer;
-          }
-
           .hierarchy {
             font-size: 13px;
-          }
-
-          .hierarchy1 {
-            text-indent: 10%;
           }
         `}</style>
       </nav>
