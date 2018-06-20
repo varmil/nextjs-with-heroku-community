@@ -38,14 +38,20 @@ class IconModal extends React.Component {
           <div className="form-group row">
             <label className="col-2 col-form-label">アイコン色変更</label>
             <div className="col-10">
-              <ColorPicker onClick={this.onChangeColor.bind(this)} />
+              <ColorPicker
+                onClick={this.onChangeColor.bind(this)}
+                color={this.props.style.color}
+              />
             </div>
           </div>
 
           <div className="form-group row">
             <label className="col-2 col-form-label">背景色変更</label>
             <div className="col-10">
-              <ColorPicker onClick={this.onChangeBGColor.bind(this)} />
+              <ColorPicker
+                onClick={this.onChangeBGColor.bind(this)}
+                color={this.props.style.backgroundColor}
+              />
             </div>
           </div>
         </ModalBody>

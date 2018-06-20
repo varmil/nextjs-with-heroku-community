@@ -56,7 +56,12 @@ export default class DesignImageEdit extends React.Component {
       case STATE.COMMUNE_LIB_IMAGE:
         return null
       case STATE.BACKGROUND_COLOR:
-        return <ColorPicker onClick={this.props.onClickBGColor} />
+        return (
+          <ColorPicker
+            onClick={this.props.onClickBGColor}
+            color={this.props.backgroundColor}
+          />
+        )
     }
   }
 
