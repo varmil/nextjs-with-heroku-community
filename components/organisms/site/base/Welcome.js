@@ -13,10 +13,16 @@ export default class BoxHeader extends React.Component {
         </main>
 
         <style global jsx>{`
+          html,
           body,
+          #__next,
           #editBody,
           #editableContainer {
             height: 100%;
+          }
+
+          #editBody {
+            height: 667px;
           }
         `}</style>
 
