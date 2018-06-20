@@ -1,11 +1,11 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import AdminHeader from 'components/organisms/AdminHeader'
 import WhiteBreadcrumb from 'components/organisms/WhiteBreadcrumb'
 import SideBar from 'components/templates/site/container/SideBar'
-import TopPage from 'components/templates/site/page/TopPage'
+// import TopPage from 'components/templates/site/page/TopPage'
 import Device from 'constants/Device'
 
-import { connect } from 'react-redux'
 // import { loadData } from 'actions/example'
 
 const initialState = {}
@@ -71,6 +71,7 @@ class Edit extends React.Component {
 
   render() {
     const props = this.props
+
     return (
       <div className="container-fluid">
         <div className="fixed-top">
@@ -85,9 +86,7 @@ class Edit extends React.Component {
         <div className="mainBody">
           <SideBar width={SIDEBAR_WIDTH} offsetTop={OFFSET_TOP_SIDEBAR} />
 
-          <div style={this.addDeviceStyle()}>
-            <TopPage {...props} edit={true} />
-          </div>
+          <div style={this.addDeviceStyle()}>{this.props.children}</div>
         </div>
 
         <style global jsx>{`
