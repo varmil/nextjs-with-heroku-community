@@ -3,9 +3,7 @@ import { connect } from 'react-redux'
 import AdminHeader from 'components/organisms/AdminHeader'
 import WhiteBreadcrumb from 'components/organisms/WhiteBreadcrumb'
 import SideBar from 'components/templates/site/container/SideBar'
-// import TopPage from 'components/templates/site/page/TopPage'
 import Device from 'constants/Device'
-
 // import { loadData } from 'actions/example'
 
 const initialState = {}
@@ -71,7 +69,6 @@ class Edit extends React.Component {
 
   render() {
     const props = this.props
-
     return (
       <div className="container-fluid">
         <div className="fixed-top">

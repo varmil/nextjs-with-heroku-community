@@ -72,6 +72,7 @@ const boxesBase = range(3).map(i => ({
   id: '', // サーバで管理しているスレッドID（URLに使う？）
   type: '', // TALK or SURVEY or REVIEW
   index: i,
+  slug: '', // （固定の）URLパス。これでselected判定など行う
   header: {
     defaultText: '', // use after box adding
     contentState: null, // draft-js
@@ -84,12 +85,15 @@ const boxesBase = range(3).map(i => ({
 }))
 export const Boxes = [
   update(boxesBase[0], {
+    slug: { $set: 'talkroom' },
     header: { defaultText: { $set: 'TALK ROOM' } }
   }),
   update(boxesBase[1], {
+    slug: { $set: 'yourvoice' },
     header: { defaultText: { $set: 'YOUR VOICE' } }
   }),
   update(boxesBase[2], {
+    slug: { $set: 'news' },
     header: { defaultText: { $set: 'NEWS' } }
   })
 ]

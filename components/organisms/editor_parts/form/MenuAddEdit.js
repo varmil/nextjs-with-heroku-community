@@ -1,4 +1,5 @@
 import React from 'react'
+import Color from 'constants/Color'
 
 export default class MenuAddEdit extends React.Component {
   render() {
@@ -31,7 +32,7 @@ export default class MenuAddEdit extends React.Component {
             width: 30px;
             height: 30px;
             border-radius: 50%;
-            background-color: #0090a1;
+            background-color: ${Color.PERA_BLUE};
             text-align: center;
             box-shadow: 0 2px 6px rgba(100, 100, 100, 0.8);
             cursor: pointer;

@@ -1,4 +1,5 @@
 import React from 'react'
+import Color from 'constants/Color'
 
 export class MultipleToggleGroup extends React.Component {
   render() {
@@ -60,7 +61,7 @@ export class MultipleToggle extends React.Component {
 
           .editMenu_selectLink.selected,
           .editMenu_selectLink:hover {
-            background-color: #0090a1;
+            background-color: ${Color.PERA_BLUE};
             color: #fff;
           }
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import Color from 'constants/Color'
 
 export default class ToggleSideSecond extends React.Component {
   addSelectedIfNeeded() {
@@ -28,7 +29,7 @@ export default class ToggleSideSecond extends React.Component {
           }
 
           .toggleSideSecond.selected {
-            background-color: #0090a1;
+            background-color: ${Color.PERA_BLUE};
           }
 
           .toggleSideSecond > a {
@@ -37,8 +38,8 @@ export default class ToggleSideSecond extends React.Component {
           }
 
           .toggleSideSecond:hover {
-            background-color: #0090a1;
-            border-color: #0090a1;
+            background-color: ${Color.PERA_BLUE};
+            border-color: ${Color.PERA_BLUE};
             color: #fff;
           }
 

@@ -2,8 +2,12 @@ import React from 'react'
 import Link from 'next/link'
 import { connect } from 'react-redux'
 import { setDevice } from 'actions/site'
+import ActiveLink from 'components/atoms/ActiveLink'
 import ToggleSideSecond from 'components/molecules/site/edit/ToggleSideSecond'
 import Device from 'constants/Device'
+import URL from 'constants/URL'
+import Color from 'constants/Color'
+import { getText } from 'utils/editor'
 
 const initialState = {}
 
@@ -41,7 +45,7 @@ const SideBarDevice = props => {
         a:hover,
         a.selected {
           color: #fff;
-          background-color: #0090a1;
+          background-color: ${Color.PERA_BLUE};
         }
 
         a {
@@ -61,6 +65,35 @@ const SideBarDevice = props => {
   )
 }
 
+// page item
+const PageItem = props => {
+  return (
+    <React.Fragment>
+      <ActiveLink href={`${URL.ADMIN_SITE_EDIT}/${props.slug}`}>
+        <div className={`pageItem hierarchy${props.level}`}>{props.text}</div>
+      </ActiveLink>
+
+      <style jsx>{`
+        .pageItem {
+          cursor: pointer;
+        }
+
+        .pageItem.active {
+          background-color: ${Color.PERA_BLUE};
+        }
+
+        .hierarchy1 {
+          text-indent: 10%;
+        }
+
+        .hierarchy2 {
+          text-indent: 20%;
+        }
+      `}</style>
+    </React.Fragment>
+  )
+}
+
 class SideBar extends React.Component {
   constructor(props) {
     super(props)
@@ -75,7 +108,20 @@ class SideBar extends React.Component {
     this.props.dispatch(setDevice({ device: type }))
   }
 
+  createPageHierarchy() {
+    return this.props.top.boxes.map((box, i) => (
+      <React.Fragment key={i}>
+        <PageItem
+          level={2}
+          slug={box.slug}
+          text={getText(box.header.contentState) || box.header.defaultText}
+        />
+      </React.Fragment>
+    ))
+  }
+
   render() {
+    const props = this.props
     return (
       <nav className="bg-faded sidebar" style={{ width: this.props.width }}>
         <ul className="sidebarActions">
@@ -138,17 +184,27 @@ class SideBar extends React.Component {
           />
         </ul>
 
-        <div>
-          <ToggleSideSecond icon="fa-object-group" text="レイアウト変更" />
+        <section>
           <ToggleSideSecond
             icon="fa-clipboard-list"
             text="テーマカラー変更"
-            selected={true}
+            selected={false}
           />
-          <ToggleSideSecond icon="fa-font" text="フォント変更" />
-          <ToggleSideSecond icon="fa-images" text="バナー追加" />
-          <ToggleSideSecond icon="fa-box" text="ボックス追加" />
-        </div>
+          {/* <ToggleSideSecond icon="fa-object-group" text="レイアウト変更" /> */}
+          {/* <ToggleSideSecond icon="fa-font" text="フォント変更" /> */}
+          {/* <ToggleSideSecond icon="fa-images" text="バナー追加" /> */}
+          {/* <ToggleSideSecond icon="fa-box" text="ボックス追加" /> */}
+        </section>
+
+        <section className="hierarchy mt-3">
+          <div className="my-2">
+            <PageItem level={1} slug={'welcome'} text={'Welcomeページ'} />
+          </div>
+          <div className="my-2">
+            <PageItem level={1} slug={'top'} text={'トップページ'} />
+            {this.createPageHierarchy()}
+          </div>
+        </section>
 
         <style global jsx>{`
           .sidebar {
@@ -227,8 +283,8 @@ class SideBar extends React.Component {
           }
 
           .sidebarActions li a:hover {
-            background-color: #0090a1;
-            border-color: #0090a1;
+            background-color: ${Color.PERA_BLUE};
+            border-color: ${Color.PERA_BLUE};
             color: #fff;
           }
 
@@ -301,11 +357,27 @@ class SideBar extends React.Component {
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
           }
         `}</style>
+
+        {/* page link */}
+        <style jsx>{`
+          .pageItem {
+            cursor: pointer;
+          }
+
+          .hierarchy {
+            font-size: 13px;
+          }
+
+          .hierarchy1 {
+            text-indent: 10%;
+          }
+        `}</style>
       </nav>
     )
   }
 }
 
 export default connect(state => ({
-  preview: state.site.preview
+  preview: state.site.preview,
+  top: state.site.top
 }))(SideBar)
