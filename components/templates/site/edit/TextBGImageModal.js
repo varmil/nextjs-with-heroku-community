@@ -85,6 +85,7 @@ class TextBGImageModal extends React.Component {
 
           <div className="form-group row">
             <DesignImageEdit
+              selectedImgSrc={state.src}
               backgroundColor={props.backgroundColor}
               onClickImage={this.onClickImage.bind(this)}
               onClickBGColor={this.onClickBGColor.bind(this)}

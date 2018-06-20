@@ -27,17 +27,11 @@ class ImageModal extends React.Component {
         <ModalBody className="container">
           <div className="form-group row">
             <DesignImageEdit
+              selectedImgSrc={this.state.src}
               onClickImage={this.onClickImage.bind(this)}
               secondToggleType={DesignImageEdit.TYPE_COMMUNE_LIB_IMAGE()}
             />
           </div>
-
-          {/* <div className="form-group row">
-            <label className="col-2 col-form-label">リンク</label>
-            <div className="col-10">
-              <LinkEditor />
-            </div>
-          </div> */}
         </ModalBody>
       </React.Fragment>
     )
