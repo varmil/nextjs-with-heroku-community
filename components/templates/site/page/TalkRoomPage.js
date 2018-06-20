@@ -12,9 +12,9 @@ import Header from 'components/templates/site/container/Header'
 import dynamic from 'next/dynamic'
 
 const initialState = {}
-let MainBanner, BoxHeader, SubBanner
+let BoxHeader, SubBanner
 
-export default class TopPage extends React.Component {
+export default class TalkRoomPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = initialState
@@ -24,11 +24,9 @@ export default class TopPage extends React.Component {
   // NOTE: dynamic import should be done before render(), not render() or constructor()
   dynamicImport() {
     if (this.props.edit) {
-      MainBanner = dynamic(import('components/organisms/site/edit/MainBanner'))
       BoxHeader = dynamic(import('components/organisms/site/edit/BoxHeader'))
       SubBanner = dynamic(import('components/organisms/site/edit/SubBanner'))
     } else {
-      MainBanner = dynamic(import('components/organisms/site/base/MainBanner'))
       BoxHeader = dynamic(import('components/organisms/site/base/BoxHeader'))
       SubBanner = dynamic(import('components/organisms/site/base/SubBanner'))
     }
@@ -116,34 +114,20 @@ export default class TopPage extends React.Component {
     this.props.dispatch(setSubBanner({ ...state, index }))
   }
 
-  // onSaveFooter(state) {
-  //   this.props.dispatch(setFooter(state))
-  // }
-
   /**
    * Edit Handler END
    */
 
   render() {
     const props = this.props
-    const mainBanner = props.top.mainBanner
+    const talkRoom = props.talkroom
 
     return (
       <React.Fragment>
         <Header edit={props.edit} />
 
         <main>
-          {range(mainBanner.item.length).map(i => (
-            <MainBanner
-              key={i}
-              className="mt-2 mb-3"
-              contentState={mainBanner.item[i].contentState}
-              src={mainBanner.item[i].src}
-              backgroundColor={mainBanner.item[i].backgroundColor}
-              href={mainBanner.item[i].href}
-              onSave={state => this.onSaveMainBanner(state, i)}
-            />
-          ))}
+          <section>{talkRoom.desc.contentState}</section>
 
           {range(props.top.boxes.length).map(i => (
             <React.Fragment key={i}>
@@ -158,14 +142,7 @@ export default class TopPage extends React.Component {
               {this.createBoxContents()}
             </React.Fragment>
           ))}
-
-          <div className="subBanner mt-3 mb-5">{this.createSubBanners()}</div>
         </main>
-
-        {/* <Footer
-          {...props.common.footer}
-          onSave={this.onSaveFooter.bind(this)}
-        /> */}
       </React.Fragment>
     )
   }

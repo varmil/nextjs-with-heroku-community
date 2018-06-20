@@ -1,5 +1,4 @@
 import React from 'react'
-import range from 'lodash/range'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { setWelcome } from 'actions/site'
 import dynamic from 'next/dynamic'
@@ -11,7 +10,6 @@ export default class WelcomePage extends React.Component {
   constructor(props) {
     super(props)
     this.state = initialState
-
     this.dynamicImport()
   }
 

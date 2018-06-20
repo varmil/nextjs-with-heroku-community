@@ -3,7 +3,8 @@ import {
   SitePreview,
   SiteCommon,
   SiteTop,
-  SiteWelcome
+  SiteWelcome,
+  SiteTalkRoom
 } from 'constants/ActionTypes'
 
 // preview
@@ -27,6 +28,13 @@ export let setSubBanner = createAction(SiteTop.SET_SUB_BANNER, e => e)
 
 // welcome
 export let setWelcome = createAction(SiteWelcome.SET_WELCOME, e => e)
+
+// talk room
+export let setTalkRoomDesc = createAction(SiteTalkRoom.SET_DESC, e => e)
+export let setTalkRoomInputForm = createAction(
+  SiteTalkRoom.SET_INPUT_FORM,
+  e => e
+)
 
 /**
  *  ASYNC ACTIONS

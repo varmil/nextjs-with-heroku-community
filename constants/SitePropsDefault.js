@@ -143,9 +143,23 @@ export const Footer = {
   ]
 }
 
+/**
+ * WELCOME
+ */
 export const Welcome = {
   contentState:
     '{"blocks":[{"key":"a5fvj","text":"                 Welcome to\\n    SAMPLE\\n        FAN\\nCOMMUNITY\\n                                Update your lifestyle","type":"unstyled","depth":0,"inlineStyleRanges":[{"offset":0,"length":114,"style":"ITALIC"},{"offset":0,"length":61,"style":"color-rgb(239,239,239)"},{"offset":93,"length":21,"style":"color-rgb(239,239,239)"},{"offset":0,"length":28,"style":"fontsize-24"},{"offset":0,"length":114,"style":"fontfamily-Monotype Corsiva"},{"offset":28,"length":33,"style":"fontsize-48"},{"offset":61,"length":32,"style":"fontsize-14"},{"offset":93,"length":21,"style":"fontsize-12"}],"entityRanges":[],"data":{"text-align":"center"}}],"entityMap":{}}',
   src: '/static/img/welcome-bg.png',
   backgroundColor: '#f5f5f5'
+}
+
+/**
+ * TALK ROOM
+ */
+export const TalkRoomDescDefault = {
+  contentState: null
+}
+
+export const TalkRoomInputFormDefault = {
+  text: '話題を投稿 / 質問してみましょう！'
 }

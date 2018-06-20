@@ -14,7 +14,6 @@ class EditWelcome extends React.Component {
 }
 
 export default connect(state => ({
-  preview: state.site.preview,
   common: state.site.common,
   welcome: state.site.welcome
 }))(EditWelcome)

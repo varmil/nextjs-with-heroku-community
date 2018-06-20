@@ -9,13 +9,16 @@ import {
   Boxes as BoxesDefault,
   SubBanner as SubBannerDefault,
   Footer as FooterDefault,
-  Welcome as WelcomeDefault
+  Welcome as WelcomeDefault,
+  TalkRoomDescDefault,
+  TalkRoomInputFormDefault
 } from 'constants/SitePropsDefault'
 import {
   SitePreview,
   SiteCommon,
   SiteTop,
-  SiteWelcome
+  SiteWelcome,
+  SiteTalkRoom
 } from 'constants/ActionTypes'
 import Device from 'constants/Device'
 
@@ -38,7 +41,12 @@ const initialState = {
     subBanner: SubBannerDefault
   },
 
-  welcome: WelcomeDefault
+  welcome: { ...WelcomeDefault },
+
+  talkroom: {
+    desc: TalkRoomDescDefault,
+    inputForm: TalkRoomInputFormDefault
+  }
 }
 
 export default handleActions(
@@ -121,6 +129,20 @@ export default handleActions(
         welcome: {
           $set: action.payload
         }
+      })
+    },
+
+    /**
+     * TALK ROOM
+     */
+    [SiteTalkRoom.SET_DESC]: (state, action) => {
+      return update(state, {
+        talkroom: { desc: { $set: action.payload } }
+      })
+    },
+    [SiteTalkRoom.SET_INPUT_FORM]: (state, action) => {
+      return update(state, {
+        talkroom: { inputForm: { $set: action.payload } }
       })
     }
   },
