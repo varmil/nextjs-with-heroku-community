@@ -1,6 +1,7 @@
 import React from 'react'
-import { Editor } from 'react-draft-wysiwyg'
 import { EditorState, convertFromRaw, convertToRaw } from 'draft-js'
+import dynamic from 'next/dynamic'
+const Editor = dynamic(import('components/atoms/BaseEditor'))
 
 export default class TextEditor extends React.Component {
   constructor(props) {
