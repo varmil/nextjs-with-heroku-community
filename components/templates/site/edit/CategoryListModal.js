@@ -12,12 +12,20 @@ import withSaveCancelFooter from 'components/organisms/modal/withSaveCancelFoote
 import MenuBlockEdit from 'components/organisms/editor_parts/form/MenuBlockEdit'
 
 const SortableItem = SortableElement(({ value, orderIndex, onChange }) => {
+  if (!value.editable) console.log(value)
+
+  const baseStyle = { zIndex: 1100 }
+  const addedStyle = value.editable
+    ? { cursor: 'row-resize' }
+    : { backgroundColor: '#bfbdbd' }
+
   return (
     <MenuBlockEdit
       {...value}
-      style={{ zIndex: 1100, cursor: 'row-resize' }}
+      style={{ ...baseStyle, ...addedStyle }}
       index={orderIndex}
       label={'カテゴリ' + value.categoryIndex}
+      editable={value.editable}
       onChange={onChange}
     />
   )
@@ -30,6 +38,7 @@ const SortableList = SortableContainer(({ items, onChange }) => {
         <SortableItem
           key={`item-${index}`}
           index={index}
+          disabled={!value.editable}
           value={value}
           orderIndex={index}
           onChange={onChange}

@@ -17,6 +17,7 @@ export default class MenuBlockEdit extends React.Component {
                 className="menuText"
                 type="text"
                 value={props.text || ''}
+                readOnly={!props.editable}
                 onChange={e => props.onChange(e, props.index)}
               />
             </div>
@@ -80,6 +81,7 @@ export default class MenuBlockEdit extends React.Component {
           }
 
           input[type='text'] {
+            background-color: ${'initial'};
             margin-bottom: 5px;
             padding: 7px 10px;
             font-size: 16px;

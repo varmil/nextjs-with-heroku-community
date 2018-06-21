@@ -2,6 +2,9 @@ import range from 'lodash/range'
 import Color from 'constants/Color'
 import update from 'immutability-helper'
 
+const MAX_CATEGORIES_NUM = 10
+const FREE_TALK_INDEX = 9
+
 export const Logo = {
   src: '/static/stub/logo-blue.png'
 }
@@ -165,9 +168,10 @@ export const TalkRoomInputFormDefault = {
   text: '話題を投稿 / 質問してみましょう！'
 }
 
-const itemBase = range(10).map(i => ({
+const itemBase = range(MAX_CATEGORIES_NUM).map(i => ({
   categoryIndex: i, // 0 - 9 この番号で管理する
-  text: ''
+  text: i === FREE_TALK_INDEX ? 'フリートーク' : '', // index9はフリートークで固定
+  editable: i !== FREE_TALK_INDEX
 }))
 export const TalkRoomCategoriesDefault = {
   item: itemBase

@@ -46,7 +46,6 @@ export default class TalkRoomPage extends React.Component {
    * Edit Handler START
    */
   onSaveCategory(state) {
-    console.log(state)
     this.props.dispatch(setTalkRoomCategories({ ...state }))
   }
 
