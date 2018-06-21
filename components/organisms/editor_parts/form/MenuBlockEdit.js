@@ -7,9 +7,11 @@ export default class MenuBlockEdit extends React.Component {
 
     return (
       <React.Fragment>
-        <div className="editNav_menuBlock">
+        <div className="editNav_menuBlock" style={props.style}>
           <div className="form-group row">
-            <label className="col-2 col-form-label">テキスト</label>
+            <label className="col-2 col-form-label">
+              {props.label || 'テキスト'}
+            </label>
             <div className="col-10">
               <input
                 className="menuText"
@@ -20,21 +22,31 @@ export default class MenuBlockEdit extends React.Component {
             </div>
           </div>
 
-          <div className="form-group row">
-            <label className="col-2 col-form-label">リンク</label>
-            <div className="col-10">
-              <LinkEditor />
-            </div>
-          </div>
+          {(() => {
+            if (!props.link) return null
+            return (
+              <div className="form-group row">
+                <label className="col-2 col-form-label">リンク</label>
+                <div className="col-10">
+                  <LinkEditor />
+                </div>
+              </div>
+            )
+          })()}
 
-          <div
-            className="editNav_delete"
-            onClick={() => props.onDelete(props.index)}
-          >
-            <div className="editNav_deleteBtn">
-              <i className="fa fa-times" />
-            </div>
-          </div>
+          {(() => {
+            if (!props.delete) return null
+            return (
+              <div
+                className="editNav_delete"
+                onClick={() => props.onDelete(props.index)}
+              >
+                <div className="editNav_deleteBtn">
+                  <i className="fa fa-times" />
+                </div>
+              </div>
+            )
+          })()}
         </div>
 
         <style jsx>{`
@@ -72,7 +84,8 @@ export default class MenuBlockEdit extends React.Component {
             padding: 7px 10px;
             font-size: 16px;
             border: 1px solid #ccc;
-            width: 400px;
+            width: 80%;
+            max-width: 400px;
           }
 
           .editMenu_controller [name='menuText'] {

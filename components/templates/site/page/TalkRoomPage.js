@@ -5,7 +5,7 @@ import BoxHeader from 'components/organisms/site/base/BoxHeader'
 import Header from 'components/templates/site/container/Header'
 import PostSortButtons from 'components/molecules/PostSortButtons'
 import BoxContent from 'components/organisms/site/BoxContent'
-import { setMainBanner, setBoxHeader, setSubBanner } from 'actions/site'
+import { setTalkRoomCategories } from 'actions/site'
 
 const initialState = {}
 
@@ -45,10 +45,11 @@ export default class TalkRoomPage extends React.Component {
   /**
    * Edit Handler START
    */
-  // onSaveBoxHeader(state, index) {
-  //   this.props.dispatch(setBoxHeader({ ...state, index }))
-  // }
-  //
+  onSaveCategory(state) {
+    console.log(state)
+    this.props.dispatch(setTalkRoomCategories({ ...state }))
+  }
+
   // // Main Banner
   // onSaveMainBanner(state, index) {
   //   this.props.dispatch(setMainBanner({ ...state, index }))
@@ -87,7 +88,7 @@ export default class TalkRoomPage extends React.Component {
           </section>
 
           <section className="inputForm container py-3 my-1">
-            <Link>
+            <Link href="">
               <div className="inner p-4">
                 <span>{talkRoom.inputForm.text}</span>
                 <i className="fas fa-image" />
@@ -96,9 +97,10 @@ export default class TalkRoomPage extends React.Component {
           </section>
 
           <section className="cat container pt-3 mt-1">
-            <Link>
-              <props.categorySelect />
-            </Link>
+            <props.categorySelect
+              item={talkRoom.categories.item}
+              onSave={this.onSaveCategory.bind(this)}
+            />
           </section>
 
           <section className="contents container py-3 my-1">

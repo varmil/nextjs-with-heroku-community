@@ -35,6 +35,10 @@ export let setTalkRoomInputForm = createAction(
   SiteTalkRoom.SET_INPUT_FORM,
   e => e
 )
+export let setTalkRoomCategories = createAction(
+  SiteTalkRoom.SET_CATEGORIES,
+  e => e
+)
 
 /**
  *  ASYNC ACTIONS

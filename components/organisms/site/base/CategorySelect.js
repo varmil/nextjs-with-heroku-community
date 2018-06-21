@@ -27,7 +27,7 @@ export default class CategorySelect extends React.Component {
     const props = this.props
     return (
       <React.Fragment>
-        <Link>
+        <Link href="">
           <Select
             placeholder={'全カテゴリ'}
             styles={colourStyles}

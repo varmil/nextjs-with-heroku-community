@@ -11,7 +11,8 @@ import {
   Footer as FooterDefault,
   Welcome as WelcomeDefault,
   TalkRoomDescDefault,
-  TalkRoomInputFormDefault
+  TalkRoomInputFormDefault,
+  TalkRoomCategoriesDefault
 } from 'constants/SitePropsDefault'
 import {
   SitePreview,
@@ -45,7 +46,8 @@ const initialState = {
 
   talkroom: {
     desc: TalkRoomDescDefault,
-    inputForm: TalkRoomInputFormDefault
+    inputForm: TalkRoomInputFormDefault,
+    categories: TalkRoomCategoriesDefault
   }
 }
 
@@ -143,6 +145,11 @@ export default handleActions(
     [SiteTalkRoom.SET_INPUT_FORM]: (state, action) => {
       return update(state, {
         talkroom: { inputForm: { $set: action.payload } }
+      })
+    },
+    [SiteTalkRoom.SET_CATEGORIES]: (state, action) => {
+      return update(state, {
+        talkroom: { categories: { $set: action.payload } }
       })
     }
   },

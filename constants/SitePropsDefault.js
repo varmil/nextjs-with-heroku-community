@@ -164,3 +164,11 @@ export const TalkRoomDescDefault = {
 export const TalkRoomInputFormDefault = {
   text: '話題を投稿 / 質問してみましょう！'
 }
+
+const itemBase = range(10).map(i => ({
+  categoryIndex: i, // 0 - 9 この番号で管理する
+  text: ''
+}))
+export const TalkRoomCategoriesDefault = {
+  item: itemBase
+}

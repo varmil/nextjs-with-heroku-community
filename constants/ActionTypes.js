@@ -29,7 +29,8 @@ export const SiteWelcome = createTypes('site/welcome/', 'SET_WELCOME')
 export const SiteTalkRoom = createTypes(
   'site/talkroom/',
   'SET_DESC',
-  'SET_INPUT_FORM'
+  'SET_INPUT_FORM',
+  'SET_CATEGORIES'
 )
 
 // -----
