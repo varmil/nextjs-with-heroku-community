@@ -23,7 +23,19 @@ const colourStyles = {
 const initialState = {}
 
 export default class CategorySelect extends React.Component {
+  constructor(props) {
+    super(props)
+    // work around for SSR
+    // https://github.com/zeit/next.js/issues/1722
+    this.state = { show: false }
+  }
+
+  componentDidMount() {
+    this.setState({ ...this.state, show: true })
+  }
+
   render() {
+    if (!this.state.show) return null
     const props = this.props
     return (
       <React.Fragment>

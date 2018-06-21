@@ -1,11 +1,14 @@
 import React from 'react'
-import range from 'lodash/range'
 import Link from 'next/link'
 import BoxHeader from 'components/organisms/site/base/BoxHeader'
 import Header from 'components/templates/site/container/Header'
 import PostSortButtons from 'components/molecules/PostSortButtons'
 import BoxContent from 'components/organisms/site/BoxContent'
-import { setTalkRoomCategories } from 'actions/site'
+import {
+  setTalkRoomCategories,
+  setTalkRoomDesc,
+  setTalkRoomInputForm
+} from 'actions/site'
 
 const initialState = {}
 
@@ -45,19 +48,19 @@ export default class TalkRoomPage extends React.Component {
   /**
    * Edit Handler START
    */
+  onSaveDesc(state) {
+    if (state.text.length === 0) return
+    this.props.dispatch(setTalkRoomDesc({ ...state }))
+  }
+
+  onSaveInputForm(state) {
+    if (state.text.length === 0) return
+    this.props.dispatch(setTalkRoomInputForm({ ...state }))
+  }
+
   onSaveCategory(state) {
     this.props.dispatch(setTalkRoomCategories({ ...state }))
   }
-
-  // // Main Banner
-  // onSaveMainBanner(state, index) {
-  //   this.props.dispatch(setMainBanner({ ...state, index }))
-  // }
-  //
-  // // Sub Banner
-  // onSaveSubBanner(state, index) {
-  //   this.props.dispatch(setSubBanner({ ...state, index }))
-  // }
 
   /**
    * Edit Handler END
@@ -82,17 +85,19 @@ export default class TalkRoomPage extends React.Component {
             />
           </section>
 
-          <section className="desc container py-3 my-1 font-weight-bold">
-            {talkRoom.desc.text}
+          <section className="desc container py-3 my-1">
+            <props.pageDescription
+              text={talkRoom.desc.text}
+              onSave={this.onSaveDesc.bind(this)}
+            />
           </section>
 
           <section className="inputForm container py-3 my-1">
-            <Link href="">
-              <div className="inner p-4">
-                <span>{talkRoom.inputForm.text}</span>
-                <i className="fas fa-image" />
-              </div>
-            </Link>
+            <props.preInputForm
+              href={''}
+              text={talkRoom.inputForm.text}
+              onSave={this.onSaveInputForm.bind(this)}
+            />
           </section>
 
           <section className="cat container pt-3 mt-1">
@@ -112,26 +117,6 @@ export default class TalkRoomPage extends React.Component {
         <style jsx>{`
           .desc {
             border-bottom: solid gray 1px;
-          }
-
-          .inputForm .inner {
-            position: relative;
-            color: gray;
-            border: 2px solid gray;
-            border-radius: 25px;
-          }
-
-          span {
-            display: inline-block;
-            width: 80%;
-            font-size: 12px;
-          }
-
-          .inputForm .inner i {
-            position: absolute;
-            right: 20px;
-            top: 22px;
-            font-size: 30px;
           }
         `}</style>
       </React.Fragment>

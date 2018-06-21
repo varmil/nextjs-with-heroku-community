@@ -7,7 +7,7 @@ Router.onRouteChangeStart = url => {
   console.log(`Loading: ${url}`)
   NProgress.start()
 }
-Router.onRouteChangeComplete = () => setTimeout(() => NProgress.done(), 2000)
+Router.onRouteChangeComplete = () => NProgress.done()
 Router.onRouteChangeError = () => NProgress.done()
 
 const LoadingHeader = () => (
