@@ -7,6 +7,7 @@
     "react/react-in-jsx-scope": 0,
     "react/prop-types": 0,
     "generator-star-spacing": 0,
-    "react/no-deprecated": 0
+    "react/no-deprecated": 0,
+    "react/display-name": 0
   }
 }

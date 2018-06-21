@@ -3,6 +3,7 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import withRedux from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
+import withAppLayout from 'components/templates/withAppLayout'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 
 import createStore from 'store'
@@ -30,4 +31,5 @@ class MyApp extends App {
   }
 }
 
-export default withRedux(createStore)(withReduxSaga({ async: true })(MyApp))
+const ReduxApp = withRedux(createStore)(withReduxSaga({ async: true })(MyApp))
+export default withAppLayout(ReduxApp)
