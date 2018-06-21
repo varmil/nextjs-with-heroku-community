@@ -1,31 +1,18 @@
 import React from 'react'
 import range from 'lodash/range'
 import Link from 'next/link'
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-import { setMainBanner, setBoxHeader, setSubBanner } from 'actions/site'
-import CategorySelect from 'components/molecules/CategorySelect'
-import PostSortButtons from 'components/molecules/PostSortButtons'
 import BoxHeader from 'components/organisms/site/base/BoxHeader'
-import BoxContent from 'components/organisms/site/BoxContent'
 import Header from 'components/templates/site/container/Header'
-import dynamic from 'next/dynamic'
+import PostSortButtons from 'components/molecules/PostSortButtons'
+import BoxContent from 'components/organisms/site/BoxContent'
+import { setMainBanner, setBoxHeader, setSubBanner } from 'actions/site'
 
 const initialState = {}
-let SubBanner
 
 export default class TalkRoomPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = initialState
-    this.dynamicImport()
-  }
-
-  dynamicImport() {
-    if (this.props.edit) {
-      SubBanner = dynamic(import('components/organisms/site/edit/SubBanner'))
-    } else {
-      SubBanner = dynamic(import('components/organisms/site/base/SubBanner'))
-    }
   }
 
   createBoxContents() {
@@ -110,7 +97,7 @@ export default class TalkRoomPage extends React.Component {
 
           <section className="cat container pt-3 mt-1">
             <Link>
-              <CategorySelect />
+              <props.categorySelect />
             </Link>
           </section>
 

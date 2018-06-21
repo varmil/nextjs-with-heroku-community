@@ -1,7 +1,6 @@
 import React from 'react'
 import { Editor } from 'react-draft-wysiwyg'
 import { EditorState, convertFromRaw, convertToRaw } from 'draft-js'
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 
 export default class TextEditor extends React.Component {
   constructor(props) {

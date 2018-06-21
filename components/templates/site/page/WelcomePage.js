@@ -1,5 +1,4 @@
 import React from 'react'
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { setWelcome } from 'actions/site'
 
 const initialState = {}

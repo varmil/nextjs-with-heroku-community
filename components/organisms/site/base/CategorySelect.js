@@ -2,7 +2,6 @@ import React from 'react'
 import range from 'lodash/range'
 import Link from 'next/link'
 import Select from 'react-select'
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 
 const options = [
   { value: 'chocolate', label: 'Chocolate' },

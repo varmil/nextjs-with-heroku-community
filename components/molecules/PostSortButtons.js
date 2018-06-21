@@ -1,6 +1,5 @@
 import React from 'react'
 import range from 'lodash/range'
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 
 const initialState = {}
 
