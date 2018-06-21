@@ -1,38 +1,30 @@
 import React from 'react'
 import range from 'lodash/range'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-import {
-  setMainBanner,
-  setBoxHeader,
-  setSubBanner
-  // setFooter
-} from 'actions/site'
+import { setMainBanner, setBoxHeader, setSubBanner } from 'actions/site'
 import BoxContent from 'components/organisms/site/BoxContent'
 import Header from 'components/templates/site/container/Header'
-import dynamic from 'next/dynamic'
 
 const initialState = {}
-let MainBanner, BoxHeader, SubBanner
 
 export default class TopPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = initialState
-    this.dynamicImport()
   }
 
   // NOTE: dynamic import should be done before render(), not render() or constructor()
-  dynamicImport() {
-    if (this.props.edit) {
-      MainBanner = dynamic(import('components/organisms/site/edit/MainBanner'))
-      BoxHeader = dynamic(import('components/organisms/site/edit/BoxHeader'))
-      SubBanner = dynamic(import('components/organisms/site/edit/SubBanner'))
-    } else {
-      MainBanner = dynamic(import('components/organisms/site/base/MainBanner'))
-      BoxHeader = dynamic(import('components/organisms/site/base/BoxHeader'))
-      SubBanner = dynamic(import('components/organisms/site/base/SubBanner'))
-    }
-  }
+  // dynamicImport() {
+  //   if (this.props.edit) {
+  //     MainBanner = dynamic(import('components/organisms/site/edit/MainBanner'))
+  //     BoxHeader = dynamic(import('components/organisms/site/edit/BoxHeader'))
+  //     SubBanner = dynamic(import('components/organisms/site/edit/SubBanner'))
+  //   } else {
+  //     MainBanner = dynamic(import('components/organisms/site/base/MainBanner'))
+  //     BoxHeader = dynamic(import('components/organisms/site/base/BoxHeader'))
+  //     SubBanner = dynamic(import('components/organisms/site/base/SubBanner'))
+  //   }
+  // }
 
   // http://blog.keisuke11.com/webdesign/horizontal-scroll/
   createBoxContents() {
@@ -85,7 +77,7 @@ export default class TopPage extends React.Component {
     return (
       <div className="">
         {range(subBanner.item.length).map(i => (
-          <SubBanner
+          <this.props.subBanner
             key={i}
             className="mb-2"
             contentState={subBanner.item[i].contentState}
@@ -134,7 +126,7 @@ export default class TopPage extends React.Component {
 
         <main>
           {range(mainBanner.item.length).map(i => (
-            <MainBanner
+            <props.mainBanner
               key={i}
               className="mt-2 mb-3"
               contentState={mainBanner.item[i].contentState}
@@ -147,7 +139,7 @@ export default class TopPage extends React.Component {
 
           {range(props.top.boxes.length).map(i => (
             <React.Fragment key={i}>
-              <BoxHeader
+              <props.boxHeader
                 key={i}
                 defaultText={props.top.boxes[i].header.defaultText}
                 contentState={props.top.boxes[i].header.contentState}
