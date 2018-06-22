@@ -13,11 +13,11 @@ export let setDevice = createAction(SitePreview.SET_DEVICE, e => e)
 
 // common
 export let setLogo = createAction(SiteCommon.SET_LOGO, e => e)
-export let setNotificationIcon = createAction(
-  SiteCommon.SET_NOTIFICATION_ICON,
-  e => e
-)
-export let setAccountIcon = createAction(SiteCommon.SET_ACCOUNT_ICON, e => e)
+// export let setNotificationIcon = createAction(
+//   SiteCommon.SET_NOTIFICATION_ICON,
+//   e => e
+// )
+// export let setAccountIcon = createAction(SiteCommon.SET_ACCOUNT_ICON, e => e)
 export let setMenuBarStyle = createAction(SiteCommon.SET_MENUBAR_STYLE, e => e)
 export let setMenuBarItem = createAction(SiteCommon.SET_MENUBAR_ITEM, e => e)
 export let setFooter = createAction(SiteCommon.SET_FOOTER, e => e)

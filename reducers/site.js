@@ -2,8 +2,8 @@ import { handleActions } from 'redux-actions'
 import update from 'immutability-helper'
 import {
   Logo as LogoDefault,
-  NotificationIcon as NotificationIconDefault,
-  AccountIcon as AccountIconDefault,
+  // NotificationIcon as NotificationIconDefault,
+  // AccountIcon as AccountIconDefault,
   MenuBar as MenuBarDefault,
   MainBanner as MainBannerDefault,
   Boxes as BoxesDefault,
@@ -33,8 +33,8 @@ const initialState = {
 
   common: {
     logo: LogoDefault,
-    notificationIcon: NotificationIconDefault,
-    accountIcon: AccountIconDefault,
+    // notificationIcon: NotificationIconDefault,
+    // accountIcon: AccountIconDefault,
     menuBar: MenuBarDefault,
     footer: FooterDefault
   },
