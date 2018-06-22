@@ -1,17 +1,13 @@
 import React from 'react'
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
-} from 'reactstrap'
+
+import Navbar from 'reactstrap/lib/Navbar'
+import NavbarBrand from 'reactstrap/lib/NavbarBrand'
+import Nav from 'reactstrap/lib/Nav'
+import NavItem from 'reactstrap/lib/NavItem'
+import UncontrolledDropdown from 'reactstrap/lib/UncontrolledDropdown'
+import DropdownToggle from 'reactstrap/lib/DropdownToggle'
+import DropdownMenu from 'reactstrap/lib/DropdownMenu'
+import DropdownItem from 'reactstrap/lib/DropdownItem'
 import Color from '../../constants/Color'
 
 const brandStyle = {

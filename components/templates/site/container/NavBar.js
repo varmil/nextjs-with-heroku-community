@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Navbar, NavbarBrand } from 'reactstrap'
+import Navbar from 'reactstrap/lib/Navbar'
+import NavbarBrand from 'reactstrap/lib/NavbarBrand'
 import { setLogo } from 'actions/site'
 import { action as toggleMenu } from 'redux-burger-menu'
 import CommunityLogo from 'components/organisms/site/base/CommunityLogo'

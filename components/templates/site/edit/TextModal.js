@@ -1,6 +1,9 @@
 import React from 'react'
 import update from 'immutability-helper'
-import { ModalHeader, ModalBody, Input, FormFeedback } from 'reactstrap'
+import ModalHeader from 'reactstrap/lib/ModalHeader'
+import ModalBody from 'reactstrap/lib/ModalBody'
+import Input from 'reactstrap/lib/Input'
+import FormFeedback from 'reactstrap/lib/FormFeedback'
 import withSaveCancelFooter from 'components/organisms/modal/withSaveCancelFooter'
 
 // テキスト編集するモーダル

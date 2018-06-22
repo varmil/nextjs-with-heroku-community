@@ -1,6 +1,7 @@
 import React from 'react'
 import update from 'immutability-helper'
-import { ModalHeader, ModalBody } from 'reactstrap'
+import ModalHeader from 'reactstrap/lib/ModalHeader'
+import ModalBody from 'reactstrap/lib/ModalBody'
 import withSaveCancelFooter from 'components/organisms/modal/withSaveCancelFooter'
 import ColorPicker from 'components/molecules/ColorPicker'
 

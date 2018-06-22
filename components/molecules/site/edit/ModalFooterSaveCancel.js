@@ -1,5 +1,6 @@
 import React from 'react'
-import { ModalFooter, Button } from 'reactstrap'
+import ModalFooter from 'reactstrap/lib/ModalFooter'
+import Button from 'reactstrap/lib/Button'
 
 // 編集モーダルの汎用フッター
 export default class ModalFooterSaveCancel extends React.Component {

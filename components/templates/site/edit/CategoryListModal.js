@@ -1,7 +1,8 @@
 import React from 'react'
 import range from 'lodash/range'
 import update from 'immutability-helper'
-import { ModalHeader, ModalBody } from 'reactstrap'
+import ModalHeader from 'reactstrap/lib/ModalHeader'
+import ModalBody from 'reactstrap/lib/ModalBody'
 import {
   SortableContainer,
   SortableElement,

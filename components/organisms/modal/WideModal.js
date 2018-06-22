@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Modal } from 'reactstrap'
+import Modal from 'reactstrap/lib/Modal'
 
 const modalStyle = {
   maxWidth: '90%'

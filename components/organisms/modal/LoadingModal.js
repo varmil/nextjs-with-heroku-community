@@ -1,5 +1,8 @@
 import React from 'react'
-import { Progress, Modal, ModalHeader, ModalBody } from 'reactstrap'
+import Progress from 'reactstrap/lib/Progress'
+import Modal from 'reactstrap/lib/Modal'
+import ModalHeader from 'reactstrap/lib/ModalHeader'
+import ModalBody from 'reactstrap/lib/ModalBody'
 
 class LoadingModal extends React.Component {
   render() {
