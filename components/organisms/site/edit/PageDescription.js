@@ -1,11 +1,11 @@
 import React from 'react'
-import compose from 'lodash/fp/compose'
+import flowRight from 'lodash/flowRight'
 import toEditable from './Editable'
 import withModal from './withModal'
 import Modal from 'components/templates/site/edit/TextModal'
 import PageDescription from 'components/organisms/site/base/PageDescription'
 
-const Composed = compose(
+const Composed = flowRight(
   c => withModal(c, Modal),
   toEditable
 )(PageDescription)

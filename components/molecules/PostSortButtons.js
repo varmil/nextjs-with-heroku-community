@@ -1,5 +1,4 @@
 import React from 'react'
-import range from 'lodash/range'
 
 const initialState = {}
 

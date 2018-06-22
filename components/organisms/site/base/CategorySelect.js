@@ -1,5 +1,4 @@
 import React from 'react'
-import range from 'lodash/range'
 import Link from 'next/link'
 import Select from 'react-select'
 
