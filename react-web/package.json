@@ -1,0 +1,54 @@
+{
+  "name": "react-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js",
+    "heroku-postbuild": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Akihiro Yamamoto",
+  "engines": {
+    "node": "10.3.0"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@zeit/next-bundle-analyzer": "^0.1.1",
+    "@zeit/next-css": "^0.2.0",
+    "draft-js": "^0.10.5",
+    "es6-promise": "4.1.1",
+    "immutability-helper": "^2.7.0",
+    "isomorphic-unfetch": "2.0.0",
+    "lodash": "^4.17.10",
+    "next": "^6.0.4-canary.8",
+    "next-redux-saga": "3.0.0-beta.2",
+    "next-redux-wrapper": "2.0.0-beta.6",
+    "next-routes": "^1.4.2",
+    "nprogress": "^0.2.0",
+    "rc-steps": "^3.1.1",
+    "react": "^16.4.0",
+    "react-burger-menu": "^2.5.2",
+    "react-color": "^2.14.1",
+    "react-dom": "^16.4.0",
+    "react-draft-wysiwyg": "^1.12.13",
+    "react-redux": "5.0.7",
+    "react-scroll": "^1.7.9",
+    "react-select": "^2.0.0-beta.6",
+    "react-sortable-hoc": "^0.8.3",
+    "reactstrap": "^6.1.0",
+    "redux": "4.0.0",
+    "redux-actions": "^2.4.0",
+    "redux-burger-menu": "^0.2.7",
+    "redux-saga": "0.16.0",
+    "webpack-bundle-analyzer": "^2.13.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.3",
+    "babel-plugin-module-resolver": "^3.1.1",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "redux-devtools-extension": "2.13.2"
+  }
+}
