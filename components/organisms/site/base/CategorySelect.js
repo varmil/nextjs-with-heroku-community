@@ -19,8 +19,6 @@ const colourStyles = {
   })
 }
 
-const initialState = {}
-
 export default class CategorySelect extends React.Component {
   constructor(props) {
     super(props)
