@@ -1,5 +1,5 @@
 import React from 'react'
-import LinkEditor from 'components/molecules/site/edit/LinkEditor'
+import LinkEditor from 'components/molecules/edit_modal/LinkEditor'
 
 export default class MenuBlockEdit extends React.Component {
   render() {

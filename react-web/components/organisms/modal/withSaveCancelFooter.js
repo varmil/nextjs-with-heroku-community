@@ -1,6 +1,6 @@
 import React from 'react'
 import WideModal from 'components/organisms/modal/WideModal'
-import ModalFooterSaveCancel from 'components/molecules/site/edit/ModalFooterSaveCancel'
+import ModalFooterSaveCancel from 'components/molecules/edit_modal/ModalFooterSaveCancel'
 
 export default function ppHOC(WrappedComponent) {
   return class PP extends React.Component {

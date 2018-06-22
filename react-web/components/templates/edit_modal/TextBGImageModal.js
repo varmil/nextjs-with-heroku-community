@@ -5,7 +5,7 @@ import ModalBody from 'reactstrap/lib/ModalBody'
 import TextEditor from 'components/atoms/TextEditor'
 import withSaveCancelFooter from 'components/organisms/modal/withSaveCancelFooter'
 import DesignImageEdit from 'components/organisms/edit_modal/DesignImageEdit'
-import LinkEditor from 'components/molecules/site/edit/LinkEditor'
+import LinkEditor from 'components/molecules/edit_modal/LinkEditor'
 
 // テキスト編集可能なモーダル。
 // src             --> 背景画像

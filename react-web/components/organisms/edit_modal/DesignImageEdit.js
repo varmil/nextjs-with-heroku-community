@@ -5,7 +5,7 @@ import {
   MultipleToggle
 } from 'components/atoms/MultipleToggle'
 import ColorPicker from 'components/molecules/ColorPicker'
-import { ImageContainer } from 'components/molecules/site/edit/ImageShower'
+import { ImageContainer } from 'components/molecules/edit_modal/ImageShower'
 
 const STATE = {
   EXISTING: 0,
