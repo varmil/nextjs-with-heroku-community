@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
-import AdminHeader from 'components/organisms/AdminHeader'
-import WhiteBreadcrumb from 'components/organisms/WhiteBreadcrumb'
+import AdminHeader from 'components/organisms/admin/AdminHeader'
+import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
 import CommonFooter from 'components/organisms/CommonFooter'
 
 const initialState = {}
