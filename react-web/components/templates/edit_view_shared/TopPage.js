@@ -2,7 +2,7 @@ import React from 'react'
 import range from 'lodash/range'
 import { setMainBanner, setBoxHeader, setSubBanner } from 'actions/site'
 import BoxContent from 'components/organisms/site/BoxContent'
-import Header from 'components/templates/site/container/Header'
+import Header from 'components/templates/container/Header'
 
 const initialState = {}
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import TopPage from 'components/templates/site/page/TopPage'
+import TopPage from 'components/templates/edit_view_shared/TopPage'
 import MainBanner from 'components/organisms/site/base/MainBanner'
 import BoxHeader from 'components/organisms/site/base/BoxHeader'
 import SubBanner from 'components/organisms/site/base/SubBanner'

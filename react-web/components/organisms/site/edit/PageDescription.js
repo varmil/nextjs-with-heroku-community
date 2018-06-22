@@ -2,7 +2,7 @@ import React from 'react'
 import flowRight from 'lodash/flowRight'
 import toEditable from './Editable'
 import withModal from './withModal'
-import Modal from 'components/templates/site/edit/TextModal'
+import Modal from 'components/templates/edit_modal/TextModal'
 import PageDescription from 'components/organisms/site/base/PageDescription'
 
 const Composed = flowRight(

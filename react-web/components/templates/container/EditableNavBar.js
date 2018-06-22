@@ -1,5 +1,5 @@
 import React from 'react'
-import BaseNavBar from 'components/templates/site/container/NavBar'
+import BaseNavBar from 'components/templates/container/NavBar'
 import CommunityLogo from 'components/organisms/site/edit/CommunityLogo'
 // import AccountIcon from 'components/organisms/pc/AccountIcon'
 // import NotificationIcon from 'components/organisms/pc/NotificationIcon'

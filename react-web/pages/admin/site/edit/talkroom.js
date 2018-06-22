@@ -1,6 +1,6 @@
 import React from 'react'
 import Edit from 'components/templates/Edit'
-import TalkRoomPage from 'components/templates/site/page/TalkRoomPage'
+import TalkRoomPage from 'components/templates/edit_view_shared/TalkRoomPage'
 import PageDescription from 'components/organisms/site/edit/PageDescription'
 import PreInputForm from 'components/organisms/site/edit/PreInputForm'
 import CategorySelect from 'components/organisms/site/edit/CategorySelect'

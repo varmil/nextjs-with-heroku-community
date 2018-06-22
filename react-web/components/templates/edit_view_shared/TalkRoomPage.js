@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import TalkBox from 'components/templates/site/page/TalkBox'
+import TalkBox from 'components/templates/edit_view_shared/TalkBox'
 import {
   setTalkRoomCategories,
   setTalkRoomDesc,

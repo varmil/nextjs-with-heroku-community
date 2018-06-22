@@ -2,7 +2,7 @@
 // import flowRight from 'lodash/flowRight'
 // import toEditable from './Editable'
 // import withModal from './withModal'
-// import Modal from 'components/templates/site/edit/LinkedImageModal'
+// import Modal from 'components/templates/edit_modal/LinkedImageModal'
 // import MenuItem from 'components/organisms/site/base/MenuItem'
 //
 // const Composed = flowRight(

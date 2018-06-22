@@ -1,5 +1,5 @@
 import React from 'react'
-import TalkRoomPage from 'components/templates/site/page/TalkRoomPage'
+import TalkRoomPage from 'components/templates/edit_view_shared/TalkRoomPage'
 import PageDescription from 'components/organisms/site/base/PageDescription'
 import PreInputForm from 'components/organisms/site/base/PreInputForm'
 import CategorySelect from 'components/organisms/site/base/CategorySelect'

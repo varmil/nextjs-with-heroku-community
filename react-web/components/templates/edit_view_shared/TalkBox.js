@@ -1,6 +1,6 @@
 import React from 'react'
 import BoxHeader from 'components/organisms/site/base/BoxHeader'
-import Header from 'components/templates/site/container/Header'
+import Header from 'components/templates/container/Header'
 import PostSortButtons from 'components/molecules/PostSortButtons'
 import BoxContent from 'components/organisms/site/BoxContent'
 

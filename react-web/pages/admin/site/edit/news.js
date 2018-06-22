@@ -1,6 +1,6 @@
 import React from 'react'
 import Edit from 'components/templates/Edit'
-import NewsPage from 'components/templates/site/page/NewsPage'
+import NewsPage from 'components/templates/edit_view_shared/NewsPage'
 import PageDescription from 'components/organisms/site/edit/PageDescription'
 import PreInputForm from 'components/organisms/site/edit/PreInputForm'
 import CategorySelect from 'components/organisms/site/edit/CategorySelect'

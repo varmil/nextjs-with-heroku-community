@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import AdminHeader from 'components/organisms/AdminHeader'
 import WhiteBreadcrumb from 'components/organisms/WhiteBreadcrumb'
-import SideBar from 'components/templates/site/container/SideBar'
+import SideBar from 'components/templates/container/SideBar'
 import Device from 'constants/Device'
 // import { loadData } from 'actions/example'
 

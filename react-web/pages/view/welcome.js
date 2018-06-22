@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import WelcomePage from 'components/templates/site/page/WelcomePage'
+import WelcomePage from 'components/templates/edit_view_shared/WelcomePage'
 import WelcomeElement from 'components/organisms/site/base/Welcome'
 
 class Welcome extends React.Component {
