@@ -1,14 +1,14 @@
 import React from 'react'
-import TalkRoomPage from 'components/templates/site/page/TalkRoomPage'
+import NewsPage from 'components/templates/site/page/NewsPage'
 import PageDescription from 'components/organisms/site/base/PageDescription'
 import PreInputForm from 'components/organisms/site/base/PreInputForm'
 import CategorySelect from 'components/organisms/site/base/CategorySelect'
 
-class TalkRoom extends React.Component {
+class News extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <TalkRoomPage
+        <NewsPage
           {...this.props}
           pageDescription={PageDescription}
           preInputForm={PreInputForm}
@@ -19,4 +19,4 @@ class TalkRoom extends React.Component {
   }
 }
 
-export default TalkRoom
+export default News

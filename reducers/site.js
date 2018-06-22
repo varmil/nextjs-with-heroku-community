@@ -12,14 +12,17 @@ import {
   Welcome as WelcomeDefault,
   TalkRoomDescDefault,
   TalkRoomInputFormDefault,
-  TalkRoomCategoriesDefault
+  TalkRoomCategoriesDefault,
+  NewsDescDefault,
+  NewsCategoriesDefault
 } from 'constants/SitePropsDefault'
 import {
   SitePreview,
   SiteCommon,
   SiteTop,
   SiteWelcome,
-  SiteTalkRoom
+  SiteTalkRoom,
+  SiteNews
 } from 'constants/ActionTypes'
 import Device from 'constants/Device'
 
@@ -48,6 +51,11 @@ const initialState = {
     desc: TalkRoomDescDefault,
     inputForm: TalkRoomInputFormDefault,
     categories: TalkRoomCategoriesDefault
+  },
+
+  news: {
+    desc: NewsDescDefault,
+    categories: NewsCategoriesDefault
   }
 }
 
@@ -150,6 +158,20 @@ export default handleActions(
     [SiteTalkRoom.SET_CATEGORIES]: (state, action) => {
       return update(state, {
         talkroom: { categories: { $set: action.payload } }
+      })
+    },
+
+    /**
+     * NEWS
+     */
+    [SiteNews.SET_DESC]: (state, action) => {
+      return update(state, {
+        news: { desc: { $set: action.payload } }
+      })
+    },
+    [SiteNews.SET_CATEGORIES]: (state, action) => {
+      return update(state, {
+        news: { categories: { $set: action.payload } }
       })
     }
   },

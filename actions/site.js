@@ -4,7 +4,8 @@ import {
   SiteCommon,
   SiteTop,
   SiteWelcome,
-  SiteTalkRoom
+  SiteTalkRoom,
+  SiteNews
 } from 'constants/ActionTypes'
 
 // preview
@@ -39,6 +40,10 @@ export let setTalkRoomCategories = createAction(
   SiteTalkRoom.SET_CATEGORIES,
   e => e
 )
+
+// talk room
+export let setNewsDesc = createAction(SiteNews.SET_DESC, e => e)
+export let setNewsCategories = createAction(SiteNews.SET_CATEGORIES, e => e)
 
 /**
  *  ASYNC ACTIONS

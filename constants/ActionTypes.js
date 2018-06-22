@@ -25,13 +25,16 @@ export const SiteTop = createTypes(
 // （Edit, View）Welcome
 export const SiteWelcome = createTypes('site/welcome/', 'SET_WELCOME')
 
-// （Edit, View）トップページ
+// （Edit, View）トークルーム
 export const SiteTalkRoom = createTypes(
   'site/talkroom/',
   'SET_DESC',
   'SET_INPUT_FORM',
   'SET_CATEGORIES'
 )
+
+// （Edit, View）NEWS
+export const SiteNews = createTypes('site/news/', 'SET_DESC', 'SET_CATEGORIES')
 
 // -----
 // -----

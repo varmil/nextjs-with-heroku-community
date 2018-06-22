@@ -168,11 +168,28 @@ export const TalkRoomInputFormDefault = {
   text: '話題を投稿 / 質問してみましょう！'
 }
 
-const itemBase = range(MAX_CATEGORIES_NUM).map(i => ({
+const talkRoomItemBase = range(MAX_CATEGORIES_NUM).map(i => ({
   categoryIndex: i, // 0 - 9 この番号で管理する
   text: i === FREE_TALK_INDEX ? 'フリートーク' : '', // index9はフリートークで固定
   editable: i !== FREE_TALK_INDEX
 }))
 export const TalkRoomCategoriesDefault = {
-  item: itemBase
+  item: talkRoomItemBase
+}
+
+/**
+ * NEWS（Input Formがない点に注意）
+ */
+export const NewsDescDefault = {
+  text: 'Sample からのお知らせやニュースをシェアさせていただく場です！'
+}
+
+// Talk Roomとキーを合わせること
+const newsItemBase = range(MAX_CATEGORIES_NUM).map(i => ({
+  categoryIndex: i,
+  text: '',
+  editable: true
+}))
+export const NewsCategoriesDefault = {
+  item: newsItemBase
 }

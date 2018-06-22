@@ -1,15 +1,15 @@
 import React from 'react'
 import Edit from 'components/templates/Edit'
-import TalkRoomPage from 'components/templates/site/page/TalkRoomPage'
+import NewsPage from 'components/templates/site/page/NewsPage'
 import PageDescription from 'components/organisms/site/edit/PageDescription'
 import PreInputForm from 'components/organisms/site/edit/PreInputForm'
 import CategorySelect from 'components/organisms/site/edit/CategorySelect'
 
-class EditTalkRoom extends React.Component {
+class EditNews extends React.Component {
   render() {
     return (
       <Edit>
-        <TalkRoomPage
+        <NewsPage
           {...this.props}
           edit={true}
           pageDescription={PageDescription}
@@ -21,4 +21,4 @@ class EditTalkRoom extends React.Component {
   }
 }
 
-export default EditTalkRoom
+export default EditNews
