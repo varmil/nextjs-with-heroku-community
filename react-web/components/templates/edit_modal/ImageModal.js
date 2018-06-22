@@ -3,7 +3,7 @@ import update from 'immutability-helper'
 import ModalHeader from 'reactstrap/lib/ModalHeader'
 import ModalBody from 'reactstrap/lib/ModalBody'
 import withSaveCancelFooter from 'components/organisms/modal/withSaveCancelFooter'
-import DesignImageEdit from 'components/organisms/editor_parts/form/DesignImageEdit'
+import DesignImageEdit from 'components/organisms/edit_modal/DesignImageEdit'
 // import LinkEditor from 'components/molecules/site/edit/LinkEditor'
 
 // バナー。リンク設定不可。画像編集のみのモーダル

@@ -5,8 +5,8 @@ import ModalHeader from 'reactstrap/lib/ModalHeader'
 import ModalBody from 'reactstrap/lib/ModalBody'
 import withSaveCancelFooter from 'components/organisms/modal/withSaveCancelFooter'
 import ColorPicker from 'components/molecules/ColorPicker'
-import MenuBlockEdit from 'components/organisms/editor_parts/form/MenuBlockEdit'
-import MenuAddEdit from 'components/organisms/editor_parts/form/MenuAddEdit'
+import MenuBlockEdit from 'components/organisms/edit_modal/MenuBlockEdit'
+import MenuAddEdit from 'components/organisms/edit_modal/MenuAddEdit'
 
 class MenuListModal extends React.Component {
   constructor(props) {

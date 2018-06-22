@@ -10,7 +10,7 @@ import {
 } from 'react-sortable-hoc'
 
 import withSaveCancelFooter from 'components/organisms/modal/withSaveCancelFooter'
-import MenuBlockEdit from 'components/organisms/editor_parts/form/MenuBlockEdit'
+import MenuBlockEdit from 'components/organisms/edit_modal/MenuBlockEdit'
 
 const SortableItem = SortableElement(({ value, orderIndex, onChange }) => {
   if (!value.editable) console.log(value)
