@@ -7,7 +7,7 @@
     "dev": "node server.js",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
-    "pm2": "pm2 start pm2config.json --env production",
+    "pm2": "pm2 startOrRestart pm2config.json --env production --update-env",
     "heroku-postbuild": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
