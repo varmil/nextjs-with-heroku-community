@@ -4,6 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "db:install": "sequelize db:migrate",
+    "db:uninstall": "sequelize db:migrate:undo:all",
+    "db:init": "npm run db:uninstall && npm run db:install",
+    "db:seed": "node ./seeders/rst-seeder.js",
     "start": "NODE_ENV=production node index.js",
     "dev": "nodemon ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,7 +16,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "mysql2": "^1.5.3",
+    "sequelize": "^4.38.0",
+    "sequelize-cli": "^4.0.0"
   },
   "devDependencies": {
     "nodemon": "^1.17.5"

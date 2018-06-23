@@ -1,0 +1,27 @@
+{
+  "development": {
+    "username": "root",
+    "password": "root",
+    "database": "commune",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": "Sequelize.Op",
+    "logging": true
+  },
+  "test": {
+    "username": "root",
+    "password": "root",
+    "database": "commune",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": "Sequelize.Op"
+  },
+  "production": {
+    "username": "root",
+    "password": "root",
+    "database": "commune",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": "Sequelize.Op"
+  }
+}
