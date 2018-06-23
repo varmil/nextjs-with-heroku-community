@@ -1,16 +1,18 @@
 module.exports = function(sequelize, DataTypes) {
   const User = sequelize.define('User', {
+    email: DataTypes.STRING,
+    passwordHash: DataTypes.STRING,
+
     nickname: DataTypes.STRING,
-    facebook_id: DataTypes.BIGINT,
-    facebook_access_token: DataTypes.STRING,
-    first_name: DataTypes.STRING,
-    last_name: DataTypes.STRING,
-    profile_photo_path: DataTypes.STRING,
+    facebookId: DataTypes.BIGINT,
+    facebookAccessToken: DataTypes.STRING,
+    firstName: DataTypes.STRING,
+    lastName: DataTypes.STRING,
+    profilePhotoPath: DataTypes.STRING,
     locale: DataTypes.STRING,
     gender: DataTypes.STRING,
-    email: DataTypes.STRING,
-    age_range_min: DataTypes.INTEGER,
-    age_range_max: DataTypes.INTEGER,
+    ageRangeMin: DataTypes.INTEGER,
+    ageRangeMax: DataTypes.INTEGER,
     timezone: DataTypes.FLOAT,
     verified: DataTypes.BOOLEAN,
     birthday: DataTypes.STRING

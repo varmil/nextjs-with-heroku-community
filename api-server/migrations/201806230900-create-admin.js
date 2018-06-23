@@ -1,4 +1,4 @@
-var db = require('../models')
+const db = require('../models')
 const tableName = db.Admin.tableName
 
 module.exports = {
@@ -10,18 +10,28 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-
-      first_name: {
-        allowNull: false,
-        defaultValue: '',
-        type: Sequelize.STRING
-      },
-      last_name: {
-        allowNull: false,
-        defaultValue: '',
-        type: Sequelize.STRING
-      },
       email: {
+        allowNull: false,
+        defaultValue: '',
+        type: Sequelize.STRING
+      },
+      passwordHash: {
+        allowNull: false,
+        defaultValue: '',
+        type: Sequelize.STRING
+      },
+      roleId: {
+        allowNull: false,
+        defaultValue: 0,
+        type: Sequelize.INTEGER
+      },
+
+      firstName: {
+        allowNull: false,
+        defaultValue: '',
+        type: Sequelize.STRING
+      },
+      lastName: {
         allowNull: false,
         defaultValue: '',
         type: Sequelize.STRING

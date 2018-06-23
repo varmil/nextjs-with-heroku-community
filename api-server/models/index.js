@@ -1,12 +1,12 @@
 // issues
 // https://github.com/webpack/webpack/issues/2463
-var fs = require('fs')
-var path = require('path')
-var Sequelize = require('sequelize')
-var basename = path.basename(__filename)
-var env = process.env.NODE_ENV || 'development'
-var config = require(path.join(__dirname, '/../config/database.json'))[env]
-var db = {}
+const fs = require('fs')
+const path = require('path')
+const Sequelize = require('sequelize')
+const basename = path.basename(__filename)
+const env = process.env.NODE_ENV || 'development'
+const config = require(path.join(__dirname, '/../config/database.json'))[env]
+let db = {}
 
 let sequelize
 if (config.use_env_variable) {

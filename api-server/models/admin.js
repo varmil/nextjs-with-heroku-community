@@ -1,8 +1,10 @@
 module.exports = function(sequelize, DataTypes) {
-  var Admin = sequelize.define('Admin', {
-    first_name: DataTypes.STRING,
-    last_name: DataTypes.STRING,
-    email: DataTypes.STRING
+  const Admin = sequelize.define('Admin', {
+    email: DataTypes.STRING,
+    passwordHash: DataTypes.STRING,
+    roleId: DataTypes.INTEGER,
+    firstName: DataTypes.STRING,
+    lastName: DataTypes.STRING
   })
   return Admin
 }

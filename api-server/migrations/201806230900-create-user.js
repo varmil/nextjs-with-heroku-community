@@ -1,4 +1,4 @@
-var db = require('../models')
+const db = require('../models')
 const tableName = db.User.tableName
 
 module.exports = {
@@ -10,33 +10,43 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      email: {
+        allowNull: false,
+        defaultValue: '',
+        type: Sequelize.STRING
+      },
+      passwordHash: {
+        allowNull: false,
+        defaultValue: '',
+        type: Sequelize.STRING
+      },
       nickname: {
         allowNull: false,
         defaultValue: '',
         type: Sequelize.STRING
       },
 
-      facebook_id: {
+      facebookId: {
         allowNull: false,
         defaultValue: 0,
         type: Sequelize.BIGINT
       },
-      facebook_access_token: {
+      facebookAccessToken: {
         allowNull: false,
         defaultValue: '',
         type: Sequelize.STRING
       },
-      first_name: {
+      firstName: {
         allowNull: false,
         defaultValue: '',
         type: Sequelize.STRING
       },
-      last_name: {
+      lastName: {
         allowNull: false,
         defaultValue: '',
         type: Sequelize.STRING
       },
-      profile_photo_path: {
+      profilePhotoPath: {
         allowNull: false,
         defaultValue: '',
         type: Sequelize.STRING
@@ -51,17 +61,12 @@ module.exports = {
         defaultValue: '',
         type: Sequelize.STRING
       },
-      email: {
-        allowNull: false,
-        defaultValue: '',
-        type: Sequelize.STRING
-      },
-      age_range_min: {
+      ageRangeMin: {
         allowNull: false,
         defaultValue: 0,
         type: Sequelize.INTEGER
       },
-      age_range_max: {
+      ageRangeMax: {
         allowNull: false,
         defaultValue: 0,
         type: Sequelize.INTEGER
