@@ -64,7 +64,7 @@ export default class CategorySelect extends React.Component {
             padding: 0;
           }
           .scroll_item {
-            margin-right: 15px;
+            margin-right: 10px;
             display: inline-block;
           }
           .scroll_item:first-child {
@@ -72,7 +72,7 @@ export default class CategorySelect extends React.Component {
           }
 
           button {
-            width: 90px;
+            width: 80px;
             font-size: 11px;
           }
         `}</style>

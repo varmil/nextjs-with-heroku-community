@@ -19,8 +19,8 @@ const styles = {
 }
 
 const tabIndicatorStyle = {
-  backgroundColor: '#333',
-  height: 5
+  backgroundColor: 'red',
+  height: 4
 }
 
 const Label = props => (
