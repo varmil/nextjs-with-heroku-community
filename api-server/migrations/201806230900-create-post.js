@@ -25,6 +25,11 @@ module.exports = {
         defaultValue: false,
         type: Sequelize.BOOLEAN
       },
+      categoryIndex: {
+        allowNull: false,
+        defaultValue: 0,
+        type: Sequelize.INTEGER
+      },
       title: {
         allowNull: false,
         defaultValue: '',
