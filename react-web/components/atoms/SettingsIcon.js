@@ -1,0 +1,14 @@
+import React from 'react'
+
+const Index = props => (
+  <React.Fragment>
+    <i id="ai" className={`fas fa-cog ${props.className || ''}`} />
+
+    <style jsx>{`
+      #ai {
+        // color: ${props.color || '#000'};
+      }
+    `}</style>
+  </React.Fragment>
+)
+export default Index

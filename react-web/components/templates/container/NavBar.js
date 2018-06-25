@@ -5,12 +5,13 @@ import NavbarBrand from 'reactstrap/lib/NavbarBrand'
 import { setLogo } from 'actions/site'
 import { action as toggleMenu } from 'redux-burger-menu'
 import CommunityLogo from 'components/organisms/site/base/CommunityLogo'
-// import AccountIcon from 'components/organisms/site/base/AccountIcon'
-// import NotificationIcon from 'components/organisms/site/base/NotificationIcon'
+import Avatar from 'components/atoms/Avatar'
+import NotificationIcon from 'components/atoms/NotificationIcon'
+import SettingsIcon from 'components/atoms/SettingsIcon'
 
 const brandStyle = {
-  position: 'relative',
-  top: 2
+  position: 'relative'
+  // top: 2
 }
 
 class NavBar extends React.Component {
@@ -35,37 +36,56 @@ class NavBar extends React.Component {
     return (
       <React.Fragment>
         <Navbar
-          dark
-          className={`container ${props.className}`}
-          style={{ padding: '1rem', ...props.style }}
+          className={`${props.className || ''}`}
+          style={{ padding: '1rem 0.8rem', ...props.style }}
         >
-          <div onClick={() => props.dispatch(toggleMenu(true))}>
-            <i className="menuIcon fas fa-bars" />
-          </div>
+          <NavbarBrand className="mr-0" style={brandStyle}>
+            <div
+              className="d-inline-block"
+              onClick={() => props.dispatch(toggleMenu(true))}
+            >
+              <Avatar
+                src="https://www.w3schools.com/w3images/avatar2.png"
+                className=""
+              />
+            </div>
 
-          <NavbarBrand className="mx-auto" href="/" style={brandStyle}>
-            {React.createElement(this.communityLogo, {
-              src: common.logo.src,
-              onSave: state => this.onSaveLogo(state)
-            })}
+            <div className="ml-3 d-inline-block">
+              {React.createElement(this.communityLogo, {
+                src: common.logo.src,
+                onSave: state => this.onSaveLogo(state)
+              })}
+            </div>
           </NavbarBrand>
 
-          <i className="searchIcon fas fa-search" />
+          <div className="ml-auto icons">
+            <i className="fas fa-search mx-1" />
+            <NotificationIcon className="mx-1" />
+            <SettingsIcon className="mx-1" />
+          </div>
         </Navbar>
 
         <style jsx>{`
-          .searchIcon {
-            position: absolute;
-            top: 30px;
-            right: 30px;
-            font-size: 25px;
+          .icons {
+            font-size: 20px;
+            color: black;
           }
-          .menuIcon {
-            position: absolute;
-            top: 30px;
-            left: 30px;
-            font-size: 25px;
-            cursor: pointer;
+
+          .icons .icon {
+          }
+
+          .searchIcon {
+            // position: absolute;
+            // top: 30px;
+            // right: 30px;
+            // font-size: 25px;
+          }
+          .avatarIcon {
+            // position: absolute;
+            // top: 30px;
+            // left: 30px;
+            // font-size: 25px;
+            // cursor: pointer;
           }
         `}</style>
       </React.Fragment>
