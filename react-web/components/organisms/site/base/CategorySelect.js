@@ -42,6 +42,13 @@ export default class CategorySelect extends React.Component {
               </button>
             </Link>
           </li>
+          <li className="scroll_item">
+            <Link href="">
+              <button type="button" className="btn btn-secondary">
+                プロダクト
+              </button>
+            </Link>
+          </li>
         </ul>
 
         <style jsx>{`

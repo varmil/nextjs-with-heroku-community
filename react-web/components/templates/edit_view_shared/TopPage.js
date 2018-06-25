@@ -146,8 +146,10 @@ class TopPage extends React.Component {
         </main>
 
         <style global jsx>{`
-          .tabs {
+          ::-webkit-scrollbar {
+            display: none;
           }
+
           .tab {
             width: 120px;
             outline: none !important;
