@@ -7,7 +7,11 @@ import BoxContent from 'components/organisms/site/BoxContent'
 export default class TalkRoomContents extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = { showPortal: false }
+  }
+
+  componentDidMount() {
+    this.setState({ showPortal: true })
   }
 
   createCategorySelect() {
@@ -70,9 +74,11 @@ export default class TalkRoomContents extends React.Component {
           </section>
         </main>
 
-        <Portal container={document.body}>
-          <FixedButton />
-        </Portal>
+        {this.state.showPortal ? (
+          <Portal container={document.body}>
+            <FixedButton />
+          </Portal>
+        ) : null}
 
         <style jsx>{`
           .desc {
