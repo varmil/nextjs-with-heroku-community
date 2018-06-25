@@ -64,7 +64,7 @@ export default class BoxContent extends React.Component {
             }
 
             .card {
-              border-radius: 10px;
+              border-radius: 0px;
             }
 
             .card-img-top {

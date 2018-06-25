@@ -4,31 +4,36 @@ import SwipeableViews from 'react-swipeable-views'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import { setBoxHeader, setSubBanner } from 'actions/site'
+import FixedButton from 'components/atoms/FixedButton'
 import Header from 'components/templates/container/Header'
 import TalkRoomContents from 'components/templates/edit_view_shared/TalkRoomContents'
 import NewsContents from 'components/templates/edit_view_shared/NewsContents'
 
 const styles = {
   slide: {
-    // padding: 15,
     minHeight: 100
-    // color: '#fff'
   },
-  slide1: {
-    // background: '#F5F5F5'
-  },
-  slide2: {
-    // background: '#F5F5F5'
-  },
-  slide3: {
-    // background: '#F5F5F5'
-  }
+  slide1: {},
+  slide2: {},
+  slide3: {}
 }
 
 const tabIndicatorStyle = {
   backgroundColor: '#333',
   height: 5
 }
+
+const Label = props => (
+  <span>
+    {props.text}
+    <style jsx>{`
+      span {
+        font-size: 25px;
+        font-weight: 900;
+      }
+    `}</style>
+  </span>
+)
 
 class TopPage extends React.Component {
   constructor(props) {
@@ -103,17 +108,18 @@ class TopPage extends React.Component {
         <main>
           <section>
             <Tabs
+              className="tabs"
               value={this.state.tabIndex}
               onChange={this.handleChange}
               TabIndicatorProps={{ style: tabIndicatorStyle }}
-              fullWidth
+              // fullWidth
               scrollable
               scrollButtons="off"
             >
-              <Tab label="TALK" className="outline-none" />
-              <Tab label="VOICE" className="outline-none" />
-              <Tab label="NEWS" className="outline-none" />
-              <Tab label="EVENT" className="outline-none" />
+              <Tab label={<Label text={'TALK'} />} className="tab" />
+              <Tab label={<Label text={'VOICE'} />} className="tab" />
+              <Tab label={<Label text={'NEWS'} />} className="tab" />
+              <Tab label={<Label text={'EVENT'} />} className="tab" />
             </Tabs>
           </section>
 
@@ -140,7 +146,10 @@ class TopPage extends React.Component {
         </main>
 
         <style global jsx>{`
-          .outline-none {
+          .tabs {
+          }
+          .tab {
+            width: 120px;
             outline: none !important;
           }
         `}</style>

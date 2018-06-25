@@ -1,4 +1,6 @@
 import React from 'react'
+import Portal from '@material-ui/core/Portal'
+import FixedButton from 'components/atoms/FixedButton'
 import BoxContent from 'components/organisms/site/BoxContent'
 
 // TALK BOX系のベースクラス
@@ -67,6 +69,10 @@ export default class TalkRoomContents extends React.Component {
             {this.createBoxContents()}
           </section>
         </main>
+
+        <Portal container={document.body}>
+          <FixedButton />
+        </Portal>
 
         <style jsx>{`
           .desc {

@@ -66,7 +66,7 @@ export default class CategorySelect extends React.Component {
 
           button {
             width: 90px;
-            font-size: 12px;
+            font-size: 11px;
           }
         `}</style>
       </div>
