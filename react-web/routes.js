@@ -5,4 +5,5 @@ const routes = (module.exports = nextRoutes())
 // routes.add('/view/about', '/about-us/:foo(bar|baz)')
 
 // box page
-routes.add('/home/:slug', 'home')
+routes.add('/admin/site/edit/home/:slug', '/admin/site/edit/home')
+routes.add('/view/home/:slug', '/view/home')

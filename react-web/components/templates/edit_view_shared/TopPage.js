@@ -1,12 +1,14 @@
 import React from 'react'
 import range from 'lodash/range'
 import SwipeableViews from 'react-swipeable-views'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
 import { setBoxHeader, setSubBanner } from 'actions/site'
 import Header from 'components/templates/container/Header'
 import TalkRoomContents from 'components/templates/edit_view_shared/TalkRoomContents'
 import NewsContents from 'components/templates/edit_view_shared/NewsContents'
 
-const initialState = {}
+const initialState = { tabIndex: 0 }
 
 const styles = {
   slide: {
@@ -25,7 +27,7 @@ const styles = {
   }
 }
 
-export default class TopPage extends React.Component {
+class TopPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = initialState
@@ -48,6 +50,16 @@ export default class TopPage extends React.Component {
         ))}
       </div>
     )
+  }
+
+  // tabIndex
+  handleChange = (event, tabIndex) => {
+    this.setState({ tabIndex })
+  }
+
+  handleChangeIndex = index => {
+    console.log('change index', index)
+    this.setState({ tabIndex: index })
   }
 
   /**
@@ -77,13 +89,34 @@ export default class TopPage extends React.Component {
 
   render() {
     const props = this.props
+    console.log('[TOP PAGE]', props)
 
     return (
       <React.Fragment>
         <Header edit={props.edit} mainBanner={props.mainBanner} />
 
         <main>
-          <SwipeableViews enableMouseEvents>
+          <section>
+            <Tabs
+              value={this.state.tabIndex}
+              onChange={this.handleChange}
+              TabIndicatorProps={{ style: { backgroundColor: '#333' } }}
+              fullWidth
+              scrollable
+              scrollButtons="off"
+            >
+              <Tab label="TALK" className="outline-none" />
+              <Tab label="VOICE" className="outline-none" />
+              <Tab label="NEWS" className="outline-none" />
+              <Tab label="EVENT" className="outline-none" />
+            </Tabs>
+          </section>
+
+          <SwipeableViews
+            enableMouseEvents
+            index={this.state.tabIndex}
+            onChangeIndex={this.handleChangeIndex}
+          >
             <div style={Object.assign({}, styles.slide, styles.slide1)}>
               <TalkRoomContents categorySelect={props.categorySelect} />
             </div>
@@ -97,7 +130,16 @@ export default class TopPage extends React.Component {
 
           <div className="subBanner mt-3 mb-5">{this.createSubBanners()}</div>
         </main>
+
+        <style global jsx>{`
+          .outline-none {
+            outline: none !important;
+          }
+        `}</style>
       </React.Fragment>
     )
   }
 }
+
+// export default withStyles(uiStyles)(TopPage)
+export default TopPage
