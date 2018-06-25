@@ -1,4 +1,5 @@
 import React from 'react'
+import Classes from 'constants/Classes'
 import TextViewer from 'components/atoms/TextViewer'
 
 const MAX_HEIGHT = '250px'
@@ -8,9 +9,9 @@ export default class MainBanner extends React.Component {
     const props = this.props
     return (
       <a
-        id="TopMainBanner"
-        className={`bg container ${props.className}`}
+        className={`bg container ${Classes.EDITABLE} ${props.className}`}
         href={props.href}
+        data-modal={`TextBGImageModal`}
       >
         <TextViewer value={props.contentState} />
 
