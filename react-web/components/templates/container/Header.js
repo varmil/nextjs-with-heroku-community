@@ -1,7 +1,8 @@
 import React from 'react'
+import range from 'lodash/range'
 import dynamic from 'next/dynamic'
 import { connect } from 'react-redux'
-import { setMenuBarStyle } from 'actions/site'
+import { setMainBanner, setBoxHeader, setSubBanner } from 'actions/site'
 
 let NavBar, MenuBar
 
@@ -22,22 +23,35 @@ class Header extends React.Component {
     }
   }
 
-  onSaveMenuBar(state) {
-    this.props.dispatch(setMenuBarStyle({ ...state }))
+  onSaveMainBanner(state, index) {
+    this.props.dispatch(setMainBanner({ ...state, index }))
   }
+
+  // onSaveMenuBar(state) {
+  //   this.props.dispatch(setMenuBarStyle({ ...state }))
+  // }
 
   render() {
     const props = this.props
-    const common = props.common
+    // const common = props.common
+    const mainBanner = props.top.mainBanner
+
     return (
       <React.Fragment>
         <header>
           <NavBar />
 
-          <MenuBar
-            onSave={this.onSaveMenuBar.bind(this)}
-            style={common.menuBar.style}
-          />
+          {range(mainBanner.item.length).map(i => (
+            <props.mainBanner
+              key={i}
+              className="mb-3"
+              contentState={mainBanner.item[i].contentState}
+              src={mainBanner.item[i].src}
+              backgroundColor={mainBanner.item[i].backgroundColor}
+              href={mainBanner.item[i].href}
+              onSave={state => this.onSaveMainBanner(state, i)}
+            />
+          ))}
         </header>
       </React.Fragment>
     )
@@ -45,5 +59,6 @@ class Header extends React.Component {
 }
 
 export default connect(state => ({
-  common: state.site.common
+  common: state.site.common,
+  top: state.site.top
 }))(Header)

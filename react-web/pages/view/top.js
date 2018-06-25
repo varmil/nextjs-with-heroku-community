@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import TopPage from 'components/templates/edit_view_shared/TopPage'
 import MainBanner from 'components/organisms/site/base/MainBanner'
-import BoxHeader from 'components/organisms/site/base/BoxHeader'
+import CategorySelect from 'components/organisms/site/base/CategorySelect'
 import SubBanner from 'components/organisms/site/base/SubBanner'
 
 class Top extends React.Component {
@@ -13,7 +13,7 @@ class Top extends React.Component {
         <TopPage
           {...props}
           mainBanner={MainBanner}
-          boxHeader={BoxHeader}
+          categorySelect={CategorySelect}
           subBanner={SubBanner}
         />
       </React.Fragment>
