@@ -12,7 +12,7 @@ export default class TalkRoomContents extends React.Component {
     const props = this.props
     if (!props.categorySelect) return null
     return (
-      <section className="cat container pt-3 mt-1">
+      <section className="cat mt-3">
         <props.categorySelect
           item={props.pageData.categories.item}
           onSave={this.onSaveCategory.bind(this)}
@@ -23,7 +23,7 @@ export default class TalkRoomContents extends React.Component {
 
   createBoxContents() {
     return (
-      <div className="wrap my-4">
+      <div className="wrap">
         <div className="c">
           <BoxContent />
         </div>
@@ -36,12 +36,10 @@ export default class TalkRoomContents extends React.Component {
 
         <style jsx>{`
           .wrap {
-            width: 100%;
-            margin: 0 auto;
           }
 
           .c {
-            margin: 20px 0;
+            margin: 0 0 20px;
           }
         `}</style>
       </div>
@@ -65,7 +63,7 @@ export default class TalkRoomContents extends React.Component {
         <main>
           {this.createCategorySelect()}
 
-          <section className="contents container py-3 my-1">
+          <section className="contents container">
             {this.createBoxContents()}
           </section>
         </main>

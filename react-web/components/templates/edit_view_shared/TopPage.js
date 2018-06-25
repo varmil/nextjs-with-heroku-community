@@ -8,29 +8,34 @@ import Header from 'components/templates/container/Header'
 import TalkRoomContents from 'components/templates/edit_view_shared/TalkRoomContents'
 import NewsContents from 'components/templates/edit_view_shared/NewsContents'
 
-const initialState = { tabIndex: 0 }
-
 const styles = {
   slide: {
-    padding: 15,
-    minHeight: 100,
-    color: '#fff'
+    // padding: 15,
+    minHeight: 100
+    // color: '#fff'
   },
   slide1: {
-    background: '#FEA900'
+    // background: '#F5F5F5'
   },
   slide2: {
-    background: '#B3DC4A'
+    // background: '#F5F5F5'
   },
   slide3: {
-    background: '#6AC0FF'
+    // background: '#F5F5F5'
   }
+}
+
+const tabIndicatorStyle = {
+  backgroundColor: '#333',
+  height: 5
 }
 
 class TopPage extends React.Component {
   constructor(props) {
     super(props)
-    this.state = initialState
+
+    // TODO: decide initial tab index with URL props.slug
+    this.state = { tabIndex: 0 }
   }
 
   createSubBanners() {
@@ -100,7 +105,7 @@ class TopPage extends React.Component {
             <Tabs
               value={this.state.tabIndex}
               onChange={this.handleChange}
-              TabIndicatorProps={{ style: { backgroundColor: '#333' } }}
+              TabIndicatorProps={{ style: tabIndicatorStyle }}
               fullWidth
               scrollable
               scrollButtons="off"
@@ -125,6 +130,9 @@ class TopPage extends React.Component {
             </div>
             <div style={Object.assign({}, styles.slide, styles.slide3)}>
               <NewsContents categorySelect={props.categorySelect} />
+            </div>
+            <div style={Object.assign({}, styles.slide, styles.slide2)}>
+              slide n°4
             </div>
           </SwipeableViews>
 

@@ -1,23 +1,5 @@
 import React from 'react'
 import Link from 'next/link'
-import Select from 'react-select'
-
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' }
-]
-
-const colourStyles = {
-  control: styles => ({
-    ...styles,
-    backgroundColor: 'white',
-    // border: 'none',
-    width: 190,
-    margin: '0 auto',
-    fontSize: 12
-  })
-}
 
 export default class CategorySelect extends React.Component {
   constructor(props) {
@@ -27,24 +9,71 @@ export default class CategorySelect extends React.Component {
     this.state = { show: false }
   }
 
-  componentDidMount() {
-    this.setState({ ...this.state, show: true })
+  // http://blog.keisuke11.com/webdesign/horizontal-scroll/
+  createContents() {
+    return (
+      <div className="horizontal_scroll_wrap">
+        <ul className="scroll_lst">
+          <li className="scroll_item">
+            <Link href="">
+              <button type="button" className="btn btn-secondary">
+                プロダクト
+              </button>
+            </Link>
+          </li>
+          <li className="scroll_item">
+            <Link href="">
+              <button type="button" className="btn btn-secondary">
+                プロダクト
+              </button>
+            </Link>
+          </li>
+          <li className="scroll_item">
+            <Link href="">
+              <button type="button" className="btn btn-secondary">
+                プロダクト
+              </button>
+            </Link>
+          </li>
+          <li className="scroll_item">
+            <Link href="">
+              <button type="button" className="btn btn-secondary">
+                プロダクト
+              </button>
+            </Link>
+          </li>
+        </ul>
+
+        <style jsx>{`
+          .horizontal_scroll_wrap {
+            overflow-y: hidden;
+            margin: 0;
+          }
+          .scroll_lst {
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            padding: 0;
+          }
+          .scroll_item {
+            margin-right: 15px;
+            display: inline-block;
+          }
+          .scroll_item:first-child {
+            margin-left: 10px;
+          }
+
+          button {
+            width: 90px;
+            font-size: 12px;
+          }
+        `}</style>
+      </div>
+    )
   }
 
   render() {
-    if (!this.state.show) return null
-    const props = this.props
-    return (
-      <React.Fragment>
-        <Link href="">
-          <Select
-            placeholder={'全カテゴリ'}
-            styles={colourStyles}
-            options={options}
-            isSearchable={false}
-          />
-        </Link>
-      </React.Fragment>
-    )
+    return <React.Fragment>{this.createContents()}</React.Fragment>
   }
 }
