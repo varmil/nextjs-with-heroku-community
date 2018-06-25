@@ -6,7 +6,6 @@ import SideBar from 'components/templates/container/SideBar'
 import Device from 'constants/Device'
 // import { loadData } from 'actions/example'
 
-const initialState = {}
 const SIDEBAR_WIDTH = 180
 const OFFSET_TOP_SIDEBAR = 106
 const OFFSET_TOP_MAINBODY = 135
@@ -24,7 +23,20 @@ class Edit extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = initialState
+    this.state = { show: false }
+  }
+
+  componentDidMount() {
+    this.setState({ show: true })
+
+    // TODO: get the element rect in iframe
+    setTimeout(() => {
+      const mb = this.iframe.contentWindow.document.getElementById(
+        'TopMainBanner'
+      )
+      const rect = mb.getBoundingClientRect()
+      console.log(rect)
+    }, 500)
   }
 
   addDeviceStyle() {
@@ -83,9 +95,19 @@ class Edit extends React.Component {
         <div className="mainBody">
           <SideBar width={SIDEBAR_WIDTH} offsetTop={OFFSET_TOP_SIDEBAR} />
 
-          <div id="editBody" style={this.addDeviceStyle()}>
+          {/* <div id="editBody" style={this.addDeviceStyle()}>
             {this.props.children}
-          </div>
+          </div> */}
+
+          {this.state.show ? (
+            <iframe
+              src="/view/home/top"
+              style={this.addDeviceStyle()}
+              ref={f => {
+                this.iframe = f
+              }}
+            />
+          ) : null}
         </div>
 
         <style global jsx>{`
