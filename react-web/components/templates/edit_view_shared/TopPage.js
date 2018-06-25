@@ -1,10 +1,29 @@
 import React from 'react'
 import range from 'lodash/range'
-import { setMainBanner, setBoxHeader, setSubBanner } from 'actions/site'
+import SwipeableViews from 'react-swipeable-views'
+import { setBoxHeader, setSubBanner } from 'actions/site'
 import Header from 'components/templates/container/Header'
-import TalkRoomContents from 'components/templates/TalkRoomContents'
+import TalkRoomContents from 'components/templates/edit_view_shared/TalkRoomContents'
+import NewsContents from 'components/templates/edit_view_shared/NewsContents'
 
 const initialState = {}
+
+const styles = {
+  slide: {
+    padding: 15,
+    minHeight: 100,
+    color: '#fff'
+  },
+  slide1: {
+    background: '#FEA900'
+  },
+  slide2: {
+    background: '#B3DC4A'
+  },
+  slide3: {
+    background: '#6AC0FF'
+  }
+}
 
 export default class TopPage extends React.Component {
   constructor(props) {
@@ -64,7 +83,18 @@ export default class TopPage extends React.Component {
         <Header edit={props.edit} mainBanner={props.mainBanner} />
 
         <main>
-          <TalkRoomContents categorySelect={props.categorySelect} />
+          <SwipeableViews enableMouseEvents>
+            <div style={Object.assign({}, styles.slide, styles.slide1)}>
+              <TalkRoomContents categorySelect={props.categorySelect} />
+            </div>
+            <div style={Object.assign({}, styles.slide, styles.slide2)}>
+              slide n°2
+            </div>
+            <div style={Object.assign({}, styles.slide, styles.slide3)}>
+              <NewsContents categorySelect={props.categorySelect} />
+            </div>
+          </SwipeableViews>
+
           <div className="subBanner mt-3 mb-5">{this.createSubBanners()}</div>
         </main>
       </React.Fragment>

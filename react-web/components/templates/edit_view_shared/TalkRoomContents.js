@@ -1,10 +1,6 @@
 import { connect } from 'react-redux'
-import BoxContents from 'components/templates/BoxContents'
-import {
-  setTalkRoomCategories,
-  setTalkRoomDesc,
-  setTalkRoomInputForm
-} from 'actions/site'
+import BoxContents from 'components/templates/edit_view_shared/BoxContents'
+import { setTalkRoomCategories } from 'actions/site'
 
 class TalkRoomContents extends BoxContents {
   /**
