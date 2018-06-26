@@ -5,6 +5,12 @@ import ImageModal from 'components/templates/edit_modal/ImageModal'
 import TextBGImageModal from 'components/templates/edit_modal/TextBGImageModal'
 import TextModal from 'components/templates/edit_modal/TextModal'
 
+// string - class mapping
+const CLASSES = {
+  CategoryListModal,
+  TextBGImageModal
+}
+
 // ここは汎用Modal処理のみ書いておいて、外からどのモーダルを展開するか渡す感じ
 // modalName : string       data属性の文字列から展開Modalを決定
 export default function ppHOC(WrappedComponent, modalName) {
@@ -14,13 +20,7 @@ export default function ppHOC(WrappedComponent, modalName) {
       this.state = { isOpen: false }
 
       // create instance with modal name
-      this.Modal = null
-      switch (modalName) {
-        case 'TextBGImageModal':
-          this.Modal = TextBGImageModal
-          break
-        default:
-      }
+      this.Modal = CLASSES[modalName]
     }
 
     onTriggerModal() {

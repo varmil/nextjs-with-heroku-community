@@ -67,6 +67,10 @@ export default function ppHOC(WrappedComponent) {
         const attr = e.dataset
         const Composed = withModalFactory(OverlayEdit, attr.modal)
 
+        // TODO
+        // const actionMethod = createAction(attr.action, e => e)
+        // actionMethod({ state, index })
+
         return (
           <Composed
             key={i}

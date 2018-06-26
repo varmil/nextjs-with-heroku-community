@@ -1,6 +1,7 @@
 import React from 'react'
 import Classes from 'constants/Classes'
 import TextViewer from 'components/atoms/TextViewer'
+import { SiteTop } from 'constants/ActionTypes'
 
 const MAX_HEIGHT = '250px'
 
@@ -13,7 +14,7 @@ export default class MainBanner extends React.Component {
         href={props.href}
         data-modal={`TextBGImageModal`}
         data-index={props.index}
-        data-action={'ACTION_TYPE'}
+        data-action={SiteTop.SET_MAIN_BANNER}
       >
         <TextViewer value={props.contentState} />
 
