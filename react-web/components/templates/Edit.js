@@ -2,6 +2,7 @@ import React from 'react'
 // import { connect } from 'react-redux'
 // import dynamic from 'next/dynamic'
 import AdminHeader from 'components/organisms/admin/AdminHeader'
+import OverlayEdit from 'components/organisms/OverlayEdit'
 import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
 import SideBar from 'components/templates/container/SideBar'
 import Device from 'constants/Device'
@@ -21,8 +22,7 @@ export default function ppHOC(WrappedComponent) {
     constructor(props) {
       super(props)
       this.state = { show: false, iframeHeight: 0, overlayElements: [] }
-
-      console.info('EDIT', props)
+      // console.info('EDIT', props)
     }
 
     componentDidMount() {
@@ -59,10 +59,10 @@ export default function ppHOC(WrappedComponent) {
           height: rect.height,
           width: rect.width,
           top: rect.top,
-          left: rect.left,
-          backgroundColor: 'black'
+          left: rect.left
         }
-        return <div key={i} className="ee" style={tmpStyle} />
+
+        return <OverlayEdit key={i} className="ee" containerStyle={tmpStyle} />
       })
     }
 
