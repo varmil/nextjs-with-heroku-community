@@ -80,7 +80,6 @@ class TopPage extends React.Component {
   }
 
   handleChangeIndex = index => {
-    console.log('change index', index)
     this.setState({ tabIndex: index })
   }
 
@@ -101,17 +100,13 @@ class TopPage extends React.Component {
     this.props.dispatch(setSubBanner({ ...state, index }))
   }
 
-  // onSaveFooter(state) {
-  //   this.props.dispatch(setFooter(state))
-  // }
-
   /**
    * Edit Handler END
    */
 
   render() {
     const props = this.props
-    console.log('[TOP PAGE]', props)
+    // console.log('[TOP PAGE]', props)
 
     return (
       <React.Fragment>

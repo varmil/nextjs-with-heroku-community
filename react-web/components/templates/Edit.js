@@ -34,10 +34,10 @@ export default function ppHOC(WrappedComponent) {
         console.log('editable', rect)
       })
 
-      // dummy post message to iframe
+      // DEMO: dummy post message to iframe
       // 本来はModal編集でSaveしたタイミングで通知が行く
       setTimeout(() => {
-        iWindow.postMessage('HELLO WORLD', '*')
+        iWindow.postMessage({ type: 'edited', payload: 'HELLO WORLD' }, '*')
       }, 1500)
     }
 

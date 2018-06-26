@@ -16,10 +16,10 @@ class Header extends React.Component {
   dynamicImport() {
     if (this.props.edit) {
       NavBar = dynamic(import('components/templates/container/EditableNavBar'))
-      MenuBar = dynamic(import('components/organisms/site/edit/MenuBar'))
+      // MenuBar = dynamic(import('components/organisms/site/edit/MenuBar'))
     } else {
       NavBar = dynamic(import('components/templates/container/NavBar'))
-      MenuBar = dynamic(import('components/organisms/site/base/MenuBar'))
+      // MenuBar = dynamic(import('components/organisms/site/base/MenuBar'))
     }
   }
 
