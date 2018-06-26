@@ -7,11 +7,14 @@ import SideBar from 'components/templates/container/SideBar'
 import Device from 'constants/Device'
 import Classes from 'constants/Classes'
 
-// import { loadData } from 'actions/example'
+// env
 const IS_SERVER = typeof window === 'undefined'
+// side bar
 const SIDEBAR_WIDTH = 180
 const OFFSET_TOP_SIDEBAR = 106
 const OFFSET_TOP_MAINBODY = 135
+// device
+const MOBILE_WIDTH = 375
 
 export default function ppHOC(WrappedComponent) {
   return class Edit extends React.Component {
@@ -33,6 +36,8 @@ export default function ppHOC(WrappedComponent) {
         const rect = mb[0].getBoundingClientRect()
         console.log('editable rect ::', rect)
         console.log('iframe height ::', iWindow.document.body.scrollHeight)
+
+        // TODO: dynamically create edit overlay elements
 
         const tmpStyle = {
           position: 'absolute',
@@ -86,7 +91,7 @@ export default function ppHOC(WrappedComponent) {
           merged = {
             position: 'relative',
             left: '50%',
-            width: 375,
+            width: MOBILE_WIDTH,
             marginLeft: -66
           }
           break
@@ -99,7 +104,7 @@ export default function ppHOC(WrappedComponent) {
     addIFrameStyle() {
       return {
         height: this.state.iframeHeight,
-        width: 375,
+        width: MOBILE_WIDTH,
         border: 'none'
       }
     }
@@ -108,10 +113,10 @@ export default function ppHOC(WrappedComponent) {
     addOverlayContainerStyle() {
       return {
         position: 'absolute',
-        top: 0,
-        left: 0,
         height: this.state.iframeHeight,
-        width: 375
+        width: MOBILE_WIDTH,
+        top: 0,
+        left: 0
       }
     }
 
