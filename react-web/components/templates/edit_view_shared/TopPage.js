@@ -43,6 +43,18 @@ class TopPage extends React.Component {
     this.state = { tabIndex: 0 }
   }
 
+  componentDidMount() {
+    // TODO: iFrame event listener
+    // update redux store when receive message (data is store state)
+    window.addEventListener(
+      'message',
+      event => {
+        console.info('TOPInside of iframe ' + JSON.stringify(event.data))
+      },
+      false
+    )
+  }
+
   createSubBanners() {
     const subBanner = this.props.top.subBanner
     return (

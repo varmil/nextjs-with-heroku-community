@@ -1,12 +1,14 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import dynamic from 'next/dynamic'
+// import { connect } from 'react-redux'
+// import dynamic from 'next/dynamic'
 import AdminHeader from 'components/organisms/admin/AdminHeader'
 import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
 import SideBar from 'components/templates/container/SideBar'
 import Device from 'constants/Device'
-// import { loadData } from 'actions/example'
+import Classes from 'constants/Classes'
 
+// import { loadData } from 'actions/example'
+const IS_SERVER = typeof window === 'undefined'
 const SIDEBAR_WIDTH = 180
 const OFFSET_TOP_SIDEBAR = 106
 const OFFSET_TOP_MAINBODY = 135
@@ -21,18 +23,22 @@ export default function ppHOC(WrappedComponent) {
     }
 
     componentDidMount() {
-      this.setState({ show: true })
+      // this.setState({ show: true })
+      // this.Frame = dynamic(import('react-frame-component'))
 
       // TODO: get the element rect in iframe
-      // setTimeout(() => {
-      //   const mb = this.iframe.contentWindow.document.getElementById(
-      //     'TopMainBanner'
-      //   )
-      //   const rect = mb.getBoundingClientRect()
-      //   console.log(rect)
-      // }, 500)
+      const iWindow = this.iframe.contentWindow
+      iWindow.addEventListener('load', () => {
+        const mb = iWindow.document.getElementsByClassName(Classes.EDITABLE)
+        const rect = mb[0].getBoundingClientRect()
+        console.log('editable', rect)
+      })
 
-      this.Frame = dynamic(import('react-frame-component'))
+      // dummy post message to iframe
+      // 本来はModal編集でSaveしたタイミングで通知が行く
+      setTimeout(() => {
+        iWindow.postMessage('HELLO WORLD', '*')
+      }, 1500)
     }
 
     addDeviceStyle() {
@@ -91,14 +97,14 @@ export default function ppHOC(WrappedComponent) {
           <div className="mainBody">
             <SideBar width={SIDEBAR_WIDTH} offsetTop={OFFSET_TOP_SIDEBAR} />
 
-            {/* <div id="editBody" style={this.addDeviceStyle()}>
-              {this.props.children}
-            </div> */}
-
-            {this.state.show ? (
-              <this.Frame style={this.addDeviceStyle()}>
-                <WrappedComponent {...this.props} container={null} />
-              </this.Frame>
+            {!IS_SERVER ? (
+              <iframe
+                ref={f => (this.iframe = f)}
+                style={this.addDeviceStyle()}
+                src="/view/home"
+              >
+                {/* <WrappedComponent {...this.props} container={null} /> */}
+              </iframe>
             ) : null}
           </div>
 
