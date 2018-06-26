@@ -1,6 +1,8 @@
 import React from 'react'
 // import { connect } from 'react-redux'
 // import dynamic from 'next/dynamic'
+import { createAction } from 'redux-actions'
+import { setMainBanner } from 'actions/site'
 import AdminHeader from 'components/organisms/admin/AdminHeader'
 import OverlayEdit from 'components/organisms/OverlayEdit'
 import withModalFactory from 'components/organisms/site/edit/withModalFactory'
@@ -54,7 +56,6 @@ export default function ppHOC(WrappedComponent) {
       const arr = Array.from(elements) // convert to array
       return arr.map((e, i) => {
         const rect = e.getBoundingClientRect()
-        console.log('editable rect ::', rect)
         const style = {
           position: 'absolute',
           height: rect.height,
@@ -68,8 +69,7 @@ export default function ppHOC(WrappedComponent) {
         const Composed = withModalFactory(OverlayEdit, attr.modal)
 
         // TODO
-        // const actionMethod = createAction(attr.action, e => e)
-        // actionMethod({ state, index })
+        const actionMethod = createAction(attr.action)
 
         return (
           <Composed
@@ -87,6 +87,8 @@ export default function ppHOC(WrappedComponent) {
                 'index',
                 attr.index
               )
+
+              this.props.dispatch(actionMethod({ ...state, index: attr.index }))
             }}
           />
         )
@@ -156,6 +158,7 @@ export default function ppHOC(WrappedComponent) {
     render() {
       const props = this.props
       const state = this.state
+
       return (
         <div className="container-fluid">
           <div className="fixed-top">
@@ -175,10 +178,8 @@ export default function ppHOC(WrappedComponent) {
                 <iframe
                   ref={f => (this.iframe = f)}
                   style={this.addIFrameStyle()}
-                  src="/view/home"
-                >
-                  {/* <WrappedComponent {...this.props} container={null} /> */}
-                </iframe>
+                  src={'/view/home'}
+                />
                 <div
                   id="editableOverlayContainer"
                   style={this.addOverlayContainerStyle()}
