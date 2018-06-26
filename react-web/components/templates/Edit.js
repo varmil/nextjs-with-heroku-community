@@ -20,35 +20,23 @@ export default function ppHOC(WrappedComponent) {
   return class Edit extends React.Component {
     constructor(props) {
       super(props)
-      this.state = { show: false, iframeHeight: 0, tmpStyle: {} }
+      this.state = { show: false, iframeHeight: 0, overlayElements: [] }
 
       console.info('EDIT', props)
     }
 
     componentDidMount() {
-      // this.setState({ show: true })
-      // this.Frame = dynamic(import('react-frame-component'))
-
-      // TODO: get the element rect in iframe
       const iWindow = this.iframe.contentWindow
       iWindow.addEventListener('load', () => {
-        const mb = iWindow.document.getElementsByClassName(Classes.EDITABLE)
-        const rect = mb[0].getBoundingClientRect()
-        console.log('editable rect ::', rect)
         console.log('iframe height ::', iWindow.document.body.scrollHeight)
 
-        // TODO: dynamically create edit overlay elements
+        // dynamically create edit overlay elements
+        const arr = iWindow.document.getElementsByClassName(Classes.EDITABLE)
+        const overlayElements = this.mapEditableElements(arr)
 
-        const tmpStyle = {
-          position: 'absolute',
-          height: rect.height,
-          width: rect.width,
-          top: rect.top,
-          left: rect.left
-        }
         this.setState({
           ...this.state,
-          tmpStyle,
+          overlayElements,
           iframeHeight: iWindow.document.body.scrollHeight
         })
       })
@@ -58,6 +46,24 @@ export default function ppHOC(WrappedComponent) {
       setTimeout(() => {
         iWindow.postMessage({ type: 'edited', payload: 'HELLO WORLD' }, '*')
       }, 1500)
+    }
+
+    mapEditableElements(elements) {
+      const arr = Array.from(elements) // convert to array
+      return arr.map((e, i) => {
+        //  get the element rect in iframe
+        const rect = e.getBoundingClientRect()
+        console.log('editable rect ::', rect)
+        const tmpStyle = {
+          position: 'absolute',
+          height: rect.height,
+          width: rect.width,
+          top: rect.top,
+          left: rect.left,
+          backgroundColor: 'black'
+        }
+        return <div key={i} className="ee" style={tmpStyle} />
+      })
     }
 
     addDeviceStyle() {
@@ -150,7 +156,7 @@ export default function ppHOC(WrappedComponent) {
                   id="editableOverlayContainer"
                   style={this.addOverlayContainerStyle()}
                 >
-                  <div id="FOOOO" style={state.tmpStyle} />
+                  {state.overlayElements}
                 </div>
               </section>
             ) : null}
