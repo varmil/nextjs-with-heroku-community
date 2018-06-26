@@ -17,7 +17,7 @@ export default function ppHOC(WrappedComponent) {
   return class Edit extends React.Component {
     constructor(props) {
       super(props)
-      this.state = { show: false }
+      this.state = { show: false, iframeHeight: 0, tmpStyle: {} }
 
       console.info('EDIT', props)
     }
@@ -31,7 +31,21 @@ export default function ppHOC(WrappedComponent) {
       iWindow.addEventListener('load', () => {
         const mb = iWindow.document.getElementsByClassName(Classes.EDITABLE)
         const rect = mb[0].getBoundingClientRect()
-        console.log('editable', rect)
+        console.log('editable rect ::', rect)
+        console.log('iframe height ::', iWindow.document.body.scrollHeight)
+
+        const tmpStyle = {
+          position: 'absolute',
+          height: rect.height,
+          width: rect.width,
+          top: rect.top,
+          left: rect.left
+        }
+        this.setState({
+          ...this.state,
+          tmpStyle,
+          iframeHeight: iWindow.document.body.scrollHeight
+        })
       })
 
       // DEMO: dummy post message to iframe
@@ -70,7 +84,7 @@ export default function ppHOC(WrappedComponent) {
           break
         case Device.MOBILE:
           merged = {
-            position: 'absolute',
+            position: 'relative',
             left: '50%',
             width: 375,
             marginLeft: -66
@@ -81,8 +95,29 @@ export default function ppHOC(WrappedComponent) {
       return { ...base, ...merged }
     }
 
+    // NOTE: only mobile
+    addIFrameStyle() {
+      return {
+        height: this.state.iframeHeight,
+        width: 375,
+        border: 'none'
+      }
+    }
+
+    // NOTE: only mobile
+    addOverlayContainerStyle() {
+      return {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        height: this.state.iframeHeight,
+        width: 375
+      }
+    }
+
     render() {
       const props = this.props
+      const state = this.state
       return (
         <div className="container-fluid">
           <div className="fixed-top">
@@ -98,13 +133,21 @@ export default function ppHOC(WrappedComponent) {
             <SideBar width={SIDEBAR_WIDTH} offsetTop={OFFSET_TOP_SIDEBAR} />
 
             {!IS_SERVER ? (
-              <iframe
-                ref={f => (this.iframe = f)}
-                style={this.addDeviceStyle()}
-                src="/view/home"
-              >
-                {/* <WrappedComponent {...this.props} container={null} /> */}
-              </iframe>
+              <section style={this.addDeviceStyle()}>
+                <iframe
+                  ref={f => (this.iframe = f)}
+                  style={this.addIFrameStyle()}
+                  src="/view/home"
+                >
+                  {/* <WrappedComponent {...this.props} container={null} /> */}
+                </iframe>
+                <div
+                  id="editableOverlayContainer"
+                  style={this.addOverlayContainerStyle()}
+                >
+                  <div id="FOOOO" style={state.tmpStyle} />
+                </div>
+              </section>
             ) : null}
           </div>
 
