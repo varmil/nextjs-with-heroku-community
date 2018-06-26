@@ -44,6 +44,7 @@ class Header extends React.Component {
           {range(mainBanner.item.length).map(i => (
             <props.mainBanner
               key={i}
+              index={i}
               className="mb-3"
               contentState={mainBanner.item[i].contentState}
               src={mainBanner.item[i].src}

@@ -3,6 +3,7 @@ import React from 'react'
 // import dynamic from 'next/dynamic'
 import AdminHeader from 'components/organisms/admin/AdminHeader'
 import OverlayEdit from 'components/organisms/OverlayEdit'
+import withModalFactory from 'components/organisms/site/edit/withModalFactory'
 import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
 import SideBar from 'components/templates/container/SideBar'
 import Device from 'constants/Device'
@@ -48,13 +49,13 @@ export default function ppHOC(WrappedComponent) {
       }, 1500)
     }
 
+    // map from elements in iframe to react component
     mapEditableElements(elements) {
       const arr = Array.from(elements) // convert to array
       return arr.map((e, i) => {
-        //  get the element rect in iframe
         const rect = e.getBoundingClientRect()
         console.log('editable rect ::', rect)
-        const tmpStyle = {
+        const style = {
           position: 'absolute',
           height: rect.height,
           width: rect.width,
@@ -62,7 +63,29 @@ export default function ppHOC(WrappedComponent) {
           left: rect.left
         }
 
-        return <OverlayEdit key={i} className="ee" containerStyle={tmpStyle} />
+        // bind modal
+        const attr = e.dataset
+        const Composed = withModalFactory(OverlayEdit, attr.modal)
+
+        return (
+          <Composed
+            key={i}
+            containerStyle={style}
+            // action   : string    起動するAction
+            // index    : int       WrappedComponentが配列で管理される場合のIndex
+            onSave={state => {
+              console.warn(
+                'NOTIMPL ONSAVE',
+                'state',
+                state,
+                'action',
+                attr.action,
+                'index',
+                attr.index
+              )
+            }}
+          />
+        )
       })
     }
 
