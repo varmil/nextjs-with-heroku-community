@@ -42,6 +42,9 @@ export default function ppHOC(WrappedComponent, modalName) {
           {/* handle custom modal */}
           {(() => (
             <this.Modal
+              // 有用な情報（ContentState, src, etc.）は含んでないので注意
+              // Edit側でconnectしておいて、 mapEditableElements() の際に
+              // 「このElementsにはこのProps」みたいに第３引数でPropsを渡すか
               {...this.props}
               {...this.state}
               toggle={this.toggle.bind(this)}
