@@ -23,9 +23,9 @@ class Header extends React.Component {
     }
   }
 
-  onSaveMainBanner(state, index) {
-    this.props.dispatch(setMainBanner({ ...state, index }))
-  }
+  // onSaveMainBanner(state, index) {
+  //   this.props.dispatch(setMainBanner({ ...state, index }))
+  // }
 
   // onSaveMenuBar(state) {
   //   this.props.dispatch(setMenuBarStyle({ ...state }))
@@ -50,7 +50,8 @@ class Header extends React.Component {
               src={mainBanner.item[i].src}
               backgroundColor={mainBanner.item[i].backgroundColor}
               href={mainBanner.item[i].href}
-              onSave={state => this.onSaveMainBanner(state, i)}
+              propsPath={`top.mainBanner.item.${i}`}
+              // onSave={state => this.onSaveMainBanner(state, i)}
             />
           ))}
         </header>

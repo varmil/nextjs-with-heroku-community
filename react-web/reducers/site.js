@@ -1,5 +1,6 @@
 import { handleActions } from 'redux-actions'
 import update from 'immutability-helper'
+import immutable from 'object-path-immutable'
 import {
   Logo as LogoDefault,
   // NotificationIcon as NotificationIconDefault,
@@ -104,13 +105,15 @@ export default handleActions(
      * TOP
      */
     [SiteTop.SET_MAIN_BANNER]: (state, action) => {
-      return update(state, {
-        top: {
-          mainBanner: {
-            item: { [action.payload.index]: { $set: action.payload } }
-          }
-        }
-      })
+      // return update(state, {
+      //   top: {
+      //     mainBanner: {
+      //       item: { [action.payload.index]: { $set: action.payload } }
+      //     }
+      //   }
+      // })
+      const i = action.payload.index
+      return immutable.set(state, `top.mainBanner.item.${i}`, action.payload)
     },
     [SiteTop.SET_BOX_HEADER]: (state, action) => {
       return update(state, {
