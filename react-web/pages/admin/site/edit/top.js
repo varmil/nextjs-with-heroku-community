@@ -23,6 +23,5 @@ class EditTop extends React.Component {
 const composed = withAdminEdit(EditTop)
 export default connect(state => ({
   preview: state.site.preview,
-  common: state.site.common,
-  top: state.site.top
+  site: state.site
 }))(composed)

@@ -15,7 +15,7 @@ export default class MainBanner extends React.Component {
         data-modal={`TextBGImageModal`}
         data-index={props.index}
         data-action={SiteTop.SET_MAIN_BANNER}
-        data-props={JSON.stringify(props)}
+        data-path={props.propsPath}
       >
         <TextViewer value={props.contentState} />
 

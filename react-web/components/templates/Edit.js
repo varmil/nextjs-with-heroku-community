@@ -1,16 +1,12 @@
 import React from 'react'
 // import { connect } from 'react-redux'
 // import dynamic from 'next/dynamic'
-import { createAction } from 'redux-actions'
-import { postMessage } from 'actions/iframe'
 import AdminHeader from 'components/organisms/admin/AdminHeader'
-import OverlayEdit from 'components/organisms/OverlayEdit'
-import withModalFactory from 'components/organisms/site/edit/withModalFactory'
+import OverlayEditWithModal from 'components/organisms/OverlayEditWithModal'
 import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
 import SideBar from 'components/templates/container/SideBar'
 import Device from 'constants/Device'
 import Classes from 'constants/Classes'
-import IFrame from 'constants/IFrame'
 
 // env
 const IS_SERVER = typeof window === 'undefined'
@@ -25,8 +21,8 @@ export default function ppHOC(WrappedComponent) {
   return class Edit extends React.Component {
     constructor(props) {
       super(props)
-      this.state = { show: false, iframeHeight: 0, overlayElements: [] }
       // console.info('EDIT', props)
+      this.state = { show: false, iframeHeight: 0, overlayElements: [] }
     }
 
     componentDidMount() {
@@ -51,51 +47,16 @@ export default function ppHOC(WrappedComponent) {
     mapEditableElements(elements, iWindow) {
       const arr = Array.from(elements) // convert to array
       return arr.map((e, i) => {
+        // FIXME: 高さが変化した場合ここと、iframeHeightが追随する必要あり
         const rect = e.getBoundingClientRect()
-        const style = {
-          position: 'absolute',
-          height: rect.height,
-          width: rect.width,
-          top: rect.top,
-          left: rect.left
-        }
-
-        // bind modal and action that is triggered onSave
         const attr = e.dataset
-        const Composed = withModalFactory(OverlayEdit, attr.modal)
-        const actionMethod = createAction(attr.action)
-
         return (
-          <Composed
+          <OverlayEditWithModal
             key={i}
-            containerStyle={style}
-            // TODO: 初期描画時しか更新されないので、onSave時にUpdateする必要あり
-            modalProps={JSON.parse(attr.props)}
-            // state    : object    Modalで編集したstate
-            // action   : string    起動するAction
-            // index    : int       WrappedComponentが配列で管理される場合のIndex
-            onSave={state => {
-              console.log(
-                'ONSAVE',
-                'state',
-                state,
-                'action',
-                attr.action,
-                'index',
-                attr.index
-              )
-
-              // update store, and pass the same action to iframe
-              const action = actionMethod({ ...state, index: attr.index })
-              this.props.dispatch(action)
-              this.props.dispatch(
-                postMessage({
-                  iWindow,
-                  type: IFrame.EVENT_TYPE_ONSAVE,
-                  payload: action
-                })
-              )
-            }}
+            rect={rect}
+            attr={attr}
+            iWindow={iWindow}
+            dispatch={this.props.dispatch}
           />
         )
       })

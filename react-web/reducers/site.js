@@ -60,6 +60,11 @@ const initialState = {
   }
 }
 
+// nested stateのエイリアス
+export const PATH_MAP = {
+  MAIN_BANNER: `top.mainBanner`
+}
+
 export default handleActions(
   {
     /**
@@ -112,8 +117,11 @@ export default handleActions(
       //     }
       //   }
       // })
-      const i = action.payload.index
-      return immutable.set(state, `top.mainBanner.item.${i}`, action.payload)
+      return immutable.set(
+        state,
+        `${PATH_MAP.MAIN_BANNER}.${action.payload.index}`,
+        action.payload
+      )
     },
     [SiteTop.SET_BOX_HEADER]: (state, action) => {
       return update(state, {

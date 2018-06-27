@@ -15,8 +15,6 @@ class TextBGImageModal extends React.Component {
   constructor(props) {
     super(props)
 
-    console.log('MODAL initial props', props)
-
     // base state
     let initialState = {
       contentState: props.contentState,
