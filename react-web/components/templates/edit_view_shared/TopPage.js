@@ -8,6 +8,7 @@ import FixedButton from 'components/atoms/FixedButton'
 import Header from 'components/templates/container/Header'
 import TalkRoomContents from 'components/templates/edit_view_shared/TalkRoomContents'
 import NewsContents from 'components/templates/edit_view_shared/NewsContents'
+import IFrame from 'constants/IFrame'
 
 const styles = {
   slide: {
@@ -38,9 +39,23 @@ const Label = props => (
 class TopPage extends React.Component {
   constructor(props) {
     super(props)
-
     // TODO: decide initial tab index with URL props.slug
     this.state = { tabIndex: 0 }
+  }
+
+  componentDidMount() {
+    // この辺の処理は本来、もう一個上、つまり最上位のpagesレイヤーでやるべき
+    // iframe event listener
+    window.addEventListener(
+      'message',
+      event => {
+        // do nothing if type does not match
+        if (event.data.type !== IFrame.EVENT_TYPE_ONSAVE) return
+        // 全く同じアクションをこっちでも発火してやる
+        this.props.dispatch(event.data.payload)
+      },
+      false
+    )
   }
 
   createSubBanners() {
@@ -68,7 +83,6 @@ class TopPage extends React.Component {
   }
 
   handleChangeIndex = index => {
-    console.log('change index', index)
     this.setState({ tabIndex: index })
   }
 
@@ -89,17 +103,13 @@ class TopPage extends React.Component {
     this.props.dispatch(setSubBanner({ ...state, index }))
   }
 
-  // onSaveFooter(state) {
-  //   this.props.dispatch(setFooter(state))
-  // }
-
   /**
    * Edit Handler END
    */
 
   render() {
     const props = this.props
-    console.log('[TOP PAGE]', props)
+    // console.log('[TOP PAGE]', props)
 
     return (
       <React.Fragment>

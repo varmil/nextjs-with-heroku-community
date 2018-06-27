@@ -59,17 +59,15 @@ export const MenuBar = {
   }
 }
 
-export const MainBanner = {
-  item: [
-    {
-      index: 0,
-      contentState: null,
-      src: 'https://dummyimage.com/1140x220/000/fff.png',
-      backgroundColor: '#fff',
-      href: ''
-    }
-  ]
-}
+export const MainBanner = [
+  {
+    index: 0,
+    contentState: null,
+    src: 'https://dummyimage.com/1140x220/000/fff.png',
+    backgroundColor: '#fff',
+    href: ''
+  }
+]
 
 const boxesBase = range(3).map(i => ({
   id: '', // サーバで管理しているスレッドID（URLに使う？）

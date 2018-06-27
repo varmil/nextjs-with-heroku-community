@@ -1,0 +1,4 @@
+export default {
+  EVENT_TYPE_LOAD: 'IFRAME_LOAD',
+  EVENT_TYPE_ONSAVE: 'IFRAME_ON_SAVE'
+}

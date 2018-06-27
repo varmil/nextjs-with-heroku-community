@@ -1,5 +1,6 @@
 import { handleActions } from 'redux-actions'
 import update from 'immutability-helper'
+import immutable from 'object-path-immutable'
 import {
   Logo as LogoDefault,
   // NotificationIcon as NotificationIconDefault,
@@ -59,6 +60,11 @@ const initialState = {
   }
 }
 
+// nested stateのエイリアス
+export const PATH_MAP = {
+  MAIN_BANNER: `top.mainBanner`
+}
+
 export default handleActions(
   {
     /**
@@ -104,13 +110,18 @@ export default handleActions(
      * TOP
      */
     [SiteTop.SET_MAIN_BANNER]: (state, action) => {
-      return update(state, {
-        top: {
-          mainBanner: {
-            item: { [action.payload.index]: { $set: action.payload } }
-          }
-        }
-      })
+      // return update(state, {
+      //   top: {
+      //     mainBanner: {
+      //       item: { [action.payload.index]: { $set: action.payload } }
+      //     }
+      //   }
+      // })
+      return immutable.set(
+        state,
+        `${PATH_MAP.MAIN_BANNER}.${action.payload.index}`,
+        action.payload
+      )
     },
     [SiteTop.SET_BOX_HEADER]: (state, action) => {
       return update(state, {
