@@ -27,9 +27,9 @@ export default function ppHOC(WrappedComponent) {
 
     componentDidMount() {
       const iWindow = this.iframe.contentWindow
-      iWindow.addEventListener('load', () => {
-        console.log('iframe height ::', iWindow.document.body.scrollHeight)
 
+      // iframe内を走査して、親側（Overlay側）に更新をかける
+      const updateOverlays = () => {
         // dynamically create edit overlay elements
         const arr = iWindow.document.getElementsByClassName(Classes.EDITABLE)
         const overlayElements = this.mapEditableElements(arr, iWindow)
@@ -39,8 +39,28 @@ export default function ppHOC(WrappedComponent) {
           overlayElements,
           iframeHeight: iWindow.document.body.scrollHeight
         })
+      }
+
+      iWindow.addEventListener('load', () => {
+        updateOverlays()
+
+        // 定期的にiframe内を監視して高さが変化していたらOverlayにも反映
+        // ちょっと手抜き。本当はEventでやりとりすべき
+        this.timer = setInterval(() => {
+          const frameHeight = iWindow.document.body.scrollHeight
+          if (this.state.iframeHeight === frameHeight) return
+          console.info('iframe height changed, so we re-render overlay')
+          console.info('height ::', frameHeight)
+          updateOverlays()
+        }, 500)
       })
+
       // iWindow.postMessage({ type: IFrame.EVENT_TYPE_LOAD, payload: {} }, '*')
+    }
+
+    componentWillUnmount() {
+      console.log('clear timer', this.timer)
+      clearInterval(this.timer)
     }
 
     // map from elements in iframe to react component
