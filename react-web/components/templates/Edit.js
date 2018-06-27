@@ -2,7 +2,7 @@ import React from 'react'
 // import { connect } from 'react-redux'
 // import dynamic from 'next/dynamic'
 import { createAction } from 'redux-actions'
-import { setMainBanner } from 'actions/site'
+import { postMessage } from 'actions/iframe'
 import AdminHeader from 'components/organisms/admin/AdminHeader'
 import OverlayEdit from 'components/organisms/OverlayEdit'
 import withModalFactory from 'components/organisms/site/edit/withModalFactory'
@@ -10,6 +10,7 @@ import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
 import SideBar from 'components/templates/container/SideBar'
 import Device from 'constants/Device'
 import Classes from 'constants/Classes'
+import IFrame from 'constants/IFrame'
 
 // env
 const IS_SERVER = typeof window === 'undefined'
@@ -35,7 +36,7 @@ export default function ppHOC(WrappedComponent) {
 
         // dynamically create edit overlay elements
         const arr = iWindow.document.getElementsByClassName(Classes.EDITABLE)
-        const overlayElements = this.mapEditableElements(arr)
+        const overlayElements = this.mapEditableElements(arr, iWindow)
 
         this.setState({
           ...this.state,
@@ -43,16 +44,11 @@ export default function ppHOC(WrappedComponent) {
           iframeHeight: iWindow.document.body.scrollHeight
         })
       })
-
-      // DEMO: dummy post message to iframe
-      // 本来はModal編集でSaveしたタイミングで通知が行く
-      setTimeout(() => {
-        iWindow.postMessage({ type: 'edited', payload: 'HELLO WORLD' }, '*')
-      }, 1500)
+      // iWindow.postMessage({ type: IFrame.EVENT_TYPE_LOAD, payload: {} }, '*')
     }
 
     // map from elements in iframe to react component
-    mapEditableElements(elements) {
+    mapEditableElements(elements, iWindow) {
       const arr = Array.from(elements) // convert to array
       return arr.map((e, i) => {
         const rect = e.getBoundingClientRect()
@@ -64,22 +60,23 @@ export default function ppHOC(WrappedComponent) {
           left: rect.left
         }
 
-        // bind modal
+        // bind modal and action that is triggered onSave
         const attr = e.dataset
         const Composed = withModalFactory(OverlayEdit, attr.modal)
-
-        // TODO
         const actionMethod = createAction(attr.action)
 
         return (
           <Composed
             key={i}
             containerStyle={style}
+            // TODO: 初期描画時しか更新されないので、onSave時にUpdateする必要あり
+            modalProps={JSON.parse(attr.props)}
+            // state    : object    Modalで編集したstate
             // action   : string    起動するAction
             // index    : int       WrappedComponentが配列で管理される場合のIndex
             onSave={state => {
-              console.warn(
-                'NOTIMPL ONSAVE',
+              console.log(
+                'ONSAVE',
                 'state',
                 state,
                 'action',
@@ -88,7 +85,16 @@ export default function ppHOC(WrappedComponent) {
                 attr.index
               )
 
-              this.props.dispatch(actionMethod({ ...state, index: attr.index }))
+              // update store, and pass the same action to iframe
+              const action = actionMethod({ ...state, index: attr.index })
+              this.props.dispatch(action)
+              this.props.dispatch(
+                postMessage({
+                  iWindow,
+                  type: IFrame.EVENT_TYPE_ONSAVE,
+                  payload: action
+                })
+              )
             }}
           />
         )

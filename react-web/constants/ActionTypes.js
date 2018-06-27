@@ -36,6 +36,9 @@ export const SiteTalkRoom = createTypes(
 // （Edit, View）NEWS
 export const SiteNews = createTypes('site/news/', 'SET_DESC', 'SET_CATEGORIES')
 
+// (Edit) iframe
+export const IFrame = createTypes('iframe/', 'POST_MESSAGE')
+
 // -----
 // -----
 // -----
