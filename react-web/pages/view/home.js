@@ -1,28 +1,30 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import withIFrameable from 'components/templates/withIFrameable'
 import TopPage from 'components/templates/edit_view_shared/TopPage'
 import MainBanner from 'components/organisms/site/base/MainBanner'
 import CategorySelect from 'components/organisms/site/base/CategorySelect'
 import SubBanner from 'components/organisms/site/base/SubBanner'
 
-const initialState = {}
+const IFramedTop = withIFrameable(TopPage)
 
 class Home extends React.Component {
   // ctx.query contains URL params
+  // ?edit=true is added when the page is edit mode
   static async getInitialProps({ ctx }) {
-    return { slug: ctx.query.slug || '' }
+    const { edit, slug } = ctx.query
+    return { edit: !!edit, slug: slug || '' }
   }
 
-  constructor(props) {
-    super(props)
-    this.state = initialState
+  componentWillMount() {
+    this.TopPage = this.props.edit ? IFramedTop : TopPage
   }
 
   render() {
     const props = this.props
     return (
       <React.Fragment>
-        <TopPage
+        <this.TopPage
           {...props}
           mainBanner={MainBanner}
           // これはTopPageの中でImportすべきか。いや、ここでやるべきな気がする。

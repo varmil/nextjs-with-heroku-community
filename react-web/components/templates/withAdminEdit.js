@@ -165,7 +165,7 @@ export default function ppHOC(WrappedComponent) {
                 <iframe
                   ref={f => (this.iframe = f)}
                   style={this.addIFrameStyle()}
-                  src={'/view/home'}
+                  src={props.iframeSrc}
                 />
                 <div
                   id="editableOverlayContainer"
