@@ -25,11 +25,6 @@ const styles = {
   slide3: {}
 }
 
-const tabIndicatorStyle = {
-  backgroundColor: 'red',
-  height: 4
-}
-
 const Label = props => (
   <span>
     {props.text}
@@ -49,6 +44,13 @@ class TopPage extends React.Component {
     let activeTabIndex = findIndex(props.boxes, box => box.slug === props.slug)
     if (activeTabIndex === -1) activeTabIndex = 0
     this.state = { tabIndex: activeTabIndex }
+  }
+
+  getIndicatorStyle() {
+    return {
+      backgroundColor: this.props.color.backgroundColor,
+      height: 4
+    }
   }
 
   createSubBanners() {
@@ -119,7 +121,7 @@ class TopPage extends React.Component {
               className="tabs"
               value={this.state.tabIndex}
               onChange={this.handleChange}
-              TabIndicatorProps={{ style: tabIndicatorStyle }}
+              TabIndicatorProps={{ style: this.getIndicatorStyle() }}
               // fullWidth
               scrollable
               scrollButtons="off"
