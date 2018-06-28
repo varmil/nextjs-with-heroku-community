@@ -1,12 +1,20 @@
 import React from 'react'
+import Classes from 'constants/Classes'
 import TextViewer from 'components/atoms/TextViewer'
+import { SiteWelcome } from 'constants/ActionTypes'
+import { PATH_MAP } from 'reducers/site'
 
 export default class BoxHeader extends React.Component {
   render() {
     const props = this.props
     return (
       <React.Fragment>
-        <main className="main">
+        <main
+          className={`main ${Classes.EDITABLE} ${props.className}`}
+          data-modal={`TextBGImageModal`}
+          data-action={SiteWelcome.SET_WELCOME}
+          data-path={PATH_MAP.WELCOME}
+        >
           <h2 className="">
             <TextViewer value={props.contentState} />
           </h2>

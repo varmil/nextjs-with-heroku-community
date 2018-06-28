@@ -9,12 +9,13 @@ const Edit = withAdminEdit(<React.Fragment />)
 class EditHome extends React.Component {
   static async getInitialProps({ ctx }) {
     const { slug } = ctx.query
-    return { slug: slug || '' }
+    // スラッシュ入れないとNext.jsでは view/home/?edit=true の際にErrorになる
+    return { slug: `/${slug}` || '' }
   }
 
   render() {
     const props = this.props
-    return <Edit {...props} iframeSrc={`/view/home/${props.slug}?edit=true`} />
+    return <Edit {...props} iframeSrc={`/view/home${props.slug}?edit=true`} />
   }
 }
 

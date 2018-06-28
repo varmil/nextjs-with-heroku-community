@@ -21,7 +21,7 @@ const SortableItem = SortableElement(({ value, orderIndex, onChange }) => {
       {...value}
       style={{ ...baseStyle }}
       index={orderIndex}
-      label={'ボックス' + orderIndex}
+      label={'ボックス' + value.slug}
       text={value.header.text}
       onChange={onChange}
     />

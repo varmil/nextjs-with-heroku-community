@@ -6,17 +6,17 @@ import immutable from 'object-path-immutable'
 import {
   Logo as LogoDefault,
   NavIconColorDefault,
-  MenuBar as MenuBarDefault,
-  Footer as FooterDefault,
+  // MenuBar as MenuBarDefault,
+  // Footer as FooterDefault,
   ColorDefault,
   MainBanner as MainBannerDefault,
   Boxes as BoxesDefault,
   SubBanner as SubBannerDefault,
   Welcome as WelcomeDefault,
-  TalkRoomDescDefault,
-  TalkRoomInputFormDefault,
+  // TalkRoomDescDefault,
+  // TalkRoomInputFormDefault,
   TalkRoomCategoriesDefault,
-  NewsDescDefault,
+  // NewsDescDefault,
   NewsCategoriesDefault
 } from 'constants/SitePropsDefault'
 import {
@@ -37,8 +37,8 @@ const initialState = {
   common: {
     logo: LogoDefault,
     navIcon: NavIconColorDefault,
-    menuBar: MenuBarDefault,
-    footer: FooterDefault,
+    // menuBar: MenuBarDefault,
+    // footer: FooterDefault,
     // 汎用で使う背景色（テーマ色みたいな）
     color: ColorDefault
   },
@@ -66,6 +66,7 @@ const initialState = {
 
 // nested stateのエイリアス
 export const PATH_MAP = {
+  WELCOME: 'welcome',
   COLOR: 'common.color',
   MAIN_BANNER: `top.mainBanner`,
   LOGO: `common.logo`,
