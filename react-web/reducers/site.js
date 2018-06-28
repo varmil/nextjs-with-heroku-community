@@ -64,7 +64,8 @@ const initialState = {
 export const PATH_MAP = {
   MAIN_BANNER: `top.mainBanner`,
   LOGO: `common.logo`,
-  BOXES: `top.boxes`
+  BOXES: `top.boxes`,
+  TALK_CATEGORIES: `talkroom.categories`
 }
 
 export default handleActions(

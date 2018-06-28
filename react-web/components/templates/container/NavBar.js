@@ -18,11 +18,6 @@ const brandStyle = {
 class NavBar extends React.Component {
   constructor(props) {
     super(props)
-
-    // this is needed because this class is extended
-    // this.accountIcon = props.accountIcon || AccountIcon
-    // this.notificationIcon = props.notificationIcon || NotificationIcon
-
     this.state = { menuIsOpen: false }
   }
 

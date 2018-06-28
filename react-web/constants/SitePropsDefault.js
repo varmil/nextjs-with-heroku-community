@@ -101,7 +101,7 @@ export const Boxes = [
 ]
 
 export const SubBanner = {
-  item: range(2).map(i => ({
+  item: range(1).map(i => ({
     index: i,
     contentState: null,
     src: 'https://dummyimage.com/500x180/000/fff.png',

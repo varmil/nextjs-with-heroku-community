@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Classes from 'constants/Classes'
 
 export default class CategorySelect extends React.Component {
   constructor(props) {
@@ -11,8 +12,14 @@ export default class CategorySelect extends React.Component {
 
   // http://blog.keisuke11.com/webdesign/horizontal-scroll/
   createContents() {
+    const props = this.props
     return (
-      <div className="horizontal_scroll_wrap">
+      <div
+        className={`horizontal_scroll_wrap ${Classes.EDITABLE}`}
+        data-modal={`CategoryListModal`}
+        data-action={props.action}
+        data-path={props.propsPath}
+      >
         <ul className="scroll_lst">
           <li className="scroll_item">
             <Link href="">

@@ -6,6 +6,14 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import objectPath from 'object-path'
 import { PATH_MAP } from 'reducers/site'
+import {
+  SitePreview,
+  SiteCommon,
+  SiteTop,
+  SiteWelcome,
+  SiteTalkRoom,
+  SiteNews
+} from 'constants/ActionTypes'
 import { setBoxHeader, setSubBanner } from 'actions/site'
 import FixedButton from 'components/atoms/FixedButton'
 import Header from 'components/templates/container/Header'
@@ -120,7 +128,10 @@ class TopPage extends React.Component {
             onChangeIndex={this.handleChangeIndex}
           >
             <div style={Object.assign({}, styles.slide, styles.slide1)}>
-              <TalkRoomContents categorySelect={props.categorySelect} />
+              <TalkRoomContents
+                action={SiteTalkRoom.SET_CATEGORIES}
+                propsPath={`${PATH_MAP.TALK_CATEGORIES}`}
+              />
             </div>
             <div style={Object.assign({}, styles.slide, styles.slide2)}>
               slide n°2
