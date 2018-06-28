@@ -51,25 +51,6 @@ class TopPage extends React.Component {
     }
   }
 
-  // createSubBanners() {
-  //   const subBanner = this.props.top.subBanner
-  //   return (
-  //     <div className="">
-  //       {range(subBanner.item.length).map(i => (
-  //         <this.props.subBanner
-  //           key={i}
-  //           className="mb-2"
-  //           contentState={subBanner.item[i].contentState}
-  //           src={subBanner.item[i].src}
-  //           backgroundColor={subBanner.item[i].backgroundColor}
-  //           href={subBanner.item[i].href}
-  //           onSave={state => this.onSaveSubBanner(state, i)}
-  //         />
-  //       ))}
-  //     </div>
-  //   )
-  // }
-
   // 現在アクティブになってるタブのslugをみて、penを出すか決める
   isShowPenIcon() {
     const curSlug = this.props.boxes[this.state.tabIndex].slug
@@ -90,9 +71,9 @@ class TopPage extends React.Component {
 
     return (
       <React.Fragment>
-        <Header />
+        <div className="sticky-top">
+          <Header />
 
-        <main>
           <section
             className={`${Classes.EDITABLE}`}
             data-modal={`BoxesModal`}
@@ -117,7 +98,9 @@ class TopPage extends React.Component {
               ))}
             </Tabs>
           </section>
+        </div>
 
+        <main>
           <SwipeableViews
             enableMouseEvents
             index={this.state.tabIndex}
@@ -139,15 +122,19 @@ class TopPage extends React.Component {
               slide n°4
             </div>
           </SwipeableViews>
-        </main>
 
-        {this.isShowPenIcon() ? (
-          <FixedButton backgroundColor={props.color.backgroundColor} />
-        ) : null}
+          {this.isShowPenIcon() ? (
+            <FixedButton backgroundColor={props.color.backgroundColor} />
+          ) : null}
+        </main>
 
         <style global jsx>{`
           ::-webkit-scrollbar {
             display: none;
+          }
+
+          .sticky-top {
+            background-color: white;
           }
 
           .tab {

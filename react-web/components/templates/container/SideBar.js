@@ -68,8 +68,6 @@ const SideBarDevice = props => {
 
 // page item
 const PageItem = props => {
-  // HACK: 本来hrefじゃなくてrouteを使うべきだが、iframe使ってるので強制リロードで単純に
-  // トップページは便宜的に home/top というパスで強制リロード（slugなしだとりろーどにならないため）
   return (
     <React.Fragment>
       <ActiveLink route={`${URL.ADMIN_SITE_EDIT}/${props.slug}`}>
@@ -200,7 +198,7 @@ class SideBar extends React.Component {
             <PageItem level={1} slug={'welcome'} text={'Welcomeページ'} />
           </div>
           <div className="my-2">
-            <PageItem level={1} slug={'home/top'} text={'トップページ'} />
+            <PageItem level={1} slug={'home'} text={'トップページ'} />
             {this.createPageHierarchy()}
           </div>
         </section>

@@ -29,7 +29,11 @@ class NavBar extends React.Component {
       <React.Fragment>
         <Navbar
           className={`${props.className || ''}`}
-          style={{ padding: '1rem 0.8rem', ...props.style }}
+          style={{
+            padding: '0.6rem 0.8rem 0rem',
+            borderBottom: '1px solid black',
+            ...props.style
+          }}
         >
           <NavbarBrand className="mr-0" style={brandStyle}>
             <div
