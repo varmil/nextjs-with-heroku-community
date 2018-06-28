@@ -72,7 +72,9 @@ export const PATH_MAP = {
   NAV_ICON: `common.navIcon`,
   BOXES: `top.boxes`,
   TALK_CATEGORIES: `talkroom.categories`,
-  TALK_SUB_BANNER: `talkroom.subBanner`
+  NEWS_CATEGORIES: `news.categories`,
+  TALK_SUB_BANNER: `talkroom.subBanner`,
+  NEWS_SUB_BANNER: `news.subBanner`
 }
 
 export default handleActions(

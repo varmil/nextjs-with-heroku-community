@@ -116,7 +116,10 @@ class TopPage extends React.Component {
               slide n°2
             </div>
             <div style={Object.assign({}, styles.slide, styles.slide3)}>
-              <NewsContents />
+              <NewsContents
+                action={SiteNews.SET_CATEGORIES}
+                propsPath={`${PATH_MAP.NEWS_CATEGORIES}`}
+              />
             </div>
             <div style={Object.assign({}, styles.slide, styles.slide2)}>
               slide n°4

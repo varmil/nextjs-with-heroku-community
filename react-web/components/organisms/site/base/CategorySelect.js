@@ -41,6 +41,9 @@ export default class CategorySelect extends React.Component {
         data-path={props.propsPath}
       >
         <ul className="scroll_lst">
+          {/* default all */}
+          <Item text={'全て'} />
+
           {/* skip null text */}
           {props.item.filter(e => e.text).map((e, i) => {
             return <Item key={i} text={e.text} />

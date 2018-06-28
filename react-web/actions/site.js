@@ -20,8 +20,8 @@ export let setWelcome = createAction(SiteWelcome.SET_WELCOME, e => e)
 // talk room
 
 // news
-export let setNewsDesc = createAction(SiteNews.SET_DESC, e => e)
-export let setNewsCategories = createAction(SiteNews.SET_CATEGORIES, e => e)
+// export let setNewsDesc = createAction(SiteNews.SET_DESC, e => e)
+// export let setNewsCategories = createAction(SiteNews.SET_CATEGORIES, e => e)
 
 /**
  *  ASYNC ACTIONS

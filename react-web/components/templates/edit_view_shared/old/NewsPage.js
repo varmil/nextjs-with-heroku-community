@@ -1,21 +1,21 @@
 import { connect } from 'react-redux'
 import TalkBox from 'components/templates/edit_view_shared/TalkBox'
-import { setNewsCategories, setNewsDesc } from 'actions/site'
+// import { setNewsCategories, setNewsDesc } from 'actions/site'
 
 class NewsPage extends TalkBox {
   /**
    * Edit Handler START
    */
-  onSaveDesc(state) {
-    if (state.text.length === 0) return
-    this.props.dispatch(setNewsDesc({ ...state }))
-  }
-
-  onSaveInputForm(state) {}
-
-  onSaveCategory(state) {
-    this.props.dispatch(setNewsCategories({ ...state }))
-  }
+  // onSaveDesc(state) {
+  //   if (state.text.length === 0) return
+  //   this.props.dispatch(setNewsDesc({ ...state }))
+  // }
+  //
+  // onSaveInputForm(state) {}
+  //
+  // onSaveCategory(state) {
+  //   this.props.dispatch(setNewsCategories({ ...state }))
+  // }
   /**
    * Edit Handler END
    */
