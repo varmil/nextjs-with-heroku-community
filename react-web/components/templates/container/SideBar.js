@@ -72,7 +72,7 @@ const PageItem = props => {
   // トップページは便宜的に home/top というパスで強制リロード（slugなしだとりろーどにならないため）
   return (
     <React.Fragment>
-      <ActiveLink href={`${URL.ADMIN_SITE_EDIT}/${props.slug}`}>
+      <ActiveLink route={`${URL.ADMIN_SITE_EDIT}/${props.slug}`}>
         <div className={`pageItem hierarchy${props.level}`}>{props.text}</div>
       </ActiveLink>
 

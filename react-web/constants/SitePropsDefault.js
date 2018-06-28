@@ -80,10 +80,6 @@ const boxesBase = range(4).map(i => ({
   index: i,
   slug: '', // （固定の）URLパス。これでselected判定など行う
   header: {
-    // defaultText: '', // use after box adding
-    // contentState: null, // draft-js
-    // src: '', // 背景画像ソース
-    // backgroundColor: '#333'
     text: ''
   },
   contents: [

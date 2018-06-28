@@ -160,7 +160,9 @@ class TopPage extends React.Component {
           <div className="subBanner mt-3 mb-5">{this.createSubBanners()}</div>
         </main>
 
-        {this.isShowPenIcon() ? <FixedButton /> : null}
+        {this.isShowPenIcon() ? (
+          <FixedButton backgroundColor={props.color.backgroundColor} />
+        ) : null}
 
         <style global jsx>{`
           ::-webkit-scrollbar {
@@ -181,5 +183,6 @@ class TopPage extends React.Component {
 // export default TopPage
 
 export default connect(state => ({
-  boxes: objectPath.get(state.site, `${PATH_MAP.BOXES}.item`)
+  boxes: objectPath.get(state.site, `${PATH_MAP.BOXES}.item`),
+  color: objectPath.get(state.site, `${PATH_MAP.COLOR}`)
 }))(TopPage)

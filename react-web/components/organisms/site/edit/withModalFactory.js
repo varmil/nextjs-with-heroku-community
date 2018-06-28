@@ -1,4 +1,5 @@
 import React from 'react'
+import BGColorModal from 'components/templates/edit_modal/BGColorModal'
 import CategoryListModal from 'components/templates/edit_modal/CategoryListModal'
 import IconModal from 'components/templates/edit_modal/IconModal'
 import ImageModal from 'components/templates/edit_modal/ImageModal'
@@ -7,6 +8,7 @@ import BoxesModal from 'components/templates/edit_modal/BoxesModal'
 
 // string - class mapping
 const CLASSES = {
+  BGColorModal,
   CategoryListModal,
   IconModal,
   ImageModal,

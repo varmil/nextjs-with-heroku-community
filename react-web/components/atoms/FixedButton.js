@@ -5,9 +5,9 @@ import { PATH_MAP } from 'reducers/site'
 export default props => (
   <div
     className={`fixed-action-btn ${Classes.EDITABLE} ${props.className}`}
-    data-modal={`IconModal`}
+    data-modal={`BGColorModal`}
     data-action={SiteCommon.SET_BG_COLOR}
-    data-path={`${PATH_MAP.BG_COLOR}`}
+    data-path={`${PATH_MAP.COLOR}`}
   >
     <a className="btn-floating btn-lg red waves-effect waves-light">
       <i className="fas fa-pen" />

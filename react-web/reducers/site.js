@@ -1,4 +1,6 @@
 import { handleActions } from 'redux-actions'
+import pickBy from 'lodash/pickBy'
+import identity from 'lodash/identity'
 import update from 'immutability-helper'
 import immutable from 'object-path-immutable'
 import {
@@ -65,7 +67,7 @@ const initialState = {
 
 // nested stateのエイリアス
 export const PATH_MAP = {
-  BG_COLOR: 'common.color.backgroundColor',
+  COLOR: 'common.color',
   MAIN_BANNER: `top.mainBanner`,
   LOGO: `common.logo`,
   BOXES: `top.boxes`,
@@ -112,6 +114,11 @@ export default handleActions(
     //     common: { footer: { $merge: action.payload } }
     //   })
     // },
+    [SiteCommon.SET_BG_COLOR]: (state, action) => {
+      // remove falsy key (ex) index: undefined
+      const filtered = pickBy(action.payload, identity)
+      return immutable.merge(state, `${PATH_MAP.COLOR}`, filtered)
+    },
 
     /**
      * TOP
