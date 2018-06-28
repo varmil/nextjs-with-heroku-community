@@ -15,6 +15,7 @@ const SIDEBAR_WIDTH = 180
 const OFFSET_TOP_SIDEBAR = 106
 const OFFSET_TOP_MAINBODY = 135
 // device
+const MOBILE_HEIGHT = 667
 const MOBILE_WIDTH = 375
 
 export default function ppHOC(WrappedComponent) {
@@ -84,7 +85,8 @@ export default function ppHOC(WrappedComponent) {
         marginTop: OFFSET_TOP_MAINBODY,
         marginBottom: 20,
         backgroundColor: 'white',
-        minHeight: 667,
+        height: this.state.iframeHeight,
+        minHeight: MOBILE_HEIGHT,
         boxShadow: '3px 0px 20px black',
         // this is needed for burger menu
         overflow: 'hidden'
@@ -123,6 +125,7 @@ export default function ppHOC(WrappedComponent) {
     addIFrameStyle() {
       return {
         height: this.state.iframeHeight,
+        minHeight: MOBILE_HEIGHT,
         width: MOBILE_WIDTH,
         border: 'none'
       }

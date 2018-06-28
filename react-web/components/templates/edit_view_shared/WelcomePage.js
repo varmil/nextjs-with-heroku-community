@@ -1,5 +1,6 @@
 import React from 'react'
-import { setWelcome } from 'actions/site'
+// import { setWelcome } from 'actions/site'
+import WelcomeElement from 'components/organisms/site/base/Welcome'
 
 const initialState = {}
 
@@ -12,9 +13,9 @@ export default class WelcomePage extends React.Component {
   /**
    * Edit Handler START
    */
-  onSave(state) {
-    this.props.dispatch(setWelcome({ ...state }))
-  }
+  // onSave(state) {
+  //   this.props.dispatch(setWelcome({ ...state }))
+  // }
 
   /**
    * Edit Handler END
@@ -25,11 +26,11 @@ export default class WelcomePage extends React.Component {
 
     return (
       <React.Fragment>
-        <props.welcomeElement
+        <WelcomeElement
           contentState={props.welcome.contentState}
           src={props.welcome.src}
           backgroundColor={props.welcome.backgroundColor}
-          onSave={this.onSave.bind(this)}
+          // onSave={this.onSave.bind(this)}
         />
       </React.Fragment>
     )

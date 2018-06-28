@@ -9,7 +9,7 @@ const Edit = withAdminEdit(<React.Fragment />)
 class EditHome extends React.Component {
   static async getInitialProps({ ctx }) {
     const { slug } = ctx.query
-    return { slug: `${slug}` || '' }
+    return { slug: slug || '' }
   }
 
   render() {

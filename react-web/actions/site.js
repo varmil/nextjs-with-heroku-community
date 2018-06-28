@@ -15,7 +15,7 @@ export let setDevice = createAction(SitePreview.SET_DEVICE, e => e)
 // export let setSubBanner = createAction(SiteTop.SET_SUB_BANNER, e => e)
 
 // welcome
-export let setWelcome = createAction(SiteWelcome.SET_WELCOME, e => e)
+// export let setWelcome = createAction(SiteWelcome.SET_WELCOME, e => e)
 
 // talk room
 
