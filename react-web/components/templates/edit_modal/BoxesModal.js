@@ -65,7 +65,6 @@ class BoxesModal extends React.Component {
   }
 
   render() {
-    const state = this.state
     const props = this.props
 
     return (

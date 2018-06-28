@@ -1,5 +1,5 @@
 import React from 'react'
-import Link from 'next/link'
+import { Link } from 'routes'
 import { connect } from 'react-redux'
 import objectPath from 'object-path'
 import { PATH_MAP } from 'reducers/site'
@@ -10,7 +10,7 @@ import Device from 'constants/Device'
 import URL from 'constants/URL'
 import Color from 'constants/Color'
 
-const initialState = {}
+import { withRouter } from 'next/router'
 
 // editor size controller
 const SideBarDevice = props => {
@@ -68,6 +68,8 @@ const SideBarDevice = props => {
 
 // page item
 const PageItem = props => {
+  // HACK: 本来hrefじゃなくてrouteを使うべきだが、iframe使ってるので強制リロードで単純に
+  // トップページは便宜的に home/top というパスで強制リロード（slugなしだとりろーどにならないため）
   return (
     <React.Fragment>
       <ActiveLink href={`${URL.ADMIN_SITE_EDIT}/${props.slug}`}>
@@ -98,7 +100,7 @@ const PageItem = props => {
 class SideBar extends React.Component {
   constructor(props) {
     super(props)
-    this.state = initialState
+    this.state = {}
   }
 
   isSelectedDevice(type) {
@@ -198,7 +200,7 @@ class SideBar extends React.Component {
             <PageItem level={1} slug={'welcome'} text={'Welcomeページ'} />
           </div>
           <div className="my-2">
-            <PageItem level={1} slug={'home'} text={'トップページ'} />
+            <PageItem level={1} slug={'home/top'} text={'トップページ'} />
             {this.createPageHierarchy()}
           </div>
         </section>
@@ -366,7 +368,9 @@ class SideBar extends React.Component {
   }
 }
 
-export default connect(state => ({
+// IMPORTANT: connect --> withRouter しないと、URLが変わってもre-renderしないので注意！
+const Reduxed = connect(state => ({
   preview: state.site.preview,
   boxes: objectPath.get(state.site, `${PATH_MAP.BOXES}.item`)
 }))(SideBar)
+export default withRouter(Reduxed)

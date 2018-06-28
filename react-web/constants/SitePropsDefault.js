@@ -88,7 +88,7 @@ const boxesBase = range(4).map(i => ({
 export const Boxes = {
   item: [
     update(boxesBase[0], {
-      slug: { $set: 'talkroom' },
+      slug: { $set: 'talk' },
       header: { text: { $set: 'TALK' } }
     }),
     update(boxesBase[1], {
