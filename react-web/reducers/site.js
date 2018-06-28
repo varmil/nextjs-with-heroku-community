@@ -62,7 +62,9 @@ const initialState = {
 
 // nested stateのエイリアス
 export const PATH_MAP = {
-  MAIN_BANNER: `top.mainBanner`
+  MAIN_BANNER: `top.mainBanner`,
+  LOGO: `common.logo`,
+  BOXES: `top.boxes`
 }
 
 export default handleActions(

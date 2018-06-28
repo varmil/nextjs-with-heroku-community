@@ -13,8 +13,8 @@ export default class MainBanner extends React.Component {
         className={`bg container ${Classes.EDITABLE} ${props.className}`}
         href={props.href}
         data-modal={`TextBGImageModal`}
-        data-index={props.index}
         data-action={SiteTop.SET_MAIN_BANNER}
+        data-index={props.index}
         data-path={props.propsPath}
       >
         <TextViewer value={props.contentState} />

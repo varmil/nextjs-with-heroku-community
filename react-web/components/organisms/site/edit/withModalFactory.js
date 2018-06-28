@@ -8,7 +8,10 @@ import TextModal from 'components/templates/edit_modal/TextModal'
 // string - class mapping
 const CLASSES = {
   CategoryListModal,
-  TextBGImageModal
+  IconModal,
+  ImageModal,
+  TextBGImageModal,
+  TextModal
 }
 
 // ここは汎用Modal処理のみ書いておいて、外からどのモーダルを展開するか渡す感じ

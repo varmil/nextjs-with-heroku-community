@@ -1,8 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import objectPath from 'object-path'
+import { PATH_MAP } from 'reducers/site'
 import Navbar from 'reactstrap/lib/Navbar'
 import NavbarBrand from 'reactstrap/lib/NavbarBrand'
-import { setLogo } from 'actions/site'
 import { action as toggleMenu } from 'redux-burger-menu'
 import CommunityLogo from 'components/organisms/site/base/CommunityLogo'
 import Avatar from 'components/atoms/Avatar'
@@ -19,20 +20,14 @@ class NavBar extends React.Component {
     super(props)
 
     // this is needed because this class is extended
-    this.communityLogo = props.communityLogo || CommunityLogo
     // this.accountIcon = props.accountIcon || AccountIcon
     // this.notificationIcon = props.notificationIcon || NotificationIcon
 
     this.state = { menuIsOpen: false }
   }
 
-  onSaveLogo(state) {
-    this.props.dispatch(setLogo({ ...state }))
-  }
-
   render() {
     const props = this.props
-    const common = props.common
     return (
       <React.Fragment>
         <Navbar
@@ -51,10 +46,10 @@ class NavBar extends React.Component {
             </div>
 
             <div className="ml-3 d-inline-block">
-              {React.createElement(this.communityLogo, {
-                src: common.logo.src,
-                onSave: state => this.onSaveLogo(state)
-              })}
+              <CommunityLogo
+                src={props.logo.src}
+                propsPath={`${PATH_MAP.LOGO}`}
+              />
             </div>
           </NavbarBrand>
 
@@ -94,5 +89,5 @@ class NavBar extends React.Component {
 }
 
 export default connect(state => ({
-  common: state.site.common
+  logo: objectPath.get(state.site, `${PATH_MAP.LOGO}`)
 }))(NavBar)

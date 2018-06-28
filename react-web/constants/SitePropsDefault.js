@@ -75,10 +75,11 @@ const boxesBase = range(3).map(i => ({
   index: i,
   slug: '', // （固定の）URLパス。これでselected判定など行う
   header: {
-    defaultText: '', // use after box adding
-    contentState: null, // draft-js
-    src: '', // 背景画像ソース
-    backgroundColor: '#333'
+    // defaultText: '', // use after box adding
+    // contentState: null, // draft-js
+    // src: '', // 背景画像ソース
+    // backgroundColor: '#333'
+    text: ''
   },
   contents: [
     /* 投稿内容。TOPに必要な分だけ */
@@ -87,15 +88,15 @@ const boxesBase = range(3).map(i => ({
 export const Boxes = [
   update(boxesBase[0], {
     slug: { $set: 'talkroom' },
-    header: { defaultText: { $set: 'TALK ROOM' } }
+    header: { text: { $set: 'TALK' } }
   }),
   update(boxesBase[1], {
     slug: { $set: 'yourvoice' },
-    header: { defaultText: { $set: 'YOUR VOICE' } }
+    header: { text: { $set: 'YOUR VOICE' } }
   }),
   update(boxesBase[2], {
     slug: { $set: 'news' },
-    header: { defaultText: { $set: 'NEWS' } }
+    header: { text: { $set: 'NEWS' } }
   })
 ]
 

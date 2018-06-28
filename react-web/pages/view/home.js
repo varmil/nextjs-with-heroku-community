@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import withIFrameable from 'components/templates/withIFrameable'
 import TopPage from 'components/templates/edit_view_shared/TopPage'
-import MainBanner from 'components/organisms/site/base/MainBanner'
 import CategorySelect from 'components/organisms/site/base/CategorySelect'
 import SubBanner from 'components/organisms/site/base/SubBanner'
 
@@ -26,7 +25,6 @@ class Home extends React.Component {
       <React.Fragment>
         <this.TopPage
           {...props}
-          mainBanner={MainBanner}
           // これはTopPageの中でImportすべきか。いや、ここでやるべきな気がする。
           // ViewとEditを区別できるのはpageレベルなので
           categorySelect={CategorySelect}

@@ -1,13 +1,14 @@
 import React from 'react'
 import Link from 'next/link'
 import { connect } from 'react-redux'
+import objectPath from 'object-path'
+import { PATH_MAP } from 'reducers/site'
 import { setDevice } from 'actions/site'
 import ActiveLink from 'components/atoms/ActiveLink'
 import ToggleSideSecond from 'components/molecules/edit_modal/ToggleSideSecond'
 import Device from 'constants/Device'
 import URL from 'constants/URL'
 import Color from 'constants/Color'
-import { getText } from 'utils/editor'
 
 const initialState = {}
 
@@ -109,13 +110,9 @@ class SideBar extends React.Component {
   }
 
   createPageHierarchy() {
-    return this.props.top.boxes.map((box, i) => (
+    return this.props.boxes.map((box, i) => (
       <React.Fragment key={i}>
-        <PageItem
-          level={2}
-          slug={box.slug}
-          text={getText(box.header.contentState) || box.header.defaultText}
-        />
+        <PageItem level={2} slug={box.slug} text={box.header.text} />
       </React.Fragment>
     ))
   }
@@ -371,5 +368,5 @@ class SideBar extends React.Component {
 
 export default connect(state => ({
   preview: state.site.preview,
-  top: state.site.top
+  boxes: objectPath.get(state.site, `${PATH_MAP.BOXES}`)
 }))(SideBar)

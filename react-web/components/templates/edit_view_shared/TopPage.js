@@ -91,7 +91,7 @@ class TopPage extends React.Component {
 
     return (
       <React.Fragment>
-        <Header edit={props.edit} mainBanner={props.mainBanner} />
+        <Header mainBanner={props.mainBanner} />
 
         <main>
           <section>

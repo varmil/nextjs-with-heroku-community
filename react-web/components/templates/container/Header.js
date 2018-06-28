@@ -1,37 +1,25 @@
 import React from 'react'
-import objectPath from 'object-path'
 import range from 'lodash/range'
 import dynamic from 'next/dynamic'
 import { connect } from 'react-redux'
+import objectPath from 'object-path'
 import { PATH_MAP } from 'reducers/site'
-import { setMainBanner, setBoxHeader, setSubBanner } from 'actions/site'
-
-let NavBar, MenuBar
+import MainBanner from 'components/organisms/site/base/MainBanner'
+import NavBar from 'components/templates/container/NavBar'
 
 class Header extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
-    this.dynamicImport()
   }
 
   dynamicImport() {
-    if (this.props.edit) {
-      NavBar = dynamic(import('components/templates/container/EditableNavBar'))
-      // MenuBar = dynamic(import('components/organisms/site/edit/MenuBar'))
-    } else {
-      NavBar = dynamic(import('components/templates/container/NavBar'))
-      // MenuBar = dynamic(import('components/organisms/site/base/MenuBar'))
-    }
+    // if (this.props.edit) {
+    //   NavBar = dynamic(import('components/templates/container/EditableNavBar'))
+    // } else {
+    //   NavBar = dynamic(import('components/templates/container/NavBar'))
+    // }
   }
-
-  // onSaveMainBanner(state, index) {
-  //   this.props.dispatch(setMainBanner({ ...state, index }))
-  // }
-
-  // onSaveMenuBar(state) {
-  //   this.props.dispatch(setMenuBarStyle({ ...state }))
-  // }
 
   render() {
     const props = this.props
@@ -43,7 +31,7 @@ class Header extends React.Component {
           <NavBar />
 
           {range(mainBanner.length).map(i => (
-            <props.mainBanner
+            <MainBanner
               key={i}
               className="mb-3"
               contentState={mainBanner[i].contentState}
@@ -52,7 +40,6 @@ class Header extends React.Component {
               href={mainBanner[i].href}
               index={i}
               propsPath={`${PATH_MAP.MAIN_BANNER}.${i}`}
-              // onSave={state => this.onSaveMainBanner(state, i)}
             />
           ))}
         </header>
