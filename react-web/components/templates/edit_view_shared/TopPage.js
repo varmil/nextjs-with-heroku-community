@@ -1,8 +1,11 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import range from 'lodash/range'
 import SwipeableViews from 'react-swipeable-views'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
+import objectPath from 'object-path'
+import { PATH_MAP } from 'reducers/site'
 import { setBoxHeader, setSubBanner } from 'actions/site'
 import FixedButton from 'components/atoms/FixedButton'
 import Header from 'components/templates/container/Header'
@@ -91,7 +94,7 @@ class TopPage extends React.Component {
 
     return (
       <React.Fragment>
-        <Header mainBanner={props.mainBanner} />
+        <Header />
 
         <main>
           <section>
@@ -149,4 +152,8 @@ class TopPage extends React.Component {
 }
 
 // export default withStyles(uiStyles)(TopPage)
-export default TopPage
+// export default TopPage
+
+export default connect(state => ({
+  boxes: objectPath.get(state.site, `${PATH_MAP.BOXES}`)
+}))(TopPage)

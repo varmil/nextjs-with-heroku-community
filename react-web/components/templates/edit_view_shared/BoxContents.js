@@ -67,7 +67,7 @@ export default class TalkRoomContents extends React.Component {
     return (
       <React.Fragment>
         <main>
-          {this.createCategorySelect()}
+          {/* {this.createCategorySelect()} */}
 
           <section className="contents container">
             {this.createBoxContents()}
