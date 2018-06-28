@@ -23,13 +23,7 @@ class Home extends React.Component {
     const props = this.props
     return (
       <React.Fragment>
-        <this.TopPage
-          {...props}
-          // これはTopPageの中でImportすべきか。いや、ここでやるべきな気がする。
-          // ViewとEditを区別できるのはpageレベルなので
-          // categorySelect={CategorySelect}
-          subBanner={SubBanner}
-        />
+        <this.TopPage {...props} subBanner={SubBanner} />
       </React.Fragment>
     )
   }

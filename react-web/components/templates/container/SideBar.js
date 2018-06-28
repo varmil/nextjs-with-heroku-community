@@ -112,7 +112,11 @@ class SideBar extends React.Component {
   createPageHierarchy() {
     return this.props.boxes.map((box, i) => (
       <React.Fragment key={i}>
-        <PageItem level={2} slug={box.slug} text={box.header.text} />
+        <PageItem
+          level={2}
+          slug={`${URL.BOX_BASE_SLUG}/${box.slug}`}
+          text={box.header.text}
+        />
       </React.Fragment>
     ))
   }
@@ -187,10 +191,6 @@ class SideBar extends React.Component {
             text="テーマカラー変更"
             selected={false}
           />
-          {/* <ToggleSideSecond icon="fa-object-group" text="レイアウト変更" /> */}
-          {/* <ToggleSideSecond icon="fa-font" text="フォント変更" /> */}
-          {/* <ToggleSideSecond icon="fa-images" text="バナー追加" /> */}
-          {/* <ToggleSideSecond icon="fa-box" text="ボックス追加" /> */}
         </section>
 
         <section className="hierarchy mt-3">
@@ -198,7 +198,7 @@ class SideBar extends React.Component {
             <PageItem level={1} slug={'welcome'} text={'Welcomeページ'} />
           </div>
           <div className="my-2">
-            <PageItem level={1} slug={'top'} text={'トップページ'} />
+            <PageItem level={1} slug={'home'} text={'トップページ'} />
             {this.createPageHierarchy()}
           </div>
         </section>

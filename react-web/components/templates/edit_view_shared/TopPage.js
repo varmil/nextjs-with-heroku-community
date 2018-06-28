@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import findIndex from 'lodash/findIndex'
 import range from 'lodash/range'
 import SwipeableViews from 'react-swipeable-views'
 import Tabs from '@material-ui/core/Tabs'
@@ -44,7 +45,9 @@ class TopPage extends React.Component {
   constructor(props) {
     super(props)
     // TODO: decide initial tab index with URL props.slug
-    this.state = { tabIndex: 0 }
+    let activeTabIndex = findIndex(props.boxes, box => box.slug === props.slug)
+    if (activeTabIndex === -1) activeTabIndex = 0
+    this.state = { tabIndex: activeTabIndex }
   }
 
   createSubBanners() {
@@ -99,13 +102,7 @@ class TopPage extends React.Component {
         <Header />
 
         <main>
-          <section
-          // className={`${Classes.EDITABLE}`}
-          // data-modal={`TextModal`}
-          // data-action={SiteTop.SET_BOX_HEADER}
-          // data-index={props.index}
-          // data-path={props.propsPath}
-          >
+          <section>
             <Tabs
               className="tabs"
               value={this.state.tabIndex}
