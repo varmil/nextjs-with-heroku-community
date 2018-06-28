@@ -19,7 +19,7 @@ export const SiteTop = createTypes(
   'site/top/',
   'SET_MAIN_BANNER',
   'SET_SUB_BANNER',
-  'SET_BOX_HEADER'
+  'SET_BOXES'
 )
 
 // （Edit, View）Welcome

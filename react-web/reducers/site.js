@@ -113,27 +113,14 @@ export default handleActions(
      * TOP
      */
     [SiteTop.SET_MAIN_BANNER]: (state, action) => {
-      // return update(state, {
-      //   top: {
-      //     mainBanner: {
-      //       item: { [action.payload.index]: { $set: action.payload } }
-      //     }
-      //   }
-      // })
       return immutable.set(
         state,
         `${PATH_MAP.MAIN_BANNER}.${action.payload.index}`,
         action.payload
       )
     },
-    [SiteTop.SET_BOX_HEADER]: (state, action) => {
-      return update(state, {
-        top: {
-          boxes: {
-            [action.payload.index]: { header: { $merge: action.payload } }
-          }
-        }
-      })
+    [SiteTop.SET_BOXES]: (state, action) => {
+      return immutable.set(state, `${PATH_MAP.BOXES}`, action.payload)
     },
     [SiteTop.SET_SUB_BANNER]: (state, action) => {
       return update(state, {
@@ -154,7 +141,7 @@ export default handleActions(
           $set: action.payload
         }
       })
-    }
+    },
 
     /**
      * TALK ROOM
@@ -169,11 +156,11 @@ export default handleActions(
     //     talkroom: { inputForm: { $set: action.payload } }
     //   })
     // },
-    // [SiteTalkRoom.SET_CATEGORIES]: (state, action) => {
-    //   return update(state, {
-    //     talkroom: { categories: { $set: action.payload } }
-    //   })
-    // },
+    [SiteTalkRoom.SET_CATEGORIES]: (state, action) => {
+      return update(state, {
+        talkroom: { categories: { $set: action.payload } }
+      })
+    },
 
     /**
      * NEWS
@@ -183,11 +170,11 @@ export default handleActions(
     //     news: { desc: { $set: action.payload } }
     //   })
     // },
-    // [SiteNews.SET_CATEGORIES]: (state, action) => {
-    //   return update(state, {
-    //     news: { categories: { $set: action.payload } }
-    //   })
-    // }
+    [SiteNews.SET_CATEGORIES]: (state, action) => {
+      return update(state, {
+        news: { categories: { $set: action.payload } }
+      })
+    }
   },
   initialState
 )

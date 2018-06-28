@@ -85,24 +85,26 @@ const boxesBase = range(4).map(i => ({
     /* 投稿内容。TOPに必要な分だけ */
   ]
 }))
-export const Boxes = [
-  update(boxesBase[0], {
-    slug: { $set: 'talkroom' },
-    header: { text: { $set: 'TALK' } }
-  }),
-  update(boxesBase[1], {
-    slug: { $set: 'voice' },
-    header: { text: { $set: 'VOICE' } }
-  }),
-  update(boxesBase[2], {
-    slug: { $set: 'news' },
-    header: { text: { $set: 'NEWS' } }
-  }),
-  update(boxesBase[3], {
-    slug: { $set: 'event' },
-    header: { text: { $set: 'EVENT' } }
-  })
-]
+export const Boxes = {
+  item: [
+    update(boxesBase[0], {
+      slug: { $set: 'talkroom' },
+      header: { text: { $set: 'TALK' } }
+    }),
+    update(boxesBase[1], {
+      slug: { $set: 'voice' },
+      header: { text: { $set: 'VOICE' } }
+    }),
+    update(boxesBase[2], {
+      slug: { $set: 'news' },
+      header: { text: { $set: 'NEWS' } }
+    }),
+    update(boxesBase[3], {
+      slug: { $set: 'event' },
+      header: { text: { $set: 'EVENT' } }
+    })
+  ]
+}
 
 export const SubBanner = {
   item: range(1).map(i => ({

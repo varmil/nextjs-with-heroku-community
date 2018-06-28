@@ -368,5 +368,5 @@ class SideBar extends React.Component {
 
 export default connect(state => ({
   preview: state.site.preview,
-  boxes: objectPath.get(state.site, `${PATH_MAP.BOXES}`)
+  boxes: objectPath.get(state.site, `${PATH_MAP.BOXES}.item`)
 }))(SideBar)

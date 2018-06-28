@@ -33,7 +33,6 @@ export default class CategorySelect extends React.Component {
   // http://blog.keisuke11.com/webdesign/horizontal-scroll/
   createContents() {
     const props = this.props
-    console.log('CATEG', props)
     return (
       <div
         className={`horizontal_scroll_wrap ${Classes.EDITABLE}`}

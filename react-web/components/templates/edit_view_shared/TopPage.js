@@ -8,7 +8,7 @@ import Tab from '@material-ui/core/Tab'
 import objectPath from 'object-path'
 import { PATH_MAP } from 'reducers/site'
 import { SiteTop, SiteTalkRoom, SiteNews } from 'constants/ActionTypes'
-import { setBoxHeader, setSubBanner } from 'actions/site'
+import { setSubBanner } from 'actions/site'
 import FixedButton from 'components/atoms/FixedButton'
 import Header from 'components/templates/container/Header'
 import TalkRoomContents from 'components/templates/edit_view_shared/TalkRoomContents'
@@ -44,7 +44,7 @@ const Label = props => (
 class TopPage extends React.Component {
   constructor(props) {
     super(props)
-    // TODO: decide initial tab index with URL props.slug
+    // decide initial tab index with URL props.slug
     let activeTabIndex = findIndex(props.boxes, box => box.slug === props.slug)
     if (activeTabIndex === -1) activeTabIndex = 0
     this.state = { tabIndex: activeTabIndex }
@@ -102,7 +102,12 @@ class TopPage extends React.Component {
         <Header />
 
         <main>
-          <section>
+          <section
+            className={`${Classes.EDITABLE}`}
+            data-modal={`BoxesModal`}
+            data-action={SiteTop.SET_BOXES}
+            data-path={`${PATH_MAP.BOXES}`}
+          >
             <Tabs
               className="tabs"
               value={this.state.tabIndex}
@@ -116,11 +121,7 @@ class TopPage extends React.Component {
                 <Tab
                   key={i}
                   label={<Label text={box.header.text} />}
-                  className={`tab ${Classes.EDITABLE}`}
-                  data-modal={`TextModal`}
-                  data-action={SiteTop.SET_BOX_HEADER}
-                  data-index={i}
-                  data-path={`${PATH_MAP.BOXES}.${i}.header`}
+                  className={`tab`}
                 />
               ))}
             </Tabs>
@@ -170,5 +171,5 @@ class TopPage extends React.Component {
 // export default TopPage
 
 export default connect(state => ({
-  boxes: objectPath.get(state.site, `${PATH_MAP.BOXES}`)
+  boxes: objectPath.get(state.site, `${PATH_MAP.BOXES}.item`)
 }))(TopPage)

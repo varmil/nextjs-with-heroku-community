@@ -17,7 +17,7 @@ export default class MenuBlockEdit extends React.Component {
                 className="menuText"
                 type="text"
                 value={props.text || ''}
-                readOnly={!props.editable}
+                readOnly={props.editable === false}
                 onChange={e => props.onChange(e, props.index)}
               />
             </div>

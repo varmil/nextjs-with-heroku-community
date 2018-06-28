@@ -19,6 +19,6 @@ export default connect(state => ({
 
   // TALK BOX由来のページでは共通して使う。
   // TODO: box固定で指定してるので増減対応
-  boxHeader: state.site.top.boxes[2].header,
+  // boxHeader: state.site.top.boxes[2].header,
   pageData: state.site.talkroom
 }))(NewsContents)

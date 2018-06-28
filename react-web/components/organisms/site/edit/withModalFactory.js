@@ -3,7 +3,7 @@ import CategoryListModal from 'components/templates/edit_modal/CategoryListModal
 import IconModal from 'components/templates/edit_modal/IconModal'
 import ImageModal from 'components/templates/edit_modal/ImageModal'
 import TextBGImageModal from 'components/templates/edit_modal/TextBGImageModal'
-import TextModal from 'components/templates/edit_modal/TextModal'
+import BoxesModal from 'components/templates/edit_modal/BoxesModal'
 
 // string - class mapping
 const CLASSES = {
@@ -11,7 +11,7 @@ const CLASSES = {
   IconModal,
   ImageModal,
   TextBGImageModal,
-  TextModal
+  BoxesModal
 }
 
 // ここは汎用Modal処理のみ書いておいて、外からどのモーダルを展開するか渡す感じ
