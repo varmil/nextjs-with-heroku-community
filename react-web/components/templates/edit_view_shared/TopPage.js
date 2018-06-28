@@ -14,6 +14,7 @@ import Header from 'components/templates/container/Header'
 import TalkRoomContents from 'components/templates/edit_view_shared/TalkRoomContents'
 import NewsContents from 'components/templates/edit_view_shared/NewsContents'
 import Classes from 'constants/Classes'
+import URL from 'constants/URL'
 
 const styles = {
   slide: {
@@ -69,6 +70,12 @@ class TopPage extends React.Component {
     )
   }
 
+  // 現在アクティブになってるタブのslugをみて、penを出すか決める
+  isShowPenIcon() {
+    const curSlug = this.props.boxes[this.state.tabIndex].slug
+    return curSlug === URL.TALK_SLUG
+  }
+
   // tabIndex
   handleChange = (event, tabIndex) => {
     this.setState({ tabIndex })
@@ -81,9 +88,9 @@ class TopPage extends React.Component {
   /**
    * Edit Handler START
    */
-  onSaveBoxHeader(state, index) {
-    this.props.dispatch(setBoxHeader({ ...state, index }))
-  }
+  // onSaveBoxHeader(state, index) {
+  //   this.props.dispatch(setBoxHeader({ ...state, index }))
+  // }
 
   // Sub Banner
   onSaveSubBanner(state, index) {
@@ -134,6 +141,7 @@ class TopPage extends React.Component {
           >
             <div style={Object.assign({}, styles.slide, styles.slide1)}>
               <TalkRoomContents
+                pen={true}
                 action={SiteTalkRoom.SET_CATEGORIES}
                 propsPath={`${PATH_MAP.TALK_CATEGORIES}`}
               />
@@ -142,7 +150,7 @@ class TopPage extends React.Component {
               slide n°2
             </div>
             <div style={Object.assign({}, styles.slide, styles.slide3)}>
-              <NewsContents categorySelect={props.categorySelect} />
+              <NewsContents />
             </div>
             <div style={Object.assign({}, styles.slide, styles.slide2)}>
               slide n°4
@@ -151,6 +159,8 @@ class TopPage extends React.Component {
 
           <div className="subBanner mt-3 mb-5">{this.createSubBanners()}</div>
         </main>
+
+        {this.isShowPenIcon() ? <FixedButton /> : null}
 
         <style global jsx>{`
           ::-webkit-scrollbar {

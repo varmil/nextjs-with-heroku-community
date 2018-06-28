@@ -1,11 +1,9 @@
 import React from 'react'
-import Portal from '@material-ui/core/Portal'
-import FixedButton from 'components/atoms/FixedButton'
 import BoxContent from 'components/organisms/site/BoxContent'
 import CategorySelect from 'components/organisms/site/base/CategorySelect'
 
 // TALK BOX系のベースクラス
-export default class TalkRoomContents extends React.Component {
+export default class BoxContents extends React.Component {
   constructor(props) {
     super(props)
     this.state = { showPortal: false }
@@ -75,12 +73,6 @@ export default class TalkRoomContents extends React.Component {
             {this.createBoxContents()}
           </section>
         </main>
-
-        {this.state.showPortal ? (
-          <Portal container={document.body}>
-            <FixedButton />
-          </Portal>
-        ) : null}
 
         <style jsx>{`
           .desc {

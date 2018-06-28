@@ -1,5 +1,6 @@
 import range from 'lodash/range'
 import Color from 'constants/Color'
+import URL from 'constants/URL'
 import update from 'immutability-helper'
 
 const MAX_CATEGORIES_NUM = 10
@@ -88,19 +89,19 @@ const boxesBase = range(4).map(i => ({
 export const Boxes = {
   item: [
     update(boxesBase[0], {
-      slug: { $set: 'talk' },
+      slug: { $set: URL.TALK_SLUG },
       header: { text: { $set: 'TALK' } }
     }),
     update(boxesBase[1], {
-      slug: { $set: 'voice' },
+      slug: { $set: URL.VOICE_SLUG },
       header: { text: { $set: 'VOICE' } }
     }),
     update(boxesBase[2], {
-      slug: { $set: 'news' },
+      slug: { $set: URL.NEWS_SLUG },
       header: { text: { $set: 'NEWS' } }
     }),
     update(boxesBase[3], {
-      slug: { $set: 'event' },
+      slug: { $set: URL.EVENT_SLUG },
       header: { text: { $set: 'EVENT' } }
     })
   ]
