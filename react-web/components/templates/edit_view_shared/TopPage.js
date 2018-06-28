@@ -1,14 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import findIndex from 'lodash/findIndex'
-import range from 'lodash/range'
 import SwipeableViews from 'react-swipeable-views'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import objectPath from 'object-path'
 import { PATH_MAP } from 'reducers/site'
 import { SiteTop, SiteTalkRoom, SiteNews } from 'constants/ActionTypes'
-import { setSubBanner } from 'actions/site'
 import FixedButton from 'components/atoms/FixedButton'
 import Header from 'components/templates/container/Header'
 import TalkRoomContents from 'components/templates/edit_view_shared/TalkRoomContents'
@@ -53,24 +51,24 @@ class TopPage extends React.Component {
     }
   }
 
-  createSubBanners() {
-    const subBanner = this.props.top.subBanner
-    return (
-      <div className="">
-        {range(subBanner.item.length).map(i => (
-          <this.props.subBanner
-            key={i}
-            className="mb-2"
-            contentState={subBanner.item[i].contentState}
-            src={subBanner.item[i].src}
-            backgroundColor={subBanner.item[i].backgroundColor}
-            href={subBanner.item[i].href}
-            onSave={state => this.onSaveSubBanner(state, i)}
-          />
-        ))}
-      </div>
-    )
-  }
+  // createSubBanners() {
+  //   const subBanner = this.props.top.subBanner
+  //   return (
+  //     <div className="">
+  //       {range(subBanner.item.length).map(i => (
+  //         <this.props.subBanner
+  //           key={i}
+  //           className="mb-2"
+  //           contentState={subBanner.item[i].contentState}
+  //           src={subBanner.item[i].src}
+  //           backgroundColor={subBanner.item[i].backgroundColor}
+  //           href={subBanner.item[i].href}
+  //           onSave={state => this.onSaveSubBanner(state, i)}
+  //         />
+  //       ))}
+  //     </div>
+  //   )
+  // }
 
   // 現在アクティブになってるタブのslugをみて、penを出すか決める
   isShowPenIcon() {
@@ -86,22 +84,6 @@ class TopPage extends React.Component {
   handleChangeIndex = index => {
     this.setState({ tabIndex: index })
   }
-
-  /**
-   * Edit Handler START
-   */
-  // onSaveBoxHeader(state, index) {
-  //   this.props.dispatch(setBoxHeader({ ...state, index }))
-  // }
-
-  // Sub Banner
-  onSaveSubBanner(state, index) {
-    this.props.dispatch(setSubBanner({ ...state, index }))
-  }
-
-  /**
-   * Edit Handler END
-   */
 
   render() {
     const props = this.props
@@ -143,7 +125,6 @@ class TopPage extends React.Component {
           >
             <div style={Object.assign({}, styles.slide, styles.slide1)}>
               <TalkRoomContents
-                pen={true}
                 action={SiteTalkRoom.SET_CATEGORIES}
                 propsPath={`${PATH_MAP.TALK_CATEGORIES}`}
               />
@@ -158,8 +139,6 @@ class TopPage extends React.Component {
               slide n°4
             </div>
           </SwipeableViews>
-
-          <div className="subBanner mt-3 mb-5">{this.createSubBanners()}</div>
         </main>
 
         {this.isShowPenIcon() ? (

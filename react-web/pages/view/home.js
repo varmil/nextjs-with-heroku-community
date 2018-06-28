@@ -2,8 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import withIFrameable from 'components/templates/withIFrameable'
 import TopPage from 'components/templates/edit_view_shared/TopPage'
-// import CategorySelect from 'components/organisms/site/base/CategorySelect'
-import SubBanner from 'components/organisms/site/base/SubBanner'
 
 const IFramedTop = withIFrameable(TopPage)
 
@@ -23,7 +21,7 @@ class Home extends React.Component {
     const props = this.props
     return (
       <React.Fragment>
-        <this.TopPage {...props} subBanner={SubBanner} />
+        <this.TopPage {...props} />
       </React.Fragment>
     )
   }

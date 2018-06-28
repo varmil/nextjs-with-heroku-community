@@ -103,15 +103,13 @@ export const Boxes = {
   ]
 }
 
-export const SubBanner = {
-  item: range(1).map(i => ({
-    index: i,
-    contentState: null,
-    src: 'https://dummyimage.com/500x180/000/fff.png',
-    backgroundColor: '#f5f5f5',
-    href: ''
-  }))
-}
+export const SubBanner = range(1).map(i => ({
+  index: i,
+  contentState: null,
+  src: 'https://dummyimage.com/500x180/000/fff.png',
+  backgroundColor: '#fff',
+  href: ''
+}))
 
 export const Footer = {
   style: {

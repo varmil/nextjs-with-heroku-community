@@ -39,14 +39,6 @@ export default class MainBanner extends React.Component {
             background-size: cover;
             background-position: center;
           }
-
-          // .bgImg {
-          //   width: 100%;
-          //   object-fit: cover;
-          //   position: relative;
-          //   top: 0;
-          //   left: 0;
-          // }
         `}</style>
       </a>
     )

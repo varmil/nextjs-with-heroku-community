@@ -1,18 +1,13 @@
 import React from 'react'
+import range from 'lodash/range'
 import BoxContent from 'components/organisms/site/BoxContent'
+import SubBanner from 'components/organisms/site/base/SubBanner'
 import CategorySelect from 'components/organisms/site/base/CategorySelect'
+import { SiteTalkRoom } from 'constants/ActionTypes'
+import { PATH_MAP } from 'reducers/site'
 
 // TALK BOX系のベースクラス
 export default class BoxContents extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { showPortal: false }
-  }
-
-  componentDidMount() {
-    this.setState({ showPortal: true })
-  }
-
   createCategorySelect() {
     const props = this.props
     // TODO: hide categories in NEWS
@@ -37,6 +32,9 @@ export default class BoxContents extends React.Component {
         <div className="c">
           <BoxContent />
         </div>
+
+        <div className="subBanner my-3">{this.createSubBanners()}</div>
+
         <div className="c">
           <BoxContent />
         </div>
@@ -46,6 +44,7 @@ export default class BoxContents extends React.Component {
           }
 
           .c {
+            padding: 0 15px;
             margin: 0 0 20px;
           }
         `}</style>
@@ -53,25 +52,35 @@ export default class BoxContents extends React.Component {
     )
   }
 
-  /**
-   * NOTE: override these, Edit Handler START
-   */
-  // onSaveCategory(state) {}
+  createSubBanners() {
+    const subBanner = this.props.subBanner
 
-  /**
-   * Edit Handler END
-   */
+    // dont show banner if current tab is not suitable
+    if (!subBanner) return null
+    return (
+      <div className="">
+        {range(subBanner.length).map(i => (
+          <SubBanner
+            key={i}
+            contentState={subBanner[i].contentState}
+            src={subBanner[i].src}
+            backgroundColor={subBanner[i].backgroundColor}
+            href={subBanner[i].href}
+            action={SiteTalkRoom.SET_SUB_BANNER}
+            index={i}
+            propsPath={`${PATH_MAP.TALK_SUB_BANNER}.${i}`}
+          />
+        ))}
+      </div>
+    )
+  }
 
   render() {
     const props = this.props
     return (
       <React.Fragment>
         <main>
-          {/* {this.createCategorySelect()} */}
-
-          <section className="contents container">
-            {this.createBoxContents()}
-          </section>
+          <section className="contents">{this.createBoxContents()}</section>
         </main>
 
         <style jsx>{`

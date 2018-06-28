@@ -1,12 +1,5 @@
 import { createAction } from 'redux-actions'
-import {
-  SitePreview,
-  // SiteCommon,
-  SiteTop,
-  SiteWelcome,
-  // SiteTalkRoom,
-  SiteNews
-} from 'constants/ActionTypes'
+import { SitePreview, SiteWelcome, SiteNews } from 'constants/ActionTypes'
 
 // preview
 export let setDevice = createAction(SitePreview.SET_DEVICE, e => e)
@@ -19,7 +12,7 @@ export let setDevice = createAction(SitePreview.SET_DEVICE, e => e)
 // top
 // export let setMainBanner = createAction(SiteTop.SET_MAIN_BANNER, e => e)
 // export let setBoxHeader = createAction(SiteTop.SET_BOX_HEADER, e => e)
-export let setSubBanner = createAction(SiteTop.SET_SUB_BANNER, e => e)
+// export let setSubBanner = createAction(SiteTop.SET_SUB_BANNER, e => e)
 
 // welcome
 export let setWelcome = createAction(SiteWelcome.SET_WELCOME, e => e)

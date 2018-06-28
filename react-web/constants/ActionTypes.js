@@ -20,7 +20,7 @@ export const SiteCommon = createTypes(
 export const SiteTop = createTypes(
   'site/top/',
   'SET_MAIN_BANNER',
-  'SET_SUB_BANNER',
+  // 'SET_SUB_BANNER',
   'SET_BOXES'
 )
 
@@ -32,11 +32,17 @@ export const SiteTalkRoom = createTypes(
   'site/talkroom/',
   'SET_DESC',
   'SET_INPUT_FORM',
-  'SET_CATEGORIES'
+  'SET_CATEGORIES',
+  'SET_SUB_BANNER'
 )
 
 // （Edit, View）NEWS
-export const SiteNews = createTypes('site/news/', 'SET_DESC', 'SET_CATEGORIES')
+export const SiteNews = createTypes(
+  'site/news/',
+  'SET_DESC',
+  'SET_CATEGORIES',
+  'SET_SUB_BANNER'
+)
 
 // (Edit) iframe
 export const IFrame = createTypes('iframe/', 'POST_MESSAGE')

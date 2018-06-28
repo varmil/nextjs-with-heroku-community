@@ -1,4 +1,5 @@
 import React from 'react'
+import Classes from 'constants/Classes'
 import TextViewer from 'components/atoms/TextViewer'
 
 const MAX_HEIGHT = '250px'
@@ -7,7 +8,14 @@ export default class SubBanner extends React.Component {
   render() {
     const props = this.props
     return (
-      <a className={`bg container ${props.className}`} href={props.href}>
+      <a
+        className={`bg container ${Classes.EDITABLE} ${props.className}`}
+        href={props.href}
+        data-modal={`TextBGImageModal`}
+        data-action={props.action}
+        data-index={props.index}
+        data-path={props.propsPath}
+      >
         <TextViewer value={props.contentState} />
 
         <style jsx>{`
@@ -30,14 +38,6 @@ export default class SubBanner extends React.Component {
             background-size: cover;
             background-position: center;
           }
-
-          // .bgImg {
-          //   width: 100%;
-          //   object-fit: cover;
-          //   position: relative;
-          //   top: 0;
-          //   left: 0;
-          // }
         `}</style>
       </a>
     )

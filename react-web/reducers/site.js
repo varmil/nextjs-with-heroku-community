@@ -45,21 +45,22 @@ const initialState = {
 
   top: {
     mainBanner: MainBannerDefault,
-    boxes: BoxesDefault,
-    subBanner: SubBannerDefault
+    boxes: BoxesDefault
+    // subBanner: SubBannerDefault
   },
 
   welcome: { ...WelcomeDefault },
 
   talkroom: {
-    desc: TalkRoomDescDefault,
-    inputForm: TalkRoomInputFormDefault,
-    categories: TalkRoomCategoriesDefault
+    // desc: TalkRoomDescDefault,
+    // inputForm: TalkRoomInputFormDefault,
+    categories: TalkRoomCategoriesDefault,
+    subBanner: SubBannerDefault
   },
 
   news: {
-    desc: NewsDescDefault,
-    categories: NewsCategoriesDefault
+    categories: NewsCategoriesDefault,
+    subBanner: SubBannerDefault
   }
 }
 
@@ -70,7 +71,8 @@ export const PATH_MAP = {
   LOGO: `common.logo`,
   NAV_ICON: `common.navIcon`,
   BOXES: `top.boxes`,
-  TALK_CATEGORIES: `talkroom.categories`
+  TALK_CATEGORIES: `talkroom.categories`,
+  TALK_SUB_BANNER: `talkroom.subBanner`
 }
 
 export default handleActions(
@@ -148,6 +150,13 @@ export default handleActions(
       return update(state, {
         talkroom: { categories: { $set: action.payload } }
       })
+    },
+    [SiteTalkRoom.SET_SUB_BANNER]: (state, action) => {
+      return immutable.set(
+        state,
+        `${PATH_MAP.TALK_SUB_BANNER}.${action.payload.index}`,
+        action.payload
+      )
     },
 
     /**
