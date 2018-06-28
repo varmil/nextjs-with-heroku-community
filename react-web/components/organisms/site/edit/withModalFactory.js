@@ -1,7 +1,7 @@
 import React from 'react'
 import BGColorModal from 'components/templates/edit_modal/BGColorModal'
 import CategoryListModal from 'components/templates/edit_modal/CategoryListModal'
-import IconModal from 'components/templates/edit_modal/IconModal'
+import ColorModal from 'components/templates/edit_modal/ColorModal'
 import ImageModal from 'components/templates/edit_modal/ImageModal'
 import TextBGImageModal from 'components/templates/edit_modal/TextBGImageModal'
 import BoxesModal from 'components/templates/edit_modal/BoxesModal'
@@ -10,7 +10,7 @@ import BoxesModal from 'components/templates/edit_modal/BoxesModal'
 const CLASSES = {
   BGColorModal,
   CategoryListModal,
-  IconModal,
+  ColorModal,
   ImageModal,
   TextBGImageModal,
   BoxesModal

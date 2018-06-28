@@ -7,6 +7,7 @@ export const SitePreview = createTypes('site/preview/', 'SET_DEVICE')
 export const SiteCommon = createTypes(
   'site/common/',
   'SET_LOGO',
+  'SET_NAV_ICON_COLOR',
   // 'SET_NOTIFICATION_ICON',
   // 'SET_ACCOUNT_ICON',
   'SET_MENUBAR_STYLE',
@@ -66,18 +67,6 @@ export const SearchForm = createTypes(
 )
 
 /**
- * RestaurantListコンテナ用Action
- */
-export const Restaurants = createTypes(
-  'restaurants',
-  async('FETCH'),
-  'SET_QUERY',
-  'REPLACE_RESTAURANTS',
-  'ADD_RESTAURANTS'
-)
-export const Restaurant = createTypes('restaurant', 'SET')
-
-/**
  * 汎用ERROR用Action
  */
 export const Errors = createTypes('errors', 'PUSH', 'POP')
@@ -91,14 +80,6 @@ export const Loading = createTypes(
   'DECREMENT_REQUEST_COUNT',
   'SUCCESS',
   'FAILED'
-)
-
-export const Crud = createTypes(
-  'crud',
-  async('LOAD'),
-  async('SAVE'),
-  async('UPDATE'),
-  async('REMOVE')
 )
 
 export const Example = createTypes(

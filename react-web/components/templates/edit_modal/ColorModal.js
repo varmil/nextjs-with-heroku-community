@@ -5,13 +5,13 @@ import ModalBody from 'reactstrap/lib/ModalBody'
 import withSaveCancelFooter from 'components/organisms/modal/withSaveCancelFooter'
 import ColorPicker from 'components/molecules/ColorPicker'
 
-// 前景色、背景色、編集するモーダル
+// 前景色、編集するモーダル
 class IconModal extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      color: props.style.color,
-      backgroundColor: props.style.backgroundColor
+      color: props.color
+      // backgroundColor: props.style.backgroundColor
     }
   }
 
@@ -23,13 +23,13 @@ class IconModal extends React.Component {
     )
   }
 
-  onChangeBGColor(code) {
-    this.setState(
-      update(this.state, {
-        backgroundColor: { $set: code }
-      })
-    )
-  }
+  // onChangeBGColor(code) {
+  //   this.setState(
+  //     update(this.state, {
+  //       backgroundColor: { $set: code }
+  //     })
+  //   )
+  // }
 
   render() {
     return (
@@ -37,16 +37,16 @@ class IconModal extends React.Component {
         <ModalHeader>{this.props.headerText}</ModalHeader>
         <ModalBody className="container">
           <div className="form-group row">
-            <label className="col-2 col-form-label">アイコン色変更</label>
+            <label className="col-2 col-form-label">カラー変更</label>
             <div className="col-10">
               <ColorPicker
                 onClick={this.onChangeColor.bind(this)}
-                color={this.props.style.color}
+                color={this.props.color}
               />
             </div>
           </div>
 
-          <div className="form-group row">
+          {/* <div className="form-group row">
             <label className="col-2 col-form-label">背景色変更</label>
             <div className="col-10">
               <ColorPicker
@@ -54,7 +54,7 @@ class IconModal extends React.Component {
                 color={this.props.style.backgroundColor}
               />
             </div>
-          </div>
+          </div> */}
         </ModalBody>
       </React.Fragment>
     )

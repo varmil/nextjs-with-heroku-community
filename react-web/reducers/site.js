@@ -5,8 +5,7 @@ import update from 'immutability-helper'
 import immutable from 'object-path-immutable'
 import {
   Logo as LogoDefault,
-  // NotificationIcon as NotificationIconDefault,
-  // AccountIcon as AccountIconDefault,
+  NavIconColorDefault,
   MenuBar as MenuBarDefault,
   Footer as FooterDefault,
   ColorDefault,
@@ -37,8 +36,7 @@ const initialState = {
 
   common: {
     logo: LogoDefault,
-    // notificationIcon: NotificationIconDefault,
-    // accountIcon: AccountIconDefault,
+    navIcon: NavIconColorDefault,
     menuBar: MenuBarDefault,
     footer: FooterDefault,
     // 汎用で使う背景色（テーマ色みたいな）
@@ -70,6 +68,7 @@ export const PATH_MAP = {
   COLOR: 'common.color',
   MAIN_BANNER: `top.mainBanner`,
   LOGO: `common.logo`,
+  NAV_ICON: `common.navIcon`,
   BOXES: `top.boxes`,
   TALK_CATEGORIES: `talkroom.categories`
 }
@@ -93,21 +92,9 @@ export default handleActions(
         common: { logo: { $set: action.payload } }
       })
     },
-    // [SiteCommon.SET_NOTIFICATION_ICON]: (state, action) => {
-    //   return update(state, {
-    //     common: { notificationIcon: { $set: action.payload } }
-    //   })
-    // },
-    // [SiteCommon.SET_ACCOUNT_ICON]: (state, action) => {
-    //   return update(state, {
-    //     common: { accountIcon: { $set: action.payload } }
-    //   })
-    // },
-    [SiteCommon.SET_MENUBAR_STYLE]: (state, action) => {
-      return update(state, setMenuBarStyle(action))
-    },
-    [SiteCommon.SET_MENUBAR_ITEM]: (state, action) => {
-      return update(state, setMenuBarItem(action))
+    [SiteCommon.SET_NAV_ICON_COLOR]: (state, action) => {
+      const filtered = pickBy(action.payload, identity)
+      return immutable.merge(state, `${PATH_MAP.NAV_ICON}`, filtered)
     },
     // [SiteCommon.SET_FOOTER]: (state, action) => {
     //   return update(state, {
@@ -157,16 +144,6 @@ export default handleActions(
     /**
      * TALK ROOM
      */
-    // [SiteTalkRoom.SET_DESC]: (state, action) => {
-    //   return update(state, {
-    //     talkroom: { desc: { $set: action.payload } }
-    //   })
-    // },
-    // [SiteTalkRoom.SET_INPUT_FORM]: (state, action) => {
-    //   return update(state, {
-    //     talkroom: { inputForm: { $set: action.payload } }
-    //   })
-    // },
     [SiteTalkRoom.SET_CATEGORIES]: (state, action) => {
       return update(state, {
         talkroom: { categories: { $set: action.payload } }
@@ -176,11 +153,6 @@ export default handleActions(
     /**
      * NEWS
      */
-    // [SiteNews.SET_DESC]: (state, action) => {
-    //   return update(state, {
-    //     news: { desc: { $set: action.payload } }
-    //   })
-    // },
     [SiteNews.SET_CATEGORIES]: (state, action) => {
       return update(state, {
         news: { categories: { $set: action.payload } }
@@ -189,19 +161,3 @@ export default handleActions(
   },
   initialState
 )
-
-function setMenuBarStyle(action) {
-  return {
-    common: {
-      menuBar: { style: { $set: action.payload } }
-    }
-  }
-}
-
-function setMenuBarItem(action) {
-  return {
-    common: {
-      menuBar: { item: { $set: action.payload } }
-    }
-  }
-}

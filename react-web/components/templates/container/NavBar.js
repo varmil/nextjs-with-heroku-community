@@ -9,6 +9,8 @@ import CommunityLogo from 'components/organisms/site/base/CommunityLogo'
 import Avatar from 'components/atoms/Avatar'
 import NotificationIcon from 'components/atoms/NotificationIcon'
 import SettingsIcon from 'components/atoms/SettingsIcon'
+import Classes from 'constants/Classes'
+import { SiteCommon } from 'constants/ActionTypes'
 
 const brandStyle = {
   position: 'relative'
@@ -48,10 +50,21 @@ class NavBar extends React.Component {
             </div>
           </NavbarBrand>
 
-          <div className="ml-auto icons">
-            <i className="fas fa-search mx-1" />
-            <NotificationIcon className="mx-1" />
-            <SettingsIcon className="mx-1" />
+          <div
+            className={`ml-auto icons ${Classes.EDITABLE}`}
+            data-modal={`ColorModal`}
+            data-action={SiteCommon.SET_NAV_ICON_COLOR}
+            data-path={`${PATH_MAP.NAV_ICON}`}
+          >
+            <i className="fas fa-search mx-1 navIcon" />
+            <NotificationIcon
+              className="mx-1 navIcon"
+              color={props.navIcon.color}
+            />
+            <SettingsIcon
+              className="mx-1 navIcon"
+              color={props.navIcon.color}
+            />
           </div>
         </Navbar>
 
@@ -64,18 +77,8 @@ class NavBar extends React.Component {
           .icons .icon {
           }
 
-          .searchIcon {
-            // position: absolute;
-            // top: 30px;
-            // right: 30px;
-            // font-size: 25px;
-          }
-          .avatarIcon {
-            // position: absolute;
-            // top: 30px;
-            // left: 30px;
-            // font-size: 25px;
-            // cursor: pointer;
+          .navIcon {
+            color: ${props.navIcon.color};
           }
         `}</style>
       </React.Fragment>
@@ -84,5 +87,6 @@ class NavBar extends React.Component {
 }
 
 export default connect(state => ({
-  logo: objectPath.get(state.site, `${PATH_MAP.LOGO}`)
+  logo: objectPath.get(state.site, `${PATH_MAP.LOGO}`),
+  navIcon: objectPath.get(state.site, `${PATH_MAP.NAV_ICON}`)
 }))(NavBar)

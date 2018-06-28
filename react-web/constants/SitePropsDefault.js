@@ -10,13 +10,9 @@ export const Logo = {
   src: '/static/stub/logo-blue.png'
 }
 
-// export const AccountIcon = {
-//   color: Color.MAIN_BLUE
-// }
-//
-// export const NotificationIcon = {
-//   color: Color.MAIN_BLUE
-// }
+export const NavIconColorDefault = {
+  color: 'black'
+}
 
 // export const MenuBarPC = {
 //   style: {

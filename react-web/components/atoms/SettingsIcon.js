@@ -6,7 +6,7 @@ const Index = props => (
 
     <style jsx>{`
       #ai {
-        // color: ${props.color || '#000'};
+        color: ${props.color};
       }
     `}</style>
   </React.Fragment>

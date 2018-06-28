@@ -182,8 +182,6 @@ class TopPage extends React.Component {
 }
 
 // export default withStyles(uiStyles)(TopPage)
-// export default TopPage
-
 export default connect(state => ({
   boxes: objectPath.get(state.site, `${PATH_MAP.BOXES}.item`),
   color: objectPath.get(state.site, `${PATH_MAP.COLOR}`)
