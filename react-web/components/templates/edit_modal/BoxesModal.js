@@ -1,6 +1,4 @@
 import React from 'react'
-import range from 'lodash/range'
-import update from 'immutability-helper'
 import immutable from 'object-path-immutable'
 import ModalHeader from 'reactstrap/lib/ModalHeader'
 import ModalBody from 'reactstrap/lib/ModalBody'
