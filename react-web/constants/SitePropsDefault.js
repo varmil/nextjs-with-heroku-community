@@ -60,6 +60,10 @@ export const MenuBar = {
   }
 }
 
+export const ColorDefault = {
+  backgroundColor: 'red'
+}
+
 export const MainBanner = [
   {
     index: 0,

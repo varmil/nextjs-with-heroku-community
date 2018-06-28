@@ -42,15 +42,13 @@ export default function ppHOC(WrappedComponent) {
       }
 
       iWindow.addEventListener('load', () => {
-        updateOverlays()
-
         // 定期的にiframe内を監視して高さが変化していたらOverlayにも反映
         // ちょっと手抜き。本当はEventでやりとりすべき
+        // HACK: fixed要素の計算も行うため定期的に強制re-render (reactパワーで何とかなるっしょ)
         this.timer = setInterval(() => {
-          const frameHeight = iWindow.document.body.scrollHeight
-          if (this.state.iframeHeight === frameHeight) return
-          console.info('iframe height changed, so we re-render overlay')
-          console.info('height ::', frameHeight)
+          // const frameHeight = iWindow.document.body.scrollHeight
+          // if (this.state.iframeHeight === frameHeight) return
+          // console.info('height ::', frameHeight)
           updateOverlays()
         }, 500)
       })
@@ -67,7 +65,6 @@ export default function ppHOC(WrappedComponent) {
     mapEditableElements(elements, iWindow) {
       const arr = Array.from(elements) // convert to array
       return arr.map((e, i) => {
-        // FIXME: 高さが変化した場合ここと、iframeHeightが追随する必要あり
         const rect = e.getBoundingClientRect()
         const attr = e.dataset
         return (

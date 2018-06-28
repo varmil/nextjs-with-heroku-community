@@ -6,10 +6,11 @@ import {
   // NotificationIcon as NotificationIconDefault,
   // AccountIcon as AccountIconDefault,
   MenuBar as MenuBarDefault,
+  Footer as FooterDefault,
+  ColorDefault,
   MainBanner as MainBannerDefault,
   Boxes as BoxesDefault,
   SubBanner as SubBannerDefault,
-  Footer as FooterDefault,
   Welcome as WelcomeDefault,
   TalkRoomDescDefault,
   TalkRoomInputFormDefault,
@@ -37,7 +38,9 @@ const initialState = {
     // notificationIcon: NotificationIconDefault,
     // accountIcon: AccountIconDefault,
     menuBar: MenuBarDefault,
-    footer: FooterDefault
+    footer: FooterDefault,
+    // 汎用で使う背景色（テーマ色みたいな）
+    color: ColorDefault
   },
 
   top: {
@@ -62,6 +65,7 @@ const initialState = {
 
 // nested stateのエイリアス
 export const PATH_MAP = {
+  BG_COLOR: 'common.color.backgroundColor',
   MAIN_BANNER: `top.mainBanner`,
   LOGO: `common.logo`,
   BOXES: `top.boxes`,

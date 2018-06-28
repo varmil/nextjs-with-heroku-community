@@ -11,7 +11,8 @@ export const SiteCommon = createTypes(
   // 'SET_ACCOUNT_ICON',
   'SET_MENUBAR_STYLE',
   'SET_MENUBAR_ITEM',
-  'SET_FOOTER'
+  'SET_FOOTER',
+  'SET_BG_COLOR'
 )
 
 // （Edit, View）トップページ

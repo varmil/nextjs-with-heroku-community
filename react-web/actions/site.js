@@ -4,7 +4,7 @@ import {
   SiteCommon,
   SiteTop,
   SiteWelcome,
-  SiteTalkRoom,
+  // SiteTalkRoom,
   SiteNews
 } from 'constants/ActionTypes'
 
@@ -31,15 +31,15 @@ export let setSubBanner = createAction(SiteTop.SET_SUB_BANNER, e => e)
 export let setWelcome = createAction(SiteWelcome.SET_WELCOME, e => e)
 
 // talk room
-export let setTalkRoomDesc = createAction(SiteTalkRoom.SET_DESC, e => e)
-export let setTalkRoomInputForm = createAction(
-  SiteTalkRoom.SET_INPUT_FORM,
-  e => e
-)
-export let setTalkRoomCategories = createAction(
-  SiteTalkRoom.SET_CATEGORIES,
-  e => e
-)
+// export let setTalkRoomDesc = createAction(SiteTalkRoom.SET_DESC, e => e)
+// export let setTalkRoomInputForm = createAction(
+//   SiteTalkRoom.SET_INPUT_FORM,
+//   e => e
+// )
+// export let setTalkRoomCategories = createAction(
+//   SiteTalkRoom.SET_CATEGORIES,
+//   e => e
+// )
 
 // talk room
 export let setNewsDesc = createAction(SiteNews.SET_DESC, e => e)
