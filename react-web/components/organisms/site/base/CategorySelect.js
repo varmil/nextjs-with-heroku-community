@@ -2,17 +2,38 @@ import React from 'react'
 import Link from 'next/link'
 import Classes from 'constants/Classes'
 
-export default class CategorySelect extends React.Component {
-  constructor(props) {
-    super(props)
-    // work around for SSR
-    // https://github.com/zeit/next.js/issues/1722
-    this.state = { show: false }
-  }
+const Item = props => {
+  return (
+    <li className={`scroll_item ${props.className || ''}`}>
+      <Link href="">
+        <button type="button" className="btn btn-secondary">
+          {props.text}
+        </button>
+      </Link>
 
+      <style jsx>{`
+        .scroll_item {
+          margin-right: 10px;
+          display: inline-block;
+        }
+        .scroll_item:first-child {
+          margin-left: 10px;
+        }
+
+        button {
+          width: 95px;
+          font-size: 11px;
+        }
+      `}</style>
+    </li>
+  )
+}
+
+export default class CategorySelect extends React.Component {
   // http://blog.keisuke11.com/webdesign/horizontal-scroll/
   createContents() {
     const props = this.props
+    console.log('CATEG', props)
     return (
       <div
         className={`horizontal_scroll_wrap ${Classes.EDITABLE}`}
@@ -21,41 +42,10 @@ export default class CategorySelect extends React.Component {
         data-path={props.propsPath}
       >
         <ul className="scroll_lst">
-          <li className="scroll_item">
-            <Link href="">
-              <button type="button" className="btn btn-secondary">
-                プロダクト
-              </button>
-            </Link>
-          </li>
-          <li className="scroll_item">
-            <Link href="">
-              <button type="button" className="btn btn-secondary">
-                プロダクト
-              </button>
-            </Link>
-          </li>
-          <li className="scroll_item">
-            <Link href="">
-              <button type="button" className="btn btn-secondary">
-                プロダクト
-              </button>
-            </Link>
-          </li>
-          <li className="scroll_item">
-            <Link href="">
-              <button type="button" className="btn btn-secondary">
-                プロダクト
-              </button>
-            </Link>
-          </li>
-          <li className="scroll_item">
-            <Link href="">
-              <button type="button" className="btn btn-secondary">
-                プロダクト
-              </button>
-            </Link>
-          </li>
+          {/* skip null text */}
+          {props.item.filter(e => e.text).map((e, i) => {
+            return <Item key={i} text={e.text} />
+          })}
         </ul>
 
         <style jsx>{`
@@ -69,18 +59,6 @@ export default class CategorySelect extends React.Component {
             white-space: nowrap;
             -webkit-overflow-scrolling: touch;
             padding: 0;
-          }
-          .scroll_item {
-            margin-right: 10px;
-            display: inline-block;
-          }
-          .scroll_item:first-child {
-            margin-left: 10px;
-          }
-
-          button {
-            width: 80px;
-            font-size: 11px;
           }
         `}</style>
       </div>
