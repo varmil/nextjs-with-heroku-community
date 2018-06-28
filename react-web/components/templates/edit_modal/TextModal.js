@@ -10,6 +10,7 @@ import withSaveCancelFooter from 'components/organisms/modal/withSaveCancelFoote
 class TextModal extends React.Component {
   constructor(props) {
     super(props)
+    console.log('te', props)
     this.state = {
       text: props.text
     }

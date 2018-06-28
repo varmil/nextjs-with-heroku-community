@@ -69,7 +69,7 @@ export const MainBanner = [
   }
 ]
 
-const boxesBase = range(3).map(i => ({
+const boxesBase = range(4).map(i => ({
   id: '', // サーバで管理しているスレッドID（URLに使う？）
   type: '', // TALK or SURVEY or REVIEW
   index: i,
@@ -91,12 +91,16 @@ export const Boxes = [
     header: { text: { $set: 'TALK' } }
   }),
   update(boxesBase[1], {
-    slug: { $set: 'yourvoice' },
-    header: { text: { $set: 'YOUR VOICE' } }
+    slug: { $set: 'voice' },
+    header: { text: { $set: 'VOICE' } }
   }),
   update(boxesBase[2], {
     slug: { $set: 'news' },
     header: { text: { $set: 'NEWS' } }
+  }),
+  update(boxesBase[3], {
+    slug: { $set: 'event' },
+    header: { text: { $set: 'EVENT' } }
   })
 ]
 

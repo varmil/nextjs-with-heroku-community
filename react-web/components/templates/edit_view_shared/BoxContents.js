@@ -1,7 +1,5 @@
 import React from 'react'
 import Portal from '@material-ui/core/Portal'
-import objectPath from 'object-path'
-import { PATH_MAP } from 'reducers/site'
 import FixedButton from 'components/atoms/FixedButton'
 import BoxContent from 'components/organisms/site/BoxContent'
 import CategorySelect from 'components/organisms/site/base/CategorySelect'

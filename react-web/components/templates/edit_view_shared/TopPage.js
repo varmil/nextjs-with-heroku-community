@@ -6,19 +6,13 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import objectPath from 'object-path'
 import { PATH_MAP } from 'reducers/site'
-import {
-  SitePreview,
-  SiteCommon,
-  SiteTop,
-  SiteWelcome,
-  SiteTalkRoom,
-  SiteNews
-} from 'constants/ActionTypes'
+import { SiteTop, SiteTalkRoom, SiteNews } from 'constants/ActionTypes'
 import { setBoxHeader, setSubBanner } from 'actions/site'
 import FixedButton from 'components/atoms/FixedButton'
 import Header from 'components/templates/container/Header'
 import TalkRoomContents from 'components/templates/edit_view_shared/TalkRoomContents'
 import NewsContents from 'components/templates/edit_view_shared/NewsContents'
+import Classes from 'constants/Classes'
 
 const styles = {
   slide: {
@@ -105,7 +99,13 @@ class TopPage extends React.Component {
         <Header />
 
         <main>
-          <section>
+          <section
+          // className={`${Classes.EDITABLE}`}
+          // data-modal={`TextModal`}
+          // data-action={SiteTop.SET_BOX_HEADER}
+          // data-index={props.index}
+          // data-path={props.propsPath}
+          >
             <Tabs
               className="tabs"
               value={this.state.tabIndex}
@@ -115,10 +115,17 @@ class TopPage extends React.Component {
               scrollable
               scrollButtons="off"
             >
-              <Tab label={<Label text={'TALK'} />} className="tab" />
-              <Tab label={<Label text={'VOICE'} />} className="tab" />
-              <Tab label={<Label text={'NEWS'} />} className="tab" />
-              <Tab label={<Label text={'EVENT'} />} className="tab" />
+              {props.boxes.map((box, i) => (
+                <Tab
+                  key={i}
+                  label={<Label text={box.header.text} />}
+                  className={`tab ${Classes.EDITABLE}`}
+                  data-modal={`TextModal`}
+                  data-action={SiteTop.SET_BOX_HEADER}
+                  data-index={i}
+                  data-path={`${PATH_MAP.BOXES}.${i}.header`}
+                />
+              ))}
             </Tabs>
           </section>
 
