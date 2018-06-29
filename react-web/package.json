@@ -39,6 +39,7 @@
     "react-color": "^2.14.1",
     "react-dom": "^16.4.0",
     "react-draft-wysiwyg": "^1.12.13",
+    "react-dropzone": "^4.2.12",
     "react-frame-component": "^4.0.0",
     "react-jss": "^8.6.0",
     "react-redux": "5.0.7",

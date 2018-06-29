@@ -4,6 +4,7 @@ import Select from 'react-select'
 import { withStyles } from '@material-ui/core/styles'
 import Input from '@material-ui/core/Input'
 
+import DropzoneIcon from 'components/atoms/Dropzone'
 // import BoxContent from 'components/organisms/site/BoxContent'
 // import { createAction } from 'redux-actions'
 // import { SitePost } from 'constants/ActionTypes'
@@ -48,7 +49,8 @@ class Editpost extends React.Component {
 
   state = {
     title: '',
-    body: ''
+    body: '',
+    files: []
   }
 
   handleChange = name => event => {
@@ -57,7 +59,23 @@ class Editpost extends React.Component {
     })
   }
 
+  onDrop(files) {
+    console.log('Received files: ', files)
+    this.setState({ ...this.state, files: this.state.files.concat(files) })
+  }
+
+  onDelete(e, tappedFile) {
+    e.preventDefault()
+    e.stopPropagation()
+    // Remove tappedItem from state.files
+    const filtered = this.state.files.filter(
+      f => f.preview !== tappedFile.preview
+    )
+    this.setState({ ...this.state, files: filtered })
+  }
+
   render() {
+    const state = this.state
     const props = this.props
     const { classes } = props
 
@@ -99,6 +117,14 @@ class Editpost extends React.Component {
             onChange={this.handleChange('body')}
             fullWidth
             multiline
+          />
+        </section>
+
+        <section>
+          <DropzoneIcon
+            files={state.files}
+            onDrop={this.onDrop.bind(this)}
+            onDelete={this.onDelete.bind(this)}
           />
         </section>
 
