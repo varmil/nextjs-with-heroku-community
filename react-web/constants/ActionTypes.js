@@ -16,7 +16,6 @@ export const SiteCommon = createTypes(
   'SET_BG_COLOR'
 )
 
-// （Edit, View）トップページ
 export const SiteTop = createTypes(
   'site/top/',
   'SET_MAIN_BANNER',
@@ -24,10 +23,8 @@ export const SiteTop = createTypes(
   'SET_BOXES'
 )
 
-// （Edit, View）Welcome
 export const SiteWelcome = createTypes('site/welcome/', 'SET_WELCOME')
 
-// （Edit, View）トークルーム
 export const SiteTalkRoom = createTypes(
   'site/talkroom/',
   // 'SET_DESC',
@@ -38,13 +35,14 @@ export const SiteTalkRoom = createTypes(
   async('FETCH_INITIAL')
 )
 
-// （Edit, View）NEWS
 export const SiteNews = createTypes(
   'site/news/',
   // 'SET_DESC',
   'SET_CATEGORIES',
   'SET_SUB_BANNER'
 )
+
+export const SitePost = createTypes('site/post/', 'SET_POST', async('FETCH'))
 
 // (Edit) iframe
 export const IFrame = createTypes('iframe/', 'POST_MESSAGE')

@@ -3,9 +3,9 @@ import { all, fork, call, put, takeLatest } from 'redux-saga/effects'
 import es6promise from 'es6-promise'
 import 'isomorphic-unfetch' /* global fetch */
 
-import { Example, IFrame, SiteTalkRoom } from 'constants/ActionTypes'
+import { Example, IFrame, SiteTalkRoom, SitePost } from 'constants/ActionTypes'
 import { failure, loadDataSuccess } from 'actions/example'
-import { addTalkContents } from 'actions/site'
+import { addTalkContents, setPost } from 'actions/site'
 
 import { Posts } from 'stub/site'
 
@@ -20,14 +20,21 @@ es6promise.polyfill()
 // }
 
 function* fetchTalkInitial({ payload }) {
-  // const { query, params } = payload
-
   // TODO: fetch category, subBanner, then put them into store
 
   // TODO: fetch box contents from server
   // then, dispatch action to sync store
   const talkBoxContents = Posts
   yield put(addTalkContents(talkBoxContents))
+}
+
+function* fetchPost({ payload }) {
+  const { boxType, postId } = payload
+
+  // TODO: fetch post with boxType, postId
+  // 適当な記事データを返却しておく
+  const data = Posts[0]
+  yield put(setPost(data))
 }
 
 function* loadDataSaga() {
@@ -55,7 +62,8 @@ function* postIFrameMessageSaga(action) {
 
 function* watchSite() {
   return yield all([
-    takeLatest(SiteTalkRoom.FETCH_INITIAL_REQUEST, fetchTalkInitial)
+    takeLatest(SiteTalkRoom.FETCH_INITIAL_REQUEST, fetchTalkInitial),
+    takeLatest(SitePost.FETCH_REQUEST, fetchPost)
   ])
 }
 

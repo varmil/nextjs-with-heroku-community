@@ -25,7 +25,8 @@ import {
   SiteTop,
   SiteWelcome,
   SiteTalkRoom,
-  SiteNews
+  SiteNews,
+  SitePost
 } from 'constants/ActionTypes'
 import Device from 'constants/Device'
 
@@ -46,7 +47,6 @@ const initialState = {
   top: {
     mainBanner: MainBannerDefault,
     boxes: BoxesDefault
-    // subBanner: SubBannerDefault
   },
 
   welcome: { ...WelcomeDefault },
@@ -54,13 +54,20 @@ const initialState = {
   talkroom: {
     categories: TalkRoomCategoriesDefault,
     subBanner: SubBannerDefault,
-    boxContents: []
+    boxContents: [] // FETCH
   },
 
   news: {
     categories: NewsCategoriesDefault,
     subBanner: SubBannerDefault,
-    boxContents: []
+    boxContents: [] // FETCH
+  },
+
+  /**
+   NOT EDITABLE PAGES
+   */
+  post: {
+    data: {}
   }
 }
 
@@ -173,6 +180,13 @@ export default handleActions(
       return update(state, {
         news: { categories: { $set: action.payload } }
       })
+    },
+
+    /**
+     * POST
+     */
+    [SitePost.SET_POST]: (state, action) => {
+      return immutable.set(state, `post.data`, action.payload)
     }
   },
   initialState
