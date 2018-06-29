@@ -8,14 +8,21 @@ import { SiteTalkRoom } from 'constants/ActionTypes'
 const IFramedTop = withIFrameable(TopPage)
 
 class Home extends React.Component {
-  // ctx.query contains URL params
-  // ?edit=true is added when the page is edit mode
+  // For the initial page load, getInitialProps will execute on the server only.
+  // getInitialProps will only be executed on the client when navigating to a
+  // different route via the Link component or using the routing APIs.
   static async getInitialProps({ ctx }) {
-    const { edit, slug } = ctx.query
-    const { dispatch } = ctx.store
-
     // homeで使用するデータは全て事前にFETCHしないといけない。（NEWS, VOICE...）
-    dispatch(createAction(SiteTalkRoom.FETCH_INITIAL_REQUEST)())
+    // fetch only first time, 便宜的にcontentsの長さで判定
+    const contents = ctx.store.getState().site.talkroom.boxContents
+    if (ctx.isServer || contents.length === 0) {
+      const { dispatch } = ctx.store
+      dispatch(createAction(SiteTalkRoom.FETCH_INITIAL_REQUEST)())
+    }
+
+    // ctx.query contains URL params
+    // ?edit=true is added when the page is edit mode
+    const { edit, slug } = ctx.query
     return { edit: !!edit, slug: slug || '' }
   }
 
@@ -34,6 +41,5 @@ class Home extends React.Component {
 }
 
 export default connect(state => ({
-  common: state.site.common,
-  top: state.site.top
+  // top: state.site.top
 }))(Home)
