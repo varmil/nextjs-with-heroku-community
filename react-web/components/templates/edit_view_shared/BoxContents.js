@@ -26,12 +26,11 @@ export default class BoxContents extends React.Component {
   createBoxContents() {
     const props = this.props
     const { boxContents } = props.pageData
-    console.log('boxContents', boxContents)
 
     // サブバナー用に分割
     const FIRST_NUM = 2
-    const firstArray = props.pageData.boxContents.slice(0, FIRST_NUM)
-    const secondArray = props.pageData.boxContents.slice(FIRST_NUM)
+    const firstArray = boxContents.slice(0, FIRST_NUM)
+    const secondArray = boxContents.slice(FIRST_NUM)
 
     return (
       <div className="wrap">
