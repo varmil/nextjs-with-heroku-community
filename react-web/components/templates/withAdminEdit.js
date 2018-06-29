@@ -1,9 +1,6 @@
 import React from 'react'
 // import { connect } from 'react-redux'
-// import dynamic from 'next/dynamic'
-import AdminHeader from 'components/organisms/admin/AdminHeader'
 import OverlayEditWithModal from 'components/organisms/OverlayEditWithModal'
-import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
 import SideBar from 'components/templates/container/SideBar'
 import Device from 'constants/Device'
 import Classes from 'constants/Classes'
@@ -148,15 +145,6 @@ export default function ppHOC(WrappedComponent) {
 
       return (
         <div className="container-fluid">
-          <div className="fixed-top">
-            <AdminHeader />
-
-            <WhiteBreadcrumb>
-              <li className="breadcrumb-item">サイトデザイン</li>
-              <li className="breadcrumb-item active">ホーム</li>
-            </WhiteBreadcrumb>
-          </div>
-
           <div className="mainBody">
             <SideBar width={SIDEBAR_WIDTH} offsetTop={OFFSET_TOP_SIDEBAR} />
 

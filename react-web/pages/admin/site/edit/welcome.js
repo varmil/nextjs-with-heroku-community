@@ -1,14 +1,28 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import AdminHeader from 'components/organisms/admin/AdminHeader'
+import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
 import withAdminEdit from 'components/templates/withAdminEdit'
 
-// TODO: ヘッダ部分は外出しして、このEditに移動させる
 // あくまでこのHOCはsite編集の部分のみを扱う感じ
 const Edit = withAdminEdit(<React.Fragment />)
 
 class EditWelcome extends React.Component {
   render() {
-    return <Edit {...this.props} iframeSrc={`/view/welcome?edit=true`} />
+    return (
+      <React.Fragment>
+        <div className="fixed-top">
+          <AdminHeader />
+
+          <WhiteBreadcrumb>
+            <li className="breadcrumb-item">サイトデザイン</li>
+            <li className="breadcrumb-item active">{'Welcome'}</li>
+          </WhiteBreadcrumb>
+        </div>
+
+        <Edit {...this.props} iframeSrc={`/view/welcome?edit=true`} />
+      </React.Fragment>
+    )
   }
 }
 
