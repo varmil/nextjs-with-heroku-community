@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles'
 import Input from '@material-ui/core/Input'
 
 import DropzoneIcon from 'components/atoms/Dropzone'
+import Rule from 'constants/Rule'
 // import BoxContent from 'components/organisms/site/BoxContent'
 // import { createAction } from 'redux-actions'
 // import { SitePost } from 'constants/ActionTypes'
@@ -61,8 +62,11 @@ class Editpost extends React.Component {
   }
 
   onDrop(files) {
-    console.log('Received files: ', files)
-    this.setState({ ...this.state, files: this.state.files.concat(files) })
+    let newFiles = this.state.files.concat(files)
+    if (newFiles.length > Rule.MAX_UPLOAD_FILES) {
+      newFiles = newFiles.slice(0, Rule.MAX_UPLOAD_FILES)
+    }
+    this.setState({ ...this.state, files: newFiles })
   }
 
   onDelete(e, tappedFile) {
