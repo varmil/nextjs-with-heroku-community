@@ -32,7 +32,7 @@ export default class Header extends React.Component {
           <Nav className="mr-auto" navbar>
             <NavItem>
               <div className="linkItem" href="#" style={linkItemStyle}>
-                <i className="fas fa-pencil-alt" />
+                <i className="fas fa-edit" />
               </div>
             </NavItem>
             <NavItem>
@@ -42,7 +42,7 @@ export default class Header extends React.Component {
             </NavItem>
             <NavItem>
               <div className="linkItem" href="#" style={linkItemStyle}>
-                <i className="fas fa-chart-bar" />
+                <i className="fas fa-book" />
               </div>
             </NavItem>
             <NavItem>
@@ -50,16 +50,21 @@ export default class Header extends React.Component {
                 <i className="fas fa-envelope" />
               </div>
             </NavItem>
-            <NavItem>
+            {/* <NavItem>
+              <div className="linkItem" href="#" style={linkItemStyle}>
+              <i className="fas fa-chart-bar" />
+            </div>
+          </NavItem> */}
+            {/* <NavItem>
               <div className="linkItem" href="#" style={linkItemStyle}>
                 <i className="fas fa-exclamation-circle" />
               </div>
-            </NavItem>
-            <NavItem>
+            </NavItem> */}
+            {/* <NavItem>
               <div className="linkItem" href="#" style={linkItemStyle}>
                 <i className="fas fa-heart" />
               </div>
-            </NavItem>
+            </NavItem> */}
           </Nav>
           <UncontrolledDropdown className="pl-4">
             <DropdownToggle
