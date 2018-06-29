@@ -9,19 +9,7 @@ import Input from '@material-ui/core/Input'
 // import { SitePost } from 'constants/ActionTypes'
 
 const inputStyles = {
-  // root: {
-  //   background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-  //   borderRadius: 3,
-  //   border: 0,
-  //   color: 'white',
-  //   height: 48,
-  //   padding: '0 30px',
-  //   boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)'
-  // },
-  titleInput: {
-    padding: '10px'
-  },
-  bodyInput: {
+  input: {
     padding: '10px'
   }
 }
@@ -59,8 +47,8 @@ class Editpost extends React.Component {
   // }
 
   state = {
-    name: '',
-    multiline: 'Controlled'
+    title: '',
+    body: ''
   }
 
   handleChange = name => event => {
@@ -95,24 +83,24 @@ class Editpost extends React.Component {
 
         <section className="mt-3">
           <Input
-            classes={{ input: classes.titleInput }}
+            className={classes.input}
             placeholder="タイトル"
-            value={this.state.name}
-            onChange={this.handleChange('name')}
+            value={this.state.title}
+            onChange={this.handleChange('title')}
             fullWidth
           />
         </section>
 
-        {/* <section className="mt-3">
+        <section className="mt-3">
           <Input
-            classes={{ input: classes.bodyInput }}
+            className={classes.input}
             placeholder="本文"
-            value={this.state.name}
-            onChange={this.handleChange('name')}
+            value={this.state.body}
+            onChange={this.handleChange('body')}
             fullWidth
             multiline
           />
-        </section> */}
+        </section>
 
         <style jsx>{`
           input {
