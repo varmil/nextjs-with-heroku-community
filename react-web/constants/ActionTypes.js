@@ -30,16 +30,18 @@ export const SiteWelcome = createTypes('site/welcome/', 'SET_WELCOME')
 // （Edit, View）トークルーム
 export const SiteTalkRoom = createTypes(
   'site/talkroom/',
-  'SET_DESC',
-  'SET_INPUT_FORM',
+  // 'SET_DESC',
+  // 'SET_INPUT_FORM',
   'SET_CATEGORIES',
-  'SET_SUB_BANNER'
+  'SET_SUB_BANNER',
+  'ADD_CONTENTS',
+  async('FETCH_INITIAL')
 )
 
 // （Edit, View）NEWS
 export const SiteNews = createTypes(
   'site/news/',
-  'SET_DESC',
+  // 'SET_DESC',
   'SET_CATEGORIES',
   'SET_SUB_BANNER'
 )
@@ -54,7 +56,7 @@ export const IFrame = createTypes('iframe/', 'POST_MESSAGE')
 export const User = createTypes(
   'user/',
   async('FETCH'),
-  async('FETCH_OWNER'),
+  async('FETCH_ADMIN'),
   'SET',
   'SET_ID'
 )

@@ -24,20 +24,34 @@ export default class BoxContents extends React.Component {
   }
 
   createBoxContents() {
+    const props = this.props
+    const { boxContents } = props.pageData
+    console.log('boxContents', boxContents)
+
+    // サブバナー用に分割
+    const FIRST_NUM = 2
+    const firstArray = props.pageData.boxContents.slice(0, FIRST_NUM)
+    const secondArray = props.pageData.boxContents.slice(FIRST_NUM)
+
     return (
       <div className="wrap">
-        <div className="c">
-          <BoxContent />
-        </div>
-        <div className="c">
-          <BoxContent />
-        </div>
+        {firstArray.map((content, i) => {
+          return (
+            <div key={i} className="c">
+              <BoxContent {...content} />
+            </div>
+          )
+        })}
 
         <div className="subBanner my-3">{this.createSubBanners()}</div>
 
-        <div className="c">
-          <BoxContent />
-        </div>
+        {secondArray.map((content, i) => {
+          return (
+            <div key={i} className="c">
+              <BoxContent {...content} />
+            </div>
+          )
+        })}
 
         <style jsx>{`
           .wrap {
@@ -85,7 +99,6 @@ export default class BoxContents extends React.Component {
 
         <style jsx>{`
           .desc {
-            border-bottom: solid gray 1px;
           }
         `}</style>
       </React.Fragment>

@@ -1,8 +1,8 @@
 import { createAction } from 'redux-actions'
-import { SitePreview } from 'constants/ActionTypes'
+import { SitePreview, SiteTalkRoom } from 'constants/ActionTypes'
 
 // preview
-export let setDevice = createAction(SitePreview.SET_DEVICE, e => e)
+export let setDevice = createAction(SitePreview.SET_DEVICE)
 
 // common
 
@@ -11,6 +11,7 @@ export let setDevice = createAction(SitePreview.SET_DEVICE, e => e)
 // welcome
 
 // talk room
+export let addTalkContents = createAction(SiteTalkRoom.ADD_CONTENTS)
 
 // news
 

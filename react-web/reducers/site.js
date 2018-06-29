@@ -52,15 +52,15 @@ const initialState = {
   welcome: { ...WelcomeDefault },
 
   talkroom: {
-    // desc: TalkRoomDescDefault,
-    // inputForm: TalkRoomInputFormDefault,
     categories: TalkRoomCategoriesDefault,
-    subBanner: SubBannerDefault
+    subBanner: SubBannerDefault,
+    boxContents: []
   },
 
   news: {
     categories: NewsCategoriesDefault,
-    subBanner: SubBannerDefault
+    subBanner: SubBannerDefault,
+    boxContents: []
   }
 }
 
@@ -160,6 +160,10 @@ export default handleActions(
         `${PATH_MAP.TALK_SUB_BANNER}.${action.payload.index}`,
         action.payload
       )
+    },
+    [SiteTalkRoom.ADD_CONTENTS]: (state, action) => {
+      // spread payload because it is array
+      return immutable.push(state, `talkroom.boxContents`, ...action.payload)
     },
 
     /**

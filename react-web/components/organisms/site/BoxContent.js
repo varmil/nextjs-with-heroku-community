@@ -1,4 +1,5 @@
 import React from 'react'
+import MultiLineText from 'components/atoms/MultiLineText'
 
 export default class BoxContent extends React.Component {
   render() {
@@ -16,8 +17,8 @@ export default class BoxContent extends React.Component {
                 alt="Generic placeholder image"
               />
               <div className="media-body">
-                <h6 className="m-0">Commune スタッフ</h6>
-                <span>2018/06/01</span>
+                <h6 className="m-0">{props.posterName}</h6>
+                <span>{props.postDate}</span>
               </div>
             </div>
           </div>
@@ -25,7 +26,7 @@ export default class BoxContent extends React.Component {
           <div className="card-body p-2">
             <h5 className="card-title mb-1">{props.title || 'Template'}</h5>
             <p className="card-text">
-              おはようございます。今日もいい天気ですね。本日は...
+              <MultiLineText>{props.body}</MultiLineText>
             </p>
           </div>
 
@@ -37,10 +38,10 @@ export default class BoxContent extends React.Component {
 
           <div className="card-footer p-2">
             <span className="mr-3">
-              <i className="far fa-heart" /> 100
+              <i className="far fa-heart" /> {props.like}
             </span>
             <span>
-              <i className="far fa-comment" /> 67
+              <i className="far fa-comment" /> {props.comment}
             </span>
           </div>
 

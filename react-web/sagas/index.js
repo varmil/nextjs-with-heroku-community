@@ -1,10 +1,13 @@
 import { delay } from 'redux-saga'
-import { all, call, put, takeLatest } from 'redux-saga/effects'
+import { all, fork, call, put, takeLatest } from 'redux-saga/effects'
 import es6promise from 'es6-promise'
 import 'isomorphic-unfetch' /* global fetch */
 
-import { Example, IFrame } from 'constants/ActionTypes'
+import { Example, IFrame, SiteTalkRoom } from 'constants/ActionTypes'
 import { failure, loadDataSuccess } from 'actions/example'
+import { addTalkContents } from 'actions/site'
+
+import { Posts } from 'stub/site'
 
 es6promise.polyfill()
 
@@ -15,6 +18,17 @@ es6promise.polyfill()
 //     yield call(delay, 1000)
 //   }
 // }
+
+function* fetchTalkInitial({ payload }) {
+  // const { query, params } = payload
+
+  // TODO: fetch category, subBanner, then put them into store
+
+  // TODO: fetch box contents from server
+  // then, dispatch action to sync store
+  const talkBoxContents = Posts
+  yield put(addTalkContents(talkBoxContents))
+}
 
 function* loadDataSaga() {
   try {
@@ -30,15 +44,25 @@ function* postIFrameMessageSaga(action) {
   try {
     const { iWindow, type, payload } = action.payload
     iWindow.postMessage({ type, payload }, '*')
-    // yield delay(100)
   } catch (err) {
     yield put(failure(err))
   }
 }
 
+/** ****************************************************************************/
+/** ***************************** WATCHERS *************************************/
+/** ****************************************************************************/
+
+function* watchSite() {
+  return yield all([
+    takeLatest(SiteTalkRoom.FETCH_INITIAL_REQUEST, fetchTalkInitial)
+  ])
+}
+
 function* rootSaga() {
   yield all([
-    // call(runClockSaga),
+    fork(watchSite),
+
     takeLatest(Example.LOAD_DATA, loadDataSaga),
     takeLatest(IFrame.POST_MESSAGE, postIFrameMessageSaga)
   ])
