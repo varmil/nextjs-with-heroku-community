@@ -13,12 +13,12 @@ const dummyBody = `ここも今現にいわゆる料理らとして事の時で�
 
 export const Posts = range(5).map(i => ({
   posterName: 'たかだっち',
-  posterIcon: '',
+  posterIcon: 'https://www.w3schools.com/w3images/avatar2.png',
   postDate: '2018/06/29',
   categoryIndex: 0,
   title: 'オススメのセミフォーマルジャケットを教えて！',
   body: dummyBody,
   like: 123,
   comment: 45,
-  images: []
+  images: ['/static/stub/post/jacket.png', '/static/stub/post/streetman.png']
 }))

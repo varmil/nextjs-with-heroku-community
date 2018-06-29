@@ -11,38 +11,44 @@ export default class BoxContent extends React.Component {
             <div className="media">
               <img
                 className="mr-3"
-                src="http://propeller.in/components/list/img/40x40.png"
+                src={props.posterIcon}
                 width="40"
                 height="40"
                 alt="Generic placeholder image"
               />
               <div className="media-body">
-                <h6 className="m-0">{props.posterName}</h6>
+                <h5 className="m-0">{props.posterName}</h5>
                 <span>{props.postDate}</span>
               </div>
             </div>
           </div>
 
           <div className="card-body p-2">
-            <h5 className="card-title mb-1">{props.title || 'Template'}</h5>
+            <h5 className="card-title mb-2">{props.title}</h5>
             <p className="card-text">
               <MultiLineText>{props.body}</MultiLineText>
             </p>
           </div>
 
-          <img
-            className="card-img-top"
-            src="https://www.webtoolnavi.com/www/wp-content/uploads/2016/06/fakeimg-2.png"
-            alt="Card image cap"
-          />
+          <div className="mb-3">
+            {props.images.map((src, i) => (
+              <img
+                key={i}
+                className="card-img-top"
+                src={src}
+                alt="Card image cap"
+              />
+            ))}
+          </div>
 
-          <div className="card-footer p-2">
+          <div className="card-footer text-center p-2">
             <span className="mr-3">
-              <i className="far fa-heart" /> {props.like}
+              <i className="fas fa-heart" /> {props.like}
             </span>
-            <span>
-              <i className="far fa-comment" /> {props.comment}
+            <span className="mr-3">
+              <i className="fas fa-comment" /> {props.comment}
             </span>
+            <span className="">コメントする</span>
           </div>
 
           <style jsx>{`
@@ -81,7 +87,9 @@ export default class BoxContent extends React.Component {
 
             .card-footer {
               color: gray;
-              font-size: 11px;
+              font-size: 12px;
+              border: none !important;
+              background-color: initial !important;
             }
           `}</style>
         </div>
