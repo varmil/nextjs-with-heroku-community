@@ -1,4 +1,5 @@
 import Classes from 'constants/Classes'
+import { Link } from '/routes'
 import { SiteCommon } from 'constants/ActionTypes'
 import { PATH_MAP } from 'reducers/site'
 
@@ -9,9 +10,11 @@ export default props => (
     data-action={SiteCommon.SET_BG_COLOR}
     data-path={`${PATH_MAP.COLOR}`}
   >
-    <a className="btn-floating btn-lg red waves-effect waves-light">
-      <i className="fas fa-pen" />
-    </a>
+    <Link route={'/view/editpost'}>
+      <div className="btn-floating btn-lg red waves-effect waves-light">
+        <i className="fas fa-pen" />
+      </div>
+    </Link>
 
     <style jsx>{`
       .fixed-action-btn {
@@ -43,8 +46,8 @@ export default props => (
         background-color: ${props.backgroundColor || '#dc3545'};
       }
 
-      a.waves-effect,
-      a.waves-light {
+      .waves-effect,
+      .waves-light {
         display: inline-block;
       }
 

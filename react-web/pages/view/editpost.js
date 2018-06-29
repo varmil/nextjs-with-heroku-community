@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from '/routes'
 import { connect } from 'react-redux'
 import Select from 'react-select'
 import { withStyles } from '@material-ui/core/styles'
@@ -83,7 +84,9 @@ class Editpost extends React.Component {
       <React.Fragment>
         <header>
           <nav className="navbar justify-content-between">
-            <a className="">キャンセル</a>
+            <Link route={'/view/home'}>
+              <span style={{ color: 'black' }}>キャンセル</span>
+            </Link>
             <div className="">
               <button className="btn btn-link my-2 my-sm-0" type="submit">
                 投稿する
@@ -129,7 +132,8 @@ class Editpost extends React.Component {
         </section>
 
         <style jsx>{`
-          input {
+          a {
+            color: black;
           }
         `}</style>
       </React.Fragment>
