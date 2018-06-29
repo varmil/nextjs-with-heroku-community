@@ -49,11 +49,6 @@ export default class BoxContent extends React.Component {
               <img className="card-img-top" src={src} alt="" />
             </Link>
           ))}
-
-          <style jsx>{`
-            a {
-            }
-          `}</style>
         </React.Fragment>
       )
     }

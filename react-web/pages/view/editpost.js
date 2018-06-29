@@ -134,12 +134,6 @@ class Editpost extends React.Component {
             onDelete={this.onDelete.bind(this)}
           />
         </section>
-
-        <style jsx>{`
-          a {
-            color: black;
-          }
-        `}</style>
       </React.Fragment>
     )
   }
