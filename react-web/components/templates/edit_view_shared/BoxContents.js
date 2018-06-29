@@ -53,9 +53,6 @@ export default class BoxContents extends React.Component {
         })}
 
         <style jsx>{`
-          .wrap {
-          }
-
           .c {
             padding: 0 15px;
             margin: 0 0 20px;
@@ -95,11 +92,6 @@ export default class BoxContents extends React.Component {
         <main>
           <section className="contents">{this.createBoxContents()}</section>
         </main>
-
-        <style jsx>{`
-          .desc {
-          }
-        `}</style>
       </React.Fragment>
     )
   }
