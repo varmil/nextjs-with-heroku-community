@@ -7,3 +7,6 @@ const routes = (module.exports = nextRoutes())
 // box page
 routes.add('/admin/site/edit/home/:slug', '/admin/site/edit/home')
 routes.add('/view/home/:slug', '/view/home')
+
+// 投稿詳細
+routes.add('/view/post/:boxType/:postId', '/view/post')
