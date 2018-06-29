@@ -3,6 +3,10 @@ import { Link } from 'routes'
 import MultiLineText from 'components/atoms/MultiLineText'
 
 export default class BoxContent extends React.Component {
+  state = {
+    expandBody: this.props.expandBody
+  }
+
   createBody(isExpanded) {
     const props = this.props
     if (isExpanded) {
@@ -11,12 +15,12 @@ export default class BoxContent extends React.Component {
       const sliced = `${props.body.slice(0, 60)}...`
       return (
         <React.Fragment>
-          <Link route={`/view/post/${props.boxType}/${props.postId}`} passHref>
-            <a>
-              <MultiLineText>{sliced}</MultiLineText>
-              <span>もっとみる</span>
-            </a>
-          </Link>
+          <div
+            onClick={() => this.setState({ ...this.state, expandBody: true })}
+          >
+            <MultiLineText>{sliced}</MultiLineText>
+            <span>もっとみる</span>
+          </div>
 
           <style jsx>{`
             a {
@@ -31,7 +35,32 @@ export default class BoxContent extends React.Component {
     }
   }
 
+  createPhoto(isExpanded) {
+    const props = this.props
+    if (isExpanded) {
+      return props.images.map((src, i) => (
+        <img key={i} className="card-img-top" src={src} alt="" />
+      ))
+    } else {
+      return (
+        <React.Fragment>
+          {props.images.map((src, i) => (
+            <Link key={i} route={`/view/post/${props.boxType}/${props.postId}`}>
+              <img className="card-img-top" src={src} alt="" />
+            </Link>
+          ))}
+
+          <style jsx>{`
+            a {
+            }
+          `}</style>
+        </React.Fragment>
+      )
+    }
+  }
+
   render() {
+    const state = this.state
     const props = this.props
     return (
       <div style={props.style}>
@@ -54,23 +83,10 @@ export default class BoxContent extends React.Component {
 
           <div className="card-body p-2">
             <h5 className="card-title mb-2">{props.title}</h5>
-            <p className="card-text">
-              {props.expandBody
-                ? this.createBody(true)
-                : this.createBody(false)}
-            </p>
+            <div className="card-text">{this.createBody(state.expandBody)}</div>
           </div>
 
-          <div className="mb-3">
-            {props.images.map((src, i) => (
-              <img
-                key={i}
-                className="card-img-top"
-                src={src}
-                alt="Card image cap"
-              />
-            ))}
-          </div>
+          <div className="mb-3">{this.createPhoto(props.expandPhoto)}</div>
 
           <div className="card-footer text-center p-2">
             <span className="mr-3">
@@ -83,7 +99,7 @@ export default class BoxContent extends React.Component {
           </div>
 
           <style jsx>{`
-            p {
+            .card-text {
               font-size: 12px;
               color: #505050;
               white-space: normal;
