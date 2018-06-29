@@ -100,6 +100,7 @@ class Editpost extends React.Component {
         </header>
 
         <Select
+          instanceId={'SSR-GOGO001'}
           placeholder={'カテゴリ'}
           styles={colourStyles}
           options={options}

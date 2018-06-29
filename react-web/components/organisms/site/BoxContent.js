@@ -54,6 +54,26 @@ export default class BoxContent extends React.Component {
     }
   }
 
+  createComment(isExpanded) {
+    const props = this.props
+    if (!isExpanded) return null
+    return (
+      <div className="comments mx-auto pt-2">
+        <span className="my-3">以前のコメントを見る</span>
+        <div className="commentsPost my-3">
+          {props.comments.map((e, i) => <div key={i}>{e.body}</div>)}
+        </div>
+        <div className="commentForm">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="コメントする..."
+          />
+        </div>
+      </div>
+    )
+  }
+
   render() {
     const state = this.state
     const props = this.props
@@ -93,6 +113,8 @@ export default class BoxContent extends React.Component {
             <span className="">コメントする</span>
           </div>
 
+          {this.createComment(props.expandComment)}
+
           <style jsx>{`
             .card-text {
               font-size: 12px;
@@ -129,7 +151,7 @@ export default class BoxContent extends React.Component {
 
             .card-footer {
               color: gray;
-              font-size: 12px;
+              font-size: 14px;
               border: none !important;
               background-color: initial !important;
             }

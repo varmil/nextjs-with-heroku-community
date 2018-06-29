@@ -1,4 +1,4 @@
-import { delay } from 'redux-saga'
+// import { delay } from 'redux-saga'
 import { all, fork, call, put, takeLatest } from 'redux-saga/effects'
 import es6promise from 'es6-promise'
 import 'isomorphic-unfetch' /* global fetch */
@@ -6,8 +6,7 @@ import 'isomorphic-unfetch' /* global fetch */
 import { Example, IFrame, SiteTalkRoom, SitePost } from 'constants/ActionTypes'
 import { failure, loadDataSuccess } from 'actions/example'
 import { addTalkContents, setPost } from 'actions/site'
-
-import { Posts } from 'stub/site'
+import { Posts, Comments } from 'stub/site'
 
 es6promise.polyfill()
 
@@ -33,8 +32,9 @@ function* fetchPost({ payload }) {
 
   // TODO: fetch post with boxType, postId
   // 適当な記事データを返却しておく
-  const data = Posts[0]
-  yield put(setPost(data))
+  const post = Posts[0]
+  const comments = Comments
+  yield put(setPost({ ...post, comments }))
 }
 
 function* loadDataSaga() {
