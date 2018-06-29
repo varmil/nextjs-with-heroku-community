@@ -104,7 +104,6 @@ class Editpost extends React.Component {
 
         <style jsx>{`
           input {
-            padding: 10px;
           }
         `}</style>
       </React.Fragment>
