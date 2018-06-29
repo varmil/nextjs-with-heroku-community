@@ -15,8 +15,8 @@ const ImgPreviews = props => {
   const imgStyle = {
     objectFit: 'cover',
     objectPosition: 'center',
-    width: '100%',
-    height: 150
+    width: '100%'
+    // height: 150
   }
 
   return props.files.map((file, i) => (

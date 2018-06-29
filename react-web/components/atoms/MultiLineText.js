@@ -3,10 +3,11 @@ export default class MultiLineText extends React.Component {
   render() {
     const renderTexts = () => {
       if (typeof this.props.children === 'string') {
-        return this.props.children.split('\n').map((m, i) => (
+        const arr = this.props.children.split('\n')
+        return arr.map((m, i) => (
           <span key={i}>
             {m}
-            <br />
+            {i !== arr.length - 1 ? <br /> : null}
           </span>
         ))
       } else {

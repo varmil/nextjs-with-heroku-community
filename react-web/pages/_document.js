@@ -35,6 +35,12 @@ class MyDocument extends Document {
           <Main />
           <NextScript />
         </body>
+
+        <style jsx>{`
+          body {
+            background-color: white;
+          }
+        `}</style>
       </html>
     )
   }

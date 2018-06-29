@@ -18,7 +18,12 @@ class Post extends React.Component {
     const { data } = props.post
     return (
       <React.Fragment>
-        <BoxContent {...data} />
+        <BoxContent
+          {...data}
+          expandBody={true}
+          expandPhoto={true}
+          expandComment={true}
+        />
       </React.Fragment>
     )
   }

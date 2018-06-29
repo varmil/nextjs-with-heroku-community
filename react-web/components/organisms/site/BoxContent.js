@@ -1,7 +1,36 @@
 import React from 'react'
+import { Link } from 'routes'
 import MultiLineText from 'components/atoms/MultiLineText'
 
 export default class BoxContent extends React.Component {
+  createBody(isExpanded) {
+    const props = this.props
+    if (isExpanded) {
+      return <MultiLineText>{props.body}</MultiLineText>
+    } else {
+      const sliced = `${props.body.slice(0, 60)}...`
+      return (
+        <React.Fragment>
+          <Link route={`/view/post/${props.boxType}/${props.postId}`} passHref>
+            <a>
+              <MultiLineText>{sliced}</MultiLineText>
+              <span>もっとみる</span>
+            </a>
+          </Link>
+
+          <style jsx>{`
+            a {
+              color: inherit;
+            }
+            span {
+              color: gray;
+            }
+          `}</style>
+        </React.Fragment>
+      )
+    }
+  }
+
   render() {
     const props = this.props
     return (
@@ -26,7 +55,9 @@ export default class BoxContent extends React.Component {
           <div className="card-body p-2">
             <h5 className="card-title mb-2">{props.title}</h5>
             <p className="card-text">
-              <MultiLineText>{props.body}</MultiLineText>
+              {props.expandBody
+                ? this.createBody(true)
+                : this.createBody(false)}
             </p>
           </div>
 
@@ -54,7 +85,7 @@ export default class BoxContent extends React.Component {
           <style jsx>{`
             p {
               font-size: 12px;
-              color: gray;
+              color: #505050;
               white-space: normal;
             }
 
