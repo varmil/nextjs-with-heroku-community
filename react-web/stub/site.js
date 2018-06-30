@@ -20,7 +20,7 @@ S300ラインをおすすめします。お手入れもかなり楽で春夏と�
 export const Posts = range(5).map(i => ({
   // postページへのlinkに使う
   boxType: 0,
-  postId: 123,
+  postId: i,
   categoryIndex: 0,
 
   // Contentそのもの

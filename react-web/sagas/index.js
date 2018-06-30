@@ -32,7 +32,7 @@ function* fetchPost({ payload }) {
 
   // TODO: fetch post with boxType, postId
   // 適当な記事データを返却しておく
-  const post = Posts[0]
+  const post = Posts[postId]
   const comments = Comments
   yield put(setPost({ ...post, comments }))
 }

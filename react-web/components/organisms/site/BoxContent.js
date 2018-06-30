@@ -1,17 +1,25 @@
 import React from 'react'
-import Router from 'next/router'
-import { Link } from 'routes'
+import { Link, Router } from 'routes'
 import MultiLineText from 'components/atoms/MultiLineText'
 import Avatar from 'components/atoms/Avatar'
 import AvatarAndName from 'components/molecules/AvatarAndName'
 
 const AVATAR_SIZE = 44
+// アンカーで飛んだときになんとなく真ん中あたりに表示するため
+const OFFSET_IMG_TOP = -100
 
 const PreviewImage = props => (
   <React.Fragment>
-    <Link route={props.route}>
+    <div
+      onClick={async () => {
+        const id = `img${props.index}`
+        await Router.pushRoute(`${props.route}#${id}`)
+        const top = document.getElementById(id).offsetTop
+        window.scrollTo(0, top + OFFSET_IMG_TOP)
+      }}
+    >
       <img className="card-img-top" src={props.src} alt="" />
-    </Link>
+    </div>
     <style jsx>{`
       img {
         border-radius: 0;
@@ -110,7 +118,9 @@ export default class BoxContent extends React.Component {
       return (
         <React.Fragment>
           {props.images.map((src, i) => (
-            <img key={i} src={src} className="card-img-top my-2" alt="" />
+            <div key={i} id={`img${i}`}>
+              <img src={src} className="card-img-top my-2" alt="" />
+            </div>
           ))}
         </React.Fragment>
       )
@@ -123,7 +133,11 @@ export default class BoxContent extends React.Component {
             <React.Fragment>
               <div className="row">
                 <div className="col-12 px-0">
-                  <PreviewImage route={this.postLink} src={props.images[0]} />
+                  <PreviewImage
+                    route={this.postLink}
+                    src={props.images[0]}
+                    index={0}
+                  />
                 </div>
               </div>
             </React.Fragment>
@@ -137,7 +151,7 @@ export default class BoxContent extends React.Component {
               <div className="row">
                 {props.images.map((src, i) => (
                   <div key={i} className="col-6 px-0">
-                    <PreviewImage route={this.postLink} src={src} />
+                    <PreviewImage route={this.postLink} src={src} index={i} />
                   </div>
                 ))}
               </div>
@@ -150,11 +164,19 @@ export default class BoxContent extends React.Component {
             <React.Fragment>
               <div className="row">
                 <div className="col-12 px-0">
-                  <PreviewImage route={this.postLink} src={props.images[0]} />
+                  <PreviewImage
+                    route={this.postLink}
+                    src={props.images[0]}
+                    index={0}
+                  />
                 </div>
                 {props.images.slice(1).map((src, i) => (
                   <div key={i} className="col-6 px-0">
-                    <PreviewImage route={this.postLink} src={src} />
+                    <PreviewImage
+                      route={this.postLink}
+                      src={src}
+                      index={i + 1}
+                    />
                   </div>
                 ))}
               </div>
