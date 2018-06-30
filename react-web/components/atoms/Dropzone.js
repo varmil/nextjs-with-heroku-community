@@ -3,6 +3,8 @@ import Dropzone from 'react-dropzone'
 
 const dropzoneStyle = {
   display: 'block',
+  width: 80,
+  margin: '0 auto',
   marginTop: 20,
   marginBottom: 30,
   textAlign: 'center',
