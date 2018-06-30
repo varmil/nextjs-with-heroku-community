@@ -30,6 +30,11 @@ class MyDocument extends Document {
             integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
             crossOrigin="anonymous"
           />
+          {/* Google Fonts */}
+          <link
+            href="https://fonts.googleapis.com/css?family=Dancing+Script"
+            rel="stylesheet"
+          />
         </Head>
         <body>
           <Main />

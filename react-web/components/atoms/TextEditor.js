@@ -62,7 +62,7 @@ export default class TextEditor extends React.Component {
                 'Tahoma',
                 'Times New Roman',
                 'Verdana',
-                'Monotype Corsiva'
+                'Dancing Script'
               ]
             }
           }}
