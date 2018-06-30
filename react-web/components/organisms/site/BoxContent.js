@@ -7,6 +7,21 @@ import AvatarAndName from 'components/molecules/AvatarAndName'
 
 const AVATAR_SIZE = 44
 
+const PreviewImage = props => (
+  <React.Fragment>
+    <Link route={props.route}>
+      <img className="card-img-top" src={props.src} alt="" />
+    </Link>
+    <style jsx>{`
+      img {
+        border-radius: 0;
+        object-fit: cover;
+        height: 110px;
+      }
+    `}</style>
+  </React.Fragment>
+)
+
 export default class BoxContent extends React.Component {
   state = {
     expandBody: this.props.expandBody
@@ -92,19 +107,63 @@ export default class BoxContent extends React.Component {
   createPhoto(isExpanded) {
     const props = this.props
     if (isExpanded) {
-      return props.images.map((src, i) => (
-        <img key={i} className="card-img-top" src={src} alt="" />
-      ))
-    } else {
       return (
         <React.Fragment>
           {props.images.map((src, i) => (
-            <Link key={i} route={this.postLink}>
-              <img className="card-img-top" src={src} alt="" />
-            </Link>
+            <img key={i} src={src} className="card-img-top my-2" alt="" />
           ))}
         </React.Fragment>
       )
+    } else {
+      const length = props.images.length
+      let result = null
+      switch (length) {
+        case 1:
+          result = (
+            <React.Fragment>
+              <div className="row">
+                <div className="col-12 px-0">
+                  <PreviewImage route={this.postLink} src={props.images[0]} />
+                </div>
+              </div>
+            </React.Fragment>
+          )
+          break
+
+        case 2:
+        case 4:
+          result = (
+            <React.Fragment>
+              <div className="row">
+                {props.images.map((src, i) => (
+                  <div key={i} className="col-6 px-0">
+                    <PreviewImage route={this.postLink} src={src} />
+                  </div>
+                ))}
+              </div>
+            </React.Fragment>
+          )
+          break
+
+        case 3:
+          result = (
+            <React.Fragment>
+              <div className="row">
+                <div className="col-12 px-0">
+                  <PreviewImage route={this.postLink} src={props.images[0]} />
+                </div>
+                {props.images.slice(1).map((src, i) => (
+                  <div key={i} className="col-6 px-0">
+                    <PreviewImage route={this.postLink} src={src} />
+                  </div>
+                ))}
+              </div>
+            </React.Fragment>
+          )
+          break
+        default:
+      }
+      return result
     }
   }
 
@@ -221,12 +280,6 @@ export default class BoxContent extends React.Component {
 
             .card {
               border-radius: 0px;
-            }
-
-            .card-img-top {
-              border-radius: 0;
-              height: 110px;
-              object-fit: cover;
             }
 
             .card-header {

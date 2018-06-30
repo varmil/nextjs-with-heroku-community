@@ -1,4 +1,7 @@
 import immutable from 'object-path-immutable'
+import shuffle from 'lodash/shuffle'
+import take from 'lodash/take'
+import random from 'lodash/random'
 import range from 'lodash/range'
 
 const dummyPostBody = `ここも今現にいわゆる料理らとして事の時でさませだ。
@@ -28,7 +31,16 @@ export const Posts = range(5).map(i => ({
   body: dummyPostBody,
   like: 123,
   comment: 45,
-  images: ['/static/stub/post/jacket.png', '/static/stub/post/streetman.png']
+  images: take(
+    [
+      '/static/stub/post/jacket.png',
+      '/static/stub/post/preview.jpg',
+      '/static/stub/post/streetman.png',
+      '/static/stub/post/man3.jpg',
+      '/static/stub/post/clean.jpg'
+    ],
+    i
+  )
 }))
 
 export const Comments = range(3).map(i => ({
