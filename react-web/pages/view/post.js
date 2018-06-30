@@ -4,6 +4,9 @@ import { createAction } from 'redux-actions'
 import BoxContent from 'components/organisms/site/BoxContent'
 import { SitePost } from 'constants/ActionTypes'
 
+// コメントする際にBottomに飛ばしたい
+const BOTTOM_Y = 9999
+
 class Post extends React.Component {
   // boxTypeに応じてFETCHするBoxContentを変える
   // boxType, postId などは文字列なので注意
@@ -11,6 +14,12 @@ class Post extends React.Component {
     const { dispatch } = ctx.store
     dispatch(createAction(SitePost.FETCH_REQUEST)(ctx.query))
     return { focus: !!ctx.query.focus }
+  }
+
+  componentDidMount() {
+    if (this.props.focus) {
+      window.scrollTo(0, BOTTOM_Y)
+    }
   }
 
   render() {

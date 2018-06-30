@@ -7,8 +7,6 @@ import AvatarAndName from 'components/molecules/AvatarAndName'
 const AVATAR_SIZE = 44
 // アンカーで飛んだときになんとなく真ん中あたりに表示するため
 const OFFSET_IMG_TOP = -100
-// コメントする際にBottomに飛ばしたい
-const BOTTOM_Y = 9999
 
 const PreviewImage = props => (
   <React.Fragment>
@@ -277,7 +275,6 @@ export default class BoxContent extends React.Component {
             <span
               onClick={async () => {
                 await Router.pushRoute(`${this.postLink}?focus=true`)
-                window.scrollTo(0, BOTTOM_Y)
               }}
             >
               <a>コメントする</a>
