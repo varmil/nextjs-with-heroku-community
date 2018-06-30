@@ -8,10 +8,13 @@ const PORT = process.env.PORT || 5000
 
 const app = express()
 
-app.use(morgan('combined'))
+app.use(morgan('dev'))
 app.use(cors())
 app.enable('trust proxy')
-app.use(bodyParser.json({ type: '*/*' }))
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+app.use(bodyParser.json())
 
 router(app)
 

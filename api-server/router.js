@@ -11,7 +11,8 @@ module.exports = function(app) {
   })
 
   app.get('/user', requireAuth, function(req, res) {
-    res.send({ user: req.user.email.split('@')[0] })
+    const { id, nickname, createdAt } = req.user
+    res.send({ id, nickname, createdAt })
   })
 
   app.post('/signin', requireSignIn, Authentication.signin)

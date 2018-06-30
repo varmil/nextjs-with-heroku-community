@@ -18,7 +18,6 @@ const localLogin = new LocalStrategy(localOptions, async function(
     if (!user) {
       return done(null, false)
     }
-
     const isMatch = await user.comparePasswords(password)
     if (!isMatch) return done(null, false)
     return done(null, user)
@@ -35,7 +34,7 @@ const jwtOptions = {
 
 const jwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
   try {
-    const user = await models.User.findById(payload.sub)
+    const user = await models.User.findById(payload.sub.id, { raw: true })
     if (user) {
       done(null, user)
     } else {

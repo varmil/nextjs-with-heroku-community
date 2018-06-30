@@ -1,11 +1,11 @@
-const bcrypt = require('bcrypt-nodejs')
+const bcrypt = require('bcrypt')
 
 module.exports = function(sequelize, DataTypes) {
   const User = sequelize.define('User', {
     email: DataTypes.STRING,
     passwordHash: DataTypes.STRING,
-
     nickname: DataTypes.STRING,
+
     facebookId: DataTypes.BIGINT,
     facebookAccessToken: DataTypes.STRING,
     firstName: DataTypes.STRING,
@@ -35,8 +35,8 @@ module.exports = function(sequelize, DataTypes) {
     }
   }
 
-  // Instance Method
-  User.prototype.comparePasswords = async (password, callback) => {
+  // Instance Method (NOTE: arrow function does NOT bind "this")
+  User.prototype.comparePasswords = async function(password) {
     try {
       const isMatch = await bcrypt.compare(password, this.passwordHash)
       return isMatch

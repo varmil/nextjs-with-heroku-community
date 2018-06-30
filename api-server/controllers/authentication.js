@@ -5,7 +5,10 @@ const { secret } = require('../config/server')
 
 function tokenForUser(user) {
   const timestamp = new Date().getTime()
-  return jwt.encode({ sub: user.id, iat: timestamp }, secret)
+  return jwt.encode(
+    { sub: { id: user.id, nickname: user.nickname }, iat: timestamp },
+    secret
+  )
 }
 
 exports.signin = function(req, res) {
@@ -23,7 +26,10 @@ exports.signup = async function(req, res, next) {
   }
 
   try {
-    const existingUser = await models.User.findOne({ where: { email: email } })
+    const existingUser = await models.User.findOne({
+      where: { email: email },
+      raw: true
+    })
     if (existingUser) {
       return res.status(422).send({ error: 'Email is aleready in use...' })
     }
