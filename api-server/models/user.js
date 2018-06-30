@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt-nodejs')
+
 module.exports = function(sequelize, DataTypes) {
   const User = sequelize.define('User', {
     email: DataTypes.STRING,
@@ -21,8 +23,27 @@ module.exports = function(sequelize, DataTypes) {
   // Class Method
   User.associate = models => {}
 
+  User.generateHash = async password => {
+    try {
+      // generate a salt
+      const salt = await bcrypt.genSalt(10)
+      // hash the password along with our new salt
+      const hash = await bcrypt.hash(password, salt)
+      return hash
+    } catch (e) {
+      throw e
+    }
+  }
+
   // Instance Method
-  User.prototype.someMethod = () => {}
+  User.prototype.comparePasswords = async (password, callback) => {
+    try {
+      const isMatch = await bcrypt.compare(password, this.passwordHash)
+      return isMatch
+    } catch (e) {
+      throw e
+    }
+  }
 
   return User
 }
