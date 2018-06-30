@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Router } from 'routes'
 import findIndex from 'lodash/findIndex'
 import SwipeableViews from 'react-swipeable-views'
 import Tabs from '@material-ui/core/Tabs'
@@ -59,11 +60,13 @@ class TopPage extends React.Component {
 
   // tabIndex
   handleChange = (event, tabIndex) => {
+    Router.pushRoute(`${URL.VIEW_HOME}/${this.props.boxes[tabIndex].slug}`)
     this.setState({ tabIndex })
   }
 
-  handleChangeIndex = index => {
-    this.setState({ tabIndex: index })
+  handleChangeIndex = tabIndex => {
+    Router.pushRoute(`${URL.VIEW_HOME}/${this.props.boxes[tabIndex].slug}`)
+    this.setState({ tabIndex })
   }
 
   render() {

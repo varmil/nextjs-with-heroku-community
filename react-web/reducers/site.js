@@ -25,8 +25,7 @@ import {
   SiteTop,
   SiteWelcome,
   SiteTalkRoom,
-  SiteNews,
-  SitePost
+  SiteNews
 } from 'constants/ActionTypes'
 import Device from 'constants/Device'
 
@@ -38,8 +37,6 @@ const initialState = {
   common: {
     logo: LogoDefault,
     navIcon: NavIconColorDefault,
-    // menuBar: MenuBarDefault,
-    // footer: FooterDefault,
     // 汎用で使う背景色（テーマ色みたいな）
     color: ColorDefault
   },
@@ -53,21 +50,12 @@ const initialState = {
 
   talkroom: {
     categories: TalkRoomCategoriesDefault,
-    subBanner: SubBannerDefault,
-    boxContents: [] // FETCH
+    subBanner: SubBannerDefault
   },
 
   news: {
     categories: NewsCategoriesDefault,
-    subBanner: SubBannerDefault,
-    boxContents: [] // FETCH
-  },
-
-  /**
-   NOT EDITABLE PAGES
-   */
-  post: {
-    data: {}
+    subBanner: SubBannerDefault
   }
 }
 
@@ -108,11 +96,6 @@ export default handleActions(
       const filtered = pickBy(action.payload, identity)
       return immutable.merge(state, `${PATH_MAP.NAV_ICON}`, filtered)
     },
-    // [SiteCommon.SET_FOOTER]: (state, action) => {
-    //   return update(state, {
-    //     common: { footer: { $merge: action.payload } }
-    //   })
-    // },
     [SiteCommon.SET_BG_COLOR]: (state, action) => {
       // remove falsy key (ex) index: undefined
       const filtered = pickBy(action.payload, identity)
@@ -168,10 +151,6 @@ export default handleActions(
         action.payload
       )
     },
-    [SiteTalkRoom.ADD_CONTENTS]: (state, action) => {
-      // spread payload because it is array
-      return immutable.push(state, `talkroom.boxContents`, ...action.payload)
-    },
 
     /**
      * NEWS
@@ -180,13 +159,6 @@ export default handleActions(
       return update(state, {
         news: { categories: { $set: action.payload } }
       })
-    },
-
-    /**
-     * POST
-     */
-    [SitePost.SET_POST]: (state, action) => {
-      return immutable.set(state, `post.data`, action.payload)
     }
   },
   initialState

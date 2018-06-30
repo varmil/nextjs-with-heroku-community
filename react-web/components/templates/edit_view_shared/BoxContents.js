@@ -25,7 +25,7 @@ export default class BoxContents extends React.Component {
 
   createBoxContents() {
     const props = this.props
-    const { boxContents } = props.pageData
+    const { boxContents } = props
 
     // サブバナー用に分割
     const FIRST_NUM = 2

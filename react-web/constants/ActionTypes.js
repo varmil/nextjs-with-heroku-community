@@ -8,8 +8,6 @@ export const SiteCommon = createTypes(
   'site/common/',
   'SET_LOGO',
   'SET_NAV_ICON_COLOR',
-  // 'SET_NOTIFICATION_ICON',
-  // 'SET_ACCOUNT_ICON',
   'SET_MENUBAR_STYLE',
   'SET_MENUBAR_ITEM',
   'SET_FOOTER',
@@ -27,25 +25,37 @@ export const SiteWelcome = createTypes('site/welcome/', 'SET_WELCOME')
 
 export const SiteTalkRoom = createTypes(
   'site/talkroom/',
-  // 'SET_DESC',
-  // 'SET_INPUT_FORM',
   'SET_CATEGORIES',
   'SET_SUB_BANNER',
-  'ADD_CONTENTS',
   async('FETCH_INITIAL')
 )
 
 export const SiteNews = createTypes(
   'site/news/',
-  // 'SET_DESC',
   'SET_CATEGORIES',
   'SET_SUB_BANNER'
 )
 
-export const SitePost = createTypes('site/post/', 'SET_POST', async('FETCH'))
-
 // (Edit) iframe
 export const IFrame = createTypes('iframe/', 'POST_MESSAGE')
+
+// -----
+// -----
+// -----
+
+export const AppTalkRoom = createTypes(
+  'app/talkroom/',
+  'ADD_CONTENTS',
+  async('FETCH_INITIAL')
+)
+
+export const AppNews = createTypes(
+  'app/news/',
+  'ADD_CONTENTS',
+  async('FETCH_INITIAL')
+)
+
+export const AppPost = createTypes('app/post/', 'SET_POST', async('FETCH'))
 
 // -----
 // -----

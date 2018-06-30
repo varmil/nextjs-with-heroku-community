@@ -36,5 +36,6 @@ export default connect(state => ({
   mainBanner: objectPath.get(state.site, `${PATH_MAP.MAIN_BANNER}`),
   // TALK BOX由来のページでは共通して使う。
   subBanner: objectPath.get(state.site, `${PATH_MAP.TALK_SUB_BANNER}`),
-  pageData: state.site.talkroom
+  pageData: state.site.talkroom,
+  boxContents: state.app.talkroom.boxContents
 }))(TalkRoomContents)

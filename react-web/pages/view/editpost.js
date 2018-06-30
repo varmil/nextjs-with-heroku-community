@@ -7,9 +7,8 @@ import Input from '@material-ui/core/Input'
 
 import DropzoneIcon from 'components/atoms/Dropzone'
 import Rule from 'constants/Rule'
-// import BoxContent from 'components/organisms/site/BoxContent'
+import URL from 'constants/URL'
 // import { createAction } from 'redux-actions'
-// import { SitePost } from 'constants/ActionTypes'
 
 const inputStyles = {
   input: {
@@ -43,12 +42,6 @@ const colourStyles = {
 }
 
 class Editpost extends React.Component {
-  // static async getInitialProps({ ctx }) {
-  //   const { dispatch } = ctx.store
-  //   dispatch(createAction(SitePost.FETCH_REQUEST)(ctx.query))
-  //   return {}
-  // }
-
   state = {
     title: '',
     body: '',
@@ -88,7 +81,7 @@ class Editpost extends React.Component {
       <React.Fragment>
         <header>
           <nav className="navbar justify-content-between">
-            <Link route={'/view/home'}>
+            <Link route={URL.VIEW_HOME}>
               <span style={{ color: 'black' }}>キャンセル</span>
             </Link>
             <div className="">

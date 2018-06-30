@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import AdminHeader from 'components/organisms/admin/AdminHeader'
 import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
 import withAdminEdit from 'components/templates/withAdminEdit'
+import URL from 'constants/URL'
 
 // あくまでこのHOCはsite編集の部分のみを扱う感じ
 const Edit = withAdminEdit(<React.Fragment />)
@@ -28,7 +29,10 @@ class EditHome extends React.Component {
           </WhiteBreadcrumb>
         </div>
 
-        <Edit {...props} iframeSrc={`/view/home${iframeSlug}?edit=true`} />
+        <Edit
+          {...props}
+          iframeSrc={`${URL.VIEW_HOME}${iframeSlug}?edit=true`}
+        />
       </React.Fragment>
     )
   }

@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
 import BoxContent from 'components/organisms/site/BoxContent'
-import { SitePost } from 'constants/ActionTypes'
+import { AppPost } from 'constants/ActionTypes'
 
 // コメントする際にBottomに飛ばしたい
 const BOTTOM_Y = 9999
@@ -12,7 +12,7 @@ class Post extends React.Component {
   // boxType, postId などは文字列なので注意
   static async getInitialProps({ ctx }) {
     const { dispatch } = ctx.store
-    dispatch(createAction(SitePost.FETCH_REQUEST)(ctx.query))
+    dispatch(createAction(AppPost.FETCH_REQUEST)(ctx.query))
     return { focus: !!ctx.query.focus }
   }
 
@@ -40,5 +40,5 @@ class Post extends React.Component {
 }
 
 export default connect(state => ({
-  post: state.site.post
+  post: state.app.post
 }))(Post)

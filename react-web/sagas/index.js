@@ -3,28 +3,29 @@ import { all, fork, call, put, takeLatest } from 'redux-saga/effects'
 import es6promise from 'es6-promise'
 import 'isomorphic-unfetch' /* global fetch */
 
-import { Example, IFrame, SiteTalkRoom, SitePost } from 'constants/ActionTypes'
-import { failure, loadDataSuccess } from 'actions/example'
-import { addTalkContents, setPost } from 'actions/site'
-import { Posts, Comments } from 'stub/site'
+import { IFrame, AppTalkRoom, AppNews, AppPost } from 'constants/ActionTypes'
+import { failure } from 'actions/example'
+import { addTalkContents, addNewsContents, setPost } from 'actions/application'
+import { Posts, Comments } from 'stub/app'
 
 es6promise.polyfill()
 
-// function* runClockSaga() {
-//   yield take(actionTypes.START_CLOCK)
-//   while (true) {
-//     yield put(tickClock(false))
-//     yield call(delay, 1000)
-//   }
-// }
+function* fetchSiteDesign({ payload }) {
+  // TODO: fetch category, subBanner, then put them into store
+}
 
 function* fetchTalkInitial({ payload }) {
-  // TODO: fetch category, subBanner, then put them into store
-
   // TODO: fetch box contents from server
   // then, dispatch action to sync store
-  const talkBoxContents = Posts
-  yield put(addTalkContents(talkBoxContents))
+  const data = Posts
+  yield put(addTalkContents(data))
+}
+
+function* fetchNewsInitial({ payload }) {
+  // TODO: fetch box contents from server
+  // then, dispatch action to sync store
+  const data = Posts
+  yield put(addNewsContents(data))
 }
 
 function* fetchPost({ payload }) {
@@ -37,15 +38,15 @@ function* fetchPost({ payload }) {
   yield put(setPost({ ...post, comments }))
 }
 
-function* loadDataSaga() {
-  try {
-    const res = yield fetch('https://jsonplaceholder.typicode.com/users')
-    const data = yield res.json()
-    yield put(loadDataSuccess(data))
-  } catch (err) {
-    yield put(failure(err))
-  }
-}
+// function* loadDataSaga() {
+//   try {
+//     const res = yield fetch('https://jsonplaceholder.typicode.com/users')
+//     const data = yield res.json()
+//     yield put(loadDataSuccess(data))
+//   } catch (err) {
+//     yield put(failure(err))
+//   }
+// }
 
 function* postIFrameMessageSaga(action) {
   try {
@@ -60,18 +61,17 @@ function* postIFrameMessageSaga(action) {
 /** ***************************** WATCHERS *************************************/
 /** ****************************************************************************/
 
-function* watchSite() {
+function* watchApp() {
   return yield all([
-    takeLatest(SiteTalkRoom.FETCH_INITIAL_REQUEST, fetchTalkInitial),
-    takeLatest(SitePost.FETCH_REQUEST, fetchPost)
+    takeLatest(AppTalkRoom.FETCH_INITIAL_REQUEST, fetchTalkInitial),
+    takeLatest(AppNews.FETCH_INITIAL_REQUEST, fetchNewsInitial),
+    takeLatest(AppPost.FETCH_REQUEST, fetchPost)
   ])
 }
 
 function* rootSaga() {
   yield all([
-    fork(watchSite),
-
-    takeLatest(Example.LOAD_DATA, loadDataSaga),
+    fork(watchApp),
     takeLatest(IFrame.POST_MESSAGE, postIFrameMessageSaga)
   ])
 }

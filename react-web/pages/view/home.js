@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
 import withIFrameable from 'components/templates/withIFrameable'
 import TopPage from 'components/templates/edit_view_shared/TopPage'
-import { SiteTalkRoom } from 'constants/ActionTypes'
+import { AppTalkRoom, AppNews } from 'constants/ActionTypes'
 
 const IFramedTop = withIFrameable(TopPage)
 
@@ -14,10 +14,16 @@ class Home extends React.Component {
   static async getInitialProps({ ctx }) {
     // homeで使用するデータは全て事前にFETCHしないといけない。（NEWS, VOICE...）
     // fetch only first time, 便宜的にcontentsの長さで判定
-    const contents = ctx.store.getState().site.talkroom.boxContents
-    if (ctx.isServer || contents.length === 0) {
-      const { dispatch } = ctx.store
-      dispatch(createAction(SiteTalkRoom.FETCH_INITIAL_REQUEST)())
+    // 見た目のデザインは一括でsetする（DBにstate.siteがまるっと入っているので）
+    const { talkroom, news } = ctx.store.getState().app
+    const { dispatch } = ctx.store
+
+    if (ctx.isServer || talkroom.boxContents === 0) {
+      dispatch(createAction(AppTalkRoom.FETCH_INITIAL_REQUEST)())
+    }
+
+    if (ctx.isServer || news.boxContents.length === 0) {
+      dispatch(createAction(AppNews.FETCH_INITIAL_REQUEST)())
     }
 
     // ctx.query contains URL params

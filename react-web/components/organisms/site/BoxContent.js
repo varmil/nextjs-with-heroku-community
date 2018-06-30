@@ -189,6 +189,25 @@ export default class BoxContent extends React.Component {
     }
   }
 
+  createCommentButton(showDetail) {
+    let onClick = null
+    if (showDetail) {
+      onClick = () => {
+        window.scrollTo(0, 9999)
+        this.commentInput.focus()
+      }
+    } else {
+      onClick = async () => {
+        await Router.pushRoute(`${this.postLink}?focus=true`)
+      }
+    }
+    return (
+      <span onClick={onClick}>
+        <a>コメントする</a>
+      </span>
+    )
+  }
+
   createComment(isExpanded) {
     const props = this.props
     if (!isExpanded) return null
@@ -272,13 +291,7 @@ export default class BoxContent extends React.Component {
             <span className="mr-3">
               <i className="fas fa-comment" /> {props.comment}
             </span>
-            <span
-              onClick={async () => {
-                await Router.pushRoute(`${this.postLink}?focus=true`)
-              }}
-            >
-              <a>コメントする</a>
-            </span>
+            {this.createCommentButton(props.showDetail)}
           </div>
 
           {this.createComment(props.showDetail)}

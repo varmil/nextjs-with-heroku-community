@@ -18,5 +18,6 @@ class NewsContents extends BoxContents {
 export default connect(state => ({
   // TALK BOX由来のページでは共通して使う。
   subBanner: objectPath.get(state.site, `${PATH_MAP.NEWS_SUB_BANNER}`),
-  pageData: state.site.news
+  pageData: state.site.news,
+  boxContents: state.app.news.boxContents
 }))(NewsContents)
