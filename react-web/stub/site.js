@@ -34,6 +34,6 @@ export const Posts = range(5).map(i => ({
 export const Comments = range(3).map(i => ({
   postId: 123,
   commenterName: 'たかだっち',
-  commenterIcon: 'https://www.w3schools.com/w3images/avatar2.png',
+  commenterIcon: 'https://www.w3schools.com/w3images/avatar3.png',
   body: dummyCommentBody
 }))

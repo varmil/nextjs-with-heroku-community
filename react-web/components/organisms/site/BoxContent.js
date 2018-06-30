@@ -1,6 +1,8 @@
 import React from 'react'
+import Router from 'next/router'
 import { Link } from 'routes'
 import MultiLineText from 'components/atoms/MultiLineText'
+import Avatar from 'components/atoms/Avatar'
 import AvatarAndName from 'components/molecules/AvatarAndName'
 
 const AVATAR_SIZE = 44
@@ -27,15 +29,14 @@ export default class BoxContent extends React.Component {
     if (isExpanded) {
       return (
         <div className="row">
-          <div className="backIcon col-2 p-0 text-center">
+          <div
+            className="backIcon col-2 p-0 text-center"
+            onClick={() => Router.back()}
+          >
             <i className="fas fa-chevron-left" />
           </div>
           <div className="ava col-auto p-0">
-            <AvatarAndName
-              size={AVATAR_SIZE}
-              name={props.posterName}
-              date={props.postDate}
-            />
+            <AvatarAndName size={AVATAR_SIZE} name={props.posterName} />
           </div>
 
           <style jsx>{`
@@ -54,11 +55,7 @@ export default class BoxContent extends React.Component {
     } else {
       return (
         <React.Fragment>
-          <AvatarAndName
-            size={AVATAR_SIZE}
-            name={props.posterName}
-            date={props.postDate}
-          />
+          <AvatarAndName size={AVATAR_SIZE} name={props.posterName} />
         </React.Fragment>
       )
     }
@@ -116,11 +113,21 @@ export default class BoxContent extends React.Component {
     if (!isExpanded) return null
     return (
       <div className="comments mx-auto pt-2">
-        <div className="my-3 text-center" onClick={() => {}}>
+        <div className="load my-3 text-center" onClick={() => {}}>
           以前のコメントを見る
         </div>
-        <div className="commentsPost my-3">
-          {props.comments.map((e, i) => <div key={i}>{e.body}</div>)}
+        <div className="commentsPost my-3 px-5">
+          {props.comments.map((e, i) => (
+            <div key={i} className="row my-3">
+              <Avatar src={e.commenterIcon} />
+              <div className="col body">
+                <Link route={this.postLink}>
+                  <a>{e.commenterName}</a>
+                </Link>
+                <div>{e.body}</div>
+              </div>
+            </div>
+          ))}
         </div>
         <div className="commentForm">
           <input
@@ -132,6 +139,29 @@ export default class BoxContent extends React.Component {
             placeholder="コメントする..."
           />
         </div>
+
+        <style jsx>{`
+          a {
+            color: #2b6eb2;
+            font-weight: bold;
+          }
+
+          .load {
+            color: #2b6eb2;
+            font-size: 13px;
+          }
+
+          .commentsPost {
+            font-size: 12px;
+          }
+
+          .body {
+            background-color: #eff1f3;
+            border-radius: 15px;
+            padding: 10px 20px;
+            margin-left: 8px;
+          }
+        `}</style>
       </div>
     )
   }
@@ -163,7 +193,7 @@ export default class BoxContent extends React.Component {
             </span>
             <span className="">
               <Link route={`${this.postLink}?focus=true`}>
-                <a> コメントする</a>
+                <a>コメントする</a>
               </Link>
             </span>
           </div>
