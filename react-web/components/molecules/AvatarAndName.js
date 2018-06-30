@@ -7,12 +7,14 @@ export default class extends React.Component {
     const props = this.props
 
     return (
-      <div style={props.style}>
-        <Avatar
-          src="https://www.w3schools.com/w3images/avatar2.png"
-          className="mr-3"
-          size={props.size}
-        />
+      <div className="wrap" style={props.style}>
+        <div className="avatarContainer">
+          <Avatar
+            src="https://www.w3schools.com/w3images/avatar2.png"
+            className="mr-3"
+            size={props.size}
+          />
+        </div>
 
         <div className="nameContainer">
           <span className="name font-weight-bold">
@@ -20,29 +22,33 @@ export default class extends React.Component {
               <a>{props.name || 'Your Name Here'}</a>
             </Link>
           </span>
-
-          <span className="date">{props.date || ''}</span>
         </div>
 
         <style jsx>{`
           a {
             color: #2b6eb2;
           }
-          .nameContainer {
+
+          .wrap {
+            position: relative;
+          }
+
+          .avatarContainer {
             display: inline-block;
+            width: ${props.size}px;
+          }
+
+          .nameContainer {
+            display: inline-flex;
+            margin-left: 15px;
           }
 
           .name {
+            float: left;
             white-space: nowrap;
             overflow: hidden;
-            width: 170px;
+            width: 190px;
             text-overflow: ellipsis;
-          }
-
-          .date {
-            position: absolute;
-            right: 25px;
-            font-size: 0.7rem;
           }
         `}</style>
       </div>

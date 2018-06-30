@@ -5,12 +5,12 @@ import BoxContent from 'components/organisms/site/BoxContent'
 import { SitePost } from 'constants/ActionTypes'
 
 class Post extends React.Component {
+  // boxTypeに応じてFETCHするBoxContentを変える
+  // boxType, postId などは文字列なので注意
   static async getInitialProps({ ctx }) {
     const { dispatch } = ctx.store
-    // boxTypeに応じてFETCHするBoxContentを変える
-    // boxType, postId などは文字列なので注意
     dispatch(createAction(SitePost.FETCH_REQUEST)(ctx.query))
-    return {}
+    return { focus: !!ctx.query.focus }
   }
 
   render() {
@@ -21,8 +21,9 @@ class Post extends React.Component {
         <BoxContent
           {...data}
           expandBody={true}
-          expandPhoto={true}
+          showDetail={true}
           expandComment={true}
+          focus={props.focus}
         />
       </React.Fragment>
     )
