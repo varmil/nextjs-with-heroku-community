@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'routes'
 import MultiLineText from 'components/atoms/MultiLineText'
+import AvatarAndName from 'components/molecules/AvatarAndName'
 
 export default class BoxContent extends React.Component {
   state = {
@@ -59,7 +60,9 @@ export default class BoxContent extends React.Component {
     if (!isExpanded) return null
     return (
       <div className="comments mx-auto pt-2">
-        <span className="my-3">以前のコメントを見る</span>
+        <div className="my-3 text-center" onClick={() => {}}>
+          以前のコメントを見る
+        </div>
         <div className="commentsPost my-3">
           {props.comments.map((e, i) => <div key={i}>{e.body}</div>)}
         </div>
@@ -81,18 +84,8 @@ export default class BoxContent extends React.Component {
       <div style={props.style}>
         <div className={`card`}>
           <div className="card-header p-2">
-            <div className="media">
-              <img
-                className="mr-3"
-                src={props.posterIcon}
-                width="40"
-                height="40"
-                alt="Generic placeholder image"
-              />
-              <div className="media-body">
-                <h5 className="m-0">{props.posterName}</h5>
-                <span>{props.postDate}</span>
-              </div>
+            <div>
+              <AvatarAndName name={props.posterName} date={props.postDate} />
             </div>
           </div>
 
