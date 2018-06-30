@@ -10,22 +10,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      email: {
-        allowNull: false,
-        defaultValue: '',
-        type: Sequelize.STRING
-      },
-      passwordHash: {
-        allowNull: false,
-        defaultValue: '',
-        type: Sequelize.STRING
-      },
-      roleId: {
+      userId: {
         allowNull: false,
         defaultValue: 0,
         type: Sequelize.INTEGER
       },
-
       firstName: {
         allowNull: false,
         defaultValue: '',

@@ -25,6 +25,11 @@ module.exports = {
         defaultValue: '',
         type: Sequelize.STRING
       },
+      roleId: {
+        allowNull: false,
+        defaultValue: 0,
+        type: Sequelize.INTEGER
+      },
 
       facebookId: {
         allowNull: false,
