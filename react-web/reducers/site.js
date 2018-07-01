@@ -6,17 +6,12 @@ import immutable from 'object-path-immutable'
 import {
   Logo as LogoDefault,
   NavIconColorDefault,
-  // MenuBar as MenuBarDefault,
-  // Footer as FooterDefault,
   ColorDefault,
   MainBanner as MainBannerDefault,
   Boxes as BoxesDefault,
   SubBanner as SubBannerDefault,
   Welcome as WelcomeDefault,
-  // TalkRoomDescDefault,
-  // TalkRoomInputFormDefault,
   TalkRoomCategoriesDefault,
-  // NewsDescDefault,
   NewsCategoriesDefault
 } from 'constants/SitePropsDefault'
 import {

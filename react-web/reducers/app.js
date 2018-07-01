@@ -1,9 +1,13 @@
 import { handleActions } from 'redux-actions'
 import immutable from 'object-path-immutable'
-import { AppTalkRoom, AppNews, AppPost } from 'constants/ActionTypes'
+import { AppTalkRoom, AppVoice, AppNews, AppPost } from 'constants/ActionTypes'
 
 const initialState = {
   talkroom: {
+    boxContents: [] // FETCH
+  },
+
+  voice: {
     boxContents: [] // FETCH
   },
 
@@ -24,6 +28,14 @@ export default handleActions(
     [AppTalkRoom.ADD_CONTENTS]: (state, action) => {
       // spread payload because it is array
       return immutable.push(state, `talkroom.boxContents`, ...action.payload)
+    },
+
+    /**
+     * VOICE
+     */
+    [AppVoice.ADD_CONTENTS]: (state, action) => {
+      // spread payload because it is array
+      return immutable.push(state, `voice.boxContents`, ...action.payload)
     },
 
     /**

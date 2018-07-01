@@ -8,18 +8,10 @@ export const SiteCommon = createTypes(
   'site/common/',
   'SET_LOGO',
   'SET_NAV_ICON_COLOR',
-  'SET_MENUBAR_STYLE',
-  'SET_MENUBAR_ITEM',
-  'SET_FOOTER',
   'SET_BG_COLOR'
 )
 
-export const SiteTop = createTypes(
-  'site/top/',
-  'SET_MAIN_BANNER',
-  // 'SET_SUB_BANNER',
-  'SET_BOXES'
-)
+export const SiteTop = createTypes('site/top/', 'SET_MAIN_BANNER', 'SET_BOXES')
 
 export const SiteWelcome = createTypes('site/welcome/', 'SET_WELCOME')
 
@@ -45,6 +37,12 @@ export const IFrame = createTypes('iframe/', 'POST_MESSAGE')
 
 export const AppTalkRoom = createTypes(
   'app/talkroom/',
+  'ADD_CONTENTS',
+  async('FETCH_INITIAL')
+)
+
+export const AppVoice = createTypes(
+  'app/voice/',
   'ADD_CONTENTS',
   async('FETCH_INITIAL')
 )

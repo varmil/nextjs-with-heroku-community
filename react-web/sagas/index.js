@@ -3,9 +3,20 @@ import { all, fork, call, put, takeLatest } from 'redux-saga/effects'
 import es6promise from 'es6-promise'
 import 'isomorphic-unfetch' /* global fetch */
 
-import { IFrame, AppTalkRoom, AppNews, AppPost } from 'constants/ActionTypes'
+import {
+  IFrame,
+  AppTalkRoom,
+  AppVoice,
+  AppNews,
+  AppPost
+} from 'constants/ActionTypes'
 import { failure } from 'actions/example'
-import { addTalkContents, addNewsContents, setPost } from 'actions/application'
+import {
+  addTalkContents,
+  addVoiceContents,
+  addNewsContents,
+  setPost
+} from 'actions/application'
 import { Posts, Comments } from 'stub/app'
 
 es6promise.polyfill()
@@ -19,6 +30,13 @@ function* fetchTalkInitial({ payload }) {
   // then, dispatch action to sync store
   const data = Posts
   yield put(addTalkContents(data))
+}
+
+function* fetchVoiceInitial({ payload }) {
+  // TODO: fetch box contents from server
+  // then, dispatch action to sync store
+  const data = Posts
+  yield put(addVoiceContents(data))
 }
 
 function* fetchNewsInitial({ payload }) {
@@ -64,6 +82,7 @@ function* postIFrameMessageSaga(action) {
 function* watchApp() {
   return yield all([
     takeLatest(AppTalkRoom.FETCH_INITIAL_REQUEST, fetchTalkInitial),
+    takeLatest(AppVoice.FETCH_INITIAL_REQUEST, fetchVoiceInitial),
     takeLatest(AppNews.FETCH_INITIAL_REQUEST, fetchNewsInitial),
     takeLatest(AppPost.FETCH_REQUEST, fetchPost)
   ])

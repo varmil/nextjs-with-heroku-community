@@ -4,6 +4,9 @@ import { AppTalkRoom, AppNews, AppPost } from 'constants/ActionTypes'
 // talk room
 export let addTalkContents = createAction(AppTalkRoom.ADD_CONTENTS)
 
+// voice
+export let addVoiceContents = createAction(AppVoice.ADD_CONTENTS)
+
 // news
 export let addNewsContents = createAction(AppNews.ADD_CONTENTS)
 

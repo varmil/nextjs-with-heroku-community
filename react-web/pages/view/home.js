@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
 import withIFrameable from 'components/templates/withIFrameable'
 import TopPage from 'components/templates/edit_view_shared/TopPage'
-import { AppTalkRoom, AppNews } from 'constants/ActionTypes'
+import { AppTalkRoom, AppVoice, AppNews } from 'constants/ActionTypes'
 
 const IFramedTop = withIFrameable(TopPage)
 
@@ -12,14 +12,18 @@ class Home extends React.Component {
   // getInitialProps will only be executed on the client when navigating to a
   // different route via the Link component or using the routing APIs.
   static async getInitialProps({ ctx }) {
-    // homeで使用するデータは全て事前にFETCHしないといけない。（NEWS, VOICE...）
+    // homeで使用するデータは全て事前にFETCHしないといけない。（TALK, NEWS, VOICE...）
     // fetch only first time, 便宜的にcontentsの長さで判定
     // 見た目のデザインは一括でsetする（DBにstate.siteがまるっと入っているので）
-    const { talkroom, news } = ctx.store.getState().app
+    const { talkroom, voice, news } = ctx.store.getState().app
     const { dispatch } = ctx.store
 
     if (ctx.isServer || talkroom.boxContents === 0) {
       dispatch(createAction(AppTalkRoom.FETCH_INITIAL_REQUEST)())
+    }
+
+    if (ctx.isServer || voice.boxContents === 0) {
+      dispatch(createAction(AppVoice.FETCH_INITIAL_REQUEST)())
     }
 
     if (ctx.isServer || news.boxContents.length === 0) {
