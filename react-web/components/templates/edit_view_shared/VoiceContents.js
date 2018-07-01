@@ -15,7 +15,7 @@ class NewsContents extends BoxContents {
         <BoxContent
           {...originalProps}
           topPhoto
-          vote
+          goingVote
           voteButtonColor={props.color.backgroundColor}
         />
       </React.Fragment>

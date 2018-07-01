@@ -189,9 +189,9 @@ export default class BoxContent extends React.Component {
     }
   }
 
-  createVote() {
+  createGoingVote() {
     const props = this.props
-    if (!props.vote) return null
+    if (!props.goingVote) return null
     return (
       <div className="wrap py-2 px-5 mt-2 mb-3">
         <div className="mb-2">
@@ -350,7 +350,7 @@ export default class BoxContent extends React.Component {
 
           <div className="">{this.createMainContent()}</div>
 
-          {this.createVote()}
+          {this.createGoingVote()}
 
           <div className="card-footer text-center p-2">
             <span className="mr-3">
