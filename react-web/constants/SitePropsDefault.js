@@ -115,40 +115,40 @@ export const SubBanner = range(1).map(i => ({
   href: ''
 }))
 
-export const Footer = {
-  style: {
-    color: '#fff',
-    backgroundColor: Color.MAIN_BLUE,
-    textAlign: 'center'
-  },
-  item: [
-    {
-      index: 0,
-      text: 'トークルーム',
-      href: ''
-    },
-    {
-      index: 1,
-      text: '企業発信',
-      href: ''
-    },
-    {
-      index: 2,
-      text: '企業ストーリー',
-      href: ''
-    },
-    {
-      index: 3,
-      text: '投票・アンケート',
-      href: ''
-    },
-    {
-      index: 4,
-      text: 'お知らせ',
-      href: ''
-    }
-  ]
-}
+// export const Footer = {
+//   style: {
+//     color: '#fff',
+//     backgroundColor: Color.MAIN_BLUE,
+//     textAlign: 'center'
+//   },
+//   item: [
+//     {
+//       index: 0,
+//       text: 'トークルーム',
+//       href: ''
+//     },
+//     {
+//       index: 1,
+//       text: '企業発信',
+//       href: ''
+//     },
+//     {
+//       index: 2,
+//       text: '企業ストーリー',
+//       href: ''
+//     },
+//     {
+//       index: 3,
+//       text: '投票・アンケート',
+//       href: ''
+//     },
+//     {
+//       index: 4,
+//       text: 'お知らせ',
+//       href: ''
+//     }
+//   ]
+// }
 
 /**
  * WELCOME
