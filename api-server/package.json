@@ -7,7 +7,7 @@
     "db:install": "sequelize db:migrate",
     "db:uninstall": "sequelize db:migrate:undo:all",
     "db:init": "npm run db:uninstall && npm run db:install",
-    "db:seed": "node ./seeders/rst-seeder.js",
+    "db:seed": "sequelize db:seed:undo:all && sequelize db:seed:all",
     "start": "NODE_ENV=production node index.js",
     "dev": "nodemon ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
