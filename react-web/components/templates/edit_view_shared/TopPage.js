@@ -7,10 +7,11 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import objectPath from 'object-path'
 import { PATH_MAP } from 'reducers/site'
-import { SiteTop, SiteTalkRoom, SiteNews } from 'constants/ActionTypes'
+import { SiteTop } from 'constants/ActionTypes'
 import FixedButton from 'components/atoms/FixedButton'
 import Header from 'components/templates/container/Header'
 import TalkRoomContents from 'components/templates/edit_view_shared/TalkRoomContents'
+import VoiceContents from 'components/templates/edit_view_shared/VoiceContents'
 import NewsContents from 'components/templates/edit_view_shared/NewsContents'
 import Classes from 'constants/Classes'
 import URL from 'constants/URL'
@@ -18,10 +19,7 @@ import URL from 'constants/URL'
 const styles = {
   slide: {
     minHeight: 100
-  },
-  slide1: {},
-  slide2: {},
-  slide3: {}
+  }
 }
 
 const Label = props => (
@@ -109,24 +107,16 @@ class TopPage extends React.Component {
             index={this.state.tabIndex}
             onChangeIndex={this.handleChangeIndex}
           >
-            <div style={Object.assign({}, styles.slide, styles.slide1)}>
-              <TalkRoomContents
-                action={SiteTalkRoom.SET_CATEGORIES}
-                propsPath={`${PATH_MAP.TALK_CATEGORIES}`}
-              />
+            <div style={Object.assign({}, styles.slide)}>
+              <TalkRoomContents />
             </div>
-            <div style={Object.assign({}, styles.slide, styles.slide2)}>
-              slide n°2
+            <div style={Object.assign({}, styles.slide)}>
+              <VoiceContents />
             </div>
-            <div style={Object.assign({}, styles.slide, styles.slide3)}>
-              <NewsContents
-                action={SiteNews.SET_CATEGORIES}
-                propsPath={`${PATH_MAP.NEWS_CATEGORIES}`}
-              />
+            <div style={Object.assign({}, styles.slide)}>
+              <NewsContents />
             </div>
-            <div style={Object.assign({}, styles.slide, styles.slide2)}>
-              slide n°4
-            </div>
+            <div style={Object.assign({}, styles.slide)}>slide n°4</div>
           </SwipeableViews>
 
           {this.isShowPenIcon() ? (

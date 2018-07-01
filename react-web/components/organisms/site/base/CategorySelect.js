@@ -65,6 +65,7 @@ export default class CategorySelect extends React.Component {
             white-space: nowrap;
             -webkit-overflow-scrolling: touch;
             padding: 0;
+            margin-bottom: 0;
           }
         `}</style>
       </div>

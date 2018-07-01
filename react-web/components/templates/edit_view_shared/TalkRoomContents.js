@@ -3,10 +3,23 @@ import { connect } from 'react-redux'
 import range from 'lodash/range'
 import objectPath from 'object-path'
 import { PATH_MAP } from 'reducers/site'
+import { SiteTalkRoom } from 'constants/ActionTypes'
 import BoxContents from 'components/templates/edit_view_shared/BoxContents'
 import MainBanner from 'components/organisms/site/base/MainBanner'
 
 class TalkRoomContents extends BoxContents {
+  constructor(props) {
+    super(props)
+    this.categories = {
+      action: SiteTalkRoom.SET_CATEGORIES,
+      propsPath: `${PATH_MAP.TALK_CATEGORIES}`
+    }
+    this.subBanner = {
+      action: SiteTalkRoom.SET_SUB_BANNER,
+      propsPath: `${PATH_MAP.TALK_SUB_BANNER}`
+    }
+  }
+
   render() {
     const { mainBanner } = this.props
     return (
@@ -34,8 +47,8 @@ class TalkRoomContents extends BoxContents {
 
 export default connect(state => ({
   mainBanner: objectPath.get(state.site, `${PATH_MAP.MAIN_BANNER}`),
-  // TALK BOX由来のページでは共通して使う。
   subBanner: objectPath.get(state.site, `${PATH_MAP.TALK_SUB_BANNER}`),
+  // TALK BOX由来のページでは共通して使う。
   pageData: state.site.talkroom,
   boxContents: state.app.talkroom.boxContents
 }))(TalkRoomContents)

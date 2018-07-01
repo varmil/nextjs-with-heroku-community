@@ -3,21 +3,19 @@ import range from 'lodash/range'
 import BoxContent from 'components/organisms/site/BoxContent'
 import SubBanner from 'components/organisms/site/base/SubBanner'
 import CategorySelect from 'components/organisms/site/base/CategorySelect'
-import { SiteTalkRoom } from 'constants/ActionTypes'
-import { PATH_MAP } from 'reducers/site'
 
 // TALK BOX系のベースクラス
 export default class BoxContents extends React.Component {
   createCategorySelect() {
+    // hide categories in VOICE
+    if (!this.categories) return null
     const props = this.props
-    // TODO: hide categories in NEWS
-    // if (!props.categorySelect) return null
     return (
-      <section className="cat mt-3">
+      <section className="cat my-3">
         <CategorySelect
           item={props.pageData.categories.item}
-          action={props.action}
-          propsPath={props.propsPath}
+          action={this.categories.action}
+          propsPath={this.categories.propsPath}
         />
       </section>
     )
@@ -26,6 +24,9 @@ export default class BoxContents extends React.Component {
   createBoxContents() {
     const props = this.props
     const { boxContents } = props
+
+    // custom content
+    const MyBoxContent = this.BoxContent || BoxContent
 
     // サブバナー用に分割
     const FIRST_NUM = 2
@@ -37,17 +38,17 @@ export default class BoxContents extends React.Component {
         {firstArray.map((content, i) => {
           return (
             <div key={i} className="c">
-              <BoxContent {...content} />
+              <MyBoxContent {...content} />
             </div>
           )
         })}
 
-        <div className="subBanner my-3">{this.createSubBanners()}</div>
+        {this.createSubBanners()}
 
         {secondArray.map((content, i) => {
           return (
             <div key={i} className="c">
-              <BoxContent {...content} />
+              <MyBoxContent {...content} />
             </div>
           )
         })}
@@ -68,7 +69,7 @@ export default class BoxContents extends React.Component {
     // dont show banner if current tab is not suitable
     if (!subBanner) return null
     return (
-      <div className="">
+      <div className="subBanner my-3">
         {range(subBanner.length).map(i => (
           <SubBanner
             key={i}
@@ -76,9 +77,9 @@ export default class BoxContents extends React.Component {
             src={subBanner[i].src}
             backgroundColor={subBanner[i].backgroundColor}
             href={subBanner[i].href}
-            action={SiteTalkRoom.SET_SUB_BANNER}
+            action={this.subBanner.action}
             index={i}
-            propsPath={`${PATH_MAP.TALK_SUB_BANNER}.${i}`}
+            propsPath={`${this.subBanner.propsPath}.${i}`}
           />
         ))}
       </div>
@@ -86,11 +87,12 @@ export default class BoxContents extends React.Component {
   }
 
   render() {
-    const props = this.props
     return (
       <React.Fragment>
         <main>
-          <section className="contents">{this.createBoxContents()}</section>
+          <section className="contents my-3">
+            {this.createBoxContents()}
+          </section>
         </main>
       </React.Fragment>
     )

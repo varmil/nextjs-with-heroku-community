@@ -189,6 +189,44 @@ export default class BoxContent extends React.Component {
     }
   }
 
+  createVote() {
+    const props = this.props
+    if (!props.vote) return null
+    return (
+      <div className="wrap py-2 px-5 mb-3">
+        <div className="mb-2">
+          <span>ただいまの投票数</span>
+          <span className="voteNum ml-2">821</span>
+        </div>
+        <button type="button" className="btn btn-primary">
+          投票する
+        </button>
+
+        <style jsx>{`
+          span {
+            font-size: 12px;
+          }
+          .wrap {
+            margin: 0 auto;
+            text-align: center;
+            background-color: #e8e8e8;
+          }
+
+          .voteNum {
+            font-size: 20px;
+            color: #1d72b4;
+          }
+
+          button {
+            font-size: 12px;
+            width: 120px;
+            border-radius: 30px;
+          }
+        `}</style>
+      </div>
+    )
+  }
+
   createCommentButton(showDetail) {
     let onClick = null
     if (showDetail) {
@@ -266,8 +304,37 @@ export default class BoxContent extends React.Component {
     )
   }
 
-  render() {
+  createMainContent() {
     const state = this.state
+    const props = this.props
+    const Body = (
+      <div className="card-body container py-2 px-5">
+        <h5 className="card-title mb-2">{props.title}</h5>
+        <div className="card-text">{this.createBody(state.expandBody)}</div>
+
+        <style jsx>{`
+          .card-text {
+            font-size: 12px;
+            color: #505050;
+            white-space: normal;
+          }
+
+          h5 {
+            font-size: 14px;
+          }
+        `}</style>
+      </div>
+    )
+
+    const Photo =
+      props.images && props.images.length > 0 ? (
+        <div className="mb-3 px-5">{this.createPhoto(props.showDetail)}</div>
+      ) : null
+
+    return props.topPhoto ? [Photo, Body] : [Body, Photo]
+  }
+
+  render() {
     const props = this.props
     return (
       <div style={props.style}>
@@ -277,12 +344,9 @@ export default class BoxContent extends React.Component {
             <span className="date">{props.postDate}</span>
           </div>
 
-          <div className="card-body container py-2 px-5">
-            <h5 className="card-title mb-2">{props.title}</h5>
-            <div className="card-text">{this.createBody(state.expandBody)}</div>
-          </div>
+          <div className="mb-2">{this.createMainContent()}</div>
 
-          <div className="mb-3 px-5">{this.createPhoto(props.showDetail)}</div>
+          {this.createVote()}
 
           <div className="card-footer text-center p-2">
             <span className="mr-3">
@@ -297,22 +361,8 @@ export default class BoxContent extends React.Component {
           {this.createComment(props.showDetail)}
 
           <style jsx>{`
-            .card-text {
-              font-size: 12px;
-              color: #505050;
-              white-space: normal;
-            }
-
             .media-body span {
               font-size: 10px;
-            }
-
-            h5 {
-              font-size: 14px;
-            }
-
-            h6 {
-              font-size: 11px;
             }
 
             .card {
