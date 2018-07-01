@@ -310,7 +310,7 @@ export default class BoxContent extends React.Component {
     const state = this.state
     const props = this.props
     const Body = (
-      <div className="card-body container py-2 px-5">
+      <div key="body" className="card-body container py-2 px-5">
         <h5 className="card-title mb-2">{props.title}</h5>
         <div className="card-text">{this.createBody(state.expandBody)}</div>
 
@@ -330,7 +330,9 @@ export default class BoxContent extends React.Component {
 
     const Photo =
       props.images && props.images.length > 0 ? (
-        <div className="mb-3 px-5">{this.createPhoto(props.showDetail)}</div>
+        <div key="photo" className="mb-3 px-5">
+          {this.createPhoto(props.showDetail)}
+        </div>
       ) : null
 
     return props.topPhoto ? [Photo, Body] : [Body, Photo]
