@@ -44,15 +44,15 @@ const BasePosts = range(5).map(i => ({
   )
 }))
 
-export const TalkPosts = BasePosts
-export const VoicePosts = BasePosts.map(e => {
+const TalkPosts = BasePosts
+const VoicePosts = BasePosts.map(e => {
   return {
     ...e,
     title: '今年の夏にメインで来ていきたいものは？',
     boxType: BoxType.VOICE
   }
 })
-export const NewsPosts = BasePosts.map(e => {
+const NewsPosts = BasePosts.map(e => {
   return { ...e, boxType: BoxType.NEWS }
 })
 export const Posts = {
@@ -67,3 +67,14 @@ export const Comments = range(3).map(i => ({
   commenterIcon: 'https://www.w3schools.com/w3images/avatar3.png',
   body: dummyCommentBody
 }))
+
+export const VoteOptions = {
+  selectedIndex: undefined,
+  item: [
+    { text: '白T' },
+    { text: 'ガラT' },
+    { text: 'シャツ' },
+    { text: 'ポロシャツ' },
+    { text: 'カットソー' }
+  ]
+}

@@ -30,6 +30,57 @@ const PreviewImage = props => (
   </React.Fragment>
 )
 
+export const VoteCounter = props => (
+  <React.Fragment>
+    <div className={`wrap py-2 ${props.className}`}>
+      <div className="mb-2">
+        <span>ただいまの投票数</span>
+        <span className="voteNum ml-2">{props.num}</span>
+      </div>
+
+      {props.showDeadline && (
+        <div className="deadline">期限：{props.deadline}まで</div>
+      )}
+
+      {props.showButton && (
+        <button type="button" className="btn">
+          投票する
+        </button>
+      )}
+
+      <style jsx>{`
+        span {
+          font-size: 13px;
+        }
+        .wrap {
+          margin: 0 auto;
+          text-align: center;
+          background-color: #e8e8e8;
+          // width: 250px;
+        }
+
+        .voteNum {
+          font-size: 20px;
+          color: #1d72b4;
+        }
+
+        .deadline {
+          color: gray;
+          font-size: 11px;
+        }
+
+        button {
+          font-size: 12px;
+          width: 120px;
+          border-radius: 30px;
+          color: white;
+          background-color: ${props.voteButtonColor};
+        }
+      `}</style>
+    </div>
+  </React.Fragment>
+)
+
 export default class BoxContent extends React.Component {
   state = {
     expandBody: this.props.expandBody
@@ -193,38 +244,12 @@ export default class BoxContent extends React.Component {
     const props = this.props
     if (!props.goingVote) return null
     return (
-      <div className="wrap py-2 px-5 mt-2 mb-3">
-        <div className="mb-2">
-          <span>ただいまの投票数</span>
-          <span className="voteNum ml-2">821</span>
-        </div>
-        <button type="button" className="btn">
-          投票する
-        </button>
-
-        <style jsx>{`
-          span {
-            font-size: 12px;
-          }
-          .wrap {
-            margin: 0 auto;
-            text-align: center;
-            background-color: #e8e8e8;
-          }
-
-          .voteNum {
-            font-size: 20px;
-            color: #1d72b4;
-          }
-
-          button {
-            font-size: 12px;
-            width: 120px;
-            border-radius: 30px;
-            color: white;
-            background-color: ${props.voteButtonColor};
-          }
-        `}</style>
+      <div className="mt-2 mb-3 px-5">
+        <VoteCounter
+          num={821}
+          showButton={true}
+          voteButtonColor={props.voteButtonColor}
+        />
       </div>
     )
   }
@@ -323,6 +348,7 @@ export default class BoxContent extends React.Component {
 
           h5 {
             font-size: 14px;
+            font-weight: bold;
           }
         `}</style>
       </div>
@@ -361,6 +387,8 @@ export default class BoxContent extends React.Component {
             </span>
             {this.createCommentButton(props.showDetail)}
           </div>
+
+          {this.props.children}
 
           {this.createComment(props.showDetail)}
 

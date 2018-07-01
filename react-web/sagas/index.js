@@ -17,7 +17,7 @@ import {
   addNewsContents,
   setPost
 } from 'actions/application'
-import { Posts, Comments } from 'stub/app'
+import { Posts, Comments, VoteOptions } from 'stub/app'
 import BoxType from 'constants/BoxType'
 
 es6promise.polyfill()
@@ -54,7 +54,8 @@ function* fetchPost({ payload }) {
   // 適当な記事データを返却しておく
   const post = Posts[boxType][postId]
   const comments = Comments
-  yield put(setPost({ ...post, comments }))
+  const voteOptions = VoteOptions || []
+  yield put(setPost({ ...post, comments, voteOptions }))
 }
 
 // function* loadDataSaga() {
