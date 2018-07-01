@@ -193,12 +193,12 @@ export default class BoxContent extends React.Component {
     const props = this.props
     if (!props.vote) return null
     return (
-      <div className="wrap py-2 px-5 mb-3">
+      <div className="wrap py-2 px-5 mt-2 mb-3">
         <div className="mb-2">
           <span>ただいまの投票数</span>
           <span className="voteNum ml-2">821</span>
         </div>
-        <button type="button" className="btn btn-primary">
+        <button type="button" className="btn">
           投票する
         </button>
 
@@ -221,6 +221,8 @@ export default class BoxContent extends React.Component {
             font-size: 12px;
             width: 120px;
             border-radius: 30px;
+            color: white;
+            background-color: ${props.voteButtonColor};
           }
         `}</style>
       </div>
@@ -344,7 +346,7 @@ export default class BoxContent extends React.Component {
             <span className="date">{props.postDate}</span>
           </div>
 
-          <div className="mb-2">{this.createMainContent()}</div>
+          <div className="">{this.createMainContent()}</div>
 
           {this.createVote()}
 
