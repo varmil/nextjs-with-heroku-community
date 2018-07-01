@@ -18,6 +18,7 @@ import {
   setPost
 } from 'actions/application'
 import { Posts, Comments } from 'stub/app'
+import BoxType from 'constants/BoxType'
 
 es6promise.polyfill()
 
@@ -28,21 +29,21 @@ function* fetchSiteDesign({ payload }) {
 function* fetchTalkInitial({ payload }) {
   // TODO: fetch box contents from server
   // then, dispatch action to sync store
-  const data = Posts
+  const data = Posts[BoxType.TALK]
   yield put(addTalkContents(data))
 }
 
 function* fetchVoiceInitial({ payload }) {
   // TODO: fetch box contents from server
   // then, dispatch action to sync store
-  const data = Posts
+  const data = Posts[BoxType.VOICE]
   yield put(addVoiceContents(data))
 }
 
 function* fetchNewsInitial({ payload }) {
   // TODO: fetch box contents from server
   // then, dispatch action to sync store
-  const data = Posts
+  const data = Posts[BoxType.NEWS]
   yield put(addNewsContents(data))
 }
 
@@ -51,7 +52,7 @@ function* fetchPost({ payload }) {
 
   // TODO: fetch post with boxType, postId
   // 適当な記事データを返却しておく
-  const post = Posts[postId]
+  const post = Posts[boxType][postId]
   const comments = Comments
   yield put(setPost({ ...post, comments }))
 }

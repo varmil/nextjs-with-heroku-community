@@ -3,6 +3,7 @@ import shuffle from 'lodash/shuffle'
 import take from 'lodash/take'
 import random from 'lodash/random'
 import range from 'lodash/range'
+import BoxType from 'constants/BoxType'
 
 const dummyPostBody = `ここも今現にいわゆる料理らとして事の時でさませだ。
 
@@ -17,9 +18,9 @@ const dummyPostBody = `ここも今現にいわゆる料理らとして事の時
 const dummyCommentBody = `カジュアルにサラッと着れるジャケットならT100シリーズと
 S300ラインをおすすめします。お手入れもかなり楽で春夏とおして使えます。`
 
-export const Posts = range(5).map(i => ({
+const BasePosts = range(5).map(i => ({
   // postページへのlinkに使う
-  boxType: 0,
+  boxType: BoxType.TALK,
   postId: i,
   categoryIndex: 0,
 
@@ -42,6 +43,23 @@ export const Posts = range(5).map(i => ({
     i
   )
 }))
+
+export const TalkPosts = BasePosts
+export const VoicePosts = BasePosts.map(e => {
+  return {
+    ...e,
+    title: '今年の夏にメインで来ていきたいものは？',
+    boxType: BoxType.VOICE
+  }
+})
+export const NewsPosts = BasePosts.map(e => {
+  return { ...e, boxType: BoxType.NEWS }
+})
+export const Posts = {
+  [BoxType.TALK]: TalkPosts,
+  [BoxType.VOICE]: VoicePosts,
+  [BoxType.NEWS]: NewsPosts
+}
 
 export const Comments = range(3).map(i => ({
   postId: 123,
