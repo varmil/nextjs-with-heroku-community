@@ -5,11 +5,14 @@ import IconButton from '@material-ui/core/IconButton'
 export default props => (
   <React.Fragment>
     <section className="header">
-      <Link route={props.route}>
-        <IconButton style={{ position: 'absolute', top: -5, left: 0 }}>
-          <i className="fas fa-chevron-left" />
-        </IconButton>
-      </Link>
+      {props.route && (
+        <Link route={props.route}>
+          <IconButton style={{ position: 'absolute', top: -5, left: 0 }}>
+            <i className="fas fa-chevron-left" />
+          </IconButton>
+        </Link>
+      )}
+
       <span>{props.text}</span>
     </section>
 

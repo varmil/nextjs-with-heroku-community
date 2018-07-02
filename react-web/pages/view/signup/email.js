@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Router } from 'routes'
 import { createAction } from 'redux-actions'
 import { User } from 'constants/ActionTypes'
 import Input from 'reactstrap/lib/Input'
@@ -23,13 +24,15 @@ class SignupEmail extends React.Component {
     })
   }
 
+  // ERRORハンドリングしやすいのでここでPOST
   async signup(e) {
     const { email, password } = this.state
     const res = await API.post('/signup', { email, password })
     console.info('SIGNUP', res)
     if (res.ok) {
-      // TODO:
+      // TODO: set user data to store
       // yield put(loadDataSuccess(data))
+      await Router.pushRoute(`/view/signup/complete`)
     } else {
       const json = await res.json()
       this.setState({
@@ -37,8 +40,6 @@ class SignupEmail extends React.Component {
         errorMessage: <span>{json.error}</span>
       })
     }
-
-    // this.props.dispatch(createAction(User.SIGNUP_REQUEST)({ email, password }))
   }
 
   render() {

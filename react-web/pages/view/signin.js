@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
 import { User } from 'constants/ActionTypes'
-import { Link } from 'routes'
+import { Link, Router } from 'routes'
 import Input from 'reactstrap/lib/Input'
 import RoundWideButton from 'components/atoms/RoundWideButton'
 import ColorButton from 'components/atoms/ColorButton'
@@ -31,14 +31,15 @@ class Signin extends React.Component {
     })
   }
 
-  // ERRORハンドリングしやすいのでここでFETCH
+  // ERRORハンドリングしやすいのでここでPOST
   async signin(e) {
     const { email, password } = this.state
     const res = await API.post('/signin', { email, password })
     console.info('SIGNIN', res)
     if (res.ok) {
-      // TODO:
+      // TODO: set user data to store
       // yield put(loadDataSuccess(data))
+      await Router.pushRoute(`/view/home`)
     } else {
       // const message = await res.text()
       this.setState({
@@ -47,8 +48,6 @@ class Signin extends React.Component {
           'メールアドレスかパスワードが間違っています。再度入力し直してください。'
       })
     }
-
-    // this.props.dispatch(createAction(User.SIGNIN_REQUEST)({ email, password }))
   }
 
   render() {
