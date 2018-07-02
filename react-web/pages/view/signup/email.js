@@ -1,13 +1,16 @@
 import React from 'react'
 import { Link } from '/routes'
 import { connect } from 'react-redux'
+import Input from 'reactstrap/lib/Input'
+import FormFeedback from 'reactstrap/lib/FormFeedback'
 import Rule from 'constants/Rule'
-import URL from 'constants/URL'
+import ColorButton from 'components/atoms/ColorButton'
 import CenteredContainer from 'components/molecules/CenteredContainer'
+import SignInUpHeader from 'components/molecules/SignInUpHeader'
 
 class SignupEmail extends React.Component {
   state = {
-    title: '',
+    email: '',
     password: ''
   }
 
@@ -20,18 +23,22 @@ class SignupEmail extends React.Component {
   render() {
     const state = this.state
     const props = this.props
+    const passLength = this.state.password.length
 
     return (
-      <CenteredContainer height={500}>
-        <section className="mt-3">
+      <CenteredContainer height={460}>
+        <section>
+          <SignInUpHeader text="アカウント登録" route={'/view/signup'} />
+        </section>
+
+        <section className="mt-5">
           <div className="form-group">
             <label>メールアドレス</label>
-            <input
+            <Input
               type="email"
-              className="form-control"
               placeholder="foo@example.com"
-              value={this.state.title}
-              onChange={this.handleChange('title')}
+              value={this.state.email}
+              onChange={this.handleChange('email')}
             />
           </div>
         </section>
@@ -39,18 +46,36 @@ class SignupEmail extends React.Component {
         <section className="mt-3">
           <div className="form-group">
             <label>パスワード</label>
-            <input
-              type="password"
-              className="form-control"
-              placeholder="8文字以上"
+            <Input
+              type="text"
+              placeholder={`${Rule.PASS_MIN_LENGTH}文字以上`}
               value={this.state.password}
               onChange={this.handleChange('password')}
+              invalid={passLength > 0 && passLength < Rule.PASS_MIN_LENGTH}
             />
-            <small id="emailHelp" className="form-text text-muted">
-              Well never share your email with anyone else.
-            </small>
+            <FormFeedback>
+              {Rule.PASS_MIN_LENGTH}文字以上入力してください
+            </FormFeedback>
           </div>
         </section>
+
+        <section className="text-center">
+          <ColorButton className="w-75 mt-4" color="#2b6db2">
+            アカウント登録
+          </ColorButton>
+        </section>
+
+        <section className="regNote mt-3 text-center">
+          上のアカウント登録ボタンを押すことにより、<br />
+          <a>利用規約</a> に同意したことになります。
+        </section>
+
+        <style jsx>{`
+          .regNote,
+          label {
+            font-size: 12px;
+          }
+        `}</style>
       </CenteredContainer>
     )
   }

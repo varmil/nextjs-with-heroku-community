@@ -1,45 +1,24 @@
 import React from 'react'
+import ColorButton from 'components/atoms/ColorButton'
 
-const Index = props => (
+export default props => (
   <React.Fragment>
     <div>
-      <button
-        type="button"
-        className={`btn btn-outline-primary px-4 ${props.className}`}
-        style={props.style}
+      <ColorButton
+        {...props}
+        outline={true}
+        style={{ borderRadius: 30, width: '100%' }}
       >
         {props.icon && <span className="icon">{props.icon}</span>}
-
         {props.children}
-      </button>
+      </ColorButton>
     </div>
 
     <style jsx>{`
-      button {
-        font-weight: bold;
-        position: relative;
-        border-radius: 30px;
-        padding-top: 13px;
-        padding-bottom: 13px;
-      }
-
       .icon {
         position: absolute;
         left: 20px;
       }
-
-      button {
-        color: ${props.color} !important;
-        border-color: ${props.color} !important;
-      }
-
-      button.btn:active,
-      button.btn:hover {
-        color: white !important;
-        border-color: ${props.color} !important;
-        background-color: ${props.color} !important;
-      }
     `}</style>
   </React.Fragment>
 )
-export default Index

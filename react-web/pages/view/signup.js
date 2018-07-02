@@ -55,7 +55,9 @@ export default class SignUp extends React.Component {
           </section>
 
           <section className="login mt-3 text-center">
-            <a>ログイン</a>
+            <Link route="/view/signin">
+              <a>ログイン</a>
+            </Link>
           </section>
         </CenteredContainer>
 
