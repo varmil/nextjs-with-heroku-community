@@ -21,7 +21,8 @@ import API from 'utils/API'
 
 function* signinUser({ payload }) {
   const res = yield call(API.post, '/signin', payload)
-  console.info('SIGNIN', res.json())
+  const data = yield call([res, 'text'])
+  console.info('SIGNIN', res, data)
   // console.info('SIGNIN', res.ok, res.statusText, res.json())
   // TODO:
   // yield put(loadDataSuccess(data))
