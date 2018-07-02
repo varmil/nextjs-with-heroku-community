@@ -1,25 +1,17 @@
 import React from 'react'
-import { Link } from '/routes'
-import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/core/styles'
-import Input from '@material-ui/core/Input'
+import { Link } from 'routes'
 import RoundWideButton from 'components/atoms/RoundWideButton'
-import Rule from 'constants/Rule'
-import URL from 'constants/URL'
+import CenteredContainer from 'components/molecules/CenteredContainer'
 
 const btnStyle = {
   width: '100%'
 }
 
-class SignUp extends React.Component {
+export default class SignUp extends React.Component {
   render() {
-    const state = this.state
-    const props = this.props
-    const { classes } = props
-
     return (
       <React.Fragment>
-        <div className="sharedContainer">
+        <CenteredContainer height={400}>
           <section className="">
             <img src="/static/img/logo.png" />
           </section>
@@ -48,33 +40,31 @@ class SignUp extends React.Component {
           </section>
 
           <section className="">
-            <RoundWideButton
-              className="my-2"
-              style={btnStyle}
-              color={'gray'}
-              icon={<i className="fab fa-facebook-f" />}
-            >
-              メールアドレスで登録
-            </RoundWideButton>
+            <Link route={'/view/signup/email'} passHref>
+              <a>
+                <RoundWideButton
+                  className="my-2"
+                  style={btnStyle}
+                  color={'gray'}
+                  icon={<i className="fab fa-facebook-f" />}
+                >
+                  メールアドレスで登録
+                </RoundWideButton>
+              </a>
+            </Link>
           </section>
 
-          <section className="mt-3 text-center">
+          <section className="login mt-3 text-center">
             <a>ログイン</a>
           </section>
-        </div>
+        </CenteredContainer>
 
         <style jsx>{`
-          .sharedContainer {
-            width: 90%;
-            max-width: 360px;
-            margin: 30% auto;
-          }
-
           img {
             width: 100%;
           }
 
-          .sharedContainer a {
+          .login a {
             color: #909090;
             text-decoration: underline;
           }
@@ -83,7 +73,3 @@ class SignUp extends React.Component {
     )
   }
 }
-
-export default connect(state => ({
-  // post: state.site.post
-}))(SignUp)

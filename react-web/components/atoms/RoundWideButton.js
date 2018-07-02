@@ -2,7 +2,7 @@ import React from 'react'
 
 const Index = props => (
   <React.Fragment>
-    <div id="RoundWideButton">
+    <div>
       <button
         type="button"
         className={`btn btn-outline-primary px-4 ${props.className}`}
