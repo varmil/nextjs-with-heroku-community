@@ -19,21 +19,18 @@ import { Posts, Comments, VoteOptions } from 'stub/app'
 import BoxType from 'constants/BoxType'
 import API from 'utils/API'
 
-function* signinUser({ payload }) {
-  const res = yield call(API.post, '/signin', payload)
-  const data = yield call([res, 'text'])
-  console.info('SIGNIN', res, data)
-  // console.info('SIGNIN', res.ok, res.statusText, res.json())
-  // TODO:
-  // yield put(loadDataSuccess(data))
-}
+// function* signinUser({ payload }) {
+//   const res = yield call(API.post, '/signin', payload)
+//   console.info('SIGNIN', res)
+//   if (res.ok) {
+//   } else {
+//     const message = yield call([res, 'text'])
+//     console.warn(message)
+//   }
+// }
 
-function* signupUser({ payload }) {
-  const res = yield call(API.post, '/signup', { ...payload, isAdmin: false })
-  console.info('SIGNUP', res.ok, res.statusText, res.json())
-  // TODO:
-  // yield put(loadDataSuccess(data))
-}
+// function* signupUser({ payload }) {
+// }
 
 function* fetchSiteDesign({ payload }) {
   // TODO: fetch category, subBanner, then put them into store
@@ -95,8 +92,8 @@ function* postIFrameMessageSaga(action) {
 /** ****************************************************************************/
 function* watchUser() {
   return yield all([
-    takeLatest(User.SIGNIN_REQUEST, signinUser),
-    takeLatest(User.SIGNUP_REQUEST, signupUser)
+    // takeLatest(User.SIGNIN_REQUEST, signinUser),
+    // takeLatest(User.SIGNUP_REQUEST, signupUser)
     // takeLatest(User.FETCH_REQUEST, fetchUser)
   ])
 }

@@ -19,10 +19,10 @@ exports.signup = async function(req, res, next) {
   // bodyにこのkeyがなければ「ユーザ」として登録（非管理者）
   const isAdmin = req.body.isAdmin === 'true'
 
-  if (!email || !password) {
+  if (!email || !password || password.length < 8) {
     return res
       .status(422)
-      .json({ error: 'Email and password must be provided' })
+      .json({ error: 'メールアドレスとパスワードを正しく入力してください。' })
   }
 
   const trans = await models.sequelize.transaction()
@@ -32,7 +32,10 @@ exports.signup = async function(req, res, next) {
       raw: true
     })
     if (existingUser) {
-      return res.status(422).json({ error: 'Email is aleready in use...' })
+      return res.status(422).json({
+        error:
+          'このメールアドレスはすでに利用されています。別のメールアドレスをご利用ください。'
+      })
     }
 
     const user = await models.User.create(

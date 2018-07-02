@@ -1,19 +1,20 @@
 import React from 'react'
-import { Link } from '/routes'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
+import { User } from 'constants/ActionTypes'
 import Input from 'reactstrap/lib/Input'
 import FormFeedback from 'reactstrap/lib/FormFeedback'
 import Rule from 'constants/Rule'
 import ColorButton from 'components/atoms/ColorButton'
 import CenteredContainer from 'components/molecules/CenteredContainer'
 import SignInUpHeader from 'components/molecules/SignInUpHeader'
-import { User } from 'constants/ActionTypes'
+import API from 'utils/API'
 
 class SignupEmail extends React.Component {
   state = {
     email: '',
-    password: ''
+    password: '',
+    errorMessage: ''
   }
 
   handleChange = name => event => {
@@ -22,14 +23,26 @@ class SignupEmail extends React.Component {
     })
   }
 
-  signup(e) {
+  async signup(e) {
     const { email, password } = this.state
-    this.props.dispatch(createAction(User.SIGNUP_REQUEST)({ email, password }))
+    const res = await API.post('/signup', { email, password })
+    console.info('SIGNUP', res)
+    if (res.ok) {
+      // TODO:
+      // yield put(loadDataSuccess(data))
+    } else {
+      const json = await res.json()
+      this.setState({
+        ...this.state,
+        errorMessage: <span>{json.error}</span>
+      })
+    }
+
+    // this.props.dispatch(createAction(User.SIGNUP_REQUEST)({ email, password }))
   }
 
   render() {
     const passLength = this.state.password.length
-
     return (
       <CenteredContainer height={460}>
         <section>
@@ -64,6 +77,12 @@ class SignupEmail extends React.Component {
           </div>
         </section>
 
+        {this.state.errorMessage && (
+          <div className="alert alert-danger" role="alert">
+            {this.state.errorMessage}
+          </div>
+        )}
+
         <section className="text-center" onClick={this.signup.bind(this)}>
           <ColorButton className="w-75 mt-4" color="#2b6db2">
             アカウント登録
@@ -78,6 +97,10 @@ class SignupEmail extends React.Component {
         <style jsx>{`
           .regNote,
           label {
+            font-size: 12px;
+          }
+
+          .alert {
             font-size: 12px;
           }
         `}</style>
