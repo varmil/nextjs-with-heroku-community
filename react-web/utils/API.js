@@ -44,4 +44,13 @@ export default class API {
       console.error(e)
     }
   }
+
+  static isJson(str) {
+    try {
+      JSON.parse(str)
+    } catch (e) {
+      return false
+    }
+    return true
+  }
 }
