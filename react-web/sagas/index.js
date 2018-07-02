@@ -90,27 +90,31 @@ function* postIFrameMessageSaga(action) {
 /** ****************************************************************************/
 /** ***************************** WATCHERS *************************************/
 /** ****************************************************************************/
-function* watchUser() {
-  return yield all([
-    // takeLatest(User.SIGNIN_REQUEST, signinUser),
-    // takeLatest(User.SIGNUP_REQUEST, signupUser)
-    // takeLatest(User.FETCH_REQUEST, fetchUser)
-  ])
-}
 
-function* watchApp() {
-  return yield all([
-    takeLatest(AppTalkRoom.FETCH_INITIAL_REQUEST, fetchTalkInitial),
-    takeLatest(AppVoice.FETCH_INITIAL_REQUEST, fetchVoiceInitial),
-    takeLatest(AppNews.FETCH_INITIAL_REQUEST, fetchNewsInitial),
-    takeLatest(AppPost.FETCH_REQUEST, fetchPost)
-  ])
-}
+// function* watchApp() {
+//   return yield all([
+//     takeLatest(AppTalkRoom.FETCH_INITIAL_REQUEST, fetchTalkInitial),
+//     takeLatest(AppVoice.FETCH_INITIAL_REQUEST, fetchVoiceInitial),
+//     takeLatest(AppNews.FETCH_INITIAL_REQUEST, fetchNewsInitial),
+//     takeLatest(AppPost.FETCH_REQUEST, fetchPost)
+//   ])
+// }
+
+const userSaga = [
+  // takeLatest(User.FETCH_REQUEST, fetchUser)
+]
+
+const appSaga = [
+  takeLatest(AppTalkRoom.FETCH_INITIAL_REQUEST, fetchTalkInitial),
+  takeLatest(AppVoice.FETCH_INITIAL_REQUEST, fetchVoiceInitial),
+  takeLatest(AppNews.FETCH_INITIAL_REQUEST, fetchNewsInitial),
+  takeLatest(AppPost.FETCH_REQUEST, fetchPost)
+]
 
 function* rootSaga() {
   yield all([
-    fork(watchUser),
-    fork(watchApp),
+    ...userSaga,
+    ...appSaga,
     takeLatest(IFrame.POST_MESSAGE, postIFrameMessageSaga)
   ])
 }

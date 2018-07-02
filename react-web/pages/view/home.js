@@ -18,11 +18,11 @@ class Home extends React.Component {
     const { talkroom, voice, news } = ctx.store.getState().app
     const { dispatch } = ctx.store
 
-    if (ctx.isServer || talkroom.boxContents === 0) {
+    if (ctx.isServer || talkroom.boxContents.length === 0) {
       dispatch(createAction(AppTalkRoom.FETCH_INITIAL_REQUEST)())
     }
 
-    if (ctx.isServer || voice.boxContents === 0) {
+    if (ctx.isServer || voice.boxContents.length === 0) {
       dispatch(createAction(AppVoice.FETCH_INITIAL_REQUEST)())
     }
 
