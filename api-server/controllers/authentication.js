@@ -10,7 +10,7 @@ function tokenForUser(user) {
 }
 
 exports.signin = function(req, res) {
-  res.send({ token: tokenForUser(req.user) })
+  res.json({ token: tokenForUser(req.user) })
 }
 
 exports.signup = async function(req, res, next) {
@@ -22,7 +22,7 @@ exports.signup = async function(req, res, next) {
   if (!email || !password) {
     return res
       .status(422)
-      .send({ error: 'Email and password must be provided' })
+      .json({ error: 'Email and password must be provided' })
   }
 
   const trans = await models.sequelize.transaction()
@@ -32,7 +32,7 @@ exports.signup = async function(req, res, next) {
       raw: true
     })
     if (existingUser) {
-      return res.status(422).send({ error: 'Email is aleready in use...' })
+      return res.status(422).json({ error: 'Email is aleready in use...' })
     }
 
     const user = await models.User.create(

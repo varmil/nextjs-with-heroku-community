@@ -16,7 +16,7 @@ const userRole = new ConnectRoles({
     // optional function to customise code that runs when
     // user fails authorisation
     res.status(403)
-    res.send("Access Denied - You don't have permission to: " + action)
+    res.json("Access Denied - You don't have permission to: " + action)
   }
 })
 router.use(userRole.middleware())
@@ -47,17 +47,17 @@ userRole.use('adminSuper', req => {
 
 module.exports = function(app) {
   app.get('/', function(req, res) {
-    res.send('Express Server with JWT Authentication')
+    res.json('Express Server with JWT Authentication')
   })
 
   app.get('/user', requireAuth, function(req, res) {
     const { id, nickname, createdAt } = req.user
-    res.send({ id, nickname, createdAt })
+    res.json({ id, nickname, createdAt })
   })
 
   app.get('/admin', requireAuth, userRole.is('adminGuest'), function(req, res) {
     const { id, nickname, createdAt } = req.user
-    res.send({ id, nickname, createdAt })
+    res.json({ id, nickname, createdAt })
   })
 
   app.post('/signin', requireSignIn, Authentication.signin)

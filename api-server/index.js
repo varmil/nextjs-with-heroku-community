@@ -21,7 +21,7 @@ router(app)
 // Answer API requests.
 // app.get('/api', function(req, res) {
 //   res.set('Content-Type', 'application/json')
-//   res.send('{"message":"Hello from the custom server!"}')
+//   res.json('{"message":"Hello from the custom server!"}')
 // })
 
 app.listen(PORT, function() {
