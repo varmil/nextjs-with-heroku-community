@@ -19,15 +19,16 @@ class SignUp extends React.Component {
 
     return (
       <React.Fragment>
-        <div className="container">
+        <div className="sharedContainer">
           <section className="">
             <img src="/static/img/logo.png" />
           </section>
 
-          <section className="mt-5">
+          <section className="mt-4">
             <RoundWideButton
               className="my-2"
               style={btnStyle}
+              color={'#2b6db2'}
               icon={<i className="fab fa-facebook-f" />}
             >
               Facebookで登録
@@ -35,20 +36,47 @@ class SignUp extends React.Component {
             <RoundWideButton
               className="my-2"
               style={btnStyle}
+              color={'#2b6db2'}
               icon={<i className="fab fa-twitter" />}
             >
               Twitterで登録
             </RoundWideButton>
           </section>
 
-          <section className="mt-3">
+          <section className="my-2">
             <img src="/static/img/login-or-big.png" />
+          </section>
+
+          <section className="">
+            <RoundWideButton
+              className="my-2"
+              style={btnStyle}
+              color={'gray'}
+              icon={<i className="fab fa-facebook-f" />}
+            >
+              メールアドレスで登録
+            </RoundWideButton>
+          </section>
+
+          <section className="mt-3 text-center">
+            <a>ログイン</a>
           </section>
         </div>
 
         <style jsx>{`
+          .sharedContainer {
+            width: 90%;
+            max-width: 360px;
+            margin: 30% auto;
+          }
+
           img {
             width: 100%;
+          }
+
+          .sharedContainer a {
+            color: #909090;
+            text-decoration: underline;
           }
         `}</style>
       </React.Fragment>
