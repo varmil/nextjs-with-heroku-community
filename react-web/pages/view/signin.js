@@ -1,6 +1,9 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { createAction } from 'redux-actions'
 import { Link } from 'routes'
 import Input from 'reactstrap/lib/Input'
+import { User } from 'constants/ActionTypes'
 import RoundWideButton from 'components/atoms/RoundWideButton'
 import ColorButton from 'components/atoms/ColorButton'
 import CenteredContainer from 'components/molecules/CenteredContainer'
@@ -14,7 +17,7 @@ const inputStyle = {
   padding: '10px 20px'
 }
 
-export default class extends React.Component {
+class Signin extends React.Component {
   state = {
     email: '',
     password: ''
@@ -24,6 +27,11 @@ export default class extends React.Component {
     this.setState({
       [name]: event.target.value
     })
+  }
+
+  signin(e) {
+    const { email, password } = this.state
+    this.props.dispatch(createAction(User.SIGNIN_REQUEST)({ email, password }))
   }
 
   render() {
@@ -78,7 +86,7 @@ export default class extends React.Component {
             </div>
           </section>
 
-          <section className="text-center">
+          <section className="text-center" onClick={this.signin.bind(this)}>
             <ColorButton className="w-75 mt-2" color="#2b6db2">
               ログインする
             </ColorButton>
@@ -106,3 +114,7 @@ export default class extends React.Component {
     )
   }
 }
+
+export default connect(state => ({
+  // post: state.site.post
+}))(Signin)

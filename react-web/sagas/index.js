@@ -1,9 +1,7 @@
 // import { delay } from 'redux-saga'
 import { all, fork, call, put, takeLatest } from 'redux-saga/effects'
-import es6promise from 'es6-promise'
-import 'isomorphic-unfetch' /* global fetch */
-
 import {
+  User,
   IFrame,
   AppTalkRoom,
   AppVoice,
@@ -19,8 +17,22 @@ import {
 } from 'actions/application'
 import { Posts, Comments, VoteOptions } from 'stub/app'
 import BoxType from 'constants/BoxType'
+import API from 'utils/API'
 
-es6promise.polyfill()
+function* signinUser({ payload }) {
+  const res = yield call(API.post, '/signin', payload)
+  console.info('SIGNIN', res.json())
+  // console.info('SIGNIN', res.ok, res.statusText, res.json())
+  // TODO:
+  // yield put(loadDataSuccess(data))
+}
+
+function* signupUser({ payload }) {
+  const res = yield call(API.post, '/signup', { ...payload, isAdmin: false })
+  console.info('SIGNUP', res.ok, res.statusText, res.json())
+  // TODO:
+  // yield put(loadDataSuccess(data))
+}
 
 function* fetchSiteDesign({ payload }) {
   // TODO: fetch category, subBanner, then put them into store
@@ -80,6 +92,13 @@ function* postIFrameMessageSaga(action) {
 /** ****************************************************************************/
 /** ***************************** WATCHERS *************************************/
 /** ****************************************************************************/
+function* watchUser() {
+  return yield all([
+    takeLatest(User.SIGNIN_REQUEST, signinUser),
+    takeLatest(User.SIGNUP_REQUEST, signupUser)
+    // takeLatest(User.FETCH_REQUEST, fetchUser)
+  ])
+}
 
 function* watchApp() {
   return yield all([
@@ -92,6 +111,7 @@ function* watchApp() {
 
 function* rootSaga() {
   yield all([
+    fork(watchUser),
     fork(watchApp),
     takeLatest(IFrame.POST_MESSAGE, postIFrameMessageSaga)
   ])

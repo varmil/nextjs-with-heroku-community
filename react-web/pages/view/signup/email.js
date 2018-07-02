@@ -1,12 +1,14 @@
 import React from 'react'
 import { Link } from '/routes'
 import { connect } from 'react-redux'
+import { createAction } from 'redux-actions'
 import Input from 'reactstrap/lib/Input'
 import FormFeedback from 'reactstrap/lib/FormFeedback'
 import Rule from 'constants/Rule'
 import ColorButton from 'components/atoms/ColorButton'
 import CenteredContainer from 'components/molecules/CenteredContainer'
 import SignInUpHeader from 'components/molecules/SignInUpHeader'
+import { User } from 'constants/ActionTypes'
 
 class SignupEmail extends React.Component {
   state = {
@@ -20,9 +22,12 @@ class SignupEmail extends React.Component {
     })
   }
 
+  signup(e) {
+    const { email, password } = this.state
+    this.props.dispatch(createAction(User.SIGNUP_REQUEST)({ email, password }))
+  }
+
   render() {
-    const state = this.state
-    const props = this.props
     const passLength = this.state.password.length
 
     return (
@@ -59,7 +64,7 @@ class SignupEmail extends React.Component {
           </div>
         </section>
 
-        <section className="text-center">
+        <section className="text-center" onClick={this.signup.bind(this)}>
           <ColorButton className="w-75 mt-4" color="#2b6db2">
             アカウント登録
           </ColorButton>
@@ -81,7 +86,6 @@ class SignupEmail extends React.Component {
   }
 }
 
-// const Styled = withStyles(inputStyles)(SignupEmail)
 export default connect(state => ({
   // post: state.site.post
 }))(SignupEmail)
