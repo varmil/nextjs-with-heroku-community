@@ -61,10 +61,10 @@ export const AppPost = createTypes('app/post/', 'SET_POST', async('FETCH'))
 
 export const User = createTypes(
   'user/',
+  async('SIGNIN'),
+  async('SIGNUP'),
   async('FETCH'),
-  async('FETCH_ADMIN'),
-  'SET',
-  'SET_ID'
+  'SET'
 )
 
 export const Auth = createTypes('auth/', 'SET_IS_PREPARED', 'SET_IS_LOGGED_IN')
