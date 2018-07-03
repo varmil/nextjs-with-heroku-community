@@ -28,8 +28,8 @@ class SignupEmail extends React.Component {
     const { email, password } = this.state
     const successCb = async res => Router.pushRoute(`/view/signup/complete`)
     const errCb = async res => {
-      const json = await res.json()
-      this.setState({ ...this.state, errorMessage: <span>{json.error}</span> })
+      const { error } = res.data
+      this.setState({ ...this.state, errorMessage: <span>{error}</span> })
     }
     this.props.dispatch(
       createAction(User.AUTH_REQUEST)({

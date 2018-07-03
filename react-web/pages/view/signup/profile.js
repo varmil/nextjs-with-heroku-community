@@ -12,7 +12,8 @@ import ProfileIconSelector from 'components/atoms/ProfileIconSelector'
 class SignupProfile extends React.Component {
   state = {
     files: [],
-    nickname: ''
+    nickname: '',
+    errorMessage: ''
   }
 
   handleChange = name => event => {
@@ -38,8 +39,8 @@ class SignupProfile extends React.Component {
     // const successCb = async res => Router.pushRoute(`/view/home`)
     const successCb = async res => {}
     const errCb = async res => {
-      const json = await res.json()
-      this.setState({ ...this.state, errorMessage: <span>{json.error}</span> })
+      const { error } = res.data
+      this.setState({ ...this.state, errorMessage: <span>{error}</span> })
     }
     this.props.dispatch(
       createAction(User.SAVE_PROFILE_REQUEST)({
@@ -76,11 +77,17 @@ class SignupProfile extends React.Component {
           </div>
         </section>
 
-        <section className="regNote mt-3 text-center">
+        <section className="regNote my-3 text-center">
           名字や名前、ニックネームなど、<br />
           コミュニティ内で呼ばれたいユーザ名にしましょう。<br />
           * 後でいつでも変更可能です
         </section>
+
+        {this.state.errorMessage && (
+          <div className="alert alert-danger" role="alert">
+            {this.state.errorMessage}
+          </div>
+        )}
 
         <section className="text-center" onClick={this.onSubmit.bind(this)}>
           <ColorButton
@@ -100,6 +107,10 @@ class SignupProfile extends React.Component {
 
           .regNote,
           label {
+            font-size: 12px;
+          }
+
+          .alert {
             font-size: 12px;
           }
         `}</style>

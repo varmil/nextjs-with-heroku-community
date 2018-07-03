@@ -4,8 +4,9 @@ import { User } from 'constants/ActionTypes'
 
 const initialState = {
   id: undefined,
+  jwtToken: null,
   nickname: '',
-  jwtToken: null
+  iconPath: ''
 }
 
 export default handleActions(

@@ -27,23 +27,27 @@ const getJWTToken = state => state.user.jwtToken
 
 function* authenticate({ payload }) {
   const { url, email, password, successCb, errCb } = payload
-  const res = yield call(API.post, url, { email, password })
-  if (!res.status === 200) return yield call(errCb, res)
-
-  // set user data to cookie and store
-  const { token } = res.data
-  setCookie(Rule.COOKIE_JWT_TOKEN, token)
-  yield put(createAction(User.AUTHENTICATE)(token))
-  yield call(successCb, res)
+  try {
+    const res = yield call(API.post, url, { email, password })
+    // set user data to cookie and store
+    const { token } = res.data
+    setCookie(Rule.COOKIE_JWT_TOKEN, token)
+    yield put(createAction(User.AUTHENTICATE)(token))
+    yield call(successCb, res)
+  } catch (e) {
+    yield call(errCb, e.response)
+  }
 }
 
 // （初期登録、プロフィール編集？）
 function* saveUserProfile({ payload }) {
   const { formData, successCb, errCb } = payload
-  const res = yield call(API.post, '/user/profile', formData)
-  if (!res.status === 200) return yield call(errCb, res)
-
-  yield call(successCb, res)
+  try {
+    const res = yield call(API.post, '/user/profile', formData)
+    yield call(successCb, res)
+  } catch (e) {
+    yield call(errCb, e.response)
+  }
 }
 
 // payload is token

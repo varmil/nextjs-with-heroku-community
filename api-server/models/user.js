@@ -5,6 +5,7 @@ module.exports = function(sequelize, DataTypes) {
     email: DataTypes.STRING,
     passwordHash: DataTypes.STRING,
     nickname: DataTypes.STRING,
+    profilePhotoPath: DataTypes.STRING,
     // 管理者が登録したときはそれ用のId定数を入れる
     roleId: DataTypes.INTEGER,
 
@@ -12,7 +13,6 @@ module.exports = function(sequelize, DataTypes) {
     facebookAccessToken: DataTypes.STRING,
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
-    profilePhotoPath: DataTypes.STRING,
     locale: DataTypes.STRING,
     gender: DataTypes.STRING,
     ageRangeMin: DataTypes.INTEGER,
