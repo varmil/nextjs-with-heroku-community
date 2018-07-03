@@ -46,6 +46,16 @@ function* saveUserProfile({ payload }) {
   yield call(successCb, res)
 }
 
+// payload is token
+function* fetchUser({ payload }) {
+  const res = yield call(API.fetch, '/user', payload)
+  if (res.status === 200) {
+    yield put(createAction(User.SET)({ ...res.data }))
+  } else {
+    console.warn('failed fetch user info', res)
+  }
+}
+
 function* fetchSiteDesign({ payload }) {
   // TODO: fetch category, subBanner, then put them into store
 }
@@ -120,8 +130,8 @@ function* postIFrameMessageSaga(action) {
 
 const userSaga = [
   takeLatest(User.AUTH_REQUEST, authenticate),
-  takeLatest(User.SAVE_PROFILE_REQUEST, saveUserProfile)
-  // takeLatest(User.FETCH_REQUEST, fetchUser)
+  takeLatest(User.SAVE_PROFILE_REQUEST, saveUserProfile),
+  takeLatest(User.FETCH_REQUEST, fetchUser)
 ]
 
 const appSaga = [

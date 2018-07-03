@@ -31,10 +31,12 @@ class SignupProfile extends React.Component {
   async onSubmit(e) {
     // 複数画像をPOSTするためにFormDataを使用する
     let formData = new FormData()
+    formData.append('userId', this.props.user.id)
     formData.append('nickname', this.state.nickname)
     formData.append('image', this.state.files[0])
 
-    const successCb = async res => Router.pushRoute(`/view/home`)
+    // const successCb = async res => Router.pushRoute(`/view/home`)
+    const successCb = async res => {}
     const errCb = async res => {
       const json = await res.json()
       this.setState({ ...this.state, errorMessage: <span>{json.error}</span> })
@@ -81,7 +83,11 @@ class SignupProfile extends React.Component {
         </section>
 
         <section className="text-center" onClick={this.onSubmit.bind(this)}>
-          <ColorButton className="w-75 mt-4" color="#2b6db2">
+          <ColorButton
+            className="w-75 mt-4"
+            color="#2b6db2"
+            disabled={!this.state.nickname.length}
+          >
             続ける
           </ColorButton>
         </section>
@@ -103,5 +109,5 @@ class SignupProfile extends React.Component {
 }
 
 export default connect(state => ({
-  // post: state.site.post
+  user: state.user
 }))(SignupProfile)

@@ -8,6 +8,7 @@ const Index = props => (
         props.outline ? 'btn-outline-primary' : 'btn-primary'
       }  ${props.className}`}
       style={props.style}
+      disabled={props.disabled}
     >
       {props.children}
     </button>

@@ -65,6 +65,7 @@ export const User = createTypes(
   'DEAUTHENTICATE',
   async('AUTH'),
   async('SAVE_PROFILE'),
+  // fetch basic info (id, nickname)
   async('FETCH'),
   'SET'
 )
