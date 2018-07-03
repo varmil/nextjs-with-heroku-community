@@ -16,7 +16,7 @@ app.prepare().then(() => {
   server.get('/view/signin', (req, res) => {
     if (req.cookies.token) {
       console.log('you are already logined')
-      res.redirect('/')
+      // res.redirect('/')
     } else {
       return app.render(req, res, '/view/signin', req.query)
     }
@@ -25,7 +25,7 @@ app.prepare().then(() => {
   server.get('/view/signup', (req, res) => {
     if (req.cookies.token) {
       console.log('you are already logined')
-      res.redirect('/')
+      // res.redirect('/')
     } else {
       return app.render(req, res, '/view/signup', req.query)
     }
