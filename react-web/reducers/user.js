@@ -21,6 +21,7 @@ export default handleActions(
       return immutable.set(state, `jwtToken`, null)
     },
 
+    // set basic information
     [User.SET]: (state, action) => {
       return { ...state, ...action.payload }
     }

@@ -71,3 +71,4 @@ typings/
 # custom
 .DS_Store
 bundles
+react-web/static/img/up

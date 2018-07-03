@@ -1,5 +1,6 @@
 const appRoot = require('app-root-path')
 const moveFile = require('move-file')
+const Path = require('../constants/Path')
 
 /**
  * Profile編集
@@ -13,11 +14,11 @@ exports.profile = async (req, res) => {
     return res.status(422).json({ error: '項目を正しく入力してください。' })
   }
 
-  console.log(appRoot.toString())
+  // TODO save nickname
 
-  // TODO save images
+  // save image
   const { path, filename } = req.file
-  const newPath = `${appRoot}/../react-web/static/img/user/icon/${filename}`
+  const newPath = `${Path.STATIC_BASE_DIR}${Path.USER_ICON_DIR}/${filename}`
   await moveFile(path, newPath)
 
   res.json(true)
