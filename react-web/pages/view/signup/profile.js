@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Router } from 'routes'
 import { createAction } from 'redux-actions'
 import { User } from 'constants/ActionTypes'
@@ -96,4 +97,6 @@ class SignupProfile extends React.Component {
   }
 }
 
-export default SignupProfile
+export default connect(state => ({
+  // post: state.site.post
+}))(SignupProfile)

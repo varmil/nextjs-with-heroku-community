@@ -1,7 +1,8 @@
 const express = require('express')
 const ConnectRoles = require('connect-roles')
 const Role = require('./constants/Role')
-const Authentication = require('./controllers/authentication')
+const AuthenticationController = require('./controllers/authentication')
+const UserController = require('./controllers/user')
 const passport = require('passport')
 require('./services/passport')
 
@@ -60,7 +61,9 @@ module.exports = function(app) {
     res.json({ id, nickname, createdAt })
   })
 
-  app.post('/signin', requireSignIn, Authentication.signin)
+  app.post('/signin', requireSignIn, AuthenticationController.signin)
 
-  app.post('/signup', Authentication.signup)
+  app.post('/signup', AuthenticationController.signup)
+
+  app.post('/user/profile', UserController.profile)
 }
