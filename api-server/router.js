@@ -1,5 +1,7 @@
 const express = require('express')
 const ConnectRoles = require('connect-roles')
+const multer = require('multer')
+const uuidv1 = require('uuid/v1')
 const Role = require('./constants/Role')
 const AuthenticationController = require('./controllers/authentication')
 const UserController = require('./controllers/user')
@@ -7,9 +9,33 @@ const passport = require('passport')
 require('./services/passport')
 
 const router = express.Router()
-
 const requireAuth = passport.authenticate('jwt', { session: false })
 const requireSignIn = passport.authenticate('local', { session: false })
+
+// ------------------ FILE UPLOAD ---------------------
+// https://github.com/felixrieseberg/React-Dropzone-Component/blob/master/example/src-server/multerImpl.js
+const storage = multer.diskStorage({
+  filename: function(req, file, cb) {
+    let ext
+    // 適切な拡張子を付与
+    switch (file.mimetype) {
+      case 'image/jpeg':
+        ext = '.jpg'
+        break
+      case 'image/png':
+        ext = '.png'
+        break
+      case 'image/gif':
+        ext = '.gif'
+        break
+      default:
+        console.error('file.mimetype does NOT match any type')
+    }
+    cb(null, uuidv1() + ext)
+  }
+})
+const upload = multer({ storage })
+// ------------------ FILE UPLOAD END ---------------------
 
 // ------------------ CONNECT ROLES ---------------------
 const userRole = new ConnectRoles({
@@ -65,5 +91,5 @@ module.exports = function(app) {
 
   app.post('/signup', AuthenticationController.signup)
 
-  app.post('/user/profile', UserController.profile)
+  app.post('/user/profile', upload.single('image'), UserController.profile)
 }

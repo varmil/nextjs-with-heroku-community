@@ -28,25 +28,21 @@ const getJWTToken = state => state.user.jwtToken
 function* authenticate({ payload }) {
   const { url, email, password, successCb, errCb } = payload
   const res = yield call(API.post, url, { email, password })
-  if (!res.ok) return yield call(errCb, res)
+  if (!res.status === 200) return yield call(errCb, res)
 
-  try {
-    // set user data to cookie and store
-    const { token } = yield call([res, 'json'])
-    setCookie(Rule.COOKIE_JWT_TOKEN, token)
-    yield put(createAction(User.AUTHENTICATE)(token))
-    yield call(successCb, res)
-  } catch (e) {
-    console.warn('maybe response is not json')
-    return yield call(errCb, res)
-  }
+  // set user data to cookie and store
+  const { token } = res.data
+  setCookie(Rule.COOKIE_JWT_TOKEN, token)
+  yield put(createAction(User.AUTHENTICATE)(token))
+  yield call(successCb, res)
 }
 
 // （初期登録、プロフィール編集？）
 function* saveUserProfile({ payload }) {
-  const { image, nickname, successCb, errCb } = payload
-  const res = yield call(API.post, '/user/profile', { image, nickname })
-  if (!res.ok) return yield call(errCb, res)
+  const { formData, successCb, errCb } = payload
+  const res = yield call(API.post, '/user/profile', formData)
+  if (!res.status === 200) return yield call(errCb, res)
+
   yield call(successCb, res)
 }
 
