@@ -61,8 +61,9 @@ export const AppPost = createTypes('app/post/', 'SET_POST', async('FETCH'))
 
 export const User = createTypes(
   'user/',
-  // async('SIGNIN'),
-  // async('SIGNUP'),
+  'AUTHENTICATE',
+  'DEAUTHENTICATE',
+  async('AUTH'),
   async('FETCH'),
   'SET'
 )

@@ -8,7 +8,6 @@ import RoundWideButton from 'components/atoms/RoundWideButton'
 import ColorButton from 'components/atoms/ColorButton'
 import CenteredContainer from 'components/molecules/CenteredContainer'
 import SignInUpHeader from 'components/molecules/SignInUpHeader'
-import API from 'utils/API'
 
 const btnStyle = {
   width: '100%'
@@ -17,6 +16,9 @@ const inputStyle = {
   borderRadius: 30,
   padding: '10px 20px'
 }
+
+const E_MESSAGE =
+  'メールアドレスかパスワードが間違っています。再度入力し直してください。'
 
 class Signin extends React.Component {
   state = {
@@ -34,20 +36,20 @@ class Signin extends React.Component {
   // ERRORハンドリングしやすいのでここでPOST
   async signin(e) {
     const { email, password } = this.state
-    const res = await API.post('/signin', { email, password })
-    console.info('SIGNIN', res)
-    if (res.ok) {
-      // TODO: set user data to store
-      // yield put(loadDataSuccess(data))
-      await Router.pushRoute(`/view/home`)
-    } else {
-      // const message = await res.text()
-      this.setState({
-        ...this.state,
-        errorMessage:
-          'メールアドレスかパスワードが間違っています。再度入力し直してください。'
-      })
+    const successCb = async res => Router.pushRoute(`/view/home`)
+    const errCb = async res => {
+      // NOTE: passportで401等が返ってくる場合jsonではないので注意
+      this.setState({ ...this.state, errorMessage: E_MESSAGE })
     }
+    this.props.dispatch(
+      createAction(User.AUTH_REQUEST)({
+        url: '/signin',
+        email,
+        password,
+        successCb,
+        errCb
+      })
+    )
   }
 
   render() {

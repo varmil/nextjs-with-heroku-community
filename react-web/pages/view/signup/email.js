@@ -9,7 +9,6 @@ import Rule from 'constants/Rule'
 import ColorButton from 'components/atoms/ColorButton'
 import CenteredContainer from 'components/molecules/CenteredContainer'
 import SignInUpHeader from 'components/molecules/SignInUpHeader'
-import API from 'utils/API'
 
 class SignupEmail extends React.Component {
   state = {
@@ -27,19 +26,20 @@ class SignupEmail extends React.Component {
   // ERRORハンドリングしやすいのでここでPOST
   async signup(e) {
     const { email, password } = this.state
-    const res = await API.post('/signup', { email, password })
-    console.info('SIGNUP', res)
-    if (res.ok) {
-      // TODO: set user data to store
-      // yield put(loadDataSuccess(data))
-      await Router.pushRoute(`/view/signup/complete`)
-    } else {
+    const successCb = async res => Router.pushRoute(`/view/signup/complete`)
+    const errCb = async res => {
       const json = await res.json()
-      this.setState({
-        ...this.state,
-        errorMessage: <span>{json.error}</span>
-      })
+      this.setState({ ...this.state, errorMessage: <span>{json.error}</span> })
     }
+    this.props.dispatch(
+      createAction(User.AUTH_REQUEST)({
+        url: '/signup',
+        email,
+        password,
+        successCb,
+        errCb
+      })
+    )
   }
 
   render() {

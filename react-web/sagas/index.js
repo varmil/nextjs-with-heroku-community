@@ -17,20 +17,27 @@ import {
 } from 'actions/application'
 import { Posts, Comments, VoteOptions } from 'stub/app'
 import BoxType from 'constants/BoxType'
+import { createAction } from 'redux-actions'
+import { setCookie, removeCookie } from 'utils/cookie'
 import API from 'utils/API'
 
-// function* signinUser({ payload }) {
-//   const res = yield call(API.post, '/signin', payload)
-//   console.info('SIGNIN', res)
-//   if (res.ok) {
-//   } else {
-//     const message = yield call([res, 'text'])
-//     console.warn(message)
-//   }
-// }
+function* authenticate({ payload }) {
+  const { url, email, password, successCb, errCb } = payload
+  const res = yield call(API.post, url, { email, password })
 
-// function* signupUser({ payload }) {
-// }
+  if (!res.ok) return yield call(errCb, res)
+
+  try {
+    // set user data to cookie and store
+    const { token } = yield call([res, 'json'])
+    setCookie('token', token)
+    yield put(createAction(User.AUTHENTICATE)(token))
+    yield call(successCb, res)
+  } catch (e) {
+    console.warn('maybe response is not json')
+    return yield call(errCb, res)
+  }
+}
 
 function* fetchSiteDesign({ payload }) {
   // TODO: fetch category, subBanner, then put them into store
@@ -101,6 +108,7 @@ function* postIFrameMessageSaga(action) {
 // }
 
 const userSaga = [
+  takeLatest(User.AUTH_REQUEST, authenticate)
   // takeLatest(User.FETCH_REQUEST, fetchUser)
 ]
 

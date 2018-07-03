@@ -12,14 +12,18 @@ import { Provider } from 'react-redux'
 import withRedux from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
 import withAppLayout from 'components/templates/withAppLayout'
+import createStore from 'store'
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-
-import createStore from 'store'
+import initialize from 'utils/initialize'
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
     let pageProps = {}
+
+    // user AUTHENTICATE
+    initialize(ctx)
+
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps({ ctx })
     }
