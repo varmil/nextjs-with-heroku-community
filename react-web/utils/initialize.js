@@ -20,7 +20,7 @@ export default function(ctx) {
     ) {
       setTimeout(function() {
         console.log('you are already logined')
-        Router.push('/')
+        // Router.push('/')
       }, 0)
     }
   }
