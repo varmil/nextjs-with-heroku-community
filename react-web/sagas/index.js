@@ -20,6 +20,7 @@ import BoxType from 'constants/BoxType'
 import { createAction } from 'redux-actions'
 import { setCookie, removeCookie } from 'utils/cookie'
 import API from 'utils/API'
+import Rule from 'constants/Rule'
 
 function* authenticate({ payload }) {
   const { url, email, password, successCb, errCb } = payload
@@ -30,7 +31,7 @@ function* authenticate({ payload }) {
   try {
     // set user data to cookie and store
     const { token } = yield call([res, 'json'])
-    setCookie('token', token)
+    setCookie(Rule.COOKIE_JWT_TOKEN, token)
     yield put(createAction(User.AUTHENTICATE)(token))
     yield call(successCb, res)
   } catch (e) {
