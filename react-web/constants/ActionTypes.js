@@ -64,6 +64,7 @@ export const User = createTypes(
   'AUTHENTICATE',
   'DEAUTHENTICATE',
   async('AUTH'),
+  async('SAVE_PROFILE'),
   async('FETCH'),
   'SET'
 )

@@ -28,7 +28,6 @@ const getJWTToken = state => state.user.jwtToken
 function* authenticate({ payload }) {
   const { url, email, password, successCb, errCb } = payload
   const res = yield call(API.post, url, { email, password })
-
   if (!res.ok) return yield call(errCb, res)
 
   try {
@@ -41,6 +40,14 @@ function* authenticate({ payload }) {
     console.warn('maybe response is not json')
     return yield call(errCb, res)
   }
+}
+
+// （初期登録、プロフィール編集？）
+function* saveUserProfile({ payload }) {
+  const { image, nickname, successCb, errCb } = payload
+  const res = yield call(API.post, '/user/profile', { image, nickname })
+  if (!res.ok) return yield call(errCb, res)
+  yield call(successCb, res)
 }
 
 function* fetchSiteDesign({ payload }) {
@@ -116,7 +123,8 @@ function* postIFrameMessageSaga(action) {
 // }
 
 const userSaga = [
-  takeLatest(User.AUTH_REQUEST, authenticate)
+  takeLatest(User.AUTH_REQUEST, authenticate),
+  takeLatest(User.SAVE_PROFILE_REQUEST, saveUserProfile)
   // takeLatest(User.FETCH_REQUEST, fetchUser)
 ]
 

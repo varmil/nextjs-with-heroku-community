@@ -9,6 +9,7 @@ export default class extends React.Component {
           src={props.src}
           alt="Avatar"
           className={`avatar ${props.className}`}
+          style={props.style}
         />
 
         <style jsx>{`

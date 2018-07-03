@@ -23,13 +23,13 @@ app.prepare().then(() => {
     }
   })
 
-  server.get('/view/signup', (req, res) => {
+  server.get('/view/signup/email', (req, res) => {
     if (req.cookies.jwtToken) {
       console.log('you are already logined')
       // res.redirect('/')
-      return app.render(req, res, '/view/signup', req.query)
+      return app.render(req, res, '/view/signup/email', req.query)
     } else {
-      return app.render(req, res, '/view/signup', req.query)
+      return app.render(req, res, '/view/signup/email', req.query)
     }
   })
 

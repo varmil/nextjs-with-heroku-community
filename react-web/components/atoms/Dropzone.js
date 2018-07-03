@@ -8,7 +8,9 @@ const dropzoneStyle = {
   marginTop: 20,
   marginBottom: 30,
   textAlign: 'center',
-  color: '#919191'
+  color: '#919191',
+  // this is important !
+  overflow: 'hidden'
 }
 
 const ImgPreviews = props => {
