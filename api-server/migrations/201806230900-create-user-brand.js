@@ -1,5 +1,5 @@
 const db = require('../models')
-const tableName = db.Post.tableName
+const tableName = db.UserBrand.tableName
 
 module.exports = {
   up: function(queryInterface, Sequelize) {
@@ -10,42 +10,12 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      userId: {
+        allowNull: false,
+        defaultValue: 0,
+        type: Sequelize.INTEGER
+      },
       brandId: {
-        allowNull: false,
-        defaultValue: 0,
-        type: Sequelize.INTEGER
-      },
-      boxType: {
-        allowNull: false,
-        defaultValue: 0,
-        type: Sequelize.INTEGER
-      },
-      posterId: {
-        allowNull: false,
-        defaultValue: 0,
-        type: Sequelize.INTEGER
-      },
-      categoryIndex: {
-        allowNull: false,
-        defaultValue: 0,
-        type: Sequelize.INTEGER
-      },
-      title: {
-        allowNull: false,
-        defaultValue: '',
-        type: Sequelize.STRING
-      },
-      body: {
-        allowNull: false,
-        defaultValue: '',
-        type: Sequelize.TEXT
-      },
-      like: {
-        allowNull: false,
-        defaultValue: 0,
-        type: Sequelize.INTEGER
-      },
-      comment: {
         allowNull: false,
         defaultValue: 0,
         type: Sequelize.INTEGER

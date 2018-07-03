@@ -20,11 +20,6 @@ module.exports = {
         defaultValue: 0,
         type: Sequelize.INTEGER
       },
-      isAdmin: {
-        allowNull: false,
-        defaultValue: false,
-        type: Sequelize.BOOLEAN
-      },
       body: {
         allowNull: false,
         defaultValue: '',
