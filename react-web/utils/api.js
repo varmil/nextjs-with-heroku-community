@@ -21,20 +21,27 @@ export default class API {
     }
   }
 
-  static async fetch(url, options = {}) {
+  static async fetch(url, jwtToken, options = {}) {
     try {
-      return await fetch(`${API.getBaseURL()}${url}`, options)
+      const newOptions = {
+        ...options,
+        headers: {
+          Authorization: jwtToken || ''
+        }
+      }
+      return await fetch(`${API.getBaseURL()}${url}`, newOptions)
     } catch (e) {
       console.error(e)
     }
   }
 
-  static async post(url, jsonData = {}, options = {}) {
+  static async post(url, jsonData, jwtToken, options = {}) {
     try {
       const newOptions = {
         ...options,
         method: 'POST',
         headers: {
+          Authorization: jwtToken || '',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(jsonData)

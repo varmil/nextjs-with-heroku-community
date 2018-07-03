@@ -1,5 +1,5 @@
 // import { delay } from 'redux-saga'
-import { all, fork, call, put, takeLatest } from 'redux-saga/effects'
+import { all, fork, call, put, select, takeLatest } from 'redux-saga/effects'
 import {
   User,
   IFrame,
@@ -21,6 +21,9 @@ import { createAction } from 'redux-actions'
 import { setCookie, removeCookie } from 'utils/cookie'
 import API from 'utils/API'
 import Rule from 'constants/Rule'
+
+// select JWTToken !
+const getJWTToken = state => state.user.jwtToken
 
 function* authenticate({ payload }) {
   const { url, email, password, successCb, errCb } = payload
@@ -45,6 +48,10 @@ function* fetchSiteDesign({ payload }) {
 }
 
 function* fetchTalkInitial({ payload }) {
+  // how to use select()
+  // const token = yield select(getJWTToken)
+  // const res = yield call(API.fetch, '/view/home', token)
+
   // TODO: fetch box contents from server
   // then, dispatch action to sync store
   const data = Posts[BoxType.TALK]

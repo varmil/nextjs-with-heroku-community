@@ -14,18 +14,20 @@ app.prepare().then(() => {
   server.use(cookieParser())
 
   server.get('/view/signin', (req, res) => {
-    if (req.cookies.token) {
+    if (req.cookies.jwtToken) {
       console.log('you are already logined')
       // res.redirect('/')
+      return app.render(req, res, '/view/signin', req.query)
     } else {
       return app.render(req, res, '/view/signin', req.query)
     }
   })
 
   server.get('/view/signup', (req, res) => {
-    if (req.cookies.token) {
+    if (req.cookies.jwtToken) {
       console.log('you are already logined')
       // res.redirect('/')
+      return app.render(req, res, '/view/signup', req.query)
     } else {
       return app.render(req, res, '/view/signup', req.query)
     }
