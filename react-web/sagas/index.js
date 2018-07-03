@@ -52,11 +52,11 @@ function* saveUserProfile({ payload }) {
 
 // payload is token
 function* fetchUser({ payload }) {
-  const res = yield call(API.fetch, '/user', payload)
-  if (res.status === 200) {
+  try {
+    const res = yield call(API.fetch, '/user', payload)
     yield put(createAction(User.SET)({ ...res.data }))
-  } else {
-    console.warn('failed fetch user info', res)
+  } catch (e) {
+    console.warn('failed fetch user info', e.response.statusText)
   }
 }
 

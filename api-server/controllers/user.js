@@ -1,6 +1,7 @@
-const appRoot = require('app-root-path')
+const reqlib = require('app-root-path').require
+const models = reqlib('/models')
 const moveFile = require('move-file')
-const Path = require('../constants/Path')
+const Path = reqlib('/constants/Path')
 
 /**
  * Profile編集
@@ -14,12 +15,20 @@ exports.profile = async (req, res) => {
     return res.status(422).json({ error: '項目を正しく入力してください。' })
   }
 
-  // TODO save nickname
-
-  // save image
+  // image path
   const { path, filename } = req.file
-  const newPath = `${Path.STATIC_BASE_DIR}${Path.USER_ICON_DIR}/${filename}`
-  await moveFile(path, newPath)
+  const dbPath = `${Path.USER_ICON_DIR}/${filename}`
+  const fullPath = `${Path.STATIC_BASE_DIR}${dbPath}`
 
+  // save nickname
+  await models.User.update(
+    { nickname, iconPath: dbPath },
+    {
+      where: { id: userId }
+    }
+  )
+
+  // save image after update DB
+  await moveFile(path, fullPath)
   res.json(true)
 }

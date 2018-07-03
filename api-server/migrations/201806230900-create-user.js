@@ -25,6 +25,11 @@ module.exports = {
         defaultValue: '',
         type: Sequelize.STRING
       },
+      iconPath: {
+        allowNull: false,
+        defaultValue: '',
+        type: Sequelize.STRING
+      },
       roleId: {
         allowNull: false,
         defaultValue: 0,
@@ -47,11 +52,6 @@ module.exports = {
         type: Sequelize.STRING
       },
       lastName: {
-        allowNull: false,
-        defaultValue: '',
-        type: Sequelize.STRING
-      },
-      profilePhotoPath: {
         allowNull: false,
         defaultValue: '',
         type: Sequelize.STRING
