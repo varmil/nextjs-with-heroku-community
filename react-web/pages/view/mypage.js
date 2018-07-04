@@ -1,10 +1,8 @@
 import React from 'react'
+import range from 'lodash/range'
 import { connect } from 'react-redux'
-import { createAction } from 'redux-actions'
-import { User } from 'constants/ActionTypes'
 import { Link, Router } from 'routes'
 import Avatar from 'components/atoms/Avatar'
-import SignInUpHeader from 'components/molecules/SignInUpHeader'
 
 class Mypage extends React.Component {
   state = {
@@ -18,11 +16,12 @@ class Mypage extends React.Component {
     return (
       <React.Fragment>
         <div className="container">
-          <section className="mt-4 text-center">
+          <section className="avatar mt-4 text-center">
             <Avatar
               src="https://www.w3schools.com/w3images/avatar2.png"
               size={60}
             />
+            <i className="fas fa-chevron-left" />
           </section>
 
           <section className="name mt-2 text-center">
@@ -34,9 +33,40 @@ class Mypage extends React.Component {
             東京で働いています。ファッション大好き。<br />
             どうぞよろしくお願いいたします！
           </section>
+
+          <section className="act mt-4 row justify-content-center">
+            <div className="entity text-center">
+              <div className="n">140</div>
+              <div className="d">投稿</div>
+            </div>
+            <div className="entity text-center">
+              <div className="n">140</div>
+              <div className="d">いいね!</div>
+            </div>
+            <div className="entity text-center">
+              <div className="n">24k</div>
+              <div className="d">コメント</div>
+            </div>
+          </section>
+
+          <section className="badges mt-2 row justify-content-center">
+            {range(6).map(i => (
+              <div key={i} className="badge col-3 py-2">
+                <img src="/static/stub/badges/001.png" />
+              </div>
+            ))}
+          </section>
         </div>
 
         <style jsx>{`
+          .avatar i {
+            position: absolute;
+            left: 5%;
+            top: 20px;
+            font-size: 22px;
+          }
+
+          .avatar,
           .name {
             position: relative;
           }
@@ -49,15 +79,44 @@ class Mypage extends React.Component {
           }
 
           .edit {
+            color: #909090;
             position: absolute;
             bottom: 0px;
             right: 10%;
-            font-size: 12px;
+            font-size: 11px;
           }
 
           .desc {
             font-weight: bold;
             font-size: 14px;
+          }
+
+          .act .n {
+            font-weight: bold;
+            font-size: 20px;
+          }
+
+          .act .d {
+            font-size: 12px;
+          }
+
+          .act .entity {
+            width: 80px;
+          }
+
+          .act .entity:not(:last-child) {
+            border-right: 1px solid black;
+          }
+
+          .badges {
+            width: 270px;
+            margin: 0 auto;
+          }
+
+          .badge img {
+            width: 52px;
+            height: 73px;
+            object-fit: cover;
           }
         `}</style>
       </React.Fragment>
