@@ -5,12 +5,11 @@ import { createAction } from 'redux-actions'
 import { User } from 'constants/ActionTypes'
 import Input from 'reactstrap/lib/Input'
 import FormFeedback from 'reactstrap/lib/FormFeedback'
-import Rule from 'constants/Rule'
 import AdminHeader from 'components/organisms/admin/AdminHeader'
 import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
 import ColorButton from 'components/atoms/ColorButton'
-import CenteredContainer from 'components/molecules/CenteredContainer'
-import SignInUpHeader from 'components/molecules/SignInUpHeader'
+import SimpleTable from 'components/organisms/admin/SimpleTable'
+import Rule from 'constants/Rule'
 
 class AdminPostList extends React.Component {
   state = {
@@ -33,7 +32,7 @@ class AdminPostList extends React.Component {
           <li className="breadcrumb-item active">投稿</li>
         </WhiteBreadcrumb>
 
-        <div className="container pt-4 mt-3">
+        <div className="container py-4 mt-3">
           <section className="borderB pageHeader text-center position-relative pb-3">
             <span className="title">投稿</span>
             <ColorButton
@@ -75,8 +74,7 @@ class AdminPostList extends React.Component {
           )}
 
           <section className="regNote mt-3 text-center">
-            上のアカウント登録ボタンを押すことにより、<br />
-            <a>利用規約</a> に同意したことになります。
+            <SimpleTable />
           </section>
         </div>
 
