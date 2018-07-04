@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
 import BoxContent, { VoteCounter } from 'components/organisms/site/BoxContent'
 import { AppPost } from 'constants/ActionTypes'
-import BoxType from 'constants/BoxType'
+import BoxType from '/../shared/constants/BoxType'
 
 // コメントする際にBottomに飛ばしたい
 const BOTTOM_Y = 9999
@@ -98,7 +98,7 @@ class Post extends React.Component {
   render() {
     const props = this.props
     const { data } = props.post
-    const isVoice = props.boxType === BoxType.VOICE
+    const isVoice = props.boxType === BoxType.index.voice
     return (
       <React.Fragment>
         <BoxContent

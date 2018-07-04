@@ -18,7 +18,7 @@ import {
   setPost
 } from 'actions/application'
 import { Posts, Comments, VoteOptions } from 'stub/app'
-import BoxType from 'constants/BoxType'
+import BoxType from '/../shared/constants/BoxType'
 import { createAction } from 'redux-actions'
 import { setCookie, removeCookie } from 'utils/cookie'
 import API from 'utils/API'
@@ -74,27 +74,27 @@ function* fetchTalkInitial({ payload }) {
 
   // TODO: fetch box contents from server
   // then, dispatch action to sync store
-  const data = Posts[BoxType.TALK]
+  const data = Posts[BoxType.index.talk]
   yield put(addTalkContents(data))
 }
 
 function* fetchVoiceInitial({ payload }) {
   // TODO: fetch box contents from server
   // then, dispatch action to sync store
-  const data = Posts[BoxType.VOICE]
+  const data = Posts[BoxType.index.voice]
   yield put(addVoiceContents(data))
 }
 
 function* fetchNewsInitial({ payload }) {
   // TODO: fetch box contents from server
   // then, dispatch action to sync store
-  const data = Posts[BoxType.NEWS]
+  const data = Posts[BoxType.index.news]
   yield put(addNewsContents(data))
 }
 
 function* fetchMypageInitial({ payload }) {
   // TODO: 仮でNEWSを入れておく
-  const data = Posts[BoxType.NEWS]
+  const data = Posts[BoxType.index.news]
   yield put(addMypageContents(data))
 }
 

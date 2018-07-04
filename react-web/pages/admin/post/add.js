@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import { createAction } from 'redux-actions'
 import { User } from 'constants/ActionTypes'
+import BoxType from '/../shared/constants/BoxType'
 import Input from 'reactstrap/lib/Input'
 import FormFeedback from 'reactstrap/lib/FormFeedback'
 import AdminPageContainer from 'components/molecules/AdminPageContainer'
@@ -68,6 +69,7 @@ class AdminPostAdd extends React.Component {
   }
 
   render() {
+    // console.log(Foo.)
     return (
       <React.Fragment>
         <AdminHeader />

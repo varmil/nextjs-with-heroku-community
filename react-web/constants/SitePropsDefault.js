@@ -2,6 +2,7 @@ import range from 'lodash/range'
 import Color from 'constants/Color'
 import URL from 'constants/URL'
 import update from 'immutability-helper'
+import BoxType from '/../shared/constants/BoxType'
 
 const MAX_CATEGORIES_NUM = 10
 const FREE_TALK_INDEX = 9
@@ -85,22 +86,22 @@ const boxesBase = range(4).map(i => ({
 export const Boxes = {
   item: [
     update(boxesBase[0], {
-      type: { $set: 0 },
+      type: { $set: BoxType.index.talk },
       slug: { $set: URL.TALK_SLUG },
       header: { text: { $set: 'TALK' } }
     }),
     update(boxesBase[1], {
-      type: { $set: 1 },
+      type: { $set: BoxType.index.voice },
       slug: { $set: URL.VOICE_SLUG },
       header: { text: { $set: 'VOICE' } }
     }),
     update(boxesBase[2], {
-      type: { $set: 2 },
+      type: { $set: BoxType.index.news },
       slug: { $set: URL.NEWS_SLUG },
       header: { text: { $set: 'NEWS' } }
     }),
     update(boxesBase[3], {
-      type: { $set: 3 },
+      type: { $set: BoxType.index.event },
       slug: { $set: URL.EVENT_SLUG },
       header: { text: { $set: 'EVENT' } }
     })

@@ -3,7 +3,7 @@ import shuffle from 'lodash/shuffle'
 import take from 'lodash/take'
 import random from 'lodash/random'
 import range from 'lodash/range'
-import BoxType from 'constants/BoxType'
+import BoxType from '/../shared/constants/BoxType'
 
 const dummyPostBody = `ここも今現にいわゆる料理らとして事の時でさませだ。
 
@@ -20,7 +20,7 @@ S300ラインをおすすめします。お手入れもかなり楽で春夏と�
 
 const BasePosts = range(5).map(i => ({
   // postページへのlinkに使う
-  boxType: BoxType.TALK,
+  boxType: BoxType.index.talk,
   postId: i,
   categoryIndex: 0,
 
@@ -49,16 +49,16 @@ const VoicePosts = BasePosts.map(e => {
   return {
     ...e,
     title: '今年の夏にメインで来ていきたいものは？',
-    boxType: BoxType.VOICE
+    boxType: BoxType.index.voice
   }
 })
 const NewsPosts = BasePosts.map(e => {
-  return { ...e, boxType: BoxType.NEWS }
+  return { ...e, boxType: BoxType.index.news }
 })
 export const Posts = {
-  [BoxType.TALK]: TalkPosts,
-  [BoxType.VOICE]: VoicePosts,
-  [BoxType.NEWS]: NewsPosts
+  [BoxType.index.talk]: TalkPosts,
+  [BoxType.index.voice]: VoicePosts,
+  [BoxType.index.news]: NewsPosts
 }
 
 export const Comments = range(3).map(i => ({
