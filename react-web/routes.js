@@ -12,5 +12,5 @@ routes.add('/view/home/:slug', '/view/home')
 routes.add('/view/post/:boxType/:postId', '/view/post')
 
 // （admin）投稿編集
-routes.add('/admin/post/list/:slug', '/admin/post/list')
+// routes.add('/admin/post/list/:slug', '/admin/post/list')
 routes.add('/admin/post/add/:slug', '/admin/post/add')
