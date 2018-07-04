@@ -28,8 +28,8 @@ const colourStyles = bgColor => {
       backgroundColor: bgColor,
       borderRadius: 0,
       margin: '0 auto',
-      fontSize: 16,
-      height: 50
+      fontSize: 13,
+      height: 45
     }),
     singleValue: styles => ({
       ...styles,
