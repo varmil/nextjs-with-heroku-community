@@ -4,6 +4,7 @@ export default props => {
       {props.children}
       <style jsx>{`
         .container {
+          border: 1px solid #d0d0d0;
           background-color: white;
         }
       `}</style>
