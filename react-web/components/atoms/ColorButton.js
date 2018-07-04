@@ -10,6 +10,7 @@ const Index = props => (
       style={props.style}
       disabled={props.disabled}
     >
+      {props.icon && <span className="icon">{props.icon}</span>}
       {props.children}
     </button>
 
@@ -31,6 +32,11 @@ const Index = props => (
         color: white !important;
         border-color: ${props.color} !important;
         background-color: ${props.color} !important;
+      }
+
+      .icon {
+        position: absolute;
+        left: 20px;
       }
     `}</style>
   </React.Fragment>
