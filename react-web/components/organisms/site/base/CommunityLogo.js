@@ -8,10 +8,11 @@ const Index = props => (
     data-action={SiteCommon.SET_LOGO}
     data-path={props.propsPath}
   >
-    <img src={props.src} width="140" height="40" alt="logo" />
+    <img src={props.src} height="40" alt="logo" />
 
     <style jsx>{`
       img {
+        width: 100%;
         object-fit: contain;
       }
     `}</style>

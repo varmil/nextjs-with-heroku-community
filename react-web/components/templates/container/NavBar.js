@@ -14,8 +14,9 @@ import Classes from 'constants/Classes'
 import { SiteCommon } from 'constants/ActionTypes'
 
 const brandStyle = {
-  position: 'relative'
-  // top: 2
+  position: 'relative',
+  maxWidth: 140,
+  width: '63%'
 }
 
 class NavBar extends React.Component {
@@ -29,14 +30,14 @@ class NavBar extends React.Component {
     return (
       <React.Fragment>
         <Navbar
-          className={`${props.className || ''}`}
+          className={`row ${props.className || ''}`}
           style={{
-            padding: '0.6rem 0.8rem 0rem',
+            padding: '0.6rem 0.8rem 0.5rem',
             borderBottom: '1px solid black',
             ...props.style
           }}
         >
-          <div className="d-inline-block">
+          <div className="leftContainer col-7 pr-1">
             <Link route={'/view/mypage'} passHref>
               <a>
                 <Avatar
@@ -45,35 +46,41 @@ class NavBar extends React.Component {
                 />
               </a>
             </Link>
-            <NavbarBrand className="ml-3 mr-0" style={brandStyle}>
-              <div className="d-inline-block">
+            <div className="d-inline-block ml-3 mr-0" style={brandStyle}>
+              <div className="">
                 <CommunityLogo
                   src={props.logo.src}
                   propsPath={`${PATH_MAP.LOGO}`}
                 />
               </div>
-            </NavbarBrand>
+            </div>
           </div>
 
           <div
-            className={`ml-auto icons ${Classes.EDITABLE}`}
+            className={`icons text-center col-4 px-1 ${Classes.EDITABLE}`}
             data-modal={`ColorModal`}
             data-action={SiteCommon.SET_NAV_ICON_COLOR}
             data-path={`${PATH_MAP.NAV_ICON}`}
           >
-            <i className="fas fa-search mx-1 navIcon" />
+            <i className="fas fa-search mr-2 navIcon" />
             <NotificationIcon
-              className="mx-1 navIcon"
+              className="mr-2 navIcon"
               color={props.navIcon.color}
             />
-            <SettingsIcon
-              className="mx-1 navIcon"
-              color={props.navIcon.color}
-            />
+
+            <Link route={'/view/settings'} passHref>
+              <a>
+                <SettingsIcon className="navIcon" color={props.navIcon.color} />
+              </a>
+            </Link>
           </div>
         </Navbar>
 
         <style jsx>{`
+          .leftContainer {
+            display: inline-block;
+          }
+
           .icons {
             font-size: 20px;
             color: black;

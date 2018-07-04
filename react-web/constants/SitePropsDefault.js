@@ -11,7 +11,7 @@ export const Logo = {
 }
 
 export const NavIconColorDefault = {
-  color: 'black'
+  color: '#4B4B4B'
 }
 
 // export const MenuBarPC = {
