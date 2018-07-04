@@ -3,10 +3,7 @@ import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
 import { User } from 'constants/ActionTypes'
 import { Link, Router } from 'routes'
-import Input from 'reactstrap/lib/Input'
-import RoundWideButton from 'components/atoms/RoundWideButton'
-import ColorButton from 'components/atoms/ColorButton'
-import CenteredContainer from 'components/molecules/CenteredContainer'
+import Avatar from 'components/atoms/Avatar'
 import SignInUpHeader from 'components/molecules/SignInUpHeader'
 
 class Mypage extends React.Component {
@@ -17,22 +14,50 @@ class Mypage extends React.Component {
   }
 
   render() {
+    const props = this.props
     return (
       <React.Fragment>
-        HELLO
+        <div className="container">
+          <section className="mt-4 text-center">
+            <Avatar
+              src="https://www.w3schools.com/w3images/avatar2.png"
+              size={60}
+            />
+          </section>
+
+          <section className="name mt-2 text-center">
+            <span> {props.user.nickname || 'Your Name'}</span>
+            <div className="edit">編集</div>
+          </section>
+
+          <section className="desc mt-4 text-center">
+            東京で働いています。ファッション大好き。<br />
+            どうぞよろしくお願いいたします！
+          </section>
+        </div>
+
         <style jsx>{`
-          img {
-            width: 100%;
+          .name {
+            position: relative;
           }
 
-          .login a {
-            font-size: 12px;
-            color: #909090;
-            text-decoration: underline;
+          .name span {
+            position: relative;
+            font-size: 22px;
+            font-weight: bold;
+            color: #2b6eb2;
           }
 
-          .alert {
+          .edit {
+            position: absolute;
+            bottom: 0px;
+            right: 10%;
             font-size: 12px;
+          }
+
+          .desc {
+            font-weight: bold;
+            font-size: 14px;
           }
         `}</style>
       </React.Fragment>
@@ -41,5 +66,5 @@ class Mypage extends React.Component {
 }
 
 export default connect(state => ({
-  // post: state.site.post
+  user: state.user
 }))(Mypage)
