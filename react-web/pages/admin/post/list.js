@@ -1,10 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Router } from 'routes'
+import { Link } from 'routes'
 import { createAction } from 'redux-actions'
 import { User } from 'constants/ActionTypes'
 import Input from 'reactstrap/lib/Input'
 import FormFeedback from 'reactstrap/lib/FormFeedback'
+import AdminPageContainer from 'components/molecules/AdminPageContainer'
 import AdminHeader from 'components/organisms/admin/AdminHeader'
 import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
 import ColorButton from 'components/atoms/ColorButton'
@@ -28,26 +29,30 @@ class AdminPostList extends React.Component {
         <AdminHeader />
 
         <WhiteBreadcrumb>
-          <li className="breadcrumb-item">サイトデザイン</li>
-          <li className="breadcrumb-item active">投稿</li>
+          <li className="breadcrumb-item">投稿</li>
+          <li className="breadcrumb-item active">一覧</li>
         </WhiteBreadcrumb>
 
-        <div className="container py-4 mt-3">
+        <AdminPageContainer>
           <section className="borderB pageHeader text-center position-relative pb-3">
             <span className="title">投稿</span>
-            <ColorButton
-              className="addButton w-25"
-              color="#2b6db2"
-              style={{
-                position: 'absolute',
-                top: 3,
-                right: 0,
-                borderRadius: 18
-              }}
-              icon={<i className="fas fa-plus" />}
-            >
-              新規登録
-            </ColorButton>
+            <Link route={'/admin/post/add'} passHref>
+              <a>
+                <ColorButton
+                  className="addButton w-25"
+                  color="#2b6db2"
+                  style={{
+                    position: 'absolute',
+                    top: 3,
+                    right: 0,
+                    borderRadius: 18
+                  }}
+                  icon={<i className="fas fa-plus" />}
+                >
+                  新規投稿
+                </ColorButton>
+              </a>
+            </Link>
           </section>
 
           <section className="borderB py-4">
@@ -76,7 +81,7 @@ class AdminPostList extends React.Component {
           <section className="regNote mt-3 text-center">
             <SimpleTable />
           </section>
-        </div>
+        </AdminPageContainer>
 
         <style global jsx>{`
           body {
@@ -103,10 +108,6 @@ class AdminPostList extends React.Component {
             top: 0;
             right: 0%;
             width: 30%;
-          }
-
-          .alert {
-            font-size: 12px;
           }
         `}</style>
       </React.Fragment>
