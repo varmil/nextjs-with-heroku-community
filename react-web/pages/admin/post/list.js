@@ -34,9 +34,8 @@ class AdminPostList extends React.Component {
         </WhiteBreadcrumb>
 
         <div className="container pt-4 mt-3">
-          <section className="pageHeader text-center position-relative pb-3">
+          <section className="borderB pageHeader text-center position-relative pb-3">
             <span className="title">投稿</span>
-
             <ColorButton
               className="addButton w-25"
               color="#2b6db2"
@@ -52,15 +51,20 @@ class AdminPostList extends React.Component {
             </ColorButton>
           </section>
 
-          <section className="mt-3">
-            <div className="form-group">
-              <label>パスワード</label>
-              <Input
+          <section className="borderB py-4">
+            <div className="search input-group text-right">
+              <input
                 type="text"
+                className="form-control border-right-0"
                 placeholder={`キーワードを検索`}
                 value={this.state.keyword}
                 onChange={this.handleChange('keyword')}
               />
+              <div className="input-group-append">
+                <span className="input-group-text bg-white border-left-0">
+                  <i className="fas fa-search" />
+                </span>
+              </div>
             </div>
           </section>
 
@@ -87,12 +91,20 @@ class AdminPostList extends React.Component {
             background-color: white;
           }
 
-          .pageHeader {
+          .borderB {
             border-bottom: 1px solid gray;
           }
 
           .title {
             font-size: 38px;
+          }
+
+          .search {
+            margin-left: auto;
+            position: relative;
+            top: 0;
+            right: 0%;
+            width: 30%;
           }
 
           .alert {
