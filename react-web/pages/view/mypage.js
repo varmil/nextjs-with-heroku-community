@@ -16,12 +16,6 @@ const iconButtonStyle = {
 }
 
 class Mypage extends React.Component {
-  // state = {
-  //   email: '',
-  //   password: '',
-  //   errorMessage: ''
-  // }
-
   static async getInitialProps({ ctx }) {
     const { mypage } = ctx.store.getState().app
     const { dispatch } = ctx.store

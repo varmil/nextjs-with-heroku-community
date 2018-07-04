@@ -131,6 +131,7 @@ class TopPage extends React.Component {
 
           .sticky-top {
             background-color: white;
+            overflow: hidden;
           }
 
           .tab {

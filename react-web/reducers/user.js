@@ -6,7 +6,7 @@ const initialState = {
   id: undefined,
   jwtToken: null,
   nickname: '',
-  iconPath: ''
+  iconPath: 'https://www.w3schools.com/w3images/avatar2.png'
 }
 
 export default handleActions(

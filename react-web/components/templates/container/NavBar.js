@@ -40,10 +40,7 @@ class NavBar extends React.Component {
           <div className="leftContainer col-7 pr-1">
             <Link route={'/view/mypage'} passHref>
               <a>
-                <Avatar
-                  src="https://www.w3schools.com/w3images/avatar2.png"
-                  className=""
-                />
+                <Avatar src={props.user.iconPath} className="" />
               </a>
             </Link>
             <div className="d-inline-block ml-3 mr-0" style={brandStyle}>
@@ -99,6 +96,9 @@ class NavBar extends React.Component {
 }
 
 export default connect(state => ({
+  // デザイン
   logo: objectPath.get(state.site, `${PATH_MAP.LOGO}`),
-  navIcon: objectPath.get(state.site, `${PATH_MAP.NAV_ICON}`)
+  navIcon: objectPath.get(state.site, `${PATH_MAP.NAV_ICON}`),
+  // ユーザ
+  user: state.user
 }))(NavBar)
