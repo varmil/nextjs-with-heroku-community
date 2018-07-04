@@ -36,6 +36,22 @@ module.exports = {
         type: Sequelize.INTEGER
       },
 
+      introduction: {
+        allowNull: false,
+        defaultValue: '',
+        type: Sequelize.TEXT
+      },
+      birthday: {
+        allowNull: false,
+        defaultValue: '',
+        type: Sequelize.STRING
+      },
+      prefecture: {
+        allowNull: false,
+        defaultValue: 0,
+        type: Sequelize.INTEGER
+      },
+
       facebookId: {
         allowNull: false,
         defaultValue: 0,
@@ -85,11 +101,6 @@ module.exports = {
         allowNull: false,
         defaultValue: false,
         type: Sequelize.BOOLEAN
-      },
-      birthday: {
-        allowNull: false,
-        defaultValue: '',
-        type: Sequelize.STRING
       },
 
       createdAt: {

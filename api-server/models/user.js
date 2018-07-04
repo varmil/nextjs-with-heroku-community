@@ -9,6 +9,12 @@ module.exports = function(sequelize, DataTypes) {
     // 管理者が登録したときはそれ用のId定数を入れる
     roleId: DataTypes.INTEGER,
 
+    // 任意登録
+    introduction: DataTypes.TEXT,
+    birthday: DataTypes.STRING,
+    prefecture: DataTypes.INTEGER,
+
+    // facebook
     facebookId: DataTypes.BIGINT,
     facebookAccessToken: DataTypes.STRING,
     firstName: DataTypes.STRING,
@@ -18,8 +24,7 @@ module.exports = function(sequelize, DataTypes) {
     ageRangeMin: DataTypes.INTEGER,
     ageRangeMax: DataTypes.INTEGER,
     timezone: DataTypes.FLOAT,
-    verified: DataTypes.BOOLEAN,
-    birthday: DataTypes.STRING
+    verified: DataTypes.BOOLEAN
   })
 
   // Class Method
