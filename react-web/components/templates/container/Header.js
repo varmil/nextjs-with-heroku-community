@@ -40,6 +40,6 @@ class Header extends React.Component {
 }
 
 export default connect(state => ({
-  common: state.site.common
+  // common: state.site.common
   // mainBannerProps: objectPath.get(state.site, `${PATH_MAP.MAIN_BANNER}`)
 }))(Header)

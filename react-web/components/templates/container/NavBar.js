@@ -1,10 +1,11 @@
 import React from 'react'
+import { Link } from 'routes'
 import { connect } from 'react-redux'
 import objectPath from 'object-path'
 import { PATH_MAP } from 'reducers/site'
 import Navbar from 'reactstrap/lib/Navbar'
 import NavbarBrand from 'reactstrap/lib/NavbarBrand'
-import { action as toggleMenu } from 'redux-burger-menu'
+// import { action as toggleMenu } from 'redux-burger-menu'
 import CommunityLogo from 'components/organisms/site/base/CommunityLogo'
 import Avatar from 'components/atoms/Avatar'
 import NotificationIcon from 'components/atoms/NotificationIcon'
@@ -35,24 +36,24 @@ class NavBar extends React.Component {
             ...props.style
           }}
         >
-          <NavbarBrand className="mr-0" style={brandStyle}>
-            <div
-              className="d-inline-block"
-              onClick={() => props.dispatch(toggleMenu(true))}
-            >
-              <Avatar
-                src="https://www.w3schools.com/w3images/avatar2.png"
-                className=""
-              />
-            </div>
-
-            <div className="ml-3 d-inline-block">
-              <CommunityLogo
-                src={props.logo.src}
-                propsPath={`${PATH_MAP.LOGO}`}
-              />
-            </div>
-          </NavbarBrand>
+          <div className="d-inline-block">
+            <Link route={'/view/mypage'} passHref>
+              <a>
+                <Avatar
+                  src="https://www.w3schools.com/w3images/avatar2.png"
+                  className=""
+                />
+              </a>
+            </Link>
+            <NavbarBrand className="ml-3 mr-0" style={brandStyle}>
+              <div className="d-inline-block">
+                <CommunityLogo
+                  src={props.logo.src}
+                  propsPath={`${PATH_MAP.LOGO}`}
+                />
+              </div>
+            </NavbarBrand>
+          </div>
 
           <div
             className={`ml-auto icons ${Classes.EDITABLE}`}
