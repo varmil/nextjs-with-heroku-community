@@ -11,7 +11,7 @@ exports.profile = async (req, res) => {
   console.log('[profile]file', req.file)
   const { userId, nickname } = req.body
 
-  if (!userId || !nickname || !req.file) {
+  if (!userId || !nickname) {
     return res.status(422).json({ error: '項目を正しく入力してください。' })
   }
 
