@@ -2,10 +2,18 @@ import React from 'react'
 import range from 'lodash/range'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
+import IconButton from '@material-ui/core/IconButton'
 import { Link, Router } from 'routes'
 import Avatar from 'components/atoms/Avatar'
 import MypageContents from 'components/templates/edit_view_shared/MypageContents'
 import { AppMypage } from 'constants/ActionTypes'
+import URL from 'constants/URL'
+
+const iconButtonStyle = {
+  position: 'absolute',
+  left: '3%',
+  top: '0px'
+}
 
 class Mypage extends React.Component {
   // state = {
@@ -35,7 +43,12 @@ class Mypage extends React.Component {
               src="https://www.w3schools.com/w3images/avatar2.png"
               size={60}
             />
-            <i className="fas fa-chevron-left" />
+
+            <Link route={URL.VIEW_HOME}>
+              <IconButton style={iconButtonStyle}>
+                <i className="fas fa-chevron-left" />
+              </IconButton>
+            </Link>
           </section>
 
           <section className="name mt-2 text-center">
@@ -70,17 +83,14 @@ class Mypage extends React.Component {
               </div>
             ))}
           </section>
-
-          <section>
-            <MypageContents />
-          </section>
         </div>
+
+        <section>
+          <MypageContents />
+        </section>
 
         <style jsx>{`
           .avatar i {
-            position: absolute;
-            left: 5%;
-            top: 20px;
             font-size: 22px;
           }
 
