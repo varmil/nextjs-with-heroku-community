@@ -9,6 +9,7 @@ const dropzoneStyle = {
   marginBottom: 30,
   textAlign: 'center',
   color: '#919191',
+  cursor: 'pointer',
   // this is important !
   overflow: 'hidden'
 }
@@ -40,6 +41,7 @@ const ImgPreviews = props => {
           top: 10px;
           right: 15px;
           color: #037bff;
+          cursor: pointer;
         }
       `}</style>
     </div>
@@ -61,7 +63,7 @@ export default class extends React.Component {
 
         <style jsx>{`
           i {
-            font-size: 35px;
+            font-size: ${props.size || 35}px;
           }
         `}</style>
       </div>

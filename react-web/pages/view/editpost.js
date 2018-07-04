@@ -4,11 +4,9 @@ import { connect } from 'react-redux'
 import Select from 'react-select'
 import { withStyles } from '@material-ui/core/styles'
 import Input from '@material-ui/core/Input'
-
-import DropzoneIcon from 'components/atoms/Dropzone'
+import PostDropzone from 'components/molecules/PostDropzone'
 import Rule from 'constants/Rule'
 import URL from 'constants/URL'
-// import { createAction } from 'redux-actions'
 
 const inputStyles = {
   input: {
@@ -26,7 +24,6 @@ const colourStyles = {
   control: styles => ({
     ...styles,
     backgroundColor: 'gray',
-    // border: 'none',
     borderRadius: 0,
     margin: '0 auto',
     fontSize: 12
@@ -122,10 +119,9 @@ class Editpost extends React.Component {
         </section>
 
         <section>
-          <DropzoneIcon
+          <PostDropzone
             files={state.files}
-            onDrop={this.onDrop.bind(this)}
-            onDelete={this.onDelete.bind(this)}
+            onChange={files => this.setState({ ...this.state, files })}
           />
         </section>
       </React.Fragment>

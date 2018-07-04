@@ -5,18 +5,15 @@ import map from 'lodash/map'
 import toUpper from 'lodash/toUpper'
 import Select from 'react-select'
 import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
+import Input from '@material-ui/core/Input'
 import { withStyles } from '@material-ui/core/styles'
 import { createAction } from 'redux-actions'
 import { User } from 'constants/ActionTypes'
 import BoxType from '/../shared/constants/BoxType'
-import Input from 'reactstrap/lib/Input'
-import FormFeedback from 'reactstrap/lib/FormFeedback'
+import PostDropzone from 'components/molecules/PostDropzone'
 import AdminPageContainer from 'components/molecules/AdminPageContainer'
 import AdminHeader from 'components/organisms/admin/AdminHeader'
 import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
-import ColorButton from 'components/atoms/ColorButton'
-import Rule from 'constants/Rule'
 
 const SelectLabel = props => (
   <div>
@@ -40,7 +37,7 @@ const colourStyles = bgColor => {
       backgroundColor: bgColor,
       borderRadius: 0,
       margin: '0 auto',
-      fontSize: 15,
+      fontSize: '1rem',
       height: 50
     }),
     singleValue: styles => ({
@@ -75,7 +72,8 @@ class AdminPostAdd extends React.Component {
 
   state = {
     title: '',
-    body: ''
+    body: '',
+    files: []
   }
 
   handleChange = name => event => {
@@ -125,29 +123,31 @@ class AdminPostAdd extends React.Component {
           </section>
 
           <section className="container mt-4">
-            <TextField
-              label="タイトル"
+            <label>タイトル</label>
+            <Input
               value={this.state.title}
               onChange={this.handleChange('title')}
-              InputLabelProps={{
-                shrink: true
-              }}
-              margin="normal"
               fullWidth
             />
           </section>
 
           <section className="container mt-4">
-            <TextField
-              label="本文"
+            <label>本文</label>
+            <Input
               value={this.state.body}
               onChange={this.handleChange('body')}
-              InputLabelProps={{
-                shrink: true
-              }}
-              margin="normal"
+              rows={5}
+              rowsMax={50}
               fullWidth
               multiline
+            />
+          </section>
+
+          <section className="images mx-auto mt-3">
+            <PostDropzone
+              size={45}
+              files={this.state.files}
+              onChange={files => this.setState({ ...this.state, files })}
             />
           </section>
         </AdminPageContainer>
@@ -159,8 +159,16 @@ class AdminPostAdd extends React.Component {
         `}</style>
 
         <style jsx>{`
+          label {
+            color: #707070;
+          }
+
           .borderB {
             border-bottom: 1px solid gray;
+          }
+
+          .images {
+            width: 375px;
           }
         `}</style>
       </React.Fragment>
