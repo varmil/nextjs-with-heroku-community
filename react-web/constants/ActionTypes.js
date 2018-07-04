@@ -53,6 +53,12 @@ export const AppNews = createTypes(
   async('FETCH_INITIAL')
 )
 
+export const AppMypage = createTypes(
+  'app/mypage/',
+  'ADD_CONTENTS',
+  async('FETCH_INITIAL')
+)
+
 export const AppPost = createTypes('app/post/', 'SET_POST', async('FETCH'))
 
 // -----

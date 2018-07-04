@@ -6,6 +6,7 @@ import {
   AppTalkRoom,
   AppVoice,
   AppNews,
+  AppMypage,
   AppPost
 } from 'constants/ActionTypes'
 import { failure } from 'actions/example'
@@ -13,6 +14,7 @@ import {
   addTalkContents,
   addVoiceContents,
   addNewsContents,
+  addMypageContents,
   setPost
 } from 'actions/application'
 import { Posts, Comments, VoteOptions } from 'stub/app'
@@ -89,6 +91,12 @@ function* fetchNewsInitial({ payload }) {
   yield put(addNewsContents(data))
 }
 
+function* fetchMypageInitial({ payload }) {
+  // TODO: 仮でNEWSを入れておく
+  const data = Posts[BoxType.NEWS]
+  yield put(addMypageContents(data))
+}
+
 function* fetchPost({ payload }) {
   const { boxType, postId } = payload
 
@@ -142,6 +150,7 @@ const appSaga = [
   takeLatest(AppTalkRoom.FETCH_INITIAL_REQUEST, fetchTalkInitial),
   takeLatest(AppVoice.FETCH_INITIAL_REQUEST, fetchVoiceInitial),
   takeLatest(AppNews.FETCH_INITIAL_REQUEST, fetchNewsInitial),
+  takeLatest(AppMypage.FETCH_INITIAL_REQUEST, fetchMypageInitial),
   takeLatest(AppPost.FETCH_REQUEST, fetchPost)
 ]
 

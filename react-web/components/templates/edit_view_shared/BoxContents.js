@@ -4,7 +4,7 @@ import BoxContent from 'components/organisms/site/BoxContent'
 import SubBanner from 'components/organisms/site/base/SubBanner'
 import CategorySelect from 'components/organisms/site/base/CategorySelect'
 
-// TALK BOX系のベースクラス
+// POST概要を並べる系のベースクラス
 export default class BoxContents extends React.Component {
   createCategorySelect() {
     // hide categories in VOICE

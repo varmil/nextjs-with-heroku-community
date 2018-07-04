@@ -1,14 +1,28 @@
 import React from 'react'
 import range from 'lodash/range'
 import { connect } from 'react-redux'
+import { createAction } from 'redux-actions'
 import { Link, Router } from 'routes'
 import Avatar from 'components/atoms/Avatar'
+import MypageContents from 'components/templates/edit_view_shared/MypageContents'
+import { AppMypage } from 'constants/ActionTypes'
 
 class Mypage extends React.Component {
-  state = {
-    email: '',
-    password: '',
-    errorMessage: ''
+  // state = {
+  //   email: '',
+  //   password: '',
+  //   errorMessage: ''
+  // }
+
+  static async getInitialProps({ ctx }) {
+    const { mypage } = ctx.store.getState().app
+    const { dispatch } = ctx.store
+
+    if (ctx.isServer || mypage.boxContents.length === 0) {
+      dispatch(createAction(AppMypage.FETCH_INITIAL_REQUEST)())
+    }
+
+    return {}
   }
 
   render() {
@@ -55,6 +69,10 @@ class Mypage extends React.Component {
                 <img src="/static/stub/badges/001.png" />
               </div>
             ))}
+          </section>
+
+          <section>
+            <MypageContents />
           </section>
         </div>
 
