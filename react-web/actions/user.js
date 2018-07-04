@@ -9,6 +9,6 @@ export let reauthenticate = createAction(User.AUTHENTICATE)
 // removing the token
 export let deauthenticate = createAction(User.DEAUTHENTICATE, e => {
   removeCookie(Rule.COOKIE_JWT_TOKEN)
-  Router.push('/')
+  Router.push('/view/signin')
   return e
 })

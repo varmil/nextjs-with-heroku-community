@@ -4,9 +4,7 @@ import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
 import IconButton from '@material-ui/core/IconButton'
 import { Link, Router } from 'routes'
-import Avatar from 'components/atoms/Avatar'
-import MypageContents from 'components/templates/edit_view_shared/MypageContents'
-import { AppMypage } from 'constants/ActionTypes'
+import { deauthenticate } from 'actions/user'
 import URL from 'constants/URL'
 
 const iconButtonStyle = {
@@ -38,7 +36,14 @@ class Mypage extends React.Component {
           </section>
 
           <section className="contentWrap mt-5 ml-4">
-            <div className="text">ログアウト</div>
+            <div
+              className="text"
+              onClick={() => {
+                props.dispatch(deauthenticate())
+              }}
+            >
+              ログアウト
+            </div>
           </section>
         </div>
 

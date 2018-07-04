@@ -37,8 +37,7 @@ module.exports = {
       },
 
       introduction: {
-        allowNull: false,
-        defaultValue: '',
+        allowNull: true,
         type: Sequelize.TEXT
       },
       birthday: {
