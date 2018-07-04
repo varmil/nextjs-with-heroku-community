@@ -10,10 +10,12 @@ export default function(ctx) {
   if (ctx.isServer) {
     if (ctx.req.headers.cookie) {
       const token = getCookie(Rule.COOKIE_JWT_TOKEN, ctx.req)
-      // store token
-      ctx.store.dispatch(reauthenticate(token))
-      // fetch and set user basic info from API server with token
-      ctx.store.dispatch(createAction(User.FETCH_REQUEST)(token))
+      if (token) {
+        // store token
+        ctx.store.dispatch(reauthenticate(token))
+        // fetch and set user basic info from API server with token
+        ctx.store.dispatch(createAction(User.FETCH_REQUEST)(token))
+      }
     }
   } else {
     const token = ctx.store.getState().user.jwtToken

@@ -35,6 +35,7 @@ function* authenticate({ payload }) {
     const { token } = res.data
     setCookie(Rule.COOKIE_JWT_TOKEN, token)
     yield put(createAction(User.AUTHENTICATE)(token))
+    yield put(createAction(User.FETCH_REQUEST)(token))
     yield call(successCb, res)
   } catch (e) {
     yield call(errCb, e.response)
