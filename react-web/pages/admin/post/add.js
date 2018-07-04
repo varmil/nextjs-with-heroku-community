@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'routes'
+import map from 'lodash/map'
+import toUpper from 'lodash/toUpper'
 import Select from 'react-select'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
@@ -44,11 +46,12 @@ const colourStyles = bgColor => {
   }
 }
 
-const boxOptions = [
-  { value: 'talk', label: <SelectLabel left="投稿先　：" right="TALK" /> },
-  { value: 'voice', label: <SelectLabel left="投稿先　：" right="VOICE" /> },
-  { value: 'news', label: <SelectLabel left="投稿先　：" right="NEWS" /> }
-]
+const boxOptions = map(BoxType.index, (v, k) => {
+  return {
+    value: v,
+    label: <SelectLabel left="投稿先　：" right={toUpper(k)} />
+  }
+})
 
 const categoryOptions = [
   { value: 'talk', label: <SelectLabel left="カテゴリ：" right="AAAAA" /> },
@@ -69,7 +72,6 @@ class AdminPostAdd extends React.Component {
   }
 
   render() {
-    // console.log(Foo.)
     return (
       <React.Fragment>
         <AdminHeader />
