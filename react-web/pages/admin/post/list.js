@@ -36,7 +36,7 @@ class AdminPostList extends React.Component {
         <AdminPageContainer>
           <section className="borderB pageHeader text-center position-relative pb-3">
             <span className="title">投稿</span>
-            <Link route={'/admin/post/add'} passHref>
+            <Link route={'/admin/post/add/0'} passHref>
               <a>
                 <ColorButton
                   className="addButton w-25"

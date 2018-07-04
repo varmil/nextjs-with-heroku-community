@@ -6,6 +6,7 @@ import toUpper from 'lodash/toUpper'
 import Select from 'react-select'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
+import { withStyles } from '@material-ui/core/styles'
 import { createAction } from 'redux-actions'
 import { User } from 'constants/ActionTypes'
 import BoxType from '/../shared/constants/BoxType'
@@ -24,6 +25,14 @@ const SelectLabel = props => (
   </div>
 )
 
+const MyBigBtn = withStyles({ root: { fontSize: 16 } })(props => {
+  return (
+    <Button {...props} className={props.classes.root}>
+      {props.children}
+    </Button>
+  )
+})
+
 const colourStyles = bgColor => {
   return {
     control: styles => ({
@@ -31,8 +40,8 @@ const colourStyles = bgColor => {
       backgroundColor: bgColor,
       borderRadius: 0,
       margin: '0 auto',
-      fontSize: 13,
-      height: 45
+      fontSize: 15,
+      height: 50
     }),
     singleValue: styles => ({
       ...styles,
@@ -60,6 +69,10 @@ const categoryOptions = [
 ]
 
 class AdminPostAdd extends React.Component {
+  static async getInitialProps({ ctx }) {
+    return { boxType: +ctx.query.boxType }
+  }
+
   state = {
     title: '',
     body: ''
@@ -72,6 +85,7 @@ class AdminPostAdd extends React.Component {
   }
 
   render() {
+    const props = this.props
     return (
       <React.Fragment>
         <AdminHeader />
@@ -84,13 +98,11 @@ class AdminPostAdd extends React.Component {
           <header className="borderB">
             <nav className="navbar justify-content-between">
               <Link route={'/admin/post/list'}>
-                <Button className={''}>キャンセル</Button>
+                <MyBigBtn>キャンセル</MyBigBtn>
               </Link>
               <div className="">
-                <Button className={''}>下書きする</Button>
-                <Button color="primary" className={''}>
-                  投稿する
-                </Button>
+                <MyBigBtn>下書きする</MyBigBtn>
+                <MyBigBtn color="primary">投稿する</MyBigBtn>
               </div>
             </nav>
           </header>
@@ -98,7 +110,7 @@ class AdminPostAdd extends React.Component {
           <section className="mt-3">
             <Select
               instanceId={'SSR-POSTADD001'}
-              defaultValue={boxOptions[0]}
+              defaultValue={boxOptions[+props.boxType]}
               styles={colourStyles('#5e91c4')}
               options={boxOptions}
               isSearchable={false}
