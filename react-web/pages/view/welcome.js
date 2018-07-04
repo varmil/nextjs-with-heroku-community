@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'routes'
 import { connect } from 'react-redux'
 import withIFrameable from 'components/templates/withIFrameable'
 import WelcomePage from 'components/templates/edit_view_shared/WelcomePage'
@@ -20,7 +21,11 @@ class Welcome extends React.Component {
     const props = this.props
     return (
       <React.Fragment>
-        <this.WelcomePage {...props} />
+        <Link route={'/view/signup/profile'} passHref>
+          <a>
+            <this.WelcomePage {...props} />
+          </a>
+        </Link>
       </React.Fragment>
     )
   }

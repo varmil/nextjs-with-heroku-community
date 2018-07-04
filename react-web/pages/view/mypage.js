@@ -33,10 +33,7 @@ class Mypage extends React.Component {
       <React.Fragment>
         <div className="container">
           <section className="avatar mt-4 text-center">
-            <Avatar
-              src="https://www.w3schools.com/w3images/avatar2.png"
-              size={60}
-            />
+            <Avatar src={props.user.iconPath} size={60} />
 
             <Link route={URL.VIEW_HOME}>
               <IconButton style={iconButtonStyle}>
@@ -46,7 +43,7 @@ class Mypage extends React.Component {
           </section>
 
           <section className="name mt-2 text-center">
-            <span> {props.user.nickname || 'Your Name'}</span>
+            <span>{props.user.nickname || 'Your Name'}</span>
 
             <Link route={'/view/settings/account'}>
               <div className="edit">編集</div>

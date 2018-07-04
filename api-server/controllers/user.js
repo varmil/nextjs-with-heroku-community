@@ -15,10 +15,18 @@ exports.profile = async (req, res) => {
     return res.status(422).json({ error: '項目を正しく入力してください。' })
   }
 
-  // image path
-  const { path, filename } = req.file
-  const dbPath = `${Path.USER_ICON_DIR}/${filename}`
-  const fullPath = `${Path.STATIC_BASE_DIR}${dbPath}`
+  let dbPath
+  if (req.file) {
+    // image path
+    // save image before update DB
+    const { path, filename } = req.file
+    dbPath = `${Path.USER_ICON_DIR}/${filename}`
+    const fullPath = `${Path.STATIC_BASE_DIR}${dbPath}`
+    await moveFile(path, fullPath)
+  } else {
+    // TODO: プロフィール画像が設定されていない場合
+    dbPath = 'https://www.w3schools.com/w3images/avatar4.png'
+  }
 
   // save nickname
   await models.User.update(
@@ -28,7 +36,5 @@ exports.profile = async (req, res) => {
     }
   )
 
-  // save image after update DB
-  await moveFile(path, fullPath)
   res.json(true)
 }
