@@ -7,7 +7,9 @@ import {
   AppVoice,
   AppNews,
   AppMypage,
-  AppPost
+  AppPost,
+  AppAdminPosts,
+  AppAdminPost
 } from 'constants/ActionTypes'
 import { failure } from 'actions/example'
 import {
@@ -20,7 +22,7 @@ import {
 import { Posts, Comments, VoteOptions } from 'stub/app'
 import BoxType from '/../shared/constants/BoxType'
 import { createAction } from 'redux-actions'
-import { setCookie, removeCookie } from 'utils/cookie'
+import { setCookie } from 'utils/cookie'
 import API from 'utils/API'
 import Rule from 'constants/Rule'
 
@@ -98,6 +100,14 @@ function* fetchMypageInitial({ payload }) {
   yield put(addMypageContents(data))
 }
 
+/**
+ * POST
+ */
+
+function* fetchPosts({ payload }) {
+  // TODO
+}
+
 function* fetchPost({ payload }) {
   const { boxType, postId } = payload
 
@@ -109,15 +119,13 @@ function* fetchPost({ payload }) {
   yield put(setPost({ ...post, comments, voteOptions }))
 }
 
-// function* loadDataSaga() {
-//   try {
-//     const res = yield fetch('https://jsonplaceholder.typicode.com/users')
-//     const data = yield res.json()
-//     yield put(loadDataSuccess(data))
-//   } catch (err) {
-//     yield put(failure(err))
-//   }
-// }
+function* savePost({ payload }) {
+  const { boxType, postId } = payload
+}
+
+/**
+ * iFrame
+ */
 
 function* postIFrameMessageSaga(action) {
   try {
@@ -131,15 +139,6 @@ function* postIFrameMessageSaga(action) {
 /** ****************************************************************************/
 /** ***************************** WATCHERS *************************************/
 /** ****************************************************************************/
-
-// function* watchApp() {
-//   return yield all([
-//     takeLatest(AppTalkRoom.FETCH_INITIAL_REQUEST, fetchTalkInitial),
-//     takeLatest(AppVoice.FETCH_INITIAL_REQUEST, fetchVoiceInitial),
-//     takeLatest(AppNews.FETCH_INITIAL_REQUEST, fetchNewsInitial),
-//     takeLatest(AppPost.FETCH_REQUEST, fetchPost)
-//   ])
-// }
 
 const userSaga = [
   takeLatest(User.AUTH_REQUEST, authenticate),
@@ -155,10 +154,17 @@ const appSaga = [
   takeLatest(AppPost.FETCH_REQUEST, fetchPost)
 ]
 
+const appAdminSaga = [
+  takeLatest(AppAdminPost.SAVE_REQUEST, savePost),
+  takeLatest(AppAdminPost.FETCH_REQUEST, fetchPost),
+  takeLatest(AppAdminPosts.FETCH_REQUEST, fetchPosts)
+]
+
 function* rootSaga() {
   yield all([
     ...userSaga,
     ...appSaga,
+    ...appAdminSaga,
     takeLatest(IFrame.POST_MESSAGE, postIFrameMessageSaga)
   ])
 }

@@ -2,6 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'routes'
 import map from 'lodash/map'
+import pickBy from 'lodash/pickBy'
+import identity from 'lodash/identity'
+import omit from 'lodash/omit'
 import toUpper from 'lodash/toUpper'
 import Select from 'react-select'
 import Button from '@material-ui/core/Button'
@@ -68,6 +71,7 @@ const createCatOptions = cats => {
 
 class AdminBaseEditor extends React.Component {
   state = {
+    category: createCatOptions(this.props.categories)[0],
     title: '',
     body: '',
     files: []
@@ -81,7 +85,16 @@ class AdminBaseEditor extends React.Component {
 
   // stateまるごと通知
   onSubmit() {
-    this.props.onSubmit(this.state)
+    let data = this.state
+
+    // カテゴリがあるBOXならば追加
+    if (data.category) {
+      data = { ...data, categoryIndex: this.state.category.value }
+    }
+    // category objectは不要なので省く
+    data = omit(data, 'category')
+
+    this.props.onSubmit(data)
   }
 
   render() {
@@ -119,7 +132,10 @@ class AdminBaseEditor extends React.Component {
             <section className="">
               <Select
                 instanceId={'SSR-POSTADD002'}
-                defaultValue={categoryOptions[0]}
+                value={this.state.category}
+                onChange={o => {
+                  this.setState({ ...this.state, category: o })
+                }}
                 styles={colourStyles('#2B6EB2')}
                 options={categoryOptions}
                 isSearchable={false}

@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'routes'
+import { Router, Link } from 'routes'
 import { withStyles } from '@material-ui/core/styles'
 import { createAction } from 'redux-actions'
-import { User } from 'constants/ActionTypes'
+import { AppAdminPost } from 'constants/ActionTypes'
 import AdminHeader from 'components/organisms/admin/AdminHeader'
 import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
 import BaseEditor from 'components/templates/admin_post_add/BaseEditor'
@@ -20,9 +20,7 @@ class AdminPostAdd extends React.Component {
   }
 
   state = {
-    title: '',
-    body: '',
-    files: []
+    errorMessage: ''
   }
 
   handleChange = name => event => {
@@ -33,6 +31,36 @@ class AdminPostAdd extends React.Component {
 
   onSubmit(state) {
     console.info(state)
+    const props = this.props
+    const { title, body, files, categoryIndex } = state
+
+    // 複数画像をPOSTするためにFormDataを使用する
+    let formData = new FormData()
+    formData.append('userId', props.user.id)
+    formData.append('boxType', props.boxType)
+    formData.append('title', title)
+    formData.append('body', body)
+
+    if (files && files.length) {
+      formData.append('image', files[0])
+    }
+
+    if (categoryIndex) {
+      formData.append('categoryIndex', categoryIndex)
+    }
+
+    const successCb = async res => Router.pushRoute(`/admin/post/list`)
+    const errCb = async res => {
+      const { error } = res.data
+      this.setState({ ...this.state, errorMessage: <span>{error}</span> })
+    }
+    this.props.dispatch(
+      createAction(AppAdminPost.SAVE_REQUEST)({
+        formData,
+        successCb,
+        errCb
+      })
+    )
   }
 
   // NOTE: いわゆるFactoryメソッド
@@ -84,6 +112,12 @@ class AdminPostAdd extends React.Component {
           <li className="breadcrumb-item">投稿</li>
         </WhiteBreadcrumb>
 
+        {this.state.errorMessage && (
+          <div className="alert alert-danger" role="alert">
+            {this.state.errorMessage}
+          </div>
+        )}
+
         {this.createContent(props.boxType)}
       </React.Fragment>
     )
@@ -91,6 +125,7 @@ class AdminPostAdd extends React.Component {
 }
 
 export default connect(state => ({
+  user: state.user,
   talkCategories: state.site.talkroom.categories.item,
   newsCategories: state.site.news.categories.item
 }))(AdminPostAdd)

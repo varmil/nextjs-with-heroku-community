@@ -1,6 +1,8 @@
 import { createTypes, async } from './redux-action-types'
 
-// （編集プレビュー）
+// -----
+// -- SITE: BrandごとにEditできるレイアウト情報 --
+// -----
 export const SitePreview = createTypes('site/preview/', 'SET_DEVICE')
 
 // （Edit, View）全ページ共通で使用するデータ
@@ -32,9 +34,8 @@ export const SiteNews = createTypes(
 export const IFrame = createTypes('iframe/', 'POST_MESSAGE')
 
 // -----
+// -- APP: ユーザViewで詰めるデータ --
 // -----
-// -----
-
 export const AppTalkRoom = createTypes(
   'app/talkroom/',
   'ADD_CONTENTS',
@@ -59,12 +60,32 @@ export const AppMypage = createTypes(
   async('FETCH_INITIAL')
 )
 
+// POST詳細画面
 export const AppPost = createTypes('app/post/', 'SET_POST', async('FETCH'))
 
 // -----
+// -- APP_ADMIN: AdminViewで詰めるデータ --
 // -----
-// -----
+// post/list
+export const AppAdminPosts = createTypes(
+  'app/admin/posts/',
+  'ADD_CONTENTS',
+  async('FETCH')
+)
 
+// post/add （UserViewとは扱う情報が微妙に違うかもなので分ける）
+export const AppAdminPost = createTypes(
+  'app/admin/post/',
+  'SET',
+  // 新規投稿
+  async('SAVE'),
+  // 下書き or 編集時のデータ取得
+  async('FETCH')
+)
+
+// -----
+// -- USER: ユーザ情報 --
+// -----
 export const User = createTypes(
   'user/',
   'AUTHENTICATE',
@@ -76,18 +97,7 @@ export const User = createTypes(
   'SET'
 )
 
-export const Auth = createTypes('auth/', 'SET_IS_PREPARED', 'SET_IS_LOGGED_IN')
-
-export const SearchForm = createTypes(
-  'form',
-  'SET',
-  'SET_AREA_TEXT',
-  'SET_GENRE_TEXT',
-  'ADD_AREA_CHIP',
-  'REMOVE_AREA_CHIP',
-  'ADD_GENRE_CHIP',
-  'REMOVE_GENRE_CHIP'
-)
+// export const Auth = createTypes('auth/', 'SET_IS_PREPARED', 'SET_IS_LOGGED_IN')
 
 /**
  * 汎用ERROR用Action
