@@ -26,8 +26,8 @@ import { setCookie } from 'utils/cookie'
 import API from 'utils/API'
 import Rule from 'constants/Rule'
 
-// select JWTToken !
-const getJWTToken = state => state.user.jwtToken
+// select User !
+const getUser = state => state.user
 
 function* authenticate({ payload }) {
   const { url, email, password, successCb, errCb } = payload
@@ -120,7 +120,49 @@ function* fetchPost({ payload }) {
 }
 
 function* savePost({ payload }) {
-  const { boxType, postId } = payload
+  const {
+    successCb,
+    errCb,
+    // 必須
+    boxType,
+    title,
+    body,
+    // 任意
+    files,
+    categoryIndex,
+    // VOICE
+    options,
+    deadline
+  } = payload
+  const { id, jwtToken } = yield select(getUser)
+
+  // 複数画像をPOSTするためにFormDataを使用する
+  let formData = new FormData()
+  formData.append('userId', id)
+  formData.append('boxType', boxType)
+  formData.append('title', title)
+  formData.append('body', body)
+  Array.isArray(files) &&
+    files.forEach(file => {
+      formData.append('image', file)
+    })
+  if (categoryIndex) {
+    formData.append('categoryIndex', categoryIndex)
+  }
+  Array.isArray(options) &&
+    options.forEach(option => {
+      formData.append('options[]', option)
+    })
+  if (deadline) {
+    formData.append('deadline', deadline)
+  }
+
+  try {
+    const res = yield call(API.post, '/post', formData, jwtToken)
+    yield call(successCb, res)
+  } catch (e) {
+    yield call(errCb, e.response)
+  }
 }
 
 /**

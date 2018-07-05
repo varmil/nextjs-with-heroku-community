@@ -5,6 +5,8 @@ const uuidv1 = require('uuid/v1')
 const Role = require('./constants/Role')
 const AuthenticationController = require('./controllers/authentication')
 const UserController = require('./controllers/user')
+const PostController = require('./controllers/post')
+
 const passport = require('passport')
 require('./services/passport')
 
@@ -87,9 +89,17 @@ module.exports = function(app) {
     res.json({ id, nickname, createdAt })
   })
 
+  /**
+   * USER
+   */
   app.post('/signin', requireSignIn, AuthenticationController.signin)
 
   app.post('/signup', AuthenticationController.signup)
 
   app.post('/user/profile', upload.single('image'), UserController.profile)
+
+  /**
+   * POST
+   */
+  app.post('/post', requireAuth, upload.array('image'), PostController.post)
 }

@@ -32,33 +32,19 @@ class AdminPostAdd extends React.Component {
   onSubmit(state) {
     console.info(state)
     const props = this.props
-    const { title, body, files, categoryIndex } = state
-
-    // 複数画像をPOSTするためにFormDataを使用する
-    let formData = new FormData()
-    formData.append('userId', props.user.id)
-    formData.append('boxType', props.boxType)
-    formData.append('title', title)
-    formData.append('body', body)
-
-    if (files && files.length) {
-      formData.append('image', files[0])
-    }
-
-    if (categoryIndex) {
-      formData.append('categoryIndex', categoryIndex)
-    }
-
     const successCb = async res => Router.pushRoute(`/admin/post/list`)
     const errCb = async res => {
-      const { error } = res.data
-      this.setState({ ...this.state, errorMessage: <span>{error}</span> })
+      this.setState({
+        ...this.state,
+        errorMessage: <span>{JSON.stringify(res.data)}</span>
+      })
     }
     this.props.dispatch(
       createAction(AppAdminPost.SAVE_REQUEST)({
-        formData,
         successCb,
-        errCb
+        errCb,
+        boxType: props.boxType,
+        ...state
       })
     )
   }
@@ -125,7 +111,6 @@ class AdminPostAdd extends React.Component {
 }
 
 export default connect(state => ({
-  user: state.user,
   talkCategories: state.site.talkroom.categories.item,
   newsCategories: state.site.news.categories.item
 }))(AdminPostAdd)
