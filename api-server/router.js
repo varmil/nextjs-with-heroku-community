@@ -93,13 +93,13 @@ module.exports = function(app) {
    * USER
    */
   app.post('/signin', requireSignIn, AuthenticationController.signin)
-
   app.post('/signup', AuthenticationController.signup)
-
   app.post('/user/profile', upload.single('image'), UserController.profile)
 
   /**
    * POST
    */
-  app.post('/post', requireAuth, upload.array('image'), PostController.post)
+  app.post('/post', requireAuth, upload.array('image'), PostController.savePost)
+  app.get('/post/:postId', requireAuth, PostController.fetchPost)
+  app.get('/post/list/:pageNum', requireAuth, PostController.fetchPostList)
 }
