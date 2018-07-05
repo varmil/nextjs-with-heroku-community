@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import fecha from 'fecha'
 import range from 'lodash/range'
 import Input from '@material-ui/core/Input'
@@ -26,7 +27,8 @@ export default class extends React.Component {
 
   // baseStateとvoiceStateをmerge
   onSubmit(state) {
-    this.props.onSubmit({ ...state, ...this.state })
+    const options = this.state.options.filter(e => e)
+    this.props.onSubmit({ ...state, ...this.state, options })
   }
 
   render() {
