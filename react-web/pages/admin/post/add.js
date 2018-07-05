@@ -7,10 +7,13 @@ import { User } from 'constants/ActionTypes'
 import AdminHeader from 'components/organisms/admin/AdminHeader'
 import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
 import BaseEditor from 'components/templates/admin_post_add/BaseEditor'
+import VoiceEditor from 'components/templates/admin_post_add/VoiceEditor'
 import BoxType from '/../shared/constants/BoxType'
 
 class AdminPostAdd extends React.Component {
   static async getInitialProps({ ctx }) {
+    // TODO: 下書き考慮
+
     // TODO: 全ボックスのカテゴリをfetchしてset
 
     return { boxType: +ctx.query.boxType }
@@ -26,6 +29,36 @@ class AdminPostAdd extends React.Component {
     this.setState({
       [name]: event.target.value
     })
+  }
+
+  onSubmit(state) {
+    console.info(state)
+  }
+
+  // NOTE: いわゆるFactoryメソッド
+  createContent(boxType) {
+    const props = this.props
+    switch (boxType) {
+      case BoxType.index.talk:
+      case BoxType.index.news:
+        return (
+          <BaseEditor
+            boxType={props.boxType}
+            categories={this.createCategories(props.boxType)}
+            onSubmit={this.onSubmit.bind(this)}
+          />
+        )
+
+      case BoxType.index.voice:
+        return (
+          <VoiceEditor
+            boxType={props.boxType}
+            onSubmit={this.onSubmit.bind(this)}
+          />
+        )
+      default:
+        return null
+    }
   }
 
   // NOTE: ボックスタイプが増えるたびにここも修正する必要あり
@@ -51,10 +84,7 @@ class AdminPostAdd extends React.Component {
           <li className="breadcrumb-item">投稿</li>
         </WhiteBreadcrumb>
 
-        <BaseEditor
-          boxType={props.boxType}
-          categories={this.createCategories(props.boxType)}
-        />
+        {this.createContent(props.boxType)}
       </React.Fragment>
     )
   }

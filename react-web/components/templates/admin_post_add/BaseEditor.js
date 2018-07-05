@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button'
 import Input from '@material-ui/core/Input'
 import { withStyles } from '@material-ui/core/styles'
 import BoxType from '/../shared/constants/BoxType'
+import AdminPostFormLabel from 'components/atoms/AdminPostFormLabel'
 import PostDropzone from 'components/molecules/PostDropzone'
 import AdminPageContainer from 'components/molecules/AdminPageContainer'
 
@@ -66,10 +67,6 @@ const createCatOptions = cats => {
 }
 
 class AdminBaseEditor extends React.Component {
-  static async getInitialProps({ ctx }) {
-    return { boxType: +ctx.query.boxType }
-  }
-
   state = {
     title: '',
     body: '',
@@ -80,6 +77,11 @@ class AdminBaseEditor extends React.Component {
     this.setState({
       [name]: event.target.value
     })
+  }
+
+  // stateまるごと通知
+  onSubmit() {
+    this.props.onSubmit(this.state)
   }
 
   render() {
@@ -96,7 +98,9 @@ class AdminBaseEditor extends React.Component {
               </Link>
               <div className="">
                 <MyBigBtn>下書きする</MyBigBtn>
-                <MyBigBtn color="primary">投稿する</MyBigBtn>
+                <MyBigBtn color="primary" onClick={this.onSubmit.bind(this)}>
+                  投稿する
+                </MyBigBtn>
               </div>
             </nav>
           </header>
@@ -124,7 +128,7 @@ class AdminBaseEditor extends React.Component {
           )}
 
           <section className="container mt-4">
-            <label>タイトル</label>
+            <AdminPostFormLabel>タイトル</AdminPostFormLabel>
             <Input
               value={this.state.title}
               onChange={this.handleChange('title')}
@@ -133,7 +137,7 @@ class AdminBaseEditor extends React.Component {
           </section>
 
           <section className="container mt-4">
-            <label>本文</label>
+            <AdminPostFormLabel>本文</AdminPostFormLabel>
             <Input
               value={this.state.body}
               onChange={this.handleChange('body')}
@@ -162,10 +166,6 @@ class AdminBaseEditor extends React.Component {
         `}</style>
 
         <style jsx>{`
-          label {
-            color: #707070;
-          }
-
           .borderB {
             border-bottom: 1px solid gray;
           }
