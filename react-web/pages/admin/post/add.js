@@ -1,72 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'routes'
-import map from 'lodash/map'
-import toUpper from 'lodash/toUpper'
-import Select from 'react-select'
-import Button from '@material-ui/core/Button'
-import Input from '@material-ui/core/Input'
 import { withStyles } from '@material-ui/core/styles'
 import { createAction } from 'redux-actions'
 import { User } from 'constants/ActionTypes'
-import BoxType from '/../shared/constants/BoxType'
-import PostDropzone from 'components/molecules/PostDropzone'
-import AdminPageContainer from 'components/molecules/AdminPageContainer'
 import AdminHeader from 'components/organisms/admin/AdminHeader'
 import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
-
-const SelectLabel = props => (
-  <div>
-    <span style={{}}>{props.left}</span>
-    <span className="ml-5">{props.right}</span>
-  </div>
-)
-
-const MyBigBtn = withStyles({ root: { fontSize: 16 } })(props => {
-  return (
-    <Button {...props} className={props.classes.root}>
-      {props.children}
-    </Button>
-  )
-})
-
-const colourStyles = bgColor => {
-  return {
-    control: styles => ({
-      ...styles,
-      backgroundColor: bgColor,
-      borderRadius: 0,
-      margin: '0 auto',
-      fontSize: '1rem',
-      height: 50
-    }),
-    singleValue: styles => ({
-      ...styles,
-      color: 'white',
-      width: '100%'
-    }),
-    placeholder: styles => ({
-      ...styles,
-      color: 'white'
-    })
-  }
-}
-
-const boxOptions = map(BoxType.index, (v, k) => {
-  return {
-    value: v,
-    label: <SelectLabel left="投稿先　：" right={toUpper(k)} />
-  }
-})
-
-const categoryOptions = [
-  { value: 'talk', label: <SelectLabel left="カテゴリ：" right="AAAAA" /> },
-  { value: 'voice', label: <SelectLabel left="カテゴリ：" right="AAAAA" /> },
-  { value: 'news', label: <SelectLabel left="カテゴリ：" right="AAAAA" /> }
-]
+import BaseEditor from 'components/templates/admin_post_add/BaseEditor'
+import BoxType from '/../shared/constants/BoxType'
 
 class AdminPostAdd extends React.Component {
   static async getInitialProps({ ctx }) {
+    // TODO: 全ボックスのカテゴリをfetchしてset
+
     return { boxType: +ctx.query.boxType }
   }
 
@@ -82,6 +28,19 @@ class AdminPostAdd extends React.Component {
     })
   }
 
+  // NOTE: ボックスタイプが増えるたびにここも修正する必要あり
+  createCategories(boxType) {
+    const props = this.props
+    switch (boxType) {
+      case BoxType.index.talk:
+        return props.talkCategories.filter(e => e.text)
+      case BoxType.index.news:
+        return props.newsCategories.filter(e => e.text)
+      default:
+        return null
+    }
+  }
+
   render() {
     const props = this.props
     return (
@@ -92,90 +51,16 @@ class AdminPostAdd extends React.Component {
           <li className="breadcrumb-item">投稿</li>
         </WhiteBreadcrumb>
 
-        <AdminPageContainer>
-          <header className="borderB">
-            <nav className="navbar justify-content-between">
-              <Link route={'/admin/post/list'}>
-                <MyBigBtn>キャンセル</MyBigBtn>
-              </Link>
-              <div className="">
-                <MyBigBtn>下書きする</MyBigBtn>
-                <MyBigBtn color="primary">投稿する</MyBigBtn>
-              </div>
-            </nav>
-          </header>
-
-          <section className="mt-3">
-            <Select
-              instanceId={'SSR-POSTADD001'}
-              defaultValue={boxOptions[+props.boxType]}
-              styles={colourStyles('#5e91c4')}
-              options={boxOptions}
-              isSearchable={false}
-            />
-            <Select
-              instanceId={'SSR-POSTADD002'}
-              defaultValue={categoryOptions[0]}
-              styles={colourStyles('#2B6EB2')}
-              options={categoryOptions}
-              isSearchable={false}
-            />
-          </section>
-
-          <section className="container mt-4">
-            <label>タイトル</label>
-            <Input
-              value={this.state.title}
-              onChange={this.handleChange('title')}
-              fullWidth
-            />
-          </section>
-
-          <section className="container mt-4">
-            <label>本文</label>
-            <Input
-              value={this.state.body}
-              onChange={this.handleChange('body')}
-              rows={5}
-              rowsMax={50}
-              fullWidth
-              multiline
-            />
-          </section>
-
-          <section className="images mx-auto mt-3">
-            <PostDropzone
-              size={45}
-              files={this.state.files}
-              onChange={files => this.setState({ ...this.state, files })}
-            />
-          </section>
-        </AdminPageContainer>
-
-        <style global jsx>{`
-          body {
-            background-color: whitesmoke !important;
-          }
-        `}</style>
-
-        <style jsx>{`
-          label {
-            color: #707070;
-          }
-
-          .borderB {
-            border-bottom: 1px solid gray;
-          }
-
-          .images {
-            width: 375px;
-          }
-        `}</style>
+        <BaseEditor
+          boxType={props.boxType}
+          categories={this.createCategories(props.boxType)}
+        />
       </React.Fragment>
     )
   }
 }
 
 export default connect(state => ({
-  // post: state.site.post
+  talkCategories: state.site.talkroom.categories.item,
+  newsCategories: state.site.news.categories.item
 }))(AdminPostAdd)

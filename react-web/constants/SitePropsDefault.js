@@ -5,7 +5,7 @@ import update from 'immutability-helper'
 import BoxType from '/../shared/constants/BoxType'
 
 const MAX_CATEGORIES_NUM = 10
-const FREE_TALK_INDEX = 9
+const DEFAULT_CAT_INDEX = 9
 
 export const Logo = {
   src: '/static/stub/logo-blue.png'
@@ -175,8 +175,8 @@ export const TalkRoomInputFormDefault = {
 
 const talkRoomCat = range(MAX_CATEGORIES_NUM).map(i => ({
   categoryIndex: i, // 0 - 9 この番号で管理する
-  text: i === FREE_TALK_INDEX ? 'フリートーク' : '', // index9はフリートークで固定
-  editable: i !== FREE_TALK_INDEX
+  text: i === DEFAULT_CAT_INDEX ? 'フリートーク' : '', // index9はフリートークで固定
+  editable: i !== DEFAULT_CAT_INDEX
 }))
 export const TalkRoomCategoriesDefault = {
   item: talkRoomCat
@@ -192,8 +192,8 @@ export const NewsDescDefault = {
 // Talk Roomとキーを合わせること
 const newsCat = range(MAX_CATEGORIES_NUM).map(i => ({
   categoryIndex: i,
-  text: '',
-  editable: true
+  text: i === DEFAULT_CAT_INDEX ? 'その他' : '', // index9はその他で固定
+  editable: i !== DEFAULT_CAT_INDEX
 }))
 export const NewsCategoriesDefault = {
   item: newsCat

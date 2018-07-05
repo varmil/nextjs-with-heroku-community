@@ -3,14 +3,11 @@ import { connect } from 'react-redux'
 import { Link } from 'routes'
 import { createAction } from 'redux-actions'
 import { User } from 'constants/ActionTypes'
-import Input from 'reactstrap/lib/Input'
-import FormFeedback from 'reactstrap/lib/FormFeedback'
 import AdminPageContainer from 'components/molecules/AdminPageContainer'
 import AdminHeader from 'components/organisms/admin/AdminHeader'
 import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
 import ColorButton from 'components/atoms/ColorButton'
 import SimpleTable from 'components/organisms/admin/SimpleTable'
-import Rule from 'constants/Rule'
 
 class AdminPostList extends React.Component {
   state = {
