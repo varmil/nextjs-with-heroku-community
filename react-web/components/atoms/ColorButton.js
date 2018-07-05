@@ -9,6 +9,7 @@ const Index = props => (
       }  ${props.className}`}
       style={props.style}
       disabled={props.disabled}
+      onClick={props.onClick}
     >
       {props.icon && <span className="icon">{props.icon}</span>}
       {props.children}

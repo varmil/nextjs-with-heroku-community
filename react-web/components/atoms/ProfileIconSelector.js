@@ -46,10 +46,11 @@ export default class extends React.Component {
     }
 
     return (
-      <div>
+      <React.Fragment>
         <Dropzone accept="image/*" onDrop={props.onDrop} style={dropzoneStyle}>
           <ImgPreview files={props.files} size={props.size} />
           <i className="fas fa-camera" />
+          {props.children}
         </Dropzone>
 
         <style jsx>{`
@@ -61,7 +62,7 @@ export default class extends React.Component {
             color: gray;
           }
         `}</style>
-      </div>
+      </React.Fragment>
     )
   }
 }

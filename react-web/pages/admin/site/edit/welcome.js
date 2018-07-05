@@ -8,7 +8,13 @@ import withAdminEdit from 'components/templates/withAdminEdit'
 const Edit = withAdminEdit(<React.Fragment />)
 
 class EditWelcome extends React.Component {
+  static async getInitialProps({ ctx }) {
+    // const { dispatch } = ctx.store
+    return {}
+  }
+
   render() {
+    const props = this.props
     return (
       <React.Fragment>
         <div className="fixed-top">

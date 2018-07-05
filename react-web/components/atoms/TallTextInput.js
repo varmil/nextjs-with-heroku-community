@@ -1,6 +1,7 @@
 const Index = props => (
   <div style={props.style}>
     <input
+      {...props}
       type={props.type || 'text'}
       className={`form-control ${props.className}`}
     />
