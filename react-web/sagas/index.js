@@ -32,14 +32,14 @@ const getUser = state => state.user
 
 // 通常ユーザのsignup, Admin,User共通のsignin
 function* authenticate({ payload }) {
-  const { url, email, password, successCb, errCb } = payload
+  const { url, email, password, successCb, errCb, errorMessage } = payload
   try {
     const res = yield call(API.post, url, { email, password })
     yield call(setUserInfo, res.data.token)
     yield call(successCb, res)
   } catch (e) {
-    yield call(errCb, e.response)
-    yield put(setCommonError(e.response))
+    if (errCb) yield call(errCb, e.response)
+    yield put(setCommonError(errorMessage || e.response))
   }
 }
 
@@ -47,7 +47,6 @@ function* authenticate({ payload }) {
 function* signupAdmin({ payload }) {
   const {
     successCb,
-    errCb,
     email,
     password,
     brandName,
@@ -70,7 +69,6 @@ function* signupAdmin({ payload }) {
     yield call(setUserInfo, res.data.token)
     yield call(successCb, res)
   } catch (e) {
-    yield call(errCb, e.response)
     yield put(setCommonError(e.response))
   }
 }
@@ -84,12 +82,11 @@ function* setUserInfo(token) {
 
 // （初期登録、プロフィール編集？）
 function* saveUserProfile({ payload }) {
-  const { formData, successCb, errCb } = payload
+  const { formData, successCb } = payload
   try {
     const res = yield call(API.post, '/user/profile', formData)
     yield call(successCb, res)
   } catch (e) {
-    yield call(errCb, e.response)
     yield put(setCommonError(e.response))
   }
 }

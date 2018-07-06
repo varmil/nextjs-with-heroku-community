@@ -1,4 +1,5 @@
 import { createAction } from 'redux-actions'
+import isString from 'lodash/isString'
 import {
   AppTalkRoom,
   AppVoice,
@@ -27,6 +28,16 @@ export let setPost = createAction(AppPost.SET_POST)
 
 // 汎用エラー
 export let setCommonError = createAction(AppErrors.PUSH, e => {
-  toastr.error('エラー', e.data.error)
-  return e
+  // NOTE: passportで401等が返ってくる場合jsonではないので注意
+  console.warn(e)
+  let message = '不明なエラーが発生しました。時間を置いて再度お試しください'
+
+  // サーバ側でエラーがあると、基本的にはこの形式
+  if (e.data && e.data.error) message = e.data.error
+  // passportのデフォルトエラーは文字列
+  if (isString(e.data)) message = e
+  // カスタムメッセージ
+  if (isString(e)) message = e
+
+  toastr.error('エラー', message)
 })

@@ -13,8 +13,7 @@ import SignInUpHeader from 'components/molecules/SignInUpHeader'
 class SignupEmail extends React.Component {
   state = {
     email: '',
-    password: '',
-    errorMessage: ''
+    password: ''
   }
 
   handleChange = name => event => {
@@ -27,17 +26,12 @@ class SignupEmail extends React.Component {
   async signup(e) {
     const { email, password } = this.state
     const successCb = async res => Router.pushRoute(`/view/signup/complete`)
-    const errCb = async res => {
-      const { error } = res.data
-      this.setState({ ...this.state, errorMessage: <span>{error}</span> })
-    }
     this.props.dispatch(
       createAction(User.AUTH_REQUEST)({
         url: '/signup',
         email,
         password,
-        successCb,
-        errCb
+        successCb
       })
     )
   }
@@ -77,12 +71,6 @@ class SignupEmail extends React.Component {
             </FormFeedback>
           </div>
         </section>
-
-        {this.state.errorMessage && (
-          <div className="alert alert-danger" role="alert">
-            {this.state.errorMessage}
-          </div>
-        )}
 
         <section className="text-center" onClick={this.signup.bind(this)}>
           <ColorButton className="w-75 mt-4" color="#2b6db2">

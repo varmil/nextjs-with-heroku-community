@@ -23,8 +23,7 @@ const E_MESSAGE =
 class Signin extends React.Component {
   state = {
     email: '',
-    password: '',
-    errorMessage: ''
+    password: ''
   }
 
   handleChange = name => event => {
@@ -37,17 +36,13 @@ class Signin extends React.Component {
   async signin(e) {
     const { email, password } = this.state
     const successCb = async res => Router.pushRoute(`/view/home`)
-    const errCb = async res => {
-      // NOTE: passportで401等が返ってくる場合jsonではないので注意
-      this.setState({ ...this.state, errorMessage: E_MESSAGE })
-    }
     this.props.dispatch(
       createAction(User.AUTH_REQUEST)({
         url: '/signin',
         email,
         password,
         successCb,
-        errCb
+        errorMessage: E_MESSAGE
       })
     )
   }
@@ -103,12 +98,6 @@ class Signin extends React.Component {
               />
             </div>
           </section>
-
-          {this.state.errorMessage && (
-            <div className="alert alert-danger" role="alert">
-              {this.state.errorMessage}
-            </div>
-          )}
 
           <section className="text-center" onClick={this.signin.bind(this)}>
             <ColorButton className="w-75 mt-2" color="#2b6db2">

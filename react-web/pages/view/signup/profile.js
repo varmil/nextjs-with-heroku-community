@@ -12,8 +12,7 @@ import ProfileIconSelector from 'components/atoms/ProfileIconSelector'
 class SignupProfile extends React.Component {
   state = {
     files: [],
-    nickname: '',
-    errorMessage: ''
+    nickname: ''
   }
 
   handleChange = name => event => {
@@ -38,15 +37,10 @@ class SignupProfile extends React.Component {
 
     // const successCb = async res => Router.pushRoute(`/view/home`)
     const successCb = async res => {}
-    const errCb = async res => {
-      const { error } = res.data
-      this.setState({ ...this.state, errorMessage: <span>{error}</span> })
-    }
     this.props.dispatch(
       createAction(User.SAVE_PROFILE_REQUEST)({
         formData,
-        successCb,
-        errCb
+        successCb
       })
     )
   }
@@ -82,12 +76,6 @@ class SignupProfile extends React.Component {
           コミュニティ内で呼ばれたいユーザ名にしましょう。<br />
           * 後でいつでも変更可能です
         </section>
-
-        {this.state.errorMessage && (
-          <div className="alert alert-danger" role="alert">
-            {this.state.errorMessage}
-          </div>
-        )}
 
         <section className="text-center" onClick={this.onSubmit.bind(this)}>
           <ColorButton

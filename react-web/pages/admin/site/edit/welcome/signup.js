@@ -19,8 +19,7 @@ class WelcomeSignup extends React.Component {
   // }
 
   state = {
-    modal: false,
-    errorMessage: ''
+    modal: false
   }
 
   componentDidMount() {
@@ -32,15 +31,10 @@ class WelcomeSignup extends React.Component {
   onSave(state) {
     console.info('state', state)
     const successCb = async res => console.log('admin signup success') // Router.pushRoute(`/view/signup/complete`)
-    const errCb = async res => {
-      const { error } = res.data
-      this.setState({ ...this.state, errorMessage: <span>{error}</span> })
-    }
     this.props.dispatch(
       createAction(User.AUTH_ADMIN_REQUEST)({
         ...state,
-        successCb,
-        errCb
+        successCb
       })
     )
   }
