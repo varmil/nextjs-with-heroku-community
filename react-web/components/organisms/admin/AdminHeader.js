@@ -81,7 +81,7 @@ class AdminHeader extends React.Component {
             >
               <span className="dropdownText pr-4">
                 <Avatar src={props.user.iconPath} size={36} className="mr-3" />
-                <span>Options</span>
+                <span>{props.user.brand.name}</span>
               </span>
             </DropdownToggle>
             <DropdownMenu right>
