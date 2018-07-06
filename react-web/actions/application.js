@@ -8,6 +8,8 @@ import {
   AppErrors
 } from 'constants/ActionTypes'
 
+import { toastr } from 'react-redux-toastr'
+
 // talk room
 export let addTalkContents = createAction(AppTalkRoom.ADD_CONTENTS)
 
@@ -25,8 +27,6 @@ export let setPost = createAction(AppPost.SET_POST)
 
 // 汎用エラー
 export let setCommonError = createAction(AppErrors.PUSH, e => {
-  // 適当にPOP（エラーメッセージが自動で消えるように）
-  // setTimeout(() => {
-  // }, 2000)
+  toastr.error('エラー', e.data.error)
   return e
 })

@@ -40,8 +40,7 @@ class Editpost extends React.Component {
     title: '',
     body: '',
     category: this.createCatOptions()[0],
-    files: [],
-    errorMessage: ''
+    files: []
   }
 
   createCatOptions() {
@@ -65,12 +64,7 @@ class Editpost extends React.Component {
     data = omit(data, 'category')
 
     const successCb = async res => console.log('success') // Router.pushRoute(`/admin/post/list`)
-    const errCb = async res => {
-      this.setState({
-        ...this.state,
-        errorMessage: <span>{JSON.stringify(res.data)}</span>
-      })
-    }
+    const errCb = async res => {}
     this.props.dispatch(
       createAction(AppPost.SAVE_REQUEST)({
         successCb,
@@ -116,12 +110,6 @@ class Editpost extends React.Component {
           options={this.createCatOptions()}
           isSearchable={false}
         />
-
-        {this.state.errorMessage && (
-          <div className="alert alert-danger" role="alert">
-            {this.state.errorMessage}
-          </div>
-        )}
 
         <section className="mt-3">
           <Input
