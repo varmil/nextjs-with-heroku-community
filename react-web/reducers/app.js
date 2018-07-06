@@ -5,7 +5,8 @@ import {
   AppVoice,
   AppNews,
   AppMypage,
-  AppPost
+  AppPost,
+  AppErrors
 } from 'constants/ActionTypes'
 
 const initialState = {
@@ -27,7 +28,9 @@ const initialState = {
 
   post: {
     data: {}
-  }
+  },
+
+  errors: {}
 }
 
 export default handleActions(
@@ -69,6 +72,13 @@ export default handleActions(
      */
     [AppPost.SET_POST]: (state, action) => {
       return immutable.set(state, `post.data`, action.payload)
+    },
+
+    /**
+     * ERRORS
+     */
+    [AppErrors.PUSH]: (state, action) => {
+      return immutable.set(state, `errors`, action.payload)
     }
   },
   initialState

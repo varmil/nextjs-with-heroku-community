@@ -107,12 +107,10 @@ export const User = createTypes(
   'SET'
 )
 
-// export const Auth = createTypes('auth/', 'SET_IS_PREPARED', 'SET_IS_LOGGED_IN')
-
 /**
  * 汎用ERROR用Action
  */
-export const Errors = createTypes('errors', 'PUSH', 'POP')
+export const AppErrors = createTypes('errors/', 'PUSH', 'POP')
 
 /**
  * 汎用Loading用Action

@@ -17,7 +17,8 @@ import {
   addVoiceContents,
   addNewsContents,
   addMypageContents,
-  setPost
+  setPost,
+  setCommonError
 } from 'actions/application'
 import { Posts, Comments, VoteOptions } from 'stub/app'
 import BoxType from '/../shared/constants/BoxType'
@@ -38,6 +39,7 @@ function* authenticate({ payload }) {
     yield call(successCb, res)
   } catch (e) {
     yield call(errCb, e.response)
+    yield put(setCommonError(e.response))
   }
 }
 
@@ -69,6 +71,7 @@ function* signupAdmin({ payload }) {
     yield call(successCb, res)
   } catch (e) {
     yield call(errCb, e.response)
+    yield put(setCommonError(e.response))
   }
 }
 
@@ -87,6 +90,7 @@ function* saveUserProfile({ payload }) {
     yield call(successCb, res)
   } catch (e) {
     yield call(errCb, e.response)
+    yield put(setCommonError(e.response))
   }
 }
 
@@ -196,6 +200,7 @@ function* savePost({ payload }) {
     yield call(successCb, res)
   } catch (e) {
     yield call(errCb, e.response)
+    yield put(setCommonError(e.response))
   }
 }
 

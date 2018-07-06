@@ -4,7 +4,8 @@ import {
   AppVoice,
   AppNews,
   AppMypage,
-  AppPost
+  AppPost,
+  AppErrors
 } from 'constants/ActionTypes'
 
 // talk room
@@ -21,3 +22,11 @@ export let addMypageContents = createAction(AppMypage.ADD_CONTENTS)
 
 // post
 export let setPost = createAction(AppPost.SET_POST)
+
+// 汎用エラー
+export let setCommonError = createAction(AppErrors.PUSH, e => {
+  // 適当にPOP（エラーメッセージが自動で消えるように）
+  // setTimeout(() => {
+  // }, 2000)
+  return e
+})
