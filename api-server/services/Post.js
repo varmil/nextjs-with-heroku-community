@@ -33,4 +33,22 @@ module.exports = class Post {
       console.error(e)
     }
   }
+
+  static async saveVoice(postId, options, deadline, trans) {
+    try {
+      const voice = await models.Voice.create(
+        {
+          postId,
+          options,
+          deadline
+        },
+        {
+          transaction: trans
+        }
+      )
+      return voice
+    } catch (e) {
+      console.error(e)
+    }
+  }
 }
