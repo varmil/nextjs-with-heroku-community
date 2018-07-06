@@ -1,15 +1,11 @@
 const services = require('../services')
 const models = require('../models')
-// const Role = require('../constants/Role')
+const Message = require('../constants/Message')
 const jwt = require('jwt-simple')
 const { secret } = require('../config/server')
 
 const E_EMAIL_PASSWORD = {
   error: 'メールアドレスとパスワードを正しく入力してください。'
-}
-
-const E_NULL_REQUIRED_FIELD = {
-  error: '必須項目を正しく入力してください。'
 }
 
 const E_EMAIL_TAKEN = {
@@ -42,7 +38,7 @@ exports.signup = async function(req, res, next) {
   const { brandName, lastName, firstName } = req.body
   if (isAdmin) {
     if (!brandName || !lastName || !firstName) {
-      return res.status(422).json(E_NULL_REQUIRED_FIELD)
+      return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
     }
   }
 
@@ -72,6 +68,7 @@ exports.signup = async function(req, res, next) {
     console.log('user created ! { id, roleId } : ', user.id, user.roleId)
     res.json({ token: tokenForUser(user) })
   } catch (e) {
+    res.status(500).json(Message.E_500_ERROR)
     return next(e)
   }
 }

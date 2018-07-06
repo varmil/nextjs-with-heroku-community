@@ -37,7 +37,8 @@ class SignupEmail extends React.Component {
   }
 
   render() {
-    const passLength = this.state.password.length
+    const { email, password } = this.state
+    const passLength = password.length
     return (
       <CenteredContainer height={460}>
         <section>
@@ -50,7 +51,7 @@ class SignupEmail extends React.Component {
             <Input
               type="email"
               placeholder="foo@example.com"
-              value={this.state.email}
+              value={email}
               onChange={this.handleChange('email')}
             />
           </div>
@@ -62,7 +63,7 @@ class SignupEmail extends React.Component {
             <Input
               type="text"
               placeholder={`${Rule.PASS_MIN_LENGTH}文字以上`}
-              value={this.state.password}
+              value={password}
               onChange={this.handleChange('password')}
               invalid={passLength > 0 && passLength < Rule.PASS_MIN_LENGTH}
             />
@@ -73,7 +74,11 @@ class SignupEmail extends React.Component {
         </section>
 
         <section className="text-center" onClick={this.signup.bind(this)}>
-          <ColorButton className="w-75 mt-4" color="#2b6db2">
+          <ColorButton
+            className="w-75 mt-4"
+            color="#2b6db2"
+            disabled={!email || password.length < Rule.PASS_MIN_LENGTH}
+          >
             アカウント登録
           </ColorButton>
         </section>

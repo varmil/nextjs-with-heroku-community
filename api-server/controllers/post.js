@@ -3,14 +3,7 @@ const services = reqlib('/services')
 const models = reqlib('/models')
 const BoxType = reqlib('/../shared/constants/BoxType')
 const Role = reqlib('/constants/Role')
-
-const E_NULL_REQUIRED_FIELD = {
-  error: '項目を正しく入力してください。'
-}
-
-const E_NOT_ALLOWED = {
-  error: 'そのアクションは許可されていません。'
-}
+const Message = reqlib('/constants/Message')
 
 /**
  * 新規投稿 or 編集（AdminもUserもこれを使用）
@@ -26,19 +19,19 @@ exports.savePost = async (req, res, next) => {
   const brand = req.user.brand
 
   if (boxType === undefined || !title || !body) {
-    return res.status(422).json(E_NULL_REQUIRED_FIELD)
+    return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
   }
 
   // 通常ユーザがTALK以外へ投稿しようとしたら弾く
   if (req.user.roleId === Role.User.NORMAL && boxType !== BoxType.index.talk) {
-    return res.status(422).json(E_NOT_ALLOWED)
+    return res.status(422).json(Message.E_NOT_ALLOWED)
   }
 
   // VOICE
   const { options, deadline } = req.body
   if (boxType === BoxType.index.voice) {
     if (!options || !deadline) {
-      return res.status(422).json(E_NULL_REQUIRED_FIELD)
+      return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
     }
   }
 
