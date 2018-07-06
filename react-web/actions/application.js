@@ -34,10 +34,13 @@ export let setCommonError = createAction(AppErrors.PUSH, e => {
 
   // サーバ側でエラーがあると、基本的にはこの形式
   if (e.data && e.data.error) message = e.data.error
+  console.log(message)
   // passportのデフォルトエラーは文字列
-  if (isString(e.data)) message = e
+  if (isString(e.data)) message = e.data
+  console.log(message)
   // カスタムメッセージ
   if (isString(e)) message = e
+  console.log(message)
 
   toastr.error('エラー', message)
 })
