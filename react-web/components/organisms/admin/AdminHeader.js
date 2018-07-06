@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { Link } from 'routes'
 import Navbar from 'reactstrap/lib/Navbar'
 import NavbarBrand from 'reactstrap/lib/NavbarBrand'
 import Nav from 'reactstrap/lib/Nav'
@@ -31,30 +31,34 @@ export default class Header extends React.Component {
           </NavbarBrand>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <div className="linkItem" href="#" style={linkItemStyle}>
-                <i className="fas fa-edit" />
-              </div>
+              <Link route={'/admin/post/list'}>
+                <div className="linkItem" style={linkItemStyle}>
+                  <i className="fas fa-pen" />
+                </div>
+              </Link>
             </NavItem>
             <NavItem>
-              <div className="linkItem" href="#" style={linkItemStyle}>
+              <div className="linkItem" style={linkItemStyle}>
                 <i className="fas fa-user" />
               </div>
             </NavItem>
             <NavItem>
-              <div className="linkItem" href="#" style={linkItemStyle}>
-                <i className="fas fa-book" />
+              <div className="linkItem" style={linkItemStyle}>
+                <i className="fas fa-chart-bar" />
               </div>
             </NavItem>
             <NavItem>
-              <div className="linkItem" href="#" style={linkItemStyle}>
+              <Link route={'/admin/site/edit/welcome'}>
+                <div className="linkItem" style={linkItemStyle}>
+                  <i className="fas fa-brush" />
+                </div>
+              </Link>
+            </NavItem>
+            <NavItem>
+              <div className="linkItem" style={linkItemStyle}>
                 <i className="fas fa-envelope" />
               </div>
             </NavItem>
-            {/* <NavItem>
-              <div className="linkItem" href="#" style={linkItemStyle}>
-              <i className="fas fa-chart-bar" />
-            </div>
-          </NavItem> */}
             {/* <NavItem>
               <div className="linkItem" href="#" style={linkItemStyle}>
                 <i className="fas fa-exclamation-circle" />
@@ -97,6 +101,7 @@ export default class Header extends React.Component {
             height: ${iconSize}px;
             text-align: center;
             border-radius: 10px;
+            cursor: pointer;
           }
 
           .dropdownText i {
