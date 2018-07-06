@@ -1,7 +1,6 @@
 const services = require('../services')
 const models = require('../models')
-const Role = require('../constants/Role')
-// const User = require('../models/User')
+// const Role = require('../constants/Role')
 const jwt = require('jwt-simple')
 const { secret } = require('../config/server')
 
@@ -47,7 +46,6 @@ exports.signup = async function(req, res, next) {
     }
   }
 
-  const trans = await models.sequelize.transaction()
   try {
     const existingUser = await models.User.findOne({
       where: { email: email },
@@ -57,34 +55,23 @@ exports.signup = async function(req, res, next) {
       return res.status(422).json(E_EMAIL_TAKEN)
     }
 
-    const user = await models.User.create(
-      {
-        email: email,
-        passwordHash: await models.User.generateHash(password),
-        roleId: isAdmin ? Role.User.ADMIN_SUPER : Role.User.NORMAL
-      },
-      {
-        transaction: trans
-      }
-    )
-
     // create admin record if the user is admin
-    if (user.roleId >= Role.User.ADMIN_GUEST) {
-      const result = await services.User.createAdmin(
-        trans,
-        user.id,
+    let user
+    if (isAdmin) {
+      user = await services.User.createAdmin(
+        email,
+        password,
         brandName,
         lastName,
         firstName,
         req.file
       )
+    } else {
+      user = await services.User.createNormalUser(email, password)
     }
-
-    trans.commit()
     console.log('user created ! { id, roleId } : ', user.id, user.roleId)
     res.json({ token: tokenForUser(user) })
   } catch (e) {
-    trans.rollback()
     return next(e)
   }
 }

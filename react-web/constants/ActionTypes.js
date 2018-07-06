@@ -90,7 +90,10 @@ export const User = createTypes(
   'user/',
   'AUTHENTICATE',
   'DEAUTHENTICATE',
+  // user signup, signin
   async('AUTH'),
+  // admin signup
+  async('AUTH_ADMIN'),
   async('SAVE_PROFILE'),
   // fetch basic info (id, nickname)
   async('FETCH'),

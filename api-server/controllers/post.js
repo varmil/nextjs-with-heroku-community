@@ -17,27 +17,6 @@ exports.savePost = async (req, res) => {
 
   // TODO brandIdを検証して付与
 
-  // let dbPath
-  // if (req.file) {
-  //   // image path
-  //   // save image before update DB
-  //   const { path, filename } = req.file
-  //   dbPath = `${Path.USER_ICON_DIR}/${filename}`
-  //   const fullPath = `${Path.STATIC_BASE_DIR}${dbPath}`
-  //   await moveFile(path, fullPath)
-  // } else {
-  //   // TODO: プロフィール画像が設定されていない場合
-  //   dbPath = 'https://www.w3schools.com/w3images/avatar4.png'
-  // }
-  //
-  // // save nickname
-  // await models.User.update(
-  //   { nickname, iconPath: dbPath },
-  //   {
-  //     where: { id: userId }
-  //   }
-  // )
-
   res.json(true)
 }
 

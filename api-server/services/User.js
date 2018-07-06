@@ -2,6 +2,7 @@ const reqlib = require('app-root-path').require
 const models = reqlib('/models')
 const moveFile = require('move-file')
 const Path = reqlib('/constants/Path')
+const Role = reqlib('/constants/Role')
 
 // import Promise from 'bluebird'
 // const fs = Promise.promisifyAll(require('fs-extra'))
@@ -12,11 +13,10 @@ const Path = reqlib('/constants/Path')
 // const FACEBOOK_PICTURE_SIZE_PX = 200
 
 module.exports = class User {
-  static async updateProfileIcon(trans, userId, file) {
+  static async moveProfileIcon(file) {
     let dbPath
     if (file) {
       // image path
-      // save image before update DB
       const { path, filename } = file
       dbPath = `${Path.USER_ICON_DIR}/${filename}`
       const fullPath = `${Path.STATIC_BASE_DIR}${dbPath}`
@@ -25,47 +25,57 @@ module.exports = class User {
       // TODO: プロフィール画像が設定されていない場合
       dbPath = 'https://www.w3schools.com/w3images/avatar4.png'
     }
-
-    // save nickname
-    await models.User.update(
-      { iconPath: dbPath },
-      {
-        where: { id: userId }
-      },
-      {
-        transaction: trans
-      }
-    )
+    return dbPath
   }
 
-  static async updateNickname(trans, userId, nickname) {
-    return models.User.update(
-      { nickname },
-      {
-        where: { id: userId }
-      },
-      {
-        transaction: trans
-      }
-    )
+  static async updateProfile(userId, nickname, file) {
+    try {
+      const dbPath = await User.moveProfileIcon(file)
+      await models.User.update(
+        { nickname, iconPath: dbPath },
+        {
+          where: { id: userId }
+        }
+      )
+    } catch (e) {
+      throw e
+    }
+  }
+
+  static async createNormalUser(email, password) {
+    try {
+      const user = await models.User.create({
+        email,
+        passwordHash: await models.User.generateHash(password),
+        roleId: Role.User.NORMAL
+      })
+      return user
+    } catch (e) {
+      throw e
+    }
   }
 
   static async createAdmin(
-    trans,
-    userId,
+    email,
+    password,
     brandName,
     lastName,
     firstName,
     file
   ) {
+    const trans = await models.sequelize.transaction()
     try {
-      await models.User.update(
+      // プロフィール画像
+      const dbPath = await User.moveProfileIcon(file)
+
+      const user = await models.User.create(
         {
+          email,
+          passwordHash: await models.User.generateHash(password),
+          roleId: Role.User.ADMIN_SUPER,
+          lastName,
           firstName,
-          lastName
-        },
-        {
-          where: { id: userId }
+          iconPath: dbPath
         },
         {
           transaction: trans
@@ -83,7 +93,7 @@ module.exports = class User {
 
       const admin = await models.Admin.create(
         {
-          userId: userId
+          userId: user.id
         },
         {
           transaction: trans
@@ -102,17 +112,17 @@ module.exports = class User {
 
       await models.UserBrand.create(
         {
-          userId: userId,
+          userId: user.id,
           brandId: brand.id
         },
         {
           transaction: trans
         }
       )
-
-      // プロフィール画像
-      await User.updateProfileIcon(trans, userId, file)
+      trans.commit()
+      return user
     } catch (e) {
+      trans.rollback()
       throw e
     }
   }

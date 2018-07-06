@@ -29,19 +29,54 @@ import Rule from 'constants/Rule'
 // select User !
 const getUser = state => state.user
 
+// 通常ユーザのsignup, Admin,User共通のsignin
 function* authenticate({ payload }) {
   const { url, email, password, successCb, errCb } = payload
   try {
     const res = yield call(API.post, url, { email, password })
-    // set user data to cookie and store
-    const { token } = res.data
-    setCookie(Rule.COOKIE_JWT_TOKEN, token)
-    yield put(createAction(User.AUTHENTICATE)(token))
-    yield put(createAction(User.FETCH_REQUEST)(token))
+    yield call(setUserInfo, res.data.token)
     yield call(successCb, res)
   } catch (e) {
     yield call(errCb, e.response)
   }
+}
+
+// Adminのsignup
+function* signupAdmin({ payload }) {
+  const {
+    successCb,
+    errCb,
+    email,
+    password,
+    brandName,
+    lastName,
+    firstName,
+    files
+  } = payload
+
+  let formData = new FormData()
+  formData.append('isAdmin', true)
+  formData.append('email', email)
+  formData.append('password', password)
+  formData.append('brandName', brandName)
+  formData.append('lastName', lastName)
+  formData.append('firstName', firstName)
+  formData.append('image', files[0])
+
+  try {
+    const res = yield call(API.post, '/signup/admin', formData)
+    yield call(setUserInfo, res.data.token)
+    yield call(successCb, res)
+  } catch (e) {
+    yield call(errCb, e.response)
+  }
+}
+
+// tokenをもとにして基本情報をset（AUTH後に基本呼ぶ）
+function* setUserInfo(token) {
+  setCookie(Rule.COOKIE_JWT_TOKEN, token)
+  yield put(createAction(User.AUTHENTICATE)(token))
+  yield put(createAction(User.FETCH_REQUEST)(token))
 }
 
 // （初期登録、プロフィール編集？）
@@ -184,6 +219,7 @@ function* postIFrameMessageSaga(action) {
 
 const userSaga = [
   takeLatest(User.AUTH_REQUEST, authenticate),
+  takeLatest(User.AUTH_ADMIN_REQUEST, signupAdmin),
   takeLatest(User.SAVE_PROFILE_REQUEST, saveUserProfile),
   takeLatest(User.FETCH_REQUEST, fetchUser)
 ]

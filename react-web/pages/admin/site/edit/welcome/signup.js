@@ -1,5 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Router } from 'routes'
+import { createAction } from 'redux-actions'
+import { User } from 'constants/ActionTypes'
 import Modal from 'reactstrap/lib/Modal'
 import ModalBody from 'reactstrap/lib/ModalBody'
 import Welcome from 'pages/admin/site/edit/welcome'
@@ -27,8 +30,19 @@ class WelcomeSignup extends React.Component {
   }
 
   onSave(state) {
-    // TODO
     console.info('state', state)
+    const successCb = async res => console.log('admin signup success') // Router.pushRoute(`/view/signup/complete`)
+    const errCb = async res => {
+      const { error } = res.data
+      this.setState({ ...this.state, errorMessage: <span>{error}</span> })
+    }
+    this.props.dispatch(
+      createAction(User.AUTH_ADMIN_REQUEST)({
+        ...state,
+        successCb,
+        errCb
+      })
+    )
   }
 
   render() {
