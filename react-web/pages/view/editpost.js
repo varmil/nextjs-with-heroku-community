@@ -64,11 +64,9 @@ class Editpost extends React.Component {
     data = omit(data, 'category')
 
     const successCb = async res => console.log('success') // Router.pushRoute(`/admin/post/list`)
-    const errCb = async res => {}
     this.props.dispatch(
       createAction(AppPost.SAVE_REQUEST)({
         successCb,
-        errCb,
         // 現状はユーザが投稿可能なのはTALKのみ。
         boxType: BoxType.index.talk,
         ...data

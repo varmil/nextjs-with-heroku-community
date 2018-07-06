@@ -32,11 +32,9 @@ class AdminPostAdd extends React.Component {
     console.info(state)
     const props = this.props
     const successCb = async res => Router.pushRoute(`/admin/post/list`)
-    const errCb = async res => {}
     this.props.dispatch(
       createAction(AppAdminPost.SAVE_REQUEST)({
         successCb,
-        errCb,
         boxType: props.boxType,
         ...state
       })

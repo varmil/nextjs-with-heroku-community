@@ -196,7 +196,7 @@ function* savePost({ payload }) {
     const res = yield call(API.post, '/post', formData, jwtToken)
     yield call(successCb, res)
   } catch (e) {
-    yield call(errCb, e.response)
+    if (errCb) yield call(errCb, e.response)
     yield put(setCommonError(e.response))
   }
 }
