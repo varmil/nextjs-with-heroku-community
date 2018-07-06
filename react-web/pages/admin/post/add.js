@@ -19,7 +19,7 @@ class AdminPostAdd extends React.Component {
   }
 
   state = {
-    errorMessage: ''
+    // errorMessage: ''
   }
 
   handleChange = name => event => {
@@ -32,12 +32,7 @@ class AdminPostAdd extends React.Component {
     console.info(state)
     const props = this.props
     const successCb = async res => Router.pushRoute(`/admin/post/list`)
-    const errCb = async res => {
-      this.setState({
-        ...this.state,
-        errorMessage: <span>{JSON.stringify(res.data)}</span>
-      })
-    }
+    const errCb = async res => {}
     this.props.dispatch(
       createAction(AppAdminPost.SAVE_REQUEST)({
         successCb,
@@ -99,12 +94,6 @@ class AdminPostAdd extends React.Component {
         <WhiteBreadcrumb>
           <li className="breadcrumb-item">投稿</li>
         </WhiteBreadcrumb>
-
-        {this.state.errorMessage && (
-          <div className="alert alert-danger" role="alert">
-            {this.state.errorMessage}
-          </div>
-        )}
 
         {this.createContent(props.boxType)}
       </React.Fragment>
