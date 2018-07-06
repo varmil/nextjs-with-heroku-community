@@ -126,4 +126,23 @@ module.exports = class User {
       throw e
     }
   }
+
+  static async fetchBrand(userId) {
+    try {
+      const { brandId } = await models.UserBrand.findOne(
+        { where: { userId } },
+        { raw: true }
+      )
+      if (!brandId) return null
+
+      const brand = await models.Brand.findById(brandId, {
+        attributes: ['id', 'name'],
+        raw: true
+      })
+      return brand
+    } catch (e) {
+      console.error(e)
+      return null
+    }
+  }
 }

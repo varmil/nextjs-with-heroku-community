@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'routes'
 import Navbar from 'reactstrap/lib/Navbar'
 import NavbarBrand from 'reactstrap/lib/NavbarBrand'
@@ -8,6 +9,7 @@ import UncontrolledDropdown from 'reactstrap/lib/UncontrolledDropdown'
 import DropdownToggle from 'reactstrap/lib/DropdownToggle'
 import DropdownMenu from 'reactstrap/lib/DropdownMenu'
 import DropdownItem from 'reactstrap/lib/DropdownItem'
+import Avatar from 'components/atoms/Avatar'
 import Color from 'constants/Color'
 
 const brandStyle = {
@@ -18,8 +20,9 @@ const brandStyle = {
 const linkItemStyle = {}
 const iconSize = 42
 
-export default class Header extends React.Component {
+class AdminHeader extends React.Component {
   render() {
+    const props = this.props
     return (
       <div
         className={this.props.className}
@@ -77,7 +80,7 @@ export default class Header extends React.Component {
               style={{ backgroundColor: 'white' }}
             >
               <span className="dropdownText pr-4">
-                <i className="fas fa-circle" />
+                <Avatar src={props.user.iconPath} size={36} className="mr-3" />
                 <span>Options</span>
               </span>
             </DropdownToggle>
@@ -104,11 +107,15 @@ export default class Header extends React.Component {
             cursor: pointer;
           }
 
-          .dropdownText i {
-            padding: 0 10px 0 0;
+          .dropdownText span {
+            font-weight: bold;
           }
         `}</style>
       </div>
     )
   }
 }
+
+export default connect(state => ({
+  user: state.user
+}))(AdminHeader)

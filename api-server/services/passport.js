@@ -1,4 +1,5 @@
 const passport = require('passport')
+const services = require('../services')
 const models = require('../models')
 // const User = require('../models/User')
 const JwtStrategy = require('passport-jwt').Strategy
@@ -35,8 +36,10 @@ const jwtOptions = {
 const jwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
   try {
     const user = await models.User.findById(payload.sub.id, { raw: true })
+
     if (user) {
-      done(null, user)
+      const brand = await services.User.fetchBrand(user.id)
+      done(null, { ...user, brand })
     } else {
       done(null, false)
     }
