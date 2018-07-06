@@ -8,13 +8,14 @@ module.exports = class Post {
   // 投稿画像を一括して移動
   static async moveProfileIcon(files) {
     if (Array.isArray(files)) {
-      return files.map(async file => {
+      const promises = files.map(async file => {
         const { path, filename } = file
         const dbPath = `${Path.POST_IMG_DIR}/${filename}`
         const fullPath = `${Path.STATIC_BASE_DIR}${dbPath}`
         await moveFile(path, fullPath)
         return dbPath
       })
+      return Promise.all(promises)
     } else {
       return null
     }
@@ -44,8 +45,8 @@ module.exports = class Post {
       }
       // save images if needed
       const images = await Post.moveProfileIcon(files)
-      if (images) {
-        data = { ...data, images }
+      if (Array.isArray(images) && images.length > 0) {
+        data = { ...data, images: images }
       }
 
       const post = await models.Post.create(data, {
