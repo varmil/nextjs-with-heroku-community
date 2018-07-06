@@ -15,16 +15,6 @@ module.exports = {
         defaultValue: 0,
         type: Sequelize.INTEGER
       },
-      firstName: {
-        allowNull: false,
-        defaultValue: '',
-        type: Sequelize.STRING
-      },
-      lastName: {
-        allowNull: false,
-        defaultValue: '',
-        type: Sequelize.STRING
-      },
 
       createdAt: {
         allowNull: false,

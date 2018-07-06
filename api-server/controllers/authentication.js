@@ -4,6 +4,19 @@ const Role = require('../constants/Role')
 const jwt = require('jwt-simple')
 const { secret } = require('../config/server')
 
+const E_EMAIL_PASSWORD = {
+  error: 'メールアドレスとパスワードを正しく入力してください。'
+}
+
+const E_NULL_REQUIRED_FIELD = {
+  error: '必須項目を正しく入力してください。'
+}
+
+const E_EMAIL_TAKEN = {
+  error:
+    'このメールアドレスはすでに利用されています。別のメールアドレスをご利用ください。'
+}
+
 function tokenForUser(user) {
   const timestamp = new Date().getTime()
   return jwt.encode({ sub: { id: user.id }, iat: timestamp }, secret)
@@ -14,15 +27,21 @@ exports.signin = function(req, res) {
 }
 
 exports.signup = async function(req, res, next) {
-  const email = req.body.email
-  const password = req.body.password
   // bodyにこのkeyがなければ「ユーザ」として登録（非管理者）
   const isAdmin = req.body.isAdmin === 'true'
 
+  // 必須チェック
+  const { email, password } = req.body
   if (!email || !password || password.length < 8) {
-    return res
-      .status(422)
-      .json({ error: 'メールアドレスとパスワードを正しく入力してください。' })
+    return res.status(422).json(E_EMAIL_PASSWORD)
+  }
+
+  // 必須チェック（管理者）
+  const { brandName, lastName, firstName } = req.body
+  if (isAdmin) {
+    if (!brandName || !lastName || !firstName) {
+      return res.status(422).json(E_NULL_REQUIRED_FIELD)
+    }
   }
 
   const trans = await models.sequelize.transaction()
@@ -32,10 +51,7 @@ exports.signup = async function(req, res, next) {
       raw: true
     })
     if (existingUser) {
-      return res.status(422).json({
-        error:
-          'このメールアドレスはすでに利用されています。別のメールアドレスをご利用ください。'
-      })
+      return res.status(422).json(E_EMAIL_TAKEN)
     }
 
     const user = await models.User.create(
@@ -51,6 +67,7 @@ exports.signup = async function(req, res, next) {
 
     // create admin record if the user is admin
     if (user.roleId >= Role.User.ADMIN_GUEST) {
+      // TODO 関数切り出し？
       await models.Admin.create(
         {
           userId: user.id
