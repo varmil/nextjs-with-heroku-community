@@ -15,19 +15,21 @@ module.exports = class Post {
     trans
   ) {
     try {
-      const post = await models.Post.create(
-        {
-          brandId,
-          boxType,
-          posterId: userId,
-          categoryIndex,
-          title,
-          body
-        },
-        {
-          transaction: trans
-        }
-      )
+      let data = {
+        brandId,
+        boxType,
+        posterId: userId,
+        title,
+        body
+      }
+      // optional params
+      if (categoryIndex) {
+        data = { ...data, categoryIndex }
+      }
+
+      const post = await models.Post.create(data, {
+        transaction: trans
+      })
       return post
     } catch (e) {
       console.error(e)

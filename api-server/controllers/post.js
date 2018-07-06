@@ -3,19 +3,33 @@ const services = reqlib('/services')
 const models = reqlib('/models')
 const BoxType = reqlib('/../shared/constants/BoxType')
 
+const E_NULL_REQUIRED_FIELD = {
+  error: '項目を正しく入力してください。'
+}
+
 /**
  * 新規投稿 or 編集
+ * NOTE: boxTypeやcategoryIndexは文字列なので注意
  */
 exports.savePost = async (req, res, next) => {
   console.log('[profile]body', req.body)
   console.log('[profile]file', req.files)
-  const { title, body, categoryIndex } = req.body
+  const { title, body } = req.body
   const boxType = +req.body.boxType
+  const categoryIndex = +req.body.categoryIndex
   const userId = req.user.id
   const brand = req.user.brand
 
-  if (!boxType || !title || !body) {
-    return res.status(422).json({ error: '項目を正しく入力してください。' })
+  if (boxType === undefined || !title || !body) {
+    return res.status(422).json(E_NULL_REQUIRED_FIELD)
+  }
+
+  // VOICE
+  const { options, deadline } = req.body
+  if (boxType === BoxType.index.voice) {
+    if (!options || !deadline) {
+      return res.status(422).json(E_NULL_REQUIRED_FIELD)
+    }
   }
 
   const trans = await models.sequelize.transaction()
@@ -35,7 +49,6 @@ exports.savePost = async (req, res, next) => {
     switch (boxType) {
       // アンケート
       case BoxType.index.voice:
-        const { options, deadline } = req.body
         await services.Post.saveVoice(post.id, options, deadline, trans)
         break
       // 追加項目なし
