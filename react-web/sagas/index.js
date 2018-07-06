@@ -169,11 +169,10 @@ function* savePost({ payload }) {
     options,
     deadline
   } = payload
-  const { id, jwtToken } = yield select(getUser)
+  const { jwtToken } = yield select(getUser)
 
   // 複数画像をPOSTするためにFormDataを使用する
   let formData = new FormData()
-  formData.append('userId', id)
   formData.append('boxType', boxType)
   formData.append('title', title)
   formData.append('body', body)
