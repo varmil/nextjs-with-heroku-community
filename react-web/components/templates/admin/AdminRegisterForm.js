@@ -105,6 +105,7 @@ class AdminRegisterForm extends React.Component {
             className="w-25"
             color={Color.MAIN_BLUE}
             onClick={this.onSave.bind(this)}
+            disabled={!state.brandName || !state.lastName || !state.firstName}
           >
             保存する
           </ColorButton>
