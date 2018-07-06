@@ -57,6 +57,9 @@ class AdminPostAdd extends React.Component {
       case BoxType.index.news:
         return (
           <BaseEditor
+            // https://stackoverflow.com/a/48451229
+            // use key to force remount when url changed
+            key={props.boxType}
             boxType={props.boxType}
             categories={this.createCategories(props.boxType)}
             onSubmit={this.onSubmit.bind(this)}

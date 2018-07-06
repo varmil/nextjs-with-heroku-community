@@ -59,22 +59,23 @@ const boxOptions = map(BoxType.index, (v, k) => {
   }
 })
 
-const createCatOptions = cats => {
-  if (!cats) return []
-  return cats.map(cat => {
-    return {
-      value: cat.categoryIndex,
-      label: <SelectLabel left="カテゴリ：" right={cat.text} />
-    }
-  })
-}
-
 class AdminBaseEditor extends React.Component {
   state = {
-    category: createCatOptions(this.props.categories)[0],
+    category: this.createCatOptions()[0],
     title: '',
     body: '',
     files: []
+  }
+
+  createCatOptions() {
+    const cats = this.props.categories
+    if (!cats) return []
+    return cats.map(cat => {
+      return {
+        value: cat.categoryIndex,
+        label: <SelectLabel left="カテゴリ：" right={cat.text} />
+      }
+    })
   }
 
   handleChange = name => event => {
@@ -99,7 +100,7 @@ class AdminBaseEditor extends React.Component {
 
   render() {
     const props = this.props
-    const categoryOptions = createCatOptions(props.categories)
+    const categoryOptions = this.createCatOptions()
 
     return (
       <React.Fragment>
