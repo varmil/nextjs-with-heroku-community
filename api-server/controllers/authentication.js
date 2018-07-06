@@ -63,7 +63,9 @@ exports.signup = async function(req, res, next) {
         req.file
       )
     } else {
-      user = await services.User.createNormalUser(email, password)
+      // TODO: 本来は招待URLからサーバ側でbrandIdを付与。とりま定数
+      const brandId = 1
+      user = await services.User.createNormalUser(email, password, brandId)
     }
     console.log('user created ! { id, roleId } : ', user.id, user.roleId)
     res.json({ token: tokenForUser(user) })

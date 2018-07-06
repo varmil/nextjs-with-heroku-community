@@ -6,6 +6,7 @@ import {
   AppNews,
   AppMypage,
   AppPost,
+  AppSuccesses,
   AppErrors
 } from 'constants/ActionTypes'
 
@@ -25,6 +26,14 @@ export let addMypageContents = createAction(AppMypage.ADD_CONTENTS)
 
 // post
 export let setPost = createAction(AppPost.SET_POST)
+
+// 汎用成功
+export let setSuccess = createAction(AppSuccesses.PUSH, e => {
+  let message = '成功しました。'
+  // カスタムメッセージ
+  if (isString(e)) message = e
+  toastr.success('成功', message)
+})
 
 // 汎用エラー
 export let setCommonError = createAction(AppErrors.PUSH, e => {

@@ -30,16 +30,27 @@ import Rule from 'constants/Rule'
 // select User !
 const getUser = state => state.user
 
-// 通常ユーザのsignup, Admin,User共通のsignin
-function* authenticate({ payload }) {
-  const { url, email, password, successCb, errCb, errorMessage } = payload
+// Admin,User共通のsignin
+function* signin({ payload }) {
+  const { email, password, successCb, errorMessage } = payload
   try {
-    const res = yield call(API.post, url, { email, password })
+    const res = yield call(API.post, '/signin', { email, password })
     yield call(setUserInfo, res.data.token)
     yield call(successCb, res)
   } catch (e) {
-    if (errCb) yield call(errCb, e.response)
     yield put(setCommonError(errorMessage || e.response))
+  }
+}
+
+// 通常ユーザのsignup
+function* signupUser({ payload }) {
+  const { email, password, successCb } = payload
+  try {
+    const res = yield call(API.post, '/signup', { email, password })
+    yield call(setUserInfo, res.data.token)
+    yield call(successCb, res)
+  } catch (e) {
+    yield put(setCommonError(e.response))
   }
 }
 
@@ -219,7 +230,8 @@ function* postIFrameMessageSaga(action) {
 /** ****************************************************************************/
 
 const userSaga = [
-  takeLatest(User.AUTH_REQUEST, authenticate),
+  takeLatest(User.SIGNUP_REQUEST, signupUser),
+  takeLatest(User.SIGNIN_REQUEST, signin),
   takeLatest(User.AUTH_ADMIN_REQUEST, signupAdmin),
   takeLatest(User.SAVE_PROFILE_REQUEST, saveUserProfile),
   takeLatest(User.FETCH_REQUEST, fetchUser)

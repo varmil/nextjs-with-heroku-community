@@ -37,8 +37,7 @@ class Signin extends React.Component {
     const { email, password } = this.state
     const successCb = async res => Router.pushRoute(`/view/home`)
     this.props.dispatch(
-      createAction(User.AUTH_REQUEST)({
-        url: '/signin',
+      createAction(User.SIGNIN_REQUEST)({
         email,
         password,
         successCb,

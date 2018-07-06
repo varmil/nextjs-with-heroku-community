@@ -98,14 +98,20 @@ export const User = createTypes(
   'AUTHENTICATE',
   'DEAUTHENTICATE',
   // user signup, signin
-  async('AUTH'),
+  async('SIGNUP'),
+  async('SIGNIN'),
+  async('SAVE_PROFILE'),
   // admin signup
   async('AUTH_ADMIN'),
-  async('SAVE_PROFILE'),
   // fetch basic info (id, nickname)
   async('FETCH'),
   'SET'
 )
+
+/**
+ * 汎用SuccessR用Action
+ */
+export const AppSuccesses = createTypes('successes/', 'PUSH', 'POP')
 
 /**
  * 汎用ERROR用Action

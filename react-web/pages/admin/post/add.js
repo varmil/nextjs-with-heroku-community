@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Router, Link } from 'routes'
 import { createAction } from 'redux-actions'
 import { AppAdminPost } from 'constants/ActionTypes'
+import { setSuccess } from 'actions/application'
 import AdminHeader from 'components/organisms/admin/AdminHeader'
 import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
 import BaseEditor from 'components/templates/admin_post_add/BaseEditor'
@@ -31,7 +32,10 @@ class AdminPostAdd extends React.Component {
   onSubmit(state) {
     console.info(state)
     const props = this.props
-    const successCb = async res => Router.pushRoute(`/admin/post/list`)
+    const successCb = async res => {
+      this.props.dispatch(setSuccess())
+      Router.pushRoute(`/admin/post/list`)
+    }
     this.props.dispatch(
       createAction(AppAdminPost.SAVE_REQUEST)({
         successCb,

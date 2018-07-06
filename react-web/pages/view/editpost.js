@@ -1,11 +1,12 @@
 import React from 'react'
-import { Link } from '/routes'
+import { Router, Link } from '/routes'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
 import Select from 'react-select'
 import omit from 'lodash/omit'
 import { withStyles } from '@material-ui/core/styles'
 import Input from '@material-ui/core/Input'
+import { setSuccess } from 'actions/application'
 import PostDropzone from 'components/molecules/PostDropzone'
 import { AppPost } from 'constants/ActionTypes'
 import BoxType from '/../shared/constants/BoxType'
@@ -63,7 +64,10 @@ class Editpost extends React.Component {
     // category objectは不要なので省く
     data = omit(data, 'category')
 
-    const successCb = async res => console.log('success') // Router.pushRoute(`/admin/post/list`)
+    const successCb = async res => {
+      this.props.dispatch(setSuccess())
+      Router.pushRoute(`/view/home`)
+    }
     this.props.dispatch(
       createAction(AppPost.SAVE_REQUEST)({
         successCb,

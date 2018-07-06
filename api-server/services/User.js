@@ -42,15 +42,33 @@ module.exports = class User {
     }
   }
 
-  static async createNormalUser(email, password) {
+  static async createNormalUser(email, password, brandId) {
+    const trans = await models.sequelize.transaction()
     try {
-      const user = await models.User.create({
-        email,
-        passwordHash: await models.User.generateHash(password),
-        roleId: Role.User.NORMAL
-      })
+      const user = await models.User.create(
+        {
+          email,
+          passwordHash: await models.User.generateHash(password),
+          roleId: Role.User.NORMAL
+        },
+        {
+          transaction: trans
+        }
+      )
+
+      await models.UserBrand.create(
+        {
+          userId: user.id,
+          brandId
+        },
+        {
+          transaction: trans
+        }
+      )
+      trans.commit()
       return user
     } catch (e) {
+      trans.rollback()
       throw e
     }
   }

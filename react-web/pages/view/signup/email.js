@@ -25,10 +25,11 @@ class SignupEmail extends React.Component {
   // ERRORハンドリングしやすいのでここでPOST
   async signup(e) {
     const { email, password } = this.state
-    const successCb = async res => Router.pushRoute(`/view/signup/complete`)
+    const successCb = async res => {
+      Router.pushRoute(`/view/signup/complete`)
+    }
     this.props.dispatch(
-      createAction(User.AUTH_REQUEST)({
-        url: '/signup',
+      createAction(User.SIGNUP_REQUEST)({
         email,
         password,
         successCb

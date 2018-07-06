@@ -35,8 +35,7 @@ class SignupProfile extends React.Component {
     formData.append('nickname', this.state.nickname)
     formData.append('image', this.state.files[0])
 
-    // const successCb = async res => Router.pushRoute(`/view/home`)
-    const successCb = async res => {}
+    const successCb = async res => Router.pushRoute(`/view/home`)
     this.props.dispatch(
       createAction(User.SAVE_PROFILE_REQUEST)({
         formData,
