@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'routes'
+import { Link, Router } from 'routes'
 import map from 'lodash/map'
 import pickBy from 'lodash/pickBy'
 import identity from 'lodash/identity'
@@ -121,7 +121,10 @@ class AdminBaseEditor extends React.Component {
           <section className="mt-3">
             <Select
               instanceId={'SSR-POSTADD001'}
-              defaultValue={boxOptions[+props.boxType]}
+              value={boxOptions[+props.boxType]}
+              onChange={o => {
+                Router.replaceRoute(`/admin/post/add/${o.value}`)
+              }}
               styles={colourStyles('#5e91c4')}
               options={boxOptions}
               isSearchable={false}
