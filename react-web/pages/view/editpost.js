@@ -1,11 +1,14 @@
 import React from 'react'
 import { Link } from '/routes'
 import { connect } from 'react-redux'
+import { createAction } from 'redux-actions'
 import Select from 'react-select'
+import omit from 'lodash/omit'
 import { withStyles } from '@material-ui/core/styles'
 import Input from '@material-ui/core/Input'
 import PostDropzone from 'components/molecules/PostDropzone'
-import Rule from 'constants/Rule'
+import { AppPost } from 'constants/ActionTypes'
+import BoxType from '/../shared/constants/BoxType'
 import URL from 'constants/URL'
 
 const inputStyles = {
@@ -13,12 +16,6 @@ const inputStyles = {
     padding: '10px'
   }
 }
-
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' }
-]
 
 const colourStyles = {
   control: styles => ({
@@ -42,7 +39,17 @@ class Editpost extends React.Component {
   state = {
     title: '',
     body: '',
-    files: []
+    category: this.createCatOptions()[0],
+    files: [],
+    errorMessage: ''
+  }
+
+  createCatOptions() {
+    const cats = this.props.talkCategories.filter(e => e.text)
+    if (!cats) return []
+    return cats.map(cat => {
+      return { value: cat.categoryIndex, label: cat.text }
+    })
   }
 
   handleChange = name => event => {
@@ -51,22 +58,28 @@ class Editpost extends React.Component {
     })
   }
 
-  onDrop(files) {
-    let newFiles = this.state.files.concat(files)
-    if (newFiles.length > Rule.MAX_UPLOAD_FILES) {
-      newFiles = newFiles.slice(0, Rule.MAX_UPLOAD_FILES)
-    }
-    this.setState({ ...this.state, files: newFiles })
-  }
+  onSubmit() {
+    let data = this.state
+    data = { ...data, categoryIndex: this.state.category.value }
+    // category objectは不要なので省く
+    data = omit(data, 'category')
 
-  onDelete(e, tappedFile) {
-    e.preventDefault()
-    e.stopPropagation()
-    // Remove tappedItem from state.files
-    const filtered = this.state.files.filter(
-      f => f.preview !== tappedFile.preview
+    const successCb = async res => console.log('success') // Router.pushRoute(`/admin/post/list`)
+    const errCb = async res => {
+      this.setState({
+        ...this.state,
+        errorMessage: <span>{JSON.stringify(res.data)}</span>
+      })
+    }
+    this.props.dispatch(
+      createAction(AppPost.SAVE_REQUEST)({
+        successCb,
+        errCb,
+        // 現状はユーザが投稿可能なのはTALKのみ。
+        boxType: BoxType.index.talk,
+        ...data
+      })
     )
-    this.setState({ ...this.state, files: filtered })
   }
 
   render() {
@@ -82,7 +95,11 @@ class Editpost extends React.Component {
               <span style={{ color: 'black' }}>キャンセル</span>
             </Link>
             <div className="">
-              <button className="btn btn-link my-2 my-sm-0" type="submit">
+              <button
+                className="btn btn-link my-2 my-sm-0"
+                type="submit"
+                onClick={this.onSubmit.bind(this)}
+              >
                 投稿する
               </button>
             </div>
@@ -91,11 +108,20 @@ class Editpost extends React.Component {
 
         <Select
           instanceId={'SSR-GOGO001'}
-          placeholder={'カテゴリ'}
+          value={this.state.category}
+          onChange={o => {
+            this.setState({ ...this.state, category: o })
+          }}
           styles={colourStyles}
-          options={options}
+          options={this.createCatOptions()}
           isSearchable={false}
         />
+
+        {this.state.errorMessage && (
+          <div className="alert alert-danger" role="alert">
+            {this.state.errorMessage}
+          </div>
+        )}
 
         <section className="mt-3">
           <Input
@@ -131,5 +157,5 @@ class Editpost extends React.Component {
 
 const Styled = withStyles(inputStyles)(Editpost)
 export default connect(state => ({
-  // post: state.site.post
+  talkCategories: state.site.talkroom.categories.item
 }))(Styled)

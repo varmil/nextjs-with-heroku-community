@@ -61,7 +61,14 @@ export const AppMypage = createTypes(
 )
 
 // POST詳細画面
-export const AppPost = createTypes('app/post/', 'SET_POST', async('FETCH'))
+export const AppPost = createTypes(
+  'app/post/',
+  'SET_POST',
+  // 新規投稿
+  async('SAVE'),
+  // 下書き or 編集時のデータ取得
+  async('FETCH')
+)
 
 // -----
 // -- APP_ADMIN: AdminViewで詰めるデータ --

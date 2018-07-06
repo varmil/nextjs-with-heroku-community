@@ -228,6 +228,7 @@ const appSaga = [
   takeLatest(AppVoice.FETCH_INITIAL_REQUEST, fetchVoiceInitial),
   takeLatest(AppNews.FETCH_INITIAL_REQUEST, fetchNewsInitial),
   takeLatest(AppMypage.FETCH_INITIAL_REQUEST, fetchMypageInitial),
+  takeLatest(AppPost.SAVE_REQUEST, savePost),
   takeLatest(AppPost.FETCH_REQUEST, fetchPost)
 ]
 

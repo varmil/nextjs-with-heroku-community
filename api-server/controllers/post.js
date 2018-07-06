@@ -2,13 +2,18 @@ const reqlib = require('app-root-path').require
 const services = reqlib('/services')
 const models = reqlib('/models')
 const BoxType = reqlib('/../shared/constants/BoxType')
+const Role = reqlib('/constants/Role')
 
 const E_NULL_REQUIRED_FIELD = {
   error: '項目を正しく入力してください。'
 }
 
+const E_NOT_ALLOWED = {
+  error: 'そのアクションは許可されていません。'
+}
+
 /**
- * 新規投稿 or 編集
+ * 新規投稿 or 編集（AdminもUserもこれを使用）
  * NOTE: boxTypeやcategoryIndexは文字列なので注意
  */
 exports.savePost = async (req, res, next) => {
@@ -22,6 +27,11 @@ exports.savePost = async (req, res, next) => {
 
   if (boxType === undefined || !title || !body) {
     return res.status(422).json(E_NULL_REQUIRED_FIELD)
+  }
+
+  // 通常ユーザがTALK以外へ投稿しようとしたら弾く
+  if (req.user.roleId === Role.User.NORMAL && boxType !== BoxType.index.talk) {
+    return res.status(422).json(E_NOT_ALLOWED)
   }
 
   // VOICE
