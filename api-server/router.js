@@ -3,7 +3,7 @@ const ConnectRoles = require('connect-roles')
 const multer = require('multer')
 const uuidv1 = require('uuid/v1')
 const Role = require('./constants/Role')
-const AuthenticationController = require('./controllers/authentication')
+const AuthController = require('./controllers/authentication')
 const UserController = require('./controllers/user')
 const PostController = require('./controllers/post')
 
@@ -92,9 +92,12 @@ module.exports = function(app) {
   /**
    * USER
    */
-  app.post('/signin', requireSignIn, AuthenticationController.signin)
-  app.post('/signup', AuthenticationController.signup)
+  app.post('/signin', requireSignIn, AuthController.signin)
+  // 一般ユーザ
+  app.post('/signup', AuthController.signup)
   app.post('/user/profile', upload.single('image'), UserController.profile)
+  // 管理者（アイコンも同時登録）
+  app.post('/signup/admin', upload.single('image'), AuthController.signup)
 
   /**
    * POST

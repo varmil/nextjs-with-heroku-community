@@ -1,3 +1,4 @@
+const services = require('../services')
 const models = require('../models')
 const Role = require('../constants/Role')
 // const User = require('../models/User')
@@ -27,6 +28,8 @@ exports.signin = function(req, res) {
 }
 
 exports.signup = async function(req, res, next) {
+  console.log('[profile]body', req.body)
+  console.log('[profile]file', req.file)
   // bodyにこのkeyがなければ「ユーザ」として登録（非管理者）
   const isAdmin = req.body.isAdmin === 'true'
 
@@ -67,14 +70,13 @@ exports.signup = async function(req, res, next) {
 
     // create admin record if the user is admin
     if (user.roleId >= Role.User.ADMIN_GUEST) {
-      // TODO 関数切り出し？
-      await models.Admin.create(
-        {
-          userId: user.id
-        },
-        {
-          transaction: trans
-        }
+      const result = await services.User.createAdmin(
+        trans,
+        user.id,
+        brandName,
+        lastName,
+        firstName,
+        req.file
       )
     }
 
