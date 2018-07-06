@@ -8,6 +8,7 @@ module.exports = function(sequelize, DataTypes) {
     categoryIndex: DataTypes.INTEGER,
     title: DataTypes.STRING,
     body: DataTypes.TEXT,
+    images: DataTypes.JSON,
     like: DataTypes.INTEGER,
     comment: DataTypes.INTEGER
   })

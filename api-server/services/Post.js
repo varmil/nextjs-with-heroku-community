@@ -5,6 +5,21 @@ const Path = reqlib('/constants/Path')
 const Role = reqlib('/constants/Role')
 
 module.exports = class Post {
+  // 投稿画像を一括して移動
+  static async moveProfileIcon(files) {
+    if (Array.isArray(files)) {
+      return files.map(async file => {
+        const { path, filename } = file
+        const dbPath = `${Path.POST_IMG_DIR}/${filename}`
+        const fullPath = `${Path.STATIC_BASE_DIR}${dbPath}`
+        await moveFile(path, fullPath)
+        return dbPath
+      })
+    } else {
+      return null
+    }
+  }
+
   static async save(
     userId,
     brandId,
@@ -12,6 +27,7 @@ module.exports = class Post {
     title,
     body,
     categoryIndex,
+    files,
     trans
   ) {
     try {
@@ -26,10 +42,16 @@ module.exports = class Post {
       if (categoryIndex) {
         data = { ...data, categoryIndex }
       }
+      // save images if needed
+      const images = await Post.moveProfileIcon(files)
+      if (images) {
+        data = { ...data, images }
+      }
 
       const post = await models.Post.create(data, {
         transaction: trans
       })
+
       return post
     } catch (e) {
       console.error(e)

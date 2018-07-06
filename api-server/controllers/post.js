@@ -42,6 +42,7 @@ exports.savePost = async (req, res, next) => {
       title,
       body,
       categoryIndex,
+      req.files,
       trans
     )
 

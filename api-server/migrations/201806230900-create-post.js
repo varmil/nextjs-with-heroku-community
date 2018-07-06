@@ -39,6 +39,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT
       },
+      images: {
+        allowNull: true,
+        type: Sequelize.JSON
+      },
       like: {
         allowNull: false,
         defaultValue: 0,
