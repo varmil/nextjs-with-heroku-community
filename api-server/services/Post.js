@@ -25,6 +25,7 @@ module.exports = class Post {
     userId,
     brandId,
     boxType,
+    released,
     title,
     body,
     categoryIndex,
@@ -35,6 +36,7 @@ module.exports = class Post {
       let data = {
         brandId,
         boxType,
+        released,
         posterId: userId,
         title,
         body

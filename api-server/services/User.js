@@ -13,6 +13,24 @@ const Role = reqlib('/constants/Role')
 // const FACEBOOK_PICTURE_SIZE_PX = 200
 
 module.exports = class User {
+  // { <id>: name, ... } というObjectを返す
+  static async idToName(ids) {
+    const names = await models.User.findAll({
+      attributes: ['id', 'nickname', 'lastName', 'firstName'],
+      where: { id: ids },
+      raw: true
+    })
+    return names.reduce((acc, cur) => {
+      let name = ''
+      if (cur.nickname) name = cur.nickname
+      else name = `${cur.lastName} ${cur.firstName}`
+      return {
+        ...acc,
+        [cur.id]: name
+      }
+    }, {})
+  }
+
   static async moveProfileIcon(file) {
     let dbPath
     if (file) {

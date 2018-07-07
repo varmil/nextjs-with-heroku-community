@@ -73,21 +73,19 @@ export const AppPost = createTypes(
 // -----
 // -- APP_ADMIN: AdminViewで詰めるデータ --
 // -----
-// post/list
-export const AppAdminPosts = createTypes(
-  'app/admin/posts/',
-  'ADD_CONTENTS',
-  async('FETCH')
-)
 
 // post/add （UserViewとは扱う情報が微妙に違うかもなので分ける）
 export const AppAdminPost = createTypes(
   'app/admin/post/',
-  'SET',
   // 新規投稿
   async('SAVE'),
   // 下書き or 編集時のデータ取得
-  async('FETCH')
+  async('FETCH'),
+  'SET',
+  // 一覧表示用
+  async('FETCH_LIST'),
+  'SET_LIST',
+  'PUSH_LIST'
 )
 
 // -----

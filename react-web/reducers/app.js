@@ -6,7 +6,8 @@ import {
   AppNews,
   AppMypage,
   AppPost,
-  AppErrors
+  AppAdminPost
+  // AppErrors
 } from 'constants/ActionTypes'
 
 const initialState = {
@@ -25,6 +26,9 @@ const initialState = {
   mypage: {
     boxContents: [] // FETCH
   },
+
+  // Admin用。投稿一覧画面
+  posts: [],
 
   post: {
     data: {}
@@ -63,6 +67,19 @@ export default handleActions(
     [AppMypage.ADD_CONTENTS]: (state, action) => {
       // spread payload because it is array
       return immutable.push(state, `mypage.boxContents`, ...action.payload)
+    },
+
+    /**
+     * POSTS
+     */
+    [AppAdminPost.SET_LIST]: (state, action) => {
+      // spread payload because it is array
+      return immutable.set(state, `posts`, action.payload)
+    },
+
+    [AppAdminPost.PUSH_LIST]: (state, action) => {
+      // spread payload because it is array
+      return immutable.push(state, `posts`, ...action.payload)
     },
 
     /**

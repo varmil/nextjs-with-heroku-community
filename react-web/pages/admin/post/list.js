@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'routes'
 import { createAction } from 'redux-actions'
-import { User } from 'constants/ActionTypes'
+import { AppAdminPost } from 'constants/ActionTypes'
 import AdminPageContainer from 'components/molecules/AdminPageContainer'
 import AdminHeader from 'components/organisms/admin/AdminHeader'
 import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
@@ -10,6 +10,18 @@ import ColorButton from 'components/atoms/ColorButton'
 import SimpleTable from 'components/organisms/admin/SimpleTable'
 
 class AdminPostList extends React.Component {
+  static async getInitialProps({ ctx }) {
+    const { dispatch } = ctx.store
+    const pageNum = ctx.query.pageNum || 1
+
+    // const { posts } = ctx.store.getState().app
+    // if (ctx.isServer || posts.length === 0) {
+    dispatch(createAction(AppAdminPost.FETCH_LIST_REQUEST)({ pageNum }))
+    // }
+
+    return { pageNum }
+  }
+
   state = {
     keyword: ''
   }
@@ -21,6 +33,7 @@ class AdminPostList extends React.Component {
   }
 
   render() {
+    const props = this.props
     return (
       <React.Fragment>
         <AdminHeader />
@@ -76,7 +89,7 @@ class AdminPostList extends React.Component {
           )}
 
           <section className="regNote mt-3 text-center">
-            <SimpleTable />
+            <SimpleTable posts={props.posts} />
           </section>
         </AdminPageContainer>
 
@@ -113,5 +126,5 @@ class AdminPostList extends React.Component {
 }
 
 export default connect(state => ({
-  // post: state.site.post
+  posts: state.app.posts
 }))(AdminPostList)

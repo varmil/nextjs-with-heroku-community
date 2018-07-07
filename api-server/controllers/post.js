@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const reqlib = require('app-root-path').require
 const services = reqlib('/services')
 const models = reqlib('/models')
@@ -38,10 +39,12 @@ exports.savePost = async (req, res, next) => {
   const trans = await models.sequelize.transaction()
   try {
     // 投稿をpostテーブルへ保存
+    const released = true
     const post = await services.Post.save(
       userId,
       brand.id,
       boxType,
+      released,
       title,
       body,
       categoryIndex,
@@ -79,5 +82,21 @@ exports.fetchPost = async (req, res) => {
 }
 
 exports.fetchPostList = async (req, res) => {
-  res.json(true)
+  const PER_PAGE = 20
+  const pageNum = req.params.pageNum || 1 // 1 origin
+  const brandId = req.user.brand.id
+
+  const posts = await models.Post.findAll({
+    // attributes: ['id', 'name', 'title'],
+    where: { brandId },
+    limit: PER_PAGE,
+    offset: PER_PAGE * (pageNum - 1),
+    order: [['id', 'DESC']],
+    raw: true
+  })
+  const names = await services.User.idToName(_.map(posts, 'posterId'))
+  const merged = posts.map(p => {
+    return { ...p, name: names[p.posterId] }
+  })
+  res.json(merged)
 }

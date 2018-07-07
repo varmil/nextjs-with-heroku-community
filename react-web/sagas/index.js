@@ -8,7 +8,6 @@ import {
   AppNews,
   AppMypage,
   AppPost,
-  AppAdminPosts,
   AppAdminPost
 } from 'constants/ActionTypes'
 import {
@@ -151,7 +150,15 @@ function* fetchMypageInitial({ payload }) {
  */
 
 function* fetchPosts({ payload }) {
-  // TODO
+  const { pageNum } = payload
+  const { jwtToken } = yield select(getUser)
+  try {
+    const { data } = yield call(API.fetch, `/post/list/${pageNum}`, jwtToken)
+    const action = createAction(AppAdminPost.SET_LIST)
+    yield put(action(data))
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
 }
 
 function* fetchPost({ payload }) {
@@ -248,7 +255,7 @@ const appSaga = [
 const appAdminSaga = [
   takeLatest(AppAdminPost.SAVE_REQUEST, savePost),
   takeLatest(AppAdminPost.FETCH_REQUEST, fetchPost),
-  takeLatest(AppAdminPosts.FETCH_REQUEST, fetchPosts)
+  takeLatest(AppAdminPost.FETCH_LIST_REQUEST, fetchPosts)
 ]
 
 function* rootSaga() {
