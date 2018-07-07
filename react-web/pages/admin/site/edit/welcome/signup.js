@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Router } from 'routes'
 import { createAction } from 'redux-actions'
+import { setSuccess } from 'actions/application'
 import { User } from 'constants/ActionTypes'
 import Modal from 'reactstrap/lib/Modal'
 import ModalBody from 'reactstrap/lib/ModalBody'
@@ -30,7 +31,10 @@ class WelcomeSignup extends React.Component {
 
   onSave(state) {
     console.info('state', state)
-    const successCb = async res => console.log('admin signup success') // Router.pushRoute(`/view/signup/complete`)
+    const successCb = async res => {
+      this.props.dispatch(setSuccess())
+      // Router.pushRoute(`/view/signup/complete`)
+    }
     this.props.dispatch(
       createAction(User.AUTH_ADMIN_REQUEST)({
         ...state,
