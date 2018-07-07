@@ -13,8 +13,3 @@ export let setDevice = createAction(SitePreview.SET_DEVICE)
 // talk room
 
 // news
-
-/**
- *  ASYNC ACTIONS
- */
-// export let loadData = createAction(Example.LOAD_DATA)

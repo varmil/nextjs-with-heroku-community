@@ -11,7 +11,6 @@ import {
   AppAdminPosts,
   AppAdminPost
 } from 'constants/ActionTypes'
-import { failure } from 'actions/example'
 import {
   addTalkContents,
   addVoiceContents,
@@ -221,7 +220,7 @@ function* postIFrameMessageSaga(action) {
     const { iWindow, type, payload } = action.payload
     iWindow.postMessage({ type, payload }, '*')
   } catch (err) {
-    yield put(failure(err))
+    yield put(setCommonError(err))
   }
 }
 

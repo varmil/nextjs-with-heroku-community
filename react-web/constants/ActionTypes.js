@@ -129,13 +129,6 @@ export const Loading = createTypes(
   'FAILED'
 )
 
-export const Example = createTypes(
-  'example/',
-  'FAILURE',
-  'LOAD_DATA',
-  'LOAD_DATA_SUCCESS'
-)
-
 /*
   types = {
     LOAD_REQUEST: 'my-app/module/LOAD_REQUEST',
