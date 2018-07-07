@@ -85,6 +85,9 @@ export default handleActions(
     /**
      * POST
      */
+    [AppAdminPost.SET]: (state, action) => {
+      return immutable.set(state, `post.data`, action.payload)
+    },
     [AppPost.SET_POST]: (state, action) => {
       return immutable.set(state, `post.data`, action.payload)
     }

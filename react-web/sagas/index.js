@@ -94,6 +94,11 @@ function* saveUserProfile({ payload }) {
   const { formData, successCb } = payload
   try {
     const res = yield call(API.post, '/user/profile', formData)
+
+    // 冗長だが、再度最新のUser情報をfetch
+    const { jwtToken } = yield select(getUser)
+    yield put(createAction(User.FETCH_REQUEST)(jwtToken))
+
     yield call(successCb, res)
   } catch (e) {
     yield put(setCommonError(e.response))
@@ -162,15 +167,27 @@ function* fetchPosts({ payload }) {
 }
 
 function* fetchPost({ payload }) {
-  const { boxType, postId } = payload
-
-  // TODO: fetch post with boxType, postId
-  // 適当な記事データを返却しておく
-  const post = Posts[boxType][postId]
-  const comments = Comments
-  const voteOptions = VoteOptions || []
-  yield put(setPost({ ...post, comments, voteOptions }))
+  const { postId } = payload
+  const { jwtToken } = yield select(getUser)
+  try {
+    const { data } = yield call(API.fetch, `/post/${postId}`, jwtToken)
+    const action = createAction(AppAdminPost.SET)
+    yield put(action(data))
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
 }
+
+// function* fetchPost({ payload }) {
+//   const { boxType, postId } = payload
+//
+//   // TODO: fetch post with boxType, postId
+//   // 適当な記事データを返却しておく
+//   const post = Posts[boxType][postId]
+//   const comments = Comments
+//   const voteOptions = VoteOptions || []
+//   yield put(setPost({ ...post, comments, voteOptions }))
+// }
 
 function* savePost({ payload }) {
   const {

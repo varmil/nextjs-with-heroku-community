@@ -1,5 +1,5 @@
 import React from 'react'
-import { connect } from 'react-redux'
+// import { connect } from 'react-redux'
 import fecha from 'fecha'
 import range from 'lodash/range'
 import Input from '@material-ui/core/Input'
@@ -9,9 +9,15 @@ import AdminPostFormLabel from 'components/atoms/AdminPostFormLabel'
 import BaseEditor from 'components/templates/admin_post_add/BaseEditor'
 
 export default class extends React.Component {
-  state = {
-    options: [],
-    deadline: fecha.format(new Date(), 'YYYY-MM-DDThh:mm')
+  constructor(props) {
+    super(props)
+    const { voice } = this.props.post
+    this.state = {
+      options: (voice && voice.options) || [],
+      deadline:
+        (voice && voice.deadline) ||
+        fecha.format(new Date(), 'YYYY-MM-DDThh:mm')
+    }
   }
 
   handleChange = name => event => {
@@ -36,7 +42,11 @@ export default class extends React.Component {
     const props = this.props
     return (
       <React.Fragment>
-        <BaseEditor boxType={props.boxType} onSubmit={this.onSubmit.bind(this)}>
+        <BaseEditor
+          post={props.post}
+          boxType={props.boxType}
+          onSubmit={this.onSubmit.bind(this)}
+        >
           <section className="container mt-5">
             <AdminPostFormLabel>選択肢</AdminPostFormLabel>
             <div className="options mx-auto mt-4">

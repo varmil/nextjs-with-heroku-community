@@ -91,4 +91,4 @@ class MyApp extends App {
 // export default withAppLayout(ReduxApp)
 
 const Layouted = withAppLayout(MyApp)
-export default withRedux(createStore)(withReduxSaga({ async: true })(Layouted))
+export default withRedux(createStore)(withReduxSaga({ async: false })(Layouted))

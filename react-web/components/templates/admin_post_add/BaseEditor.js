@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link, Router } from 'routes'
+import isEmpty from 'lodash/isEmpty'
 import map from 'lodash/map'
 import omit from 'lodash/omit'
 import toUpper from 'lodash/toUpper'
@@ -60,8 +61,8 @@ const boxOptions = map(BoxType.index, (v, k) => {
 class AdminBaseEditor extends React.Component {
   state = {
     category: this.createCatOptions()[0],
-    title: '',
-    body: '',
+    title: this.props.post.title || '',
+    body: this.props.post.body || '',
     files: []
   }
 

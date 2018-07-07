@@ -78,7 +78,27 @@ exports.savePost = async (req, res, next) => {
  * 個別記事 取得
  */
 exports.fetchPost = async (req, res) => {
-  res.json(true)
+  const { postId } = req.params
+  if (!postId) return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
+
+  let result = {}
+  const post = await models.Post.findById(postId, {
+    raw: true
+  })
+  const names = await services.User.idToName(_.map([post], 'posterId'))
+  result = { ...post, name: names[post.posterId] }
+
+  // boxTypeによって追加取得
+  if (post.boxType === BoxType.index.voice) {
+    const voice = await models.Voice.findOne({
+      attributes: ['options', 'deadline'],
+      where: { postId: post.id },
+      raw: true
+    })
+    result = { ...result, voice }
+  }
+
+  res.json(result)
 }
 
 exports.fetchPostList = async (req, res) => {

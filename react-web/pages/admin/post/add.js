@@ -12,9 +12,17 @@ import BoxType from '/../shared/constants/BoxType'
 
 class AdminPostAdd extends React.Component {
   static async getInitialProps({ ctx }) {
-    // TODO: 下書き考慮
+    const { dispatch } = ctx.store
 
-    // TODO: 全ボックスのカテゴリをfetchしてset
+    // 下書き考慮。postIdがあればfetch-set。なければstate初期化
+    const postId = +ctx.query.postId
+    if (postId) {
+      dispatch(createAction(AppAdminPost.FETCH_REQUEST)({ postId }))
+    } else {
+      dispatch(createAction(AppAdminPost.SET)({}))
+    }
+
+    // TODO: 全ボックスのカテゴリをfetch-set
 
     return { boxType: +ctx.query.boxType }
   }
@@ -56,6 +64,7 @@ class AdminPostAdd extends React.Component {
             // https://stackoverflow.com/a/48451229
             // use key to force remount when url changed
             key={props.boxType}
+            post={props.post}
             boxType={props.boxType}
             categories={this.createCategories(props.boxType)}
             onSubmit={this.onSubmit.bind(this)}
@@ -65,6 +74,7 @@ class AdminPostAdd extends React.Component {
       case BoxType.index.voice:
         return (
           <VoiceEditor
+            post={props.post}
             boxType={props.boxType}
             onSubmit={this.onSubmit.bind(this)}
           />
@@ -104,6 +114,7 @@ class AdminPostAdd extends React.Component {
 }
 
 export default connect(state => ({
+  post: state.app.post.data,
   talkCategories: state.site.talkroom.categories.item,
   newsCategories: state.site.news.categories.item
 }))(AdminPostAdd)
