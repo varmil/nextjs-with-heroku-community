@@ -121,3 +121,7 @@ exports.fetchPostList = async (req, res) => {
   })
   res.json(merged)
 }
+
+exports.fetchPostListOfBox = async (req, res) => {
+  // TODO
+}

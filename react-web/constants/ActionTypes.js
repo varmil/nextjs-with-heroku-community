@@ -36,8 +36,7 @@ export const IFrame = createTypes('iframe/', 'POST_MESSAGE')
 // -----
 // -- APP: ユーザViewで詰めるデータ --
 // -----
-
-// ページング用？
+// ページングにも使う
 export const AppTalkRoom = createTypes(
   'app/talkroom/',
   'ADD_CONTENTS',

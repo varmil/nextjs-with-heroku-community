@@ -110,4 +110,9 @@ module.exports = function(app) {
   app.post('/post', requireAuth, upload.array('image'), PostController.savePost)
   app.get('/post/:postId', requireAuth, PostController.fetchPost)
   app.get('/post/list/:pageNum', requireAuth, PostController.fetchPostList)
+  app.get(
+    '/post/list/box/:boxType/:pageNum',
+    requireAuth,
+    PostController.fetchPostListOfBox
+  )
 }

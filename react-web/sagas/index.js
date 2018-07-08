@@ -1,4 +1,4 @@
-// import { delay } from 'redux-saga'
+import { delay } from 'redux-saga'
 import { all, fork, call, put, select, takeLatest } from 'redux-saga/effects'
 import {
   User,
@@ -123,9 +123,12 @@ function* fetchSiteDesign({ payload }) {
 }
 
 function* fetchTalk({ payload }) {
-  // how to use select()
-  // const token = yield select(getJWTToken)
-  // const res = yield call(API.fetch, '/view/home', token)
+  // const { jwtToken } = yield select(getUser)
+  // const res = yield call(API.fetch, '/home/talk', jwtToken)
+
+  console.log('TALK BEFORE DELAY')
+  yield delay(3000)
+  console.log('TALK AFTER DELAY')
 
   // TODO: fetch box contents from server
   // then, dispatch action to sync store
@@ -134,6 +137,9 @@ function* fetchTalk({ payload }) {
 }
 
 function* fetchVoice({ payload }) {
+  console.log('VOICE BEFORE DELAY')
+  yield delay(3000)
+  console.log('VOICE AFTER DELAY')
   // TODO: fetch box contents from server
   // then, dispatch action to sync store
   const data = Posts[BoxType.index.voice]
@@ -141,6 +147,9 @@ function* fetchVoice({ payload }) {
 }
 
 function* fetchNews({ payload }) {
+  console.log('NEWS BEFORE DELAY')
+  yield delay(3000)
+  console.log('NEWS AFTER DELAY')
   // TODO: fetch box contents from server
   // then, dispatch action to sync store
   const data = Posts[BoxType.index.news]
