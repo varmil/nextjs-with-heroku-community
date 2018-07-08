@@ -85,19 +85,18 @@ module.exports = class Post {
   static async fetchList(pageNum, where) {
     try {
       const posts = await models.Post.findAll({
-        // attributes: ['id', 'name', 'title'],
         where: where,
         limit: PER_PAGE,
         offset: PER_PAGE * (pageNum - 1),
-        order: [['id', 'DESC']],
+        order: [['id', 'DESC']]
         // raw: true,
-        include: [
-          {
-            model: models.Voice,
-            attributes: ['options', 'deadline']
-            // as: 'voice'
-          }
-        ]
+        // include: [
+        //   {
+        //     model: models.Voice,
+        //     attributes: ['options', 'deadline']
+        //     // as: 'voice'
+        //   }
+        // ]
       })
       const plainPosts = posts.map(e => e.get({ plain: true }))
       return await Post.associateWithUser(plainPosts)
