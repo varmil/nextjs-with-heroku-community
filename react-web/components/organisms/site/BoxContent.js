@@ -295,17 +295,17 @@ class BoxContent extends React.Component {
     const props = this.props
     if (!isExpanded) return null
     return (
-      <div className="comments mx-auto pt-2">
+      <div className="comments w-100 mx-auto pt-2">
         <div className="load my-3 text-center" onClick={() => {}}>
           以前のコメントを見る
         </div>
         <div className="commentsPost my-3 px-5">
           {props.comments.map((e, i) => (
-            <div key={i} className="row my-3">
-              <Avatar src={e.commenterIcon} />
-              <div className="col body">
+            <div key={i} className="row justify-content-around my-3">
+              <Avatar className="col-2 px-0" src={e.iconPath} />
+              <div className="col-9 body">
                 <Link route={this.postLink}>
-                  <a>{e.commenterName}</a>
+                  <a>{e.name}</a>
                 </Link>
                 <div>{e.body}</div>
               </div>
@@ -356,7 +356,7 @@ class BoxContent extends React.Component {
             background-color: #eff1f3;
             border-radius: 15px;
             padding: 10px 20px;
-            margin-left: 8px;
+            // margin-left: 8px;
           }
         `}</style>
       </div>
@@ -402,6 +402,7 @@ class BoxContent extends React.Component {
     const successCb = async res => {
       dispatch(setSuccess())
       // reload comment here ?
+      this.setState({ ...this.state, comment: '' })
     }
     dispatch(
       createAction(AppPost.SAVE_COMMENT_REQUEST)({

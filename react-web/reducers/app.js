@@ -31,7 +31,8 @@ const initialState = {
   posts: [],
 
   post: {
-    data: {}
+    data: {},
+    comments: []
   }
 }
 
@@ -90,14 +91,11 @@ export default handleActions(
     },
     [AppPost.SET_POST]: (state, action) => {
       return immutable.set(state, `post.data`, action.payload)
+    },
+    [AppPost.PUSH_COMMENTS]: (state, action) => {
+      // spread payload because it is array
+      return immutable.push(state, `post.comments`, ...action.payload)
     }
-
-    /**
-     * ERRORS
-     */
-    // [AppErrors.PUSH]: (state, action) => {
-    //   return immutable.set(state, `errors`, action.payload)
-    // }
   },
   initialState
 )

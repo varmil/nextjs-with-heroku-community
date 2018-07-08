@@ -61,12 +61,15 @@ export const AppMypage = createTypes(
 export const AppPost = createTypes(
   'app/post/',
   'SET_POST',
+  'PUSH_COMMENTS',
   // 新規投稿
   async('SAVE'),
   // 新規コメント
   async('SAVE_COMMENT'),
   // 下書き or 編集時のデータ取得
-  async('FETCH')
+  async('FETCH'),
+  // コメント取得
+  async('FETCH_COMMENTS')
 )
 
 // -----

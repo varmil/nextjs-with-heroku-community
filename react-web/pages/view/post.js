@@ -97,12 +97,13 @@ class Post extends React.Component {
 
   render() {
     const props = this.props
-    const { data } = props.post
+    const { data, comments } = props.post
     const isVoice = props.boxType === BoxType.index.voice
     return (
       <React.Fragment>
         <BoxContent
           {...data}
+          comments={comments}
           expandBody={true}
           showDetail={true}
           focus={props.focus}

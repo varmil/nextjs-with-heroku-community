@@ -14,10 +14,11 @@ module.exports = class Comment {
         where: where,
         limit: PER_PAGE,
         offset: PER_PAGE * (pageNum - 1),
-        order: [['id', 'ASC']],
+        order: [['id', 'DESC']],
         raw: true
       })
-      return await Comment.associateWithUser(comments)
+      const merged = await Comment.associateWithUser(comments)
+      return merged.reverse()
     } catch (e) {
       console.error(e)
     }
@@ -27,9 +28,9 @@ module.exports = class Comment {
   // postIdsをもとに表示するのに必要なユーザ情報を追加
   static async associateWithUser(comments) {
     const names = await UserService.fetchAllObj(_.map(comments, 'commenterId'))
-    const merged = comments.map(p => {
-      const { name, iconPath } = names[p.posterId]
-      return { ...p, name, iconPath }
+    const merged = comments.map(c => {
+      const { name, iconPath } = names[c.commenterId]
+      return { ...c, name, iconPath }
     })
     return merged
   }

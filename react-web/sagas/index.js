@@ -181,11 +181,27 @@ function* fetchPost({ payload }) {
   try {
     const { data } = yield call(API.fetch, `/post/${postId}`, jwtToken)
     const action = createAction(AppAdminPost.SET)
+    yield put(action({ ...data }))
 
-    // TODO fetch comments
-    const comments = Comments
+    // fetch-set comments
+    // const comments = Comments
+    yield call(fetchComments, { payload: { postId, pageNum: 1 } })
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
+}
 
-    yield put(action({ ...data, comments }))
+function* fetchComments({ payload }) {
+  const { postId, pageNum } = payload
+  const { jwtToken } = yield select(getUser)
+  try {
+    const { data } = yield call(
+      API.fetch,
+      `/comments/${postId}/${pageNum}`,
+      jwtToken
+    )
+    const action = createAction(AppPost.PUSH_COMMENTS)
+    yield put(action(data))
   } catch (e) {
     yield put(setCommonError(e.response))
   }
@@ -286,9 +302,11 @@ const appSaga = [
   takeLatest(AppVoice.FETCH_REQUEST, fetchVoiceContents),
   takeLatest(AppNews.FETCH_REQUEST, fetchNewsContents),
   takeLatest(AppMypage.FETCH_REQUEST, fetchMypageContents),
+
+  takeLatest(AppPost.FETCH_REQUEST, fetchPost),
+  takeLatest(AppPost.FETCH_COMMENTS_REQUEST, fetchComments),
   takeLatest(AppPost.SAVE_REQUEST, savePost),
-  takeLatest(AppPost.SAVE_COMMENT_REQUEST, saveComment),
-  takeLatest(AppPost.FETCH_REQUEST, fetchPost)
+  takeLatest(AppPost.SAVE_COMMENT_REQUEST, saveComment)
 ]
 
 const appAdminSaga = [

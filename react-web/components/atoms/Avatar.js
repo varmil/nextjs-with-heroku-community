@@ -17,7 +17,11 @@ export default class extends React.Component {
             vertical-align: middle;
             width: ${props.size || 44}px;
             height: ${props.size || 44}px;
+            max-width: ${props.size || 44}px;
+            max-height: ${props.size || 44}px;
             border-radius: 50%;
+
+            object-fit: cover;
           }
         `}</style>
       </React.Fragment>
