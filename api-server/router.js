@@ -95,7 +95,12 @@ module.exports = function(app) {
   app.post('/signin', requireSignIn, AuthController.signin)
   // 一般ユーザ
   app.post('/signup', AuthController.signup)
-  app.post('/user/profile', upload.single('image'), UserController.profile)
+  app.post(
+    '/user/profile',
+    requireAuth,
+    upload.single('image'),
+    UserController.profile
+  )
   // 管理者（アイコンも同時登録）
   app.post('/signup/admin', upload.single('image'), AuthController.signup)
 

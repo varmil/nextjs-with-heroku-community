@@ -12,6 +12,7 @@ import BoxType from '/../shared/constants/BoxType'
 import AdminPostFormLabel from 'components/atoms/AdminPostFormLabel'
 import PostDropzone from 'components/molecules/PostDropzone'
 import AdminPageContainer from 'components/molecules/AdminPageContainer'
+import * as utilFiles from 'utils/files'
 
 const SelectLabel = props => (
   <div>
@@ -68,7 +69,7 @@ class AdminBaseEditor extends React.Component {
       files:
         (Array.isArray(images) &&
           images.map(src => {
-            return { fromServer: true, preview: src }
+            return { [utilFiles.FROM_SERVER_KEY]: true, preview: src }
           })) ||
         []
     }

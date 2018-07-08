@@ -72,7 +72,7 @@ function* signupAdmin({ payload }) {
   formData.append('brandName', brandName)
   formData.append('lastName', lastName)
   formData.append('firstName', firstName)
-  formData.append('image', files[0])
+  utilFiles.append(formData, files)
 
   try {
     const res = yield call(API.post, '/signup/admin', formData)
@@ -92,14 +92,16 @@ function* setUserInfo(token) {
 
 // （初期登録、プロフィール編集？）
 function* saveUserProfile({ payload }) {
-  const { formData, successCb } = payload
+  const { jwtToken } = yield select(getUser)
+  const { nickname, files, successCb } = payload
+  let formData = new FormData()
+  formData.append('nickname', nickname)
+  utilFiles.append(formData, files)
+
   try {
-    const res = yield call(API.post, '/user/profile', formData)
-
+    const res = yield call(API.post, '/user/profile', formData, jwtToken)
     // 冗長だが、再度最新のUser情報をfetch
-    const { jwtToken } = yield select(getUser)
-    yield put(createAction(User.FETCH_REQUEST)(jwtToken))
-
+    // yield put(createAction(User.FETCH_REQUEST)(jwtToken))
     yield call(successCb, res)
   } catch (e) {
     yield put(setCommonError(e.response))

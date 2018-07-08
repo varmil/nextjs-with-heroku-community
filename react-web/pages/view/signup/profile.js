@@ -29,17 +29,13 @@ class SignupProfile extends React.Component {
   }
 
   async onSubmit(e) {
-    // 複数画像をPOSTするためにFormDataを使用する
-    let formData = new FormData()
-    formData.append('userId', this.props.user.id)
-    formData.append('nickname', this.state.nickname)
-    formData.append('image', this.state.files[0])
-
+    const { nickname, files } = this.state
     const successCb = async res => Router.pushRoute(`/view/home`)
     this.props.dispatch(
       createAction(User.SAVE_PROFILE_REQUEST)({
-        formData,
-        successCb
+        successCb,
+        nickname,
+        files
       })
     )
   }

@@ -12,6 +12,8 @@ const Role = reqlib('/constants/Role')
 // const FACEBOOK_GRAPH_API_VERSION = '2.8'
 // const FACEBOOK_PICTURE_SIZE_PX = 200
 
+const DEFAULT_ICON_PATH = 'https://www.w3schools.com/w3images/avatar4.png'
+
 module.exports = class User {
   // { <id>: name, ... } というObjectを返す
   static async idToName(ids) {
@@ -41,14 +43,21 @@ module.exports = class User {
       await moveFile(path, fullPath)
     } else {
       // TODO: プロフィール画像が設定されていない場合
-      dbPath = 'https://www.w3schools.com/w3images/avatar4.png'
     }
     return dbPath
   }
 
-  static async updateProfile(userId, nickname, file) {
+  static async updateProfile(userId, nickname, file, fromServerFiles) {
     try {
-      const dbPath = await User.moveProfileIcon(file)
+      let dbPath = await User.moveProfileIcon(file)
+      if (!dbPath) {
+        if (fromServerFiles && fromServerFiles.length > 0) {
+          dbPath = fromServerFiles[0]
+        } else {
+          dbPath = DEFAULT_ICON_PATH
+        }
+      }
+
       await models.User.update(
         { nickname, iconPath: dbPath },
         {

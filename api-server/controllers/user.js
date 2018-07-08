@@ -6,14 +6,20 @@ const Message = reqlib('/constants/Message')
  * Profile編集
  */
 exports.profile = async (req, res, next) => {
-  const { userId, nickname } = req.body
+  const { nickname, fromServerFiles } = req.body
+  const userId = req.user.id
 
-  if (!userId || !nickname) {
+  if (!nickname) {
     return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
   }
 
   try {
-    await services.User.updateProfile(userId, nickname, req.file)
+    await services.User.updateProfile(
+      userId,
+      nickname,
+      req.file,
+      fromServerFiles
+    )
     res.json(true)
   } catch (e) {
     return next(e)

@@ -7,7 +7,6 @@ import { User } from 'constants/ActionTypes'
 import Modal from 'reactstrap/lib/Modal'
 import ModalBody from 'reactstrap/lib/ModalBody'
 import Welcome from 'pages/admin/site/edit/welcome'
-import ColorButton from 'components/atoms/ColorButton'
 import AdminRegisterForm from 'components/templates/admin/AdminRegisterForm'
 import Color from 'constants/Color'
 

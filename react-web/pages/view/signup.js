@@ -13,7 +13,7 @@ export default class SignUp extends React.Component {
       <React.Fragment>
         <CenteredContainer height={400}>
           <section className="">
-            <img src="/static/img/logo.png" />
+            <img src="/static/img/logo.jpg" />
           </section>
 
           <section className="mt-4">
