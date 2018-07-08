@@ -89,7 +89,7 @@ export default class BoxContent extends React.Component {
   constructor(props) {
     super(props)
     this.commentInput = React.createRef()
-    this.postLink = `/view/post/${props.boxType}/${props.postId}`
+    this.postLink = `/view/post/${props.boxType}/${props.id}`
   }
 
   componentDidMount() {
@@ -110,7 +110,11 @@ export default class BoxContent extends React.Component {
             <i className="fas fa-chevron-left" />
           </div>
           <div className="ava col-auto p-0">
-            <AvatarAndName size={AVATAR_SIZE} name={props.posterName} />
+            <AvatarAndName
+              size={AVATAR_SIZE}
+              name={props.name}
+              src={props.iconPath}
+            />
           </div>
 
           <style jsx>{`
@@ -129,7 +133,11 @@ export default class BoxContent extends React.Component {
     } else {
       return (
         <React.Fragment>
-          <AvatarAndName size={AVATAR_SIZE} name={props.posterName} />
+          <AvatarAndName
+            size={AVATAR_SIZE}
+            name={props.name}
+            src={props.iconPath}
+          />
         </React.Fragment>
       )
     }

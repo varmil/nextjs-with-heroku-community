@@ -122,44 +122,49 @@ function* fetchSiteDesign({ payload }) {
   // TODO: fetch category, subBanner, then put them into store
 }
 
-function* fetchTalk({ payload }) {
-  // const { jwtToken } = yield select(getUser)
-  // const res = yield call(API.fetch, '/home/talk', jwtToken)
-
-  console.log('TALK BEFORE DELAY')
-  yield delay(3000)
-  console.log('TALK AFTER DELAY')
-
-  // TODO: fetch box contents from server
-  // then, dispatch action to sync store
-  const data = Posts[BoxType.index.talk]
-  yield put(addTalkContents(data))
+function* fetchTalkContents({ payload }) {
+  const { jwtToken } = yield select(getUser)
+  const { pageNum } = payload
+  const res = yield call(
+    API.fetch,
+    `/post/list/box/${BoxType.index.talk}/${pageNum}`,
+    jwtToken
+  )
+  yield put(addTalkContents(res.data))
 }
 
-function* fetchVoice({ payload }) {
-  console.log('VOICE BEFORE DELAY')
-  yield delay(3000)
-  console.log('VOICE AFTER DELAY')
-  // TODO: fetch box contents from server
-  // then, dispatch action to sync store
-  const data = Posts[BoxType.index.voice]
-  yield put(addVoiceContents(data))
+function* fetchVoiceContents({ payload }) {
+  const { jwtToken } = yield select(getUser)
+  const { pageNum } = payload
+  const res = yield call(
+    API.fetch,
+    `/post/list/box/${BoxType.index.voice}/${pageNum}`,
+    jwtToken
+  )
+  yield put(addVoiceContents(res.data))
 }
 
-function* fetchNews({ payload }) {
-  console.log('NEWS BEFORE DELAY')
-  yield delay(3000)
-  console.log('NEWS AFTER DELAY')
-  // TODO: fetch box contents from server
-  // then, dispatch action to sync store
-  const data = Posts[BoxType.index.news]
-  yield put(addNewsContents(data))
+function* fetchNewsContents({ payload }) {
+  const { jwtToken } = yield select(getUser)
+  const { pageNum } = payload
+  const res = yield call(
+    API.fetch,
+    `/post/list/box/${BoxType.index.news}/${pageNum}`,
+    jwtToken
+  )
+  yield put(addNewsContents(res.data))
 }
 
-function* fetchMypage({ payload }) {
+function* fetchMypageContents({ payload }) {
   // TODO: 仮でNEWSを入れておく
-  const data = Posts[BoxType.index.news]
-  yield put(addMypageContents(data))
+  const { jwtToken } = yield select(getUser)
+  const { pageNum } = payload
+  const res = yield call(
+    API.fetch,
+    `/post/list/box/${BoxType.index.news}/${pageNum}`,
+    jwtToken
+  )
+  yield put(addMypageContents(res.data))
 }
 
 /**
@@ -184,7 +189,11 @@ function* fetchPost({ payload }) {
   try {
     const { data } = yield call(API.fetch, `/post/${postId}`, jwtToken)
     const action = createAction(AppAdminPost.SET)
-    yield put(action(data))
+
+    // TODO fetch comments
+    const comments = Comments
+
+    yield put(action({ ...data, comments }))
   } catch (e) {
     yield put(setCommonError(e.response))
   }
@@ -270,10 +279,10 @@ const userSaga = [
 ]
 
 const appSaga = [
-  takeLatest(AppTalkRoom.FETCH_REQUEST, fetchTalk),
-  takeLatest(AppVoice.FETCH_REQUEST, fetchVoice),
-  takeLatest(AppNews.FETCH_REQUEST, fetchNews),
-  takeLatest(AppMypage.FETCH_REQUEST, fetchMypage),
+  takeLatest(AppTalkRoom.FETCH_REQUEST, fetchTalkContents),
+  takeLatest(AppVoice.FETCH_REQUEST, fetchVoiceContents),
+  takeLatest(AppNews.FETCH_REQUEST, fetchNewsContents),
+  takeLatest(AppMypage.FETCH_REQUEST, fetchMypageContents),
   takeLatest(AppPost.SAVE_REQUEST, savePost),
   takeLatest(AppPost.FETCH_REQUEST, fetchPost)
 ]

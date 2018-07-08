@@ -86,8 +86,7 @@ exports.fetchPost = async (req, res) => {
   const post = await models.Post.findById(postId, {
     raw: true
   })
-  const names = await services.User.idToName(_.map([post], 'posterId'))
-  result = { ...post, name: names[post.posterId] }
+  result = (await services.Post.associateWithUser([post]))[0]
 
   // boxTypeによって追加取得
   if (post.boxType === BoxType.index.voice) {
@@ -103,25 +102,19 @@ exports.fetchPost = async (req, res) => {
 }
 
 exports.fetchPostList = async (req, res) => {
-  const PER_PAGE = 20
   const pageNum = req.params.pageNum || 1 // 1 origin
   const brandId = req.user.brand.id
-
-  const posts = await models.Post.findAll({
-    // attributes: ['id', 'name', 'title'],
-    where: { brandId },
-    limit: PER_PAGE,
-    offset: PER_PAGE * (pageNum - 1),
-    order: [['id', 'DESC']],
-    raw: true
-  })
-  const names = await services.User.idToName(_.map(posts, 'posterId'))
-  const merged = posts.map(p => {
-    return { ...p, name: names[p.posterId] }
-  })
-  res.json(merged)
+  const data = await services.Post.fetchList(pageNum, { brandId })
+  res.json(data)
 }
 
 exports.fetchPostListOfBox = async (req, res) => {
-  // TODO
+  const { boxType } = req.params
+  const pageNum = req.params.pageNum || 1 // 1 origin
+  const brandId = req.user.brand.id
+
+  if (!boxType) return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
+
+  const data = await services.Post.fetchList(pageNum, { brandId, boxType })
+  res.json(data)
 }

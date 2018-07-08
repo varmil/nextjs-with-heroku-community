@@ -15,20 +15,22 @@ const Role = reqlib('/constants/Role')
 const DEFAULT_ICON_PATH = 'https://www.w3schools.com/w3images/avatar4.png'
 
 module.exports = class User {
-  // { <id>: name, ... } というObjectを返す
-  static async idToName(ids) {
+  // { <id>: { name, iconPath }, ... } というObjectを返す
+  static async fetchAllObj(ids) {
     const names = await models.User.findAll({
-      attributes: ['id', 'nickname', 'lastName', 'firstName'],
+      attributes: ['id', 'nickname', 'lastName', 'firstName', 'iconPath'],
       where: { id: ids },
       raw: true
     })
     return names.reduce((acc, cur) => {
+      // name
       let name = ''
       if (cur.nickname) name = cur.nickname
       else name = `${cur.lastName} ${cur.firstName}`
+
       return {
         ...acc,
-        [cur.id]: name
+        [cur.id]: { name, iconPath: cur.iconPath }
       }
     }, {})
   }

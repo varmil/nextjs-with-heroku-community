@@ -9,11 +9,7 @@ export default class extends React.Component {
     return (
       <div className="wrap" style={props.style}>
         <div className="avatarContainer">
-          <Avatar
-            src="https://www.w3schools.com/w3images/avatar2.png"
-            className="mr-3"
-            size={props.size}
-          />
+          <Avatar src={props.src} className="mr-3" size={props.size} />
         </div>
 
         <div className="nameContainer">
