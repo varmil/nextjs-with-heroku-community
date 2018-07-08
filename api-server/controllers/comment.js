@@ -19,12 +19,15 @@ exports.save = async (req, res, next) => {
   }
 
   try {
-    await models.Comment.create({
+    const comment = await models.Comment.create({
       postId,
       commenterId: userId,
       body
     })
-    res.json(true)
+    const merged = (await services.Comment.associateWithUser([
+      comment.dataValues
+    ]))[0]
+    res.json(merged)
   } catch (e) {
     return next(e)
   }

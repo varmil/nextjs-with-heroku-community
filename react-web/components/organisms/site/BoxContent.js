@@ -292,16 +292,17 @@ class BoxContent extends React.Component {
   }
 
   createComment(isExpanded) {
-    const props = this.props
     if (!isExpanded) return null
+    const props = this.props
+    const copiedArray = [...props.comments].reverse()
     return (
       <div className="comments w-100 mx-auto pt-2">
         <div className="load my-3 text-center" onClick={() => {}}>
           以前のコメントを見る
         </div>
         <div className="commentsPost my-3 mb-5 px-5">
-          {props.comments.map((e, i) => (
-            <div key={i} className="row justify-content-around my-3">
+          {copiedArray.map((e, i) => (
+            <div key={e.id} className="row justify-content-around my-3">
               <Avatar className="col-2 px-0" src={e.iconPath} />
               <div className="col-9 body">
                 <Link route={this.postLink}>
@@ -401,8 +402,8 @@ class BoxContent extends React.Component {
     const { comment } = this.state
     const successCb = async res => {
       dispatch(setSuccess())
-      // reload comment here ?
       this.setState({ ...this.state, comment: '' })
+      window.scrollTo(0, 9999)
     }
     dispatch(
       createAction(AppPost.SAVE_COMMENT_REQUEST)({

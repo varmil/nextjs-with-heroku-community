@@ -18,7 +18,7 @@ module.exports = class Comment {
         raw: true
       })
       const merged = await Comment.associateWithUser(comments)
-      return merged.reverse()
+      return merged
     } catch (e) {
       console.error(e)
     }

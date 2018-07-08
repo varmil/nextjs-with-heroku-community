@@ -184,8 +184,7 @@ function* fetchPost({ payload }) {
     yield put(action({ ...data }))
 
     // fetch-set comments
-    // const comments = Comments
-    yield call(fetchComments, { payload: { postId, pageNum: 1, reset: true } })
+    yield call(fetchComments, { payload: { postId, reset: true } })
   } catch (e) {
     yield put(setCommonError(e.response))
   }
@@ -197,7 +196,7 @@ function* fetchComments({ payload }) {
   try {
     const { data } = yield call(
       API.fetch,
-      `/comments/${postId}/${pageNum}`,
+      `/comments/${postId}/${pageNum || 1}`,
       jwtToken
     )
 
@@ -269,6 +268,9 @@ function* saveComment({ payload }) {
   const { postId, body, successCb } = payload
   try {
     const res = yield call(API.post, '/comment', { postId, body }, jwtToken)
+    // 今の投稿をPREPEND
+    const action = createAction(AppPost.PREPEND_COMMENT)
+    yield put(action(res.data))
     yield call(successCb, res)
   } catch (e) {
     yield put(setCommonError(e.response))

@@ -61,6 +61,8 @@ export const AppMypage = createTypes(
 export const AppPost = createTypes(
   'app/post/',
   'SET_POST',
+  // コメント投稿直後にFetchする際に使用
+  'PREPEND_COMMENT',
   'SET_COMMENTS',
   'PUSH_COMMENTS',
   // 新規投稿

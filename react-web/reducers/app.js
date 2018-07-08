@@ -92,6 +92,10 @@ export default handleActions(
     [AppPost.SET_POST]: (state, action) => {
       return immutable.set(state, `post.data`, action.payload)
     },
+    [AppPost.PREPEND_COMMENT]: (state, action) => {
+      console.info('AA', action.payload)
+      return immutable.insert(state, `post.comments`, action.payload, 0)
+    },
     [AppPost.SET_COMMENTS]: (state, action) => {
       return immutable.set(state, `post.comments`, action.payload)
     },
