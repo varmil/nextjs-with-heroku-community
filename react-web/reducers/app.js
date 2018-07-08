@@ -11,7 +11,7 @@ import {
 } from 'constants/ActionTypes'
 
 const initialState = {
-  talkroom: {
+  talk: {
     boxContents: [] // FETCH
   },
 
@@ -43,7 +43,10 @@ export default handleActions(
      */
     [AppTalkRoom.ADD_CONTENTS]: (state, action) => {
       // spread payload because it is array
-      return immutable.push(state, `talkroom.boxContents`, ...action.payload)
+      return immutable.push(state, `talk.boxContents`, ...action.payload)
+    },
+    [AppTalkRoom.PREPEND_CONTENT]: (state, action) => {
+      return immutable.insert(state, `talk.boxContents`, action.payload, 0)
     },
 
     /**

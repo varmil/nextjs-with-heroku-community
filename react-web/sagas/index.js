@@ -259,8 +259,9 @@ function* savePost({ payload }) {
 
     // TODO 今の自分の投稿をPREPEND
     // 本来はboxTypeをみて BoxType.slug[boxType] のようにするが
-    // reducerが現状talkではなくtalkroomになってるので置換必要。
-    // とりあえずはtalkroom決め打ちでPREPENDしておく。
+    // reducerが現状talkではなくtalkになってるので置換必要。
+    // とりあえずはtalk決め打ちでPREPENDしておく。
+    yield put(createAction(AppTalkRoom.PREPEND_COMMENT)(res.data))
 
     yield call(successCb, res)
   } catch (e) {

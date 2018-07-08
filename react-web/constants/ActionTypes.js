@@ -18,7 +18,7 @@ export const SiteTop = createTypes('site/top/', 'SET_MAIN_BANNER', 'SET_BOXES')
 export const SiteWelcome = createTypes('site/welcome/', 'SET_WELCOME')
 
 export const SiteTalkRoom = createTypes(
-  'site/talkroom/',
+  'site/talk/',
   'SET_CATEGORIES',
   'SET_SUB_BANNER',
   async('FETCH')
@@ -38,7 +38,7 @@ export const IFrame = createTypes('iframe/', 'POST_MESSAGE')
 // -----
 // ページングにも使う
 export const AppTalkRoom = createTypes(
-  'app/talkroom/',
+  'app/talk/',
   'ADD_CONTENTS',
   async('FETCH')
 )

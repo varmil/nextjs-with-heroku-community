@@ -43,7 +43,7 @@ const initialState = {
 
   welcome: { ...WelcomeDefault },
 
-  talkroom: {
+  talk: {
     categories: TalkRoomCategoriesDefault,
     subBanner: SubBannerDefault
   },
@@ -62,9 +62,9 @@ export const PATH_MAP = {
   LOGO: `common.logo`,
   NAV_ICON: `common.navIcon`,
   BOXES: `top.boxes`,
-  TALK_CATEGORIES: `talkroom.categories`,
+  TALK_CATEGORIES: `talk.categories`,
   NEWS_CATEGORIES: `news.categories`,
-  TALK_SUB_BANNER: `talkroom.subBanner`,
+  TALK_SUB_BANNER: `talk.subBanner`,
   NEWS_SUB_BANNER: `news.subBanner`
 }
 
@@ -136,7 +136,7 @@ export default handleActions(
      */
     [SiteTalkRoom.SET_CATEGORIES]: (state, action) => {
       return update(state, {
-        talkroom: { categories: { $set: action.payload } }
+        talk: { categories: { $set: action.payload } }
       })
     },
     [SiteTalkRoom.SET_SUB_BANNER]: (state, action) => {

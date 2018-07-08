@@ -111,6 +111,6 @@ class AdminPostAdd extends React.Component {
 
 export default connect(state => ({
   post: state.app.post.data,
-  talkCategories: state.site.talkroom.categories.item,
+  talkCategories: state.site.talk.categories.item,
   newsCategories: state.site.news.categories.item
 }))(AdminPostAdd)

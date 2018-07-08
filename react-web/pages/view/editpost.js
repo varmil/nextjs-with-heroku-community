@@ -147,5 +147,5 @@ class Editpost extends React.Component {
 
 const Styled = withStyles(inputStyles)(Editpost)
 export default connect(state => ({
-  talkCategories: state.site.talkroom.categories.item
+  talkCategories: state.site.talk.categories.item
 }))(Styled)

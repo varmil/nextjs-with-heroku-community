@@ -15,10 +15,10 @@ class Home extends React.Component {
     // homeで使用するデータは全て事前にFETCHしないといけない。（TALK, NEWS, VOICE...）
     // fetch only first time, 便宜的にcontentsの長さで判定
     // 見た目のデザインは一括でsetする（DBにstate.siteがまるっと入っているので）
-    const { talkroom, voice, news } = ctx.store.getState().app
+    const { talk, voice, news } = ctx.store.getState().app
     const { dispatch } = ctx.store
 
-    if (ctx.isServer || talkroom.boxContents.length === 0) {
+    if (ctx.isServer || talk.boxContents.length === 0) {
       dispatch(createAction(AppTalkRoom.FETCH_REQUEST)({ pageNum: 1 }))
     }
 
