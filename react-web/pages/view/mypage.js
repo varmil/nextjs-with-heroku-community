@@ -21,7 +21,7 @@ class Mypage extends React.Component {
     const { dispatch } = ctx.store
 
     if (ctx.isServer || mypage.boxContents.length === 0) {
-      dispatch(createAction(AppMypage.FETCH_REQUEST)())
+      dispatch(createAction(AppMypage.FETCH_REQUEST)({}))
     }
 
     return {}

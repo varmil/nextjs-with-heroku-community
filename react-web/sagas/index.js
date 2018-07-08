@@ -128,7 +128,7 @@ function fetchContents(boxType) {
     const { pageNum } = payload
     return yield call(
       API.fetch,
-      `/post/list/box/${boxType}/${pageNum}`,
+      `/post/list/box/${boxType}/${pageNum || 1}`,
       jwtToken
     )
   }
@@ -256,6 +256,12 @@ function* savePost({ payload }) {
 
   try {
     const res = yield call(API.post, '/post', formData, jwtToken)
+
+    // TODO 今の自分の投稿をPREPEND
+    // 本来はboxTypeをみて BoxType.slug[boxType] のようにするが
+    // reducerが現状talkではなくtalkroomになってるので置換必要。
+    // とりあえずはtalkroom決め打ちでPREPENDしておく。
+
     yield call(successCb, res)
   } catch (e) {
     if (errCb) yield call(errCb, e.response)
@@ -269,8 +275,7 @@ function* saveComment({ payload }) {
   try {
     const res = yield call(API.post, '/comment', { postId, body }, jwtToken)
     // 今の投稿をPREPEND
-    const action = createAction(AppPost.PREPEND_COMMENT)
-    yield put(action(res.data))
+    yield put(createAction(AppPost.PREPEND_COMMENT)(res.data))
     yield call(successCb, res)
   } catch (e) {
     yield put(setCommonError(e.response))
