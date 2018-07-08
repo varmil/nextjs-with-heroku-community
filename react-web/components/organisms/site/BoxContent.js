@@ -299,7 +299,7 @@ class BoxContent extends React.Component {
         <div className="load my-3 text-center" onClick={() => {}}>
           以前のコメントを見る
         </div>
-        <div className="commentsPost my-3 px-5">
+        <div className="commentsPost my-3 mb-5 px-5">
           {props.comments.map((e, i) => (
             <div key={i} className="row justify-content-around my-3">
               <Avatar className="col-2 px-0" src={e.iconPath} />
@@ -312,7 +312,7 @@ class BoxContent extends React.Component {
             </div>
           ))}
         </div>
-        <div className="commentForm input-group">
+        <div className="commentForm fixed-bottom input-group">
           <textarea
             type="text"
             rows="1"
