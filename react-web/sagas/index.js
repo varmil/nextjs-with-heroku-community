@@ -245,6 +245,17 @@ function* savePost({ payload }) {
   }
 }
 
+function* saveComment({ payload }) {
+  const { jwtToken } = yield select(getUser)
+  const { postId, body, successCb } = payload
+  try {
+    const res = yield call(API.post, '/comment', { postId, body }, jwtToken)
+    yield call(successCb, res)
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
+}
+
 /**
  * iFrame
  */
@@ -276,6 +287,7 @@ const appSaga = [
   takeLatest(AppNews.FETCH_REQUEST, fetchNewsContents),
   takeLatest(AppMypage.FETCH_REQUEST, fetchMypageContents),
   takeLatest(AppPost.SAVE_REQUEST, savePost),
+  takeLatest(AppPost.SAVE_COMMENT_REQUEST, saveComment),
   takeLatest(AppPost.FETCH_REQUEST, fetchPost)
 ]
 

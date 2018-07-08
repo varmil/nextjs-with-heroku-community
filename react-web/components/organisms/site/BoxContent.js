@@ -1,8 +1,13 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Link, Router } from 'routes'
 import MultiLineText from 'components/atoms/MultiLineText'
 import Avatar from 'components/atoms/Avatar'
 import AvatarAndName from 'components/molecules/AvatarAndName'
+import { createAction } from 'redux-actions'
+import { AppPost } from 'constants/ActionTypes'
+import { setSuccess } from 'actions/application'
+import autosize from 'autosize'
 
 const AVATAR_SIZE = 44
 // アンカーで飛んだときになんとなく真ん中あたりに表示するため
@@ -81,9 +86,10 @@ export const VoteCounter = props => (
   </React.Fragment>
 )
 
-export default class BoxContent extends React.Component {
+class BoxContent extends React.Component {
   state = {
-    expandBody: this.props.expandBody
+    expandBody: this.props.expandBody,
+    comment: ''
   }
 
   constructor(props) {
@@ -93,6 +99,10 @@ export default class BoxContent extends React.Component {
   }
 
   componentDidMount() {
+    if (this.commentInput) {
+      autosize(this.commentInput)
+    }
+
     if (this.commentInput && this.props.focus) {
       this.commentInput.focus()
     }
@@ -302,15 +312,29 @@ export default class BoxContent extends React.Component {
             </div>
           ))}
         </div>
-        <div className="commentForm">
-          <input
+        <div className="commentForm input-group">
+          <textarea
             type="text"
+            rows="1"
             ref={input => {
               this.commentInput = input
             }}
             className="form-control"
             placeholder="コメントする..."
+            value={this.state.comment}
+            onChange={e =>
+              this.setState({ ...this.state, comment: e.target.value })
+            }
           />
+          <div className="input-group-append">
+            <button
+              className="btn btn-outline-secondary"
+              type="button"
+              onClick={this.onSubmitComment.bind(this)}
+            >
+              <i className="fas fa-chevron-right" />
+            </button>
+          </div>
         </div>
 
         <style jsx>{`
@@ -370,6 +394,22 @@ export default class BoxContent extends React.Component {
       ) : null
 
     return props.topPhoto ? [Photo, Body] : [Body, Photo]
+  }
+
+  onSubmitComment(e) {
+    const { dispatch, id } = this.props
+    const { comment } = this.state
+    const successCb = async res => {
+      dispatch(setSuccess())
+      // reload comment here ?
+    }
+    dispatch(
+      createAction(AppPost.SAVE_COMMENT_REQUEST)({
+        postId: id,
+        body: comment,
+        successCb
+      })
+    )
   }
 
   render() {
@@ -433,3 +473,5 @@ export default class BoxContent extends React.Component {
     )
   }
 }
+
+export default connect()(BoxContent)
