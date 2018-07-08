@@ -27,10 +27,6 @@ class AdminPostAdd extends React.Component {
     return { boxType: +ctx.query.boxType }
   }
 
-  state = {
-    // errorMessage: ''
-  }
-
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value

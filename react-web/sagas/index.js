@@ -23,6 +23,7 @@ import BoxType from '/../shared/constants/BoxType'
 import { createAction } from 'redux-actions'
 import { setCookie } from 'utils/cookie'
 import API from 'utils/API'
+import * as utilFiles from 'utils/files'
 import Rule from 'constants/Rule'
 
 // select User !
@@ -211,10 +212,7 @@ function* savePost({ payload }) {
   formData.append('boxType', boxType)
   formData.append('title', title)
   formData.append('body', body)
-  Array.isArray(files) &&
-    files.forEach(file => {
-      formData.append('image', file)
-    })
+  utilFiles.append(formData, files)
   if (categoryIndex) {
     formData.append('categoryIndex', categoryIndex)
   }

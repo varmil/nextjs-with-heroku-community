@@ -1,4 +1,5 @@
 const reqlib = require('app-root-path').require
+const _ = require('lodash')
 const models = reqlib('/models')
 const moveFile = require('move-file')
 const Path = reqlib('/constants/Path')
@@ -17,7 +18,7 @@ module.exports = class Post {
       })
       return Promise.all(promises)
     } else {
-      return null
+      return []
     }
   }
 
@@ -30,6 +31,7 @@ module.exports = class Post {
     body,
     categoryIndex,
     files,
+    fromServerFiles,
     trans
   ) {
     try {
@@ -45,11 +47,9 @@ module.exports = class Post {
       if (categoryIndex) {
         data = { ...data, categoryIndex }
       }
-      // save images if needed
-      const images = await Post.moveProfileIcon(files)
-      if (Array.isArray(images) && images.length > 0) {
-        data = { ...data, images: images }
-      }
+      // save images if needed (union)
+      const newImages = await Post.moveProfileIcon(files)
+      data = { ...data, images: _.union(fromServerFiles, newImages) }
 
       const post = await models.Post.create(data, {
         transaction: trans

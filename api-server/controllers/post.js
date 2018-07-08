@@ -13,7 +13,7 @@ const Message = reqlib('/constants/Message')
 exports.savePost = async (req, res, next) => {
   console.log('[profile]body', req.body)
   console.log('[profile]file', req.files)
-  const { title, body } = req.body
+  const { title, body, fromServerFiles } = req.body
   const boxType = +req.body.boxType
   const categoryIndex = +req.body.categoryIndex
   const userId = req.user.id
@@ -49,6 +49,7 @@ exports.savePost = async (req, res, next) => {
       body,
       categoryIndex,
       req.files,
+      fromServerFiles,
       trans
     )
 
