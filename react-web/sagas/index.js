@@ -122,49 +122,41 @@ function* fetchSiteDesign({ payload }) {
   // TODO: fetch category, subBanner, then put them into store
 }
 
+function fetchContents(boxType) {
+  return function*({ payload }) {
+    const { jwtToken } = yield select(getUser)
+    const { pageNum } = payload
+    return yield call(
+      API.fetch,
+      `/post/list/box/${boxType}/${pageNum}`,
+      jwtToken
+    )
+  }
+}
+
 function* fetchTalkContents({ payload }) {
-  const { jwtToken } = yield select(getUser)
-  const { pageNum } = payload
-  const res = yield call(
-    API.fetch,
-    `/post/list/box/${BoxType.index.talk}/${pageNum}`,
-    jwtToken
-  )
-  yield put(addTalkContents(res.data))
+  const func = fetchContents(BoxType.index.talk)
+  const { data } = yield call(func, { payload })
+  yield put(addTalkContents(data))
 }
 
 function* fetchVoiceContents({ payload }) {
-  const { jwtToken } = yield select(getUser)
-  const { pageNum } = payload
-  const res = yield call(
-    API.fetch,
-    `/post/list/box/${BoxType.index.voice}/${pageNum}`,
-    jwtToken
-  )
-  yield put(addVoiceContents(res.data))
+  const func = fetchContents(BoxType.index.voice)
+  const { data } = yield call(func, { payload })
+  yield put(addVoiceContents(data))
 }
 
 function* fetchNewsContents({ payload }) {
-  const { jwtToken } = yield select(getUser)
-  const { pageNum } = payload
-  const res = yield call(
-    API.fetch,
-    `/post/list/box/${BoxType.index.news}/${pageNum}`,
-    jwtToken
-  )
-  yield put(addNewsContents(res.data))
+  const func = fetchContents(BoxType.index.news)
+  const { data } = yield call(func, { payload })
+  yield put(addNewsContents(data))
 }
 
 function* fetchMypageContents({ payload }) {
   // TODO: 仮でNEWSを入れておく
-  const { jwtToken } = yield select(getUser)
-  const { pageNum } = payload
-  const res = yield call(
-    API.fetch,
-    `/post/list/box/${BoxType.index.news}/${pageNum}`,
-    jwtToken
-  )
-  yield put(addMypageContents(res.data))
+  const func = fetchContents(BoxType.index.news)
+  const { data } = yield call(func, { payload })
+  yield put(addMypageContents(data))
 }
 
 /**
