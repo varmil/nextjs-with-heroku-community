@@ -21,7 +21,7 @@ export const SiteTalkRoom = createTypes(
   'site/talkroom/',
   'SET_CATEGORIES',
   'SET_SUB_BANNER',
-  async('FETCH_INITIAL')
+  async('FETCH')
 )
 
 export const SiteNews = createTypes(
@@ -36,28 +36,26 @@ export const IFrame = createTypes('iframe/', 'POST_MESSAGE')
 // -----
 // -- APP: ユーザViewで詰めるデータ --
 // -----
+
+// ページング用？
 export const AppTalkRoom = createTypes(
   'app/talkroom/',
   'ADD_CONTENTS',
-  async('FETCH_INITIAL')
+  async('FETCH')
 )
 
 export const AppVoice = createTypes(
   'app/voice/',
   'ADD_CONTENTS',
-  async('FETCH_INITIAL')
+  async('FETCH')
 )
 
-export const AppNews = createTypes(
-  'app/news/',
-  'ADD_CONTENTS',
-  async('FETCH_INITIAL')
-)
+export const AppNews = createTypes('app/news/', 'ADD_CONTENTS', async('FETCH'))
 
 export const AppMypage = createTypes(
   'app/mypage/',
   'ADD_CONTENTS',
-  async('FETCH_INITIAL')
+  async('FETCH')
 )
 
 // POST詳細画面

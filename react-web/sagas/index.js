@@ -122,7 +122,7 @@ function* fetchSiteDesign({ payload }) {
   // TODO: fetch category, subBanner, then put them into store
 }
 
-function* fetchTalkInitial({ payload }) {
+function* fetchTalk({ payload }) {
   // how to use select()
   // const token = yield select(getJWTToken)
   // const res = yield call(API.fetch, '/view/home', token)
@@ -133,21 +133,21 @@ function* fetchTalkInitial({ payload }) {
   yield put(addTalkContents(data))
 }
 
-function* fetchVoiceInitial({ payload }) {
+function* fetchVoice({ payload }) {
   // TODO: fetch box contents from server
   // then, dispatch action to sync store
   const data = Posts[BoxType.index.voice]
   yield put(addVoiceContents(data))
 }
 
-function* fetchNewsInitial({ payload }) {
+function* fetchNews({ payload }) {
   // TODO: fetch box contents from server
   // then, dispatch action to sync store
   const data = Posts[BoxType.index.news]
   yield put(addNewsContents(data))
 }
 
-function* fetchMypageInitial({ payload }) {
+function* fetchMypage({ payload }) {
   // TODO: 仮でNEWSを入れておく
   const data = Posts[BoxType.index.news]
   yield put(addMypageContents(data))
@@ -261,10 +261,10 @@ const userSaga = [
 ]
 
 const appSaga = [
-  takeLatest(AppTalkRoom.FETCH_INITIAL_REQUEST, fetchTalkInitial),
-  takeLatest(AppVoice.FETCH_INITIAL_REQUEST, fetchVoiceInitial),
-  takeLatest(AppNews.FETCH_INITIAL_REQUEST, fetchNewsInitial),
-  takeLatest(AppMypage.FETCH_INITIAL_REQUEST, fetchMypageInitial),
+  takeLatest(AppTalkRoom.FETCH_REQUEST, fetchTalk),
+  takeLatest(AppVoice.FETCH_REQUEST, fetchVoice),
+  takeLatest(AppNews.FETCH_REQUEST, fetchNews),
+  takeLatest(AppMypage.FETCH_REQUEST, fetchMypage),
   takeLatest(AppPost.SAVE_REQUEST, savePost),
   takeLatest(AppPost.FETCH_REQUEST, fetchPost)
 ]

@@ -42,7 +42,7 @@ module.exports = class User {
       const fullPath = `${Path.STATIC_BASE_DIR}${dbPath}`
       await moveFile(path, fullPath)
     } else {
-      // TODO: プロフィール画像が設定されていない場合
+      // fileがない場合は何もしない
     }
     return dbPath
   }
@@ -52,8 +52,10 @@ module.exports = class User {
       let dbPath = await User.moveProfileIcon(file)
       if (!dbPath) {
         if (fromServerFiles && fromServerFiles.length > 0) {
+          // すでにサーバに保存されている画像があれば使用
           dbPath = fromServerFiles[0]
         } else {
+          // TODO: デフォルトは卵
           dbPath = DEFAULT_ICON_PATH
         }
       }
