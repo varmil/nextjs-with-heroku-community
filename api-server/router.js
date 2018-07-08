@@ -6,6 +6,7 @@ const Role = require('./constants/Role')
 const AuthController = require('./controllers/authentication')
 const UserController = require('./controllers/user')
 const PostController = require('./controllers/post')
+const CommentController = require('./controllers/comment')
 
 const passport = require('passport')
 require('./services/passport')
@@ -80,8 +81,8 @@ module.exports = function(app) {
   })
 
   app.get('/user', requireAuth, function(req, res) {
-    const { id, nickname, iconPath, createdAt, brand } = req.user
-    res.json({ id, nickname, iconPath, createdAt, brand })
+    const { id, nickname, iconPath, brand } = req.user
+    res.json({ id, nickname, iconPath, brand })
   })
 
   // app.get('/admin', requireAuth, userRole.is('adminGuest'), function(req, res) {
@@ -107,12 +108,22 @@ module.exports = function(app) {
   /**
    * POST
    */
-  app.post('/post', requireAuth, upload.array('image'), PostController.savePost)
-  app.get('/post/:postId', requireAuth, PostController.fetchPost)
-  app.get('/post/list/:pageNum', requireAuth, PostController.fetchPostList)
+  app.post('/post', requireAuth, upload.array('image'), PostController.save)
+  app.get('/post/:postId', requireAuth, PostController.fetch)
+  app.get('/post/list/:pageNum', requireAuth, PostController.fetchList)
   app.get(
     '/post/list/box/:boxType/:pageNum',
     requireAuth,
-    PostController.fetchPostListOfBox
+    PostController.fetchListOfBox
+  )
+
+  /**
+   * COMMENT
+   */
+  app.post('/comment', requireAuth, CommentController.save)
+  app.get(
+    '/comments/:postId/:pageNum',
+    requireAuth,
+    CommentController.fetchList
   )
 }

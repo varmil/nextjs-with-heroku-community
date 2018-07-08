@@ -10,7 +10,7 @@ const Message = reqlib('/constants/Message')
  * 新規投稿 or 編集（AdminもUserもこれを使用）
  * NOTE: boxTypeやcategoryIndexは文字列なので注意
  */
-exports.savePost = async (req, res, next) => {
+exports.save = async (req, res, next) => {
   console.log('[profile]body', req.body)
   console.log('[profile]file', req.files)
   const { title, body, fromServerFiles } = req.body
@@ -78,7 +78,7 @@ exports.savePost = async (req, res, next) => {
 /**
  * 個別記事 取得
  */
-exports.fetchPost = async (req, res) => {
+exports.fetch = async (req, res) => {
   const { postId } = req.params
   if (!postId) return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
 
@@ -101,14 +101,14 @@ exports.fetchPost = async (req, res) => {
   res.json(result)
 }
 
-exports.fetchPostList = async (req, res) => {
+exports.fetchList = async (req, res) => {
   const pageNum = req.params.pageNum || 1 // 1 origin
   const brandId = req.user.brand.id
   const data = await services.Post.fetchList(pageNum, { brandId })
   res.json(data)
 }
 
-exports.fetchPostListOfBox = async (req, res) => {
+exports.fetchListOfBox = async (req, res) => {
   const { boxType } = req.params
   const pageNum = req.params.pageNum || 1 // 1 origin
   const brandId = req.user.brand.id
