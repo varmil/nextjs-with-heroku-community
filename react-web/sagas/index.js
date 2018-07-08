@@ -185,14 +185,14 @@ function* fetchPost({ payload }) {
 
     // fetch-set comments
     // const comments = Comments
-    yield call(fetchComments, { payload: { postId, pageNum: 1 } })
+    yield call(fetchComments, { payload: { postId, pageNum: 1, reset: true } })
   } catch (e) {
     yield put(setCommonError(e.response))
   }
 }
 
 function* fetchComments({ payload }) {
-  const { postId, pageNum } = payload
+  const { postId, pageNum, reset } = payload
   const { jwtToken } = yield select(getUser)
   try {
     const { data } = yield call(
@@ -200,7 +200,10 @@ function* fetchComments({ payload }) {
       `/comments/${postId}/${pageNum}`,
       jwtToken
     )
-    const action = createAction(AppPost.PUSH_COMMENTS)
+
+    // reset が有効なら配列初期化してset
+    const type = reset ? AppPost.SET_COMMENTS : AppPost.PUSH_COMMENTS
+    let action = createAction(type)
     yield put(action(data))
   } catch (e) {
     yield put(setCommonError(e.response))

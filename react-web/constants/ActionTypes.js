@@ -61,6 +61,7 @@ export const AppMypage = createTypes(
 export const AppPost = createTypes(
   'app/post/',
   'SET_POST',
+  'SET_COMMENTS',
   'PUSH_COMMENTS',
   // 新規投稿
   async('SAVE'),
