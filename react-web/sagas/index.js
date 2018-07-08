@@ -1,8 +1,9 @@
-import { delay } from 'redux-saga'
+// import { delay } from 'redux-saga'
 import { all, fork, call, put, select, takeLatest } from 'redux-saga/effects'
 import {
   User,
   IFrame,
+  AppBox,
   AppTalkRoom,
   AppVoice,
   AppNews,
@@ -15,7 +16,7 @@ import {
   addVoiceContents,
   addNewsContents,
   addMypageContents,
-  setPost,
+  // setPost,
   setCommonError
 } from 'actions/application'
 import { Posts, Comments, VoteOptions } from 'stub/app'
@@ -175,6 +176,7 @@ function* fetchPosts({ payload }) {
   }
 }
 
+// 個別記事詳細ページ
 function* fetchPost({ payload }) {
   const { postId } = payload
   const { jwtToken } = yield select(getUser)
@@ -256,13 +258,10 @@ function* savePost({ payload }) {
 
   try {
     const res = yield call(API.post, '/post', formData, jwtToken)
-
-    // TODO 今の自分の投稿をPREPEND
-    // 本来はboxTypeをみて BoxType.slug[boxType] のようにするが
-    // reducerが現状talkではなくtalkになってるので置換必要。
-    // とりあえずはtalk決め打ちでPREPENDしておく。
-    yield put(createAction(AppTalkRoom.PREPEND_COMMENT)(res.data))
-
+    // HACK: 今の自分の投稿をfetchしてPREPEND
+    const { data } = yield call(API.fetch, `/post/${res.data.id}`, jwtToken)
+    const path = `${BoxType.slug[boxType]}.boxContents`
+    yield put(createAction(AppBox.PREPEND_CONTENT)({ path, data }))
     yield call(successCb, res)
   } catch (e) {
     if (errCb) yield call(errCb, e.response)
@@ -275,7 +274,7 @@ function* saveComment({ payload }) {
   const { postId, body, successCb } = payload
   try {
     const res = yield call(API.post, '/comment', { postId, body }, jwtToken)
-    // 今の投稿をPREPEND
+    // 今の投稿をPREPEND（postと違ってコメントデータそのものが返却される）
     yield put(createAction(AppPost.PREPEND_COMMENT)(res.data))
     yield call(successCb, res)
   } catch (e) {

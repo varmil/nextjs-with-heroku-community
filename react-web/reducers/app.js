@@ -1,6 +1,7 @@
 import { handleActions } from 'redux-actions'
 import immutable from 'object-path-immutable'
 import {
+  AppBox,
   AppTalkRoom,
   AppVoice,
   AppNews,
@@ -39,14 +40,19 @@ const initialState = {
 export default handleActions(
   {
     /**
+     * APP BOX : dynamicにboxContentsに操作を加える
+     */
+    [AppBox.PREPEND_CONTENT]: (state, action) => {
+      const { path, data } = action.payload
+      return immutable.insert(state, path, data, 0)
+    },
+
+    /**
      * TALK ROOM
      */
     [AppTalkRoom.ADD_CONTENTS]: (state, action) => {
       // spread payload because it is array
       return immutable.push(state, `talk.boxContents`, ...action.payload)
-    },
-    [AppTalkRoom.PREPEND_CONTENT]: (state, action) => {
-      return immutable.insert(state, `talk.boxContents`, action.payload, 0)
     },
 
     /**

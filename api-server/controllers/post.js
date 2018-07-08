@@ -68,7 +68,7 @@ exports.save = async (req, res, next) => {
     }
 
     trans.commit()
-    res.json(true)
+    res.json({ id: post.id })
   } catch (e) {
     trans.rollback()
     return next(e)
