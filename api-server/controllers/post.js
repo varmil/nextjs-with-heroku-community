@@ -90,12 +90,13 @@ exports.fetch = async (req, res) => {
 
   // boxTypeによって追加取得
   if (post.boxType === BoxType.index.voice) {
-    const voice = await models.Voice.findOne({
+    // hasOneで取得するときと同様パスカルで。
+    const Voice = await models.Voice.findOne({
       attributes: ['options', 'deadline'],
       where: { postId: post.id },
       raw: true
     })
-    result = { ...result, voice }
+    result = { ...result, Voice }
   }
 
   res.json(result)
@@ -104,8 +105,9 @@ exports.fetch = async (req, res) => {
 exports.fetchList = async (req, res) => {
   const pageNum = req.params.pageNum || 1 // 1 origin
   const brandId = req.user.brand.id
-  const data = await services.Post.fetchList(pageNum, { brandId })
-  res.json(data)
+  const posts = await services.Post.fetchList(pageNum, { brandId })
+  // console.log('###############', posts)
+  res.json(posts)
 }
 
 exports.fetchListOfBox = async (req, res) => {
@@ -115,6 +117,6 @@ exports.fetchListOfBox = async (req, res) => {
 
   if (!boxType) return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
 
-  const data = await services.Post.fetchList(pageNum, { brandId, boxType })
-  res.json(data)
+  const posts = await services.Post.fetchList(pageNum, { brandId, boxType })
+  res.json(posts)
 }

@@ -11,11 +11,11 @@ import BaseEditor from 'components/templates/admin_post_add/BaseEditor'
 export default class extends React.Component {
   constructor(props) {
     super(props)
-    const { voice } = this.props.post
+    const { Voice } = this.props.post
     this.state = {
-      options: (voice && voice.options) || [],
+      options: (Voice && Voice.options) || [],
       deadline:
-        (voice && voice.deadline) ||
+        (Voice && Voice.deadline) ||
         fecha.format(new Date(), 'YYYY-MM-DDThh:mm')
     }
   }

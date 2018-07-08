@@ -115,7 +115,10 @@ module.exports = class User {
     const trans = await models.sequelize.transaction()
     try {
       // プロフィール画像
-      const dbPath = await User.moveProfileIcon(file)
+      let dbPath = await User.moveProfileIcon(file)
+      if (!dbPath) {
+        dbPath = DEFAULT_ICON_PATH
+      }
 
       const user = await models.User.create(
         {

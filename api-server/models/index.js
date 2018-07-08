@@ -41,4 +41,7 @@ Object.keys(db).forEach(function(modelName) {
 db.sequelize = sequelize
 db.Sequelize = Sequelize
 
+// relation
+db.Post.hasOne(db.Voice)
+
 module.exports = db

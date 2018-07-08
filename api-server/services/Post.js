@@ -90,9 +90,17 @@ module.exports = class Post {
         limit: PER_PAGE,
         offset: PER_PAGE * (pageNum - 1),
         order: [['id', 'DESC']],
-        raw: true
+        // raw: true,
+        include: [
+          {
+            model: models.Voice,
+            attributes: ['options', 'deadline']
+            // as: 'voice'
+          }
+        ]
       })
-      return await Post.associateWithUser(posts)
+      const plainPosts = posts.map(e => e.get({ plain: true }))
+      return await Post.associateWithUser(plainPosts)
     } catch (e) {
       console.error(e)
     }
