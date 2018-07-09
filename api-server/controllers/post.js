@@ -13,7 +13,7 @@ const Message = reqlib('/constants/Message')
 exports.save = async (req, res, next) => {
   console.log('[save]body', req.body)
   console.log('[save]file', req.files)
-  const { title, body, released, fromServerFiles } = req.body
+  const { title, body, released, postId, fromServerFiles } = req.body
   const boxType = +req.body.boxType
   const categoryIndex = +req.body.categoryIndex
   const userId = req.user.id
@@ -39,7 +39,9 @@ exports.save = async (req, res, next) => {
   const trans = await models.sequelize.transaction()
   try {
     // 投稿をpostテーブルへ保存
-    const post = await services.Post.save(
+    const savedPostId = await services.Post.save(
+      // UPDATEの場合はpostIdに値が何かしら入っている
+      postId,
       userId,
       brand.id,
       boxType,
@@ -56,7 +58,7 @@ exports.save = async (req, res, next) => {
     switch (boxType) {
       // アンケート
       case BoxType.index.voice:
-        await services.Post.saveVoice(post.id, options, deadline, trans)
+        await services.Post.saveVoice(savedPostId, options, deadline, trans)
         break
       // 追加項目なし
       case BoxType.index.talk:
@@ -67,7 +69,7 @@ exports.save = async (req, res, next) => {
     }
 
     trans.commit()
-    res.json({ id: post.id })
+    res.json({ id: savedPostId })
   } catch (e) {
     trans.rollback()
     return next(e)

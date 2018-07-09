@@ -24,7 +24,7 @@ class AdminPostAdd extends React.Component {
 
     // TODO: 全ボックスのカテゴリをfetch-set
 
-    return { boxType: +ctx.query.boxType }
+    return { boxType: +ctx.query.boxType, postId }
   }
 
   handleChange = name => event => {
@@ -34,16 +34,17 @@ class AdminPostAdd extends React.Component {
   }
 
   onSubmit(state) {
-    console.info(state)
-    const props = this.props
+    console.info(state, this.props.postId)
+    const { dispatch, postId, boxType } = this.props
     const successCb = async res => {
-      this.props.dispatch(setSuccess())
+      dispatch(setSuccess())
       Router.pushRoute(`/admin/post/list`)
     }
     this.props.dispatch(
       createAction(AppAdminPost.SAVE_REQUEST)({
         successCb,
-        boxType: props.boxType,
+        postId,
+        boxType,
         ...state
       })
     )

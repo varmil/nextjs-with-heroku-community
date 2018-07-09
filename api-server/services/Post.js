@@ -27,6 +27,7 @@ module.exports = class Post {
   }
 
   static async save(
+    postId,
     userId,
     brandId,
     boxType,
@@ -36,7 +37,7 @@ module.exports = class Post {
     categoryIndex,
     files,
     fromServerFiles,
-    trans
+    transaction
   ) {
     try {
       let data = {
@@ -55,11 +56,18 @@ module.exports = class Post {
       const newImages = await Post.moveProfileIcon(files)
       data = { ...data, images: _.union(fromServerFiles, newImages) }
 
-      const post = await models.Post.create(data, {
-        transaction: trans
-      })
-
-      return post
+      if (postId) {
+        await models.Post.update(
+          data,
+          { where: { id: postId } },
+          { transaction }
+        )
+      } else {
+        const post = await models.Post.create(data, { transaction })
+        // 再代入なので微妙？
+        postId = post.id
+      }
+      return postId
     } catch (e) {
       console.error(e)
     }
@@ -67,7 +75,7 @@ module.exports = class Post {
 
   static async saveVoice(postId, options, deadline, trans) {
     try {
-      const voice = await models.Voice.create(
+      const created = await models.Voice.upsert(
         {
           postId,
           options,
@@ -77,7 +85,7 @@ module.exports = class Post {
           transaction: trans
         }
       )
-      return voice
+      return created
     } catch (e) {
       console.error(e)
     }

@@ -231,6 +231,7 @@ function* savePost({ payload }) {
     title,
     body,
     // 任意
+    postId,
     files,
     categoryIndex,
     // VOICE
@@ -245,6 +246,9 @@ function* savePost({ payload }) {
   formData.append('title', title)
   formData.append('body', body)
   utilFiles.append(formData, files)
+  if (postId) {
+    formData.append('postId', postId)
+  }
   if (categoryIndex) {
     formData.append('categoryIndex', categoryIndex)
   }
