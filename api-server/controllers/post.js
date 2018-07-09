@@ -13,7 +13,7 @@ const Message = reqlib('/constants/Message')
 exports.save = async (req, res, next) => {
   console.log('[save]body', req.body)
   console.log('[save]file', req.files)
-  const { title, body, fromServerFiles } = req.body
+  const { title, body, released, fromServerFiles } = req.body
   const boxType = +req.body.boxType
   const categoryIndex = +req.body.categoryIndex
   const userId = req.user.id
@@ -39,7 +39,6 @@ exports.save = async (req, res, next) => {
   const trans = await models.sequelize.transaction()
   try {
     // 投稿をpostテーブルへ保存
-    const released = true
     const post = await services.Post.save(
       userId,
       brand.id,

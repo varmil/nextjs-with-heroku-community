@@ -93,12 +93,12 @@ class AdminBaseEditor extends React.Component {
   }
 
   // stateまるごと通知
-  onSubmit() {
+  onSubmit(released) {
     let data = this.state
 
     // カテゴリがあるBOXならば追加
     if (data.category) {
-      data = { ...data, categoryIndex: this.state.category.value }
+      data = { ...data, released, categoryIndex: this.state.category.value }
     }
     // category objectは不要なので省く
     data = omit(data, 'category')
@@ -119,8 +119,10 @@ class AdminBaseEditor extends React.Component {
                 <MyBigBtn>キャンセル</MyBigBtn>
               </Link>
               <div className="">
-                <MyBigBtn>下書きする</MyBigBtn>
-                <MyBigBtn color="primary" onClick={this.onSubmit.bind(this)}>
+                <MyBigBtn onClick={() => this.onSubmit(false)}>
+                  下書きする
+                </MyBigBtn>
+                <MyBigBtn color="primary" onClick={() => this.onSubmit(true)}>
                   投稿する
                 </MyBigBtn>
               </div>
