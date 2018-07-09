@@ -10,12 +10,13 @@ const BOTTOM_Y = 9999
 
 class VoteOptions extends React.Component {
   state = {
-    selectedIndex: this.props.voteOptions.selectedIndex
+    // TODO: 自分自身が投票した結果があればそれをぶちこむ。なければ未定
+    selectedIndex: this.props.options.selectedIndex || null
   }
 
   render() {
     const props = this.props
-    const { voteOptions } = props
+    const { options, deadline } = props
 
     return (
       <div className="wrap mt-3 pb-5">
@@ -23,11 +24,11 @@ class VoteOptions extends React.Component {
           <VoteCounter
             className="mb-3"
             num={821}
-            deadline={'2018年6月14日23:59'}
+            deadline={deadline}
             showDeadline={true}
           />
 
-          {voteOptions.item.map((o, i) => {
+          {options.map((text, i) => {
             return (
               <div
                 key={i}
@@ -36,7 +37,7 @@ class VoteOptions extends React.Component {
                 }`}
                 onClick={() => this.setState({ selectedIndex: i })}
               >
-                {o.text}
+                {text}
               </div>
             )
           })}
@@ -110,7 +111,12 @@ class Post extends React.Component {
           // vote
           topPhoto={isVoice}
         >
-          {isVoice && <VoteOptions voteOptions={data.voteOptions} />}
+          {isVoice && (
+            <VoteOptions
+              options={data.Voice.options}
+              deadline={data.Voice.deadline}
+            />
+          )}
         </BoxContent>
       </React.Fragment>
     )
