@@ -17,7 +17,6 @@ class VoteOptions extends React.Component {
   render() {
     const props = this.props
     const { options, deadline, count } = props.Voice
-    console.log('PPP', count)
 
     return (
       <div className="wrap mt-3 pb-5">
