@@ -18,6 +18,7 @@ const getBaseURL = () => {
   }
 }
 
+// serverではシングルトンなので注意
 const instance = axios.create({
   baseURL: getBaseURL(),
   withCredentials: true
@@ -25,16 +26,12 @@ const instance = axios.create({
 
 export default class API {
   static async fetch(url, jwtToken, options = {}) {
-    if (jwtToken) {
-      instance.defaults.headers.common['Authorization'] = jwtToken
-    }
+    instance.defaults.headers.common['Authorization'] = jwtToken || null
     return instance.get(url, options)
   }
 
   static async post(url, data, jwtToken, options = {}) {
-    if (jwtToken) {
-      instance.defaults.headers.common['Authorization'] = jwtToken
-    }
+    instance.defaults.headers.common['Authorization'] = jwtToken || null
     return instance.post(url, data, options)
   }
 

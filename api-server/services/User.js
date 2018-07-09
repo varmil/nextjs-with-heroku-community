@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const reqlib = require('app-root-path').require
 const models = reqlib('/models')
 const moveFile = require('move-file')
@@ -17,9 +18,12 @@ const DEFAULT_ICON_PATH = 'https://www.w3schools.com/w3images/avatar4.png'
 module.exports = class User {
   // { <id>: { name, iconPath }, ... } というObjectを返す
   static async fetchAllObj(ids) {
+    if (!_.isArray(ids) || _.isEmpty(ids)) return {}
+
+    const filterdIds = _.compact(_.uniq(ids))
     const names = await models.User.findAll({
       attributes: ['id', 'nickname', 'lastName', 'firstName', 'iconPath'],
-      where: { id: ids },
+      where: { id: filterdIds },
       raw: true
     })
     return names.reduce((acc, cur) => {

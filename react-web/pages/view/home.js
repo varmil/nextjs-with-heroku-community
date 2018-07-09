@@ -19,15 +19,15 @@ class Home extends React.Component {
     const { dispatch } = ctx.store
 
     if (ctx.isServer || talk.boxContents.length === 0) {
-      dispatch(createAction(AppTalkRoom.FETCH_REQUEST)({ pageNum: 1 }))
+      dispatch(createAction(AppTalkRoom.FETCH_REQUEST)({ released: true }))
     }
 
     if (ctx.isServer || voice.boxContents.length === 0) {
-      dispatch(createAction(AppVoice.FETCH_REQUEST)({ pageNum: 1 }))
+      dispatch(createAction(AppVoice.FETCH_REQUEST)({ released: true }))
     }
 
     if (ctx.isServer || news.boxContents.length === 0) {
-      dispatch(createAction(AppNews.FETCH_REQUEST)({ pageNum: 1 }))
+      dispatch(createAction(AppNews.FETCH_REQUEST)({ released: true }))
     }
 
     // ctx.query contains URL params

@@ -122,13 +122,18 @@ function* fetchSiteDesign({ payload }) {
   // TODO: fetch category, subBanner, then put them into store
 }
 
+// released : fetch released posts only if true
 function fetchContents(boxType) {
   return function*({ payload }) {
     const { jwtToken } = yield select(getUser)
-    const { pageNum } = payload
+    const { pageNum, released } = payload
+
+    // qs
+    const qs = released ? `?released=1` : ''
+
     return yield call(
       API.fetch,
-      `/post/list/box/${boxType}/${pageNum || 1}`,
+      `/post/list/box/${boxType}/${pageNum || 1}${qs}`,
       jwtToken
     )
   }
