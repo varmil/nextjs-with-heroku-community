@@ -92,7 +92,7 @@ exports.fetch = async (req, res) => {
   if (post.boxType === BoxType.index.voice) {
     // hasOneで取得するときと同様パスカルで。
     const Voice = await models.Voice.findOne({
-      attributes: ['options', 'deadline'],
+      attributes: ['options', 'deadline', 'count'],
       where: { postId: post.id },
       raw: true
     })

@@ -4,8 +4,9 @@ module.exports = {
       {
         nickname: 'Demo User 001',
         email: 'foo',
+        roleId: 102,
         passwordHash:
-          ' $2b$10$bnbqqzWXpJ7sljuU6E0lh.Ajkwnno8AC2OcozAftXRODZxOvF4yZC',
+          '$2b$10$bnbqqzWXpJ7sljuU6E0lh.Ajkwnno8AC2OcozAftXRODZxOvF4yZC', // testtest
         createdAt: new Date(),
         updatedAt: new Date()
       }

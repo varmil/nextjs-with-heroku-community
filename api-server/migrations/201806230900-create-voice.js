@@ -24,6 +24,11 @@ module.exports = {
         defaultValue: '',
         type: Sequelize.STRING
       },
+      count: {
+        allowNull: false,
+        defaultValue: 0,
+        type: Sequelize.INTEGER
+      },
 
       createdAt: {
         allowNull: false,

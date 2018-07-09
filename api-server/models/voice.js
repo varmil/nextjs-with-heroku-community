@@ -11,7 +11,9 @@ module.exports = function(sequelize, DataTypes) {
     // 選択肢（配列）
     options: DataTypes.JSON,
     // 期日
-    deadline: DataTypes.STRING
+    deadline: DataTypes.STRING,
+    // 現在の投票数
+    count: DataTypes.INTEGER
   })
   return Voice
 }

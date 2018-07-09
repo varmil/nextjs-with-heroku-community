@@ -105,6 +105,57 @@ module.exports = class Post {
     }
   }
 
+  // 投票（UPDATE対応済）
+  static async saveVote(postId, voterId, choiceIndex) {
+    const transaction = await models.sequelize.transaction()
+    try {
+      const log = await models.VoiceLog.findOne({
+        where: { postId, voterId }
+      })
+      if (log) {
+        // 投票済みなのでカウントは増やさない
+        await log.update({ choiceIndex })
+      } else {
+        // INSERT and count up sum table
+        await models.VoiceLog.create(
+          {
+            postId,
+            voterId,
+            choiceIndex
+          },
+          { transaction }
+        )
+        await models.Voice.update(
+          { count: models.sequelize.literal('count + 1') },
+          { where: { postId } },
+          { transaction }
+        )
+      }
+
+      transaction.commit()
+    } catch (e) {
+      transaction.rollback()
+      console.error(e)
+    }
+  }
+
+  // 特定のユーザの投票結果（choiceIndex）を取得
+  static async fetchVote(postId, voterId) {
+    try {
+      const row = await models.Post.findOne({
+        attributes: ['choiceIndex'],
+        where: { postId, voterId },
+        raw: true
+      })
+      console.log(
+        `choiceIndex of post:${postId}, voter:${voterId}, i:${row.choiceIndex}`
+      )
+      return row.choiceIndex
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   // NOTE: mutate original posts
   // postIdsをもとに表示するのに必要なユーザ情報を追加
   static async associateWithUser(posts) {

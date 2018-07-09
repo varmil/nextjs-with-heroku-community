@@ -11,19 +11,20 @@ const BOTTOM_Y = 9999
 class VoteOptions extends React.Component {
   state = {
     // TODO: 自分自身が投票した結果があればそれをぶちこむ。なければ未定
-    selectedIndex: this.props.options.selectedIndex || null
+    selectedIndex: this.props.Voice.selectedIndex || null
   }
 
   render() {
     const props = this.props
-    const { options, deadline } = props
+    const { options, deadline, count } = props.Voice
+    console.log('PPP', count)
 
     return (
       <div className="wrap mt-3 pb-5">
         <section className="px-5">
           <VoteCounter
             className="mb-3"
-            num={821}
+            count={count}
             deadline={deadline}
             showDeadline={true}
           />
@@ -111,12 +112,7 @@ class Post extends React.Component {
           // vote
           topPhoto={isVoice}
         >
-          {isVoice && (
-            <VoteOptions
-              options={data.Voice.options}
-              deadline={data.Voice.deadline}
-            />
-          )}
+          {isVoice && <VoteOptions Voice={data.Voice} />}
         </BoxContent>
       </React.Fragment>
     )

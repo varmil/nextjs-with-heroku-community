@@ -40,7 +40,7 @@ export const VoteCounter = props => (
     <div className={`wrap py-2 ${props.className}`}>
       <div className="mb-2">
         <span>ただいまの投票数</span>
-        <span className="voteNum ml-2">{props.num}</span>
+        <span className="voteNum ml-2">{props.count}</span>
       </div>
 
       {props.showDeadline && (
