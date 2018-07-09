@@ -17,9 +17,8 @@ import Classes from 'constants/Classes'
 import URL from 'constants/URL'
 
 const styles = {
-  slide: {
-    minHeight: 100
-  }
+  slideRoot: {},
+  slide: {}
 }
 
 const Label = props => (
@@ -41,6 +40,12 @@ class TopPage extends React.Component {
     let activeTabIndex = findIndex(props.boxes, box => box.slug === props.slug)
     if (activeTabIndex === -1) activeTabIndex = 0
     this.state = { tabIndex: activeTabIndex }
+  }
+
+  componentDidMount() {
+    // スワイパブルViewの高さをちょうどよく
+    const headerHeight = document.getElementById('ViewHomeHeader').clientHeight
+    this.mainHeight = window.screen.height - headerHeight
   }
 
   getIndicatorStyle() {
@@ -72,7 +77,7 @@ class TopPage extends React.Component {
 
     return (
       <React.Fragment>
-        <div className="sticky-top">
+        <div id="ViewHomeHeader" className="sticky-top">
           <Header />
 
           <section
@@ -106,17 +111,18 @@ class TopPage extends React.Component {
             enableMouseEvents
             index={this.state.tabIndex}
             onChangeIndex={this.handleChangeIndex}
+            containerStyle={{ height: this.mainHeight }}
           >
-            <div style={Object.assign({}, styles.slide)}>
+            <div style={styles.slide}>
               <TalkRoomContents />
             </div>
-            <div style={Object.assign({}, styles.slide)}>
+            <div style={styles.slide}>
               <VoiceContents />
             </div>
-            <div style={Object.assign({}, styles.slide)}>
+            <div style={styles.slide}>
               <NewsContents />
             </div>
-            <div style={Object.assign({}, styles.slide)}>slide n°4</div>
+            <div style={styles.slide}>slide n°4</div>
           </SwipeableViews>
 
           {this.isShowPenIcon() ? (
