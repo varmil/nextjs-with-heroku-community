@@ -165,6 +165,9 @@ module.exports = class Post {
         where: { postId, voterId },
         raw: true
       })
+
+      if (!row) return null
+
       console.log(
         `choiceIndex of post:${postId}, voter:${voterId}, i:${row.choiceIndex}`
       )

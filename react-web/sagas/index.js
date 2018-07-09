@@ -211,17 +211,6 @@ function* fetchComments({ payload }) {
   }
 }
 
-// function* fetchPost({ payload }) {
-//   const { boxType, postId } = payload
-//
-//   // TODO: fetch post with boxType, postId
-//   // 適当な記事データを返却しておく
-//   const post = Posts[boxType][postId]
-//   const comments = Comments
-//   const voteOptions = VoteOptions || []
-//   yield put(setPost({ ...post, comments, voteOptions }))
-// }
-
 function* savePost({ payload }) {
   const {
     successCb,
@@ -230,6 +219,7 @@ function* savePost({ payload }) {
     boxType,
     title,
     body,
+    released,
     // 任意
     postId,
     files,
@@ -245,6 +235,7 @@ function* savePost({ payload }) {
   formData.append('boxType', boxType)
   formData.append('title', title)
   formData.append('body', body)
+  formData.append('released', released)
   utilFiles.append(formData, files)
   if (postId) {
     formData.append('postId', postId)

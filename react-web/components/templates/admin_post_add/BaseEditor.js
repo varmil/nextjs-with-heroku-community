@@ -96,6 +96,9 @@ class AdminBaseEditor extends React.Component {
   onSubmit(released) {
     let data = this.state
 
+    // 下書き情報追加
+    data = { ...data, released }
+
     // カテゴリがあるBOXならば追加
     if (data.category) {
       data = { ...data, released, categoryIndex: this.state.category.value }
