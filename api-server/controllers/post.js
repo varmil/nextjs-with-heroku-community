@@ -123,16 +123,17 @@ exports.fetchList = async (req, res) => {
   const pageNum = req.params.pageNum || 1 // 1 origin
   const brandId = req.user.brand.id
   const posts = await services.Post.fetchList(pageNum, { brandId })
-  // console.log('###############', posts)
   res.json(posts)
 }
 
 exports.fetchListOfBox = async (req, res) => {
-  const { boxType } = req.params
-  const pageNum = req.params.pageNum || 1 // 1 origin
-  const brandId = req.user.brand.id
+  if (!req.params.boxType) {
+    return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
+  }
 
-  if (!boxType) return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
+  const boxType = +req.params.boxType
+  const pageNum = +req.params.pageNum || 1 // 1 origin
+  const brandId = req.user.brand.id
 
   const posts = await services.Post.fetchList(pageNum, { brandId, boxType })
   res.json(posts)

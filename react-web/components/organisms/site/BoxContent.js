@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import fecha from 'fecha'
 import { Link, Router } from 'routes'
 import MultiLineText from 'components/atoms/MultiLineText'
 import Avatar from 'components/atoms/Avatar'
@@ -44,7 +45,9 @@ export const VoteCounter = props => (
       </div>
 
       {props.showDeadline && (
-        <div className="deadline">期限：{props.deadline}まで</div>
+        <div className="deadline">
+          期限：{fecha.format(new Date(props.deadline), 'YYYY-MM-DD hh:mm')}まで
+        </div>
       )}
 
       {props.showButton && (
@@ -259,14 +262,14 @@ class BoxContent extends React.Component {
   }
 
   createGoingVote() {
-    const props = this.props
-    if (!props.goingVote) return null
+    const { goingVote, Voice, voteButtonColor } = this.props
+    if (!goingVote) return null
     return (
       <div className="mt-2 mb-3 px-5">
         <VoteCounter
-          num={821}
+          count={Voice.count || 0}
           showButton={true}
-          voteButtonColor={props.voteButtonColor}
+          voteButtonColor={voteButtonColor}
         />
       </div>
     )

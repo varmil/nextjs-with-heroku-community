@@ -5,6 +5,7 @@ const models = reqlib('/models')
 const moveFile = require('move-file')
 const Path = reqlib('/constants/Path')
 const Role = reqlib('/constants/Role')
+const BoxType = reqlib('/../shared/constants/BoxType')
 
 const PER_PAGE = 20
 
@@ -83,20 +84,24 @@ module.exports = class Post {
   }
 
   static async fetchList(pageNum, where) {
+    // 特定条件なら関連テーブルも引っ張る
+    let include = []
+    if (where && where.boxType === BoxType.index.voice) {
+      include = [
+        {
+          model: models.Voice,
+          attributes: ['count']
+        }
+      ]
+    }
+
     try {
       const posts = await models.Post.findAll({
         where: where,
         limit: PER_PAGE,
         offset: PER_PAGE * (pageNum - 1),
-        order: [['id', 'DESC']]
-        // raw: true,
-        // include: [
-        //   {
-        //     model: models.Voice,
-        //     attributes: ['options', 'deadline']
-        //     // as: 'voice'
-        //   }
-        // ]
+        order: [['id', 'DESC']],
+        include
       })
       const plainPosts = posts.map(e => e.get({ plain: true }))
       return await Post.associateWithUser(plainPosts)
