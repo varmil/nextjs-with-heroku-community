@@ -282,6 +282,22 @@ function* saveComment({ payload }) {
   }
 }
 
+function* saveVote({ payload }) {
+  const { jwtToken } = yield select(getUser)
+  const { postId, choiceIndex, successCb } = payload
+  try {
+    const res = yield call(
+      API.post,
+      '/post/vote',
+      { postId, choiceIndex },
+      jwtToken
+    )
+    yield call(successCb, res)
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
+}
+
 /**
  * iFrame
  */
@@ -316,7 +332,8 @@ const appSaga = [
   takeLatest(AppPost.FETCH_REQUEST, fetchPost),
   takeLatest(AppPost.FETCH_COMMENTS_REQUEST, fetchComments),
   takeLatest(AppPost.SAVE_REQUEST, savePost),
-  takeLatest(AppPost.SAVE_COMMENT_REQUEST, saveComment)
+  takeLatest(AppPost.SAVE_COMMENT_REQUEST, saveComment),
+  takeLatest(AppPost.SAVE_VOTE_REQUEST, saveVote)
 ]
 
 const appAdminSaga = [

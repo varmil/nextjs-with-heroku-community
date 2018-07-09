@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
+import { setSuccess } from 'actions/application'
 import BoxContent, { VoteCounter } from 'components/organisms/site/BoxContent'
 import { AppPost } from 'constants/ActionTypes'
 import BoxType from '/../shared/constants/BoxType'
@@ -10,13 +11,36 @@ const BOTTOM_Y = 9999
 
 class VoteOptions extends React.Component {
   state = {
-    // TODO: 自分自身が投票した結果があればそれをぶちこむ。なければ未定
-    selectedIndex: this.props.Voice.selectedIndex || null
+    // 自分自身が投票した結果があればそれをぶちこむ。
+    choiceIndex: this.props.Voice.choiceIndex || null,
+    // 投票後にローカルでインクリメントするためにstateで保持
+    count: this.props.Voice.count || 0
+  }
+
+  onVote(index) {
+    const { count } = this.state
+    const { dispatch, postId } = this.props
+    const successCb = async res => {
+      dispatch(setSuccess())
+      this.setState({
+        ...this.state,
+        choiceIndex: index,
+        count: res.data.isFirstVote ? count + 1 : count
+      })
+    }
+    dispatch(
+      createAction(AppPost.SAVE_VOTE_REQUEST)({
+        postId,
+        choiceIndex: index,
+        successCb
+      })
+    )
   }
 
   render() {
+    const { count } = this.state
     const props = this.props
-    const { options, deadline, count } = props.Voice
+    const { options, deadline } = props.Voice
 
     return (
       <div className="wrap mt-3 pb-5">
@@ -33,9 +57,9 @@ class VoteOptions extends React.Component {
               <div
                 key={i}
                 className={`option my-1 ${
-                  i === this.state.selectedIndex ? 'active' : ''
+                  i === this.state.choiceIndex ? 'active' : ''
                 }`}
-                onClick={() => this.setState({ selectedIndex: i })}
+                onClick={e => this.onVote(i)}
               >
                 {text}
               </div>
@@ -86,8 +110,9 @@ class Post extends React.Component {
   // boxType, postId などは文字列なので注意
   static async getInitialProps({ ctx }) {
     const { dispatch } = ctx.store
+    const { boxType, postId } = ctx.query
     dispatch(createAction(AppPost.FETCH_REQUEST)(ctx.query))
-    return { focus: !!ctx.query.focus, boxType: +ctx.query.boxType }
+    return { focus: !!ctx.query.focus, boxType: +boxType }
   }
 
   componentDidMount() {
@@ -111,7 +136,13 @@ class Post extends React.Component {
           // vote
           topPhoto={isVoice}
         >
-          {isVoice && <VoteOptions Voice={data.Voice} />}
+          {isVoice && (
+            <VoteOptions
+              Voice={data.Voice}
+              postId={data.id}
+              dispatch={props.dispatch}
+            />
+          )}
         </BoxContent>
       </React.Fragment>
     )

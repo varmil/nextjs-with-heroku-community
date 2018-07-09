@@ -107,6 +107,8 @@ module.exports = class Post {
 
   // 投票（UPDATE対応済）
   static async saveVote(postId, voterId, choiceIndex) {
+    // 初投票ならtrue, 更新ならfalse
+    let isFirstVote = false
     const transaction = await models.sequelize.transaction()
     try {
       const log = await models.VoiceLog.findOne({
@@ -117,6 +119,7 @@ module.exports = class Post {
         await log.update({ choiceIndex })
       } else {
         // INSERT and count up sum table
+        isFirstVote = true
         await models.VoiceLog.create(
           {
             postId,
@@ -133,16 +136,18 @@ module.exports = class Post {
       }
 
       transaction.commit()
+      return isFirstVote
     } catch (e) {
       transaction.rollback()
       console.error(e)
+      return false
     }
   }
 
   // 特定のユーザの投票結果（choiceIndex）を取得
   static async fetchVote(postId, voterId) {
     try {
-      const row = await models.Post.findOne({
+      const row = await models.VoiceLog.findOne({
         attributes: ['choiceIndex'],
         where: { postId, voterId },
         raw: true

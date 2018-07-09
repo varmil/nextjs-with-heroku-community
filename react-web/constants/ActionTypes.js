@@ -71,6 +71,8 @@ export const AppPost = createTypes(
   async('SAVE'),
   // 新規コメント
   async('SAVE_COMMENT'),
+  // 投票
+  async('SAVE_VOTE'),
   // 下書き or 編集時のデータ取得
   async('FETCH'),
   // コメント取得

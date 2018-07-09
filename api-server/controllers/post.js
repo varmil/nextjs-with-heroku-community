@@ -11,8 +11,8 @@ const Message = reqlib('/constants/Message')
  * NOTE: boxTypeやcategoryIndexは文字列なので注意
  */
 exports.save = async (req, res, next) => {
-  console.log('[profile]body', req.body)
-  console.log('[profile]file', req.files)
+  console.log('[save]body', req.body)
+  console.log('[save]file', req.files)
   const { title, body, fromServerFiles } = req.body
   const boxType = +req.body.boxType
   const categoryIndex = +req.body.categoryIndex
@@ -76,6 +76,20 @@ exports.save = async (req, res, next) => {
 }
 
 /**
+ * 投票
+ */
+exports.saveVote = async (req, res, next) => {
+  console.log('[saveVote]body', req.body)
+  const { postId, choiceIndex } = req.body
+  if (!postId || _.isUndefined(choiceIndex)) {
+    return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
+  }
+  const voterId = req.user.id
+  const isFirstVote = await services.Post.saveVote(postId, voterId, choiceIndex)
+  res.json({ isFirstVote })
+}
+
+/**
  * 個別記事 取得
  */
 exports.fetch = async (req, res) => {
@@ -96,7 +110,10 @@ exports.fetch = async (req, res) => {
       where: { postId: post.id },
       raw: true
     })
-    result = { ...result, Voice }
+    // 自分の投票を取得
+    const voterId = req.user.id || 0
+    const choiceIndex = await services.Post.fetchVote(post.id, voterId)
+    result = { ...result, Voice: { ...Voice, choiceIndex } }
   }
 
   res.json(result)

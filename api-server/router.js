@@ -109,6 +109,7 @@ module.exports = function(app) {
    * POST
    */
   app.post('/post', requireAuth, upload.array('image'), PostController.save)
+  app.post('/post/vote', requireAuth, PostController.saveVote)
   app.get('/post/:postId', requireAuth, PostController.fetch)
   app.get('/post/list/:pageNum', requireAuth, PostController.fetchList)
   app.get(
