@@ -19,7 +19,6 @@ import {
   // setPost,
   setCommonError
 } from 'actions/application'
-import { Posts, Comments, VoteOptions } from 'stub/app'
 import BoxType from '/../shared/constants/BoxType'
 import { createAction } from 'redux-actions'
 import { setCookie } from 'utils/cookie'
