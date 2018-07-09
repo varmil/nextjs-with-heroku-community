@@ -2,7 +2,7 @@
 
 ## Requirement
 * `Node.js 10.3.0` (for client and api-server)
-* `MySQL >= 5.6` (for api-server)
+* `MySQL >= 5.7` (for api-server)
 
 ## How to Use (dev)
 
@@ -24,3 +24,8 @@ npm run dev
 # curl http://localhost:5000
 ```
 
+### DB migration (run it when table definition changed)
+```sh
+cd api-server
+npm run db:init
+```
