@@ -5,30 +5,28 @@ import InfiniteScroll from 'react-infinite-scroller'
 
 class InfiniteContents extends React.Component {
   state = {
+    hasMore: true,
     isLoading: false
   }
 
   // https://github.com/CassetteRocks/react-infinite-scroller/issues/143
   // 引数が怪しいのでtwiceロードしないように注意
   loadMoreRows(page) {
-    const { isLoading } = this.state
     console.info('loadMoreRows page::', page, this.state)
-
     this.setState({ ...this.state, isLoading: true })
 
-    if (isLoading) {
-      console.info('this page is already loaded, so do nothing', page)
-      return
-    }
-
     const successCb = res => {
-      console.log('load complete')
-      this.setState({ ...this.state, isLoading: false })
+      // set no more load flag if response is null
+      this.setState({
+        ...this.state,
+        hasMore: Array.isArray(res.data) && res.data.length > 0,
+        isLoading: false
+      })
     }
     // BOXにあったコンテンツをFETCH
     this.props.dispatch(
       createAction(this.props.action)({
-        pageNum: 1 || page,
+        pageNum: page,
         released: true,
         successCb
       })
@@ -42,9 +40,8 @@ class InfiniteContents extends React.Component {
         initialLoad={false}
         pageStart={1}
         loadMore={this.loadMoreRows.bind(this)}
-        // TODO true if next page is existing
-        hasMore={!this.state.isLoading}
-        threshold={100}
+        hasMore={!this.state.isLoading && this.state.hasMore}
+        threshold={130}
         loader={
           <div className="loader" key={0}>
             Loading ...

@@ -4,6 +4,7 @@
 import React from 'react'
 import Document, { Head, Main, NextScript } from 'next/document'
 import flush from 'styled-jsx/server'
+import 'react-redux-toastr/lib/css/react-redux-toastr.min.css'
 
 class MyDocument extends Document {
   // static async getInitialProps(ctx) {
@@ -34,12 +35,6 @@ class MyDocument extends Document {
           <link
             href="https://fonts.googleapis.com/css?family=Dancing+Script"
             rel="stylesheet"
-          />
-          {/* toastr */}
-          <link
-            href="https://diegoddox.github.io/react-redux-toastr/7.1/react-redux-toastr.min.css"
-            rel="stylesheet"
-            type="text/css"
           />
         </Head>
         <body>

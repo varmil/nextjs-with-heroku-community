@@ -13,15 +13,14 @@ import Header from 'components/templates/container/Header'
 import TalkRoomContents from 'components/templates/edit_view_shared/TalkRoomContents'
 import VoiceContents from 'components/templates/edit_view_shared/VoiceContents'
 import NewsContents from 'components/templates/edit_view_shared/NewsContents'
+import InfiniteScroll from 'components/templates/container/InfiniteScroll'
 import Classes from 'constants/Classes'
 import URL from 'constants/URL'
 
-import InfiniteScroll from 'components/templates/container/InfiniteScroll'
-
-const styles = {
-  slideRoot: {},
-  slide: {}
-}
+// const styles = {
+//   slideRoot: {},
+//   slide: {}
+// }
 
 const Label = props => (
   <span>
