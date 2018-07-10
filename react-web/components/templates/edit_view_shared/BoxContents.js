@@ -25,6 +25,9 @@ export default class BoxContents extends React.Component {
     const props = this.props
     const { boxContents } = props
 
+    // dont render if no contents
+    if (!Array.isArray(boxContents) || boxContents.length === 0) return null
+
     // custom content
     const MyBoxContent = this.BoxContent || BoxContent
 

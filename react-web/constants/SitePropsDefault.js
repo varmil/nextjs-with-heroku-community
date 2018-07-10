@@ -71,7 +71,7 @@ export const MainBanner = [
   }
 ]
 
-const boxesBase = range(4).map(i => ({
+const boxesBase = range(3).map(i => ({
   id: '', // サーバで管理しているスレッドID（URLに使う？）
   type: '', // int: TALK or VOICE or NEWS or EVENT
   index: i,
@@ -99,12 +99,12 @@ export const Boxes = {
       type: { $set: BoxType.index.news },
       slug: { $set: URL.NEWS_SLUG },
       header: { text: { $set: 'NEWS' } }
-    }),
-    update(boxesBase[3], {
-      type: { $set: BoxType.index.event },
-      slug: { $set: URL.EVENT_SLUG },
-      header: { text: { $set: 'EVENT' } }
     })
+    // update(boxesBase[3], {
+    //   type: { $set: BoxType.index.event },
+    //   slug: { $set: URL.EVENT_SLUG },
+    //   header: { text: { $set: 'EVENT' } }
+    // })
   ]
 }
 

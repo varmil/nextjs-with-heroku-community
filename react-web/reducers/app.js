@@ -8,29 +8,33 @@ import {
   AppMypage,
   AppPost,
   AppAdminPost
-  // AppErrors
 } from 'constants/ActionTypes'
 
 const initialState = {
   talk: {
-    boxContents: [] // FETCH
+    currentPage: 1, // use with infinite scroll
+    boxContents: [] // use in /view/home
   },
 
   voice: {
-    boxContents: [] // FETCH
+    currentPage: 1,
+    boxContents: []
   },
 
   news: {
-    boxContents: [] // FETCH
+    currentPage: 1,
+    boxContents: []
   },
 
   mypage: {
-    boxContents: [] // FETCH
+    currentPage: 1,
+    boxContents: []
   },
 
   // Admin用。投稿一覧画面
   posts: [],
 
+  // Admin, User兼用。記事詳細画面
   post: {
     data: {},
     comments: []

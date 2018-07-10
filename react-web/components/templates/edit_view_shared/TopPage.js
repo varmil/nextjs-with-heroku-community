@@ -128,7 +128,6 @@ class TopPage extends React.Component {
             <InfiniteScroll action={AppNews.FETCH_REQUEST}>
               <NewsContents />
             </InfiniteScroll>
-            <InfiniteScroll>slide n°4</InfiniteScroll>
           </SwipeableViews>
 
           {this.isShowPenIcon() ? (

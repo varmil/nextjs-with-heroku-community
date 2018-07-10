@@ -15,20 +15,18 @@ class Home extends React.Component {
     // homeで使用するデータは全て事前にFETCHしないといけない。（TALK, NEWS, VOICE...）
     // fetch only first time, 便宜的にcontentsの長さで判定
     // 見た目のデザインは一括でsetする（DBにstate.siteがまるっと入っているので）
-    const { talk, voice, news } = ctx.store.getState().app
-    const { dispatch } = ctx.store
-
-    if (ctx.isServer || talk.boxContents.length === 0) {
-      dispatch(createAction(AppTalkRoom.FETCH_REQUEST)({ released: true }))
-    }
-
-    if (ctx.isServer || voice.boxContents.length === 0) {
-      dispatch(createAction(AppVoice.FETCH_REQUEST)({ released: true }))
-    }
-
-    if (ctx.isServer || news.boxContents.length === 0) {
-      dispatch(createAction(AppNews.FETCH_REQUEST)({ released: true }))
-    }
+    // 最初のFETCHはInfiniteScrollで行ってくれる想定
+    // const { talk, voice, news } = ctx.store.getState().app
+    // const { dispatch } = ctx.store
+    // if (ctx.isServer || talk.boxContents.length === 0) {
+    //   // dispatch(createAction(AppTalkRoom.FETCH_REQUEST)({ released: true }))
+    // }
+    // if (ctx.isServer || voice.boxContents.length === 0) {
+    //   // dispatch(createAction(AppVoice.FETCH_REQUEST)({ released: true }))
+    // }
+    // if (ctx.isServer || news.boxContents.length === 0) {
+    //   // dispatch(createAction(AppNews.FETCH_REQUEST)({ released: true }))
+    // }
 
     // ctx.query contains URL params
     // ?edit=true is added when the page is edit mode
