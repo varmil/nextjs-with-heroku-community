@@ -1,5 +1,7 @@
 // import { delay } from 'redux-saga'
 import { all, fork, call, put, select, takeLatest } from 'redux-saga/effects'
+import isUndefined from 'lodash/isUndefined'
+import isBoolean from 'lodash/isBoolean'
 import qs from 'query-string'
 import {
   User,
@@ -161,7 +163,7 @@ function* fetchNewsContents({ payload }) {
 
 function* fetchMypageContents({ payload }) {
   // TODO: 仮でNEWSを入れておく
-  const func = fetchContents(BoxType.index.news, addNewsContents)
+  const func = fetchContents(BoxType.index.news, addMypageContents)
   yield call(func, { payload })
 }
 
@@ -240,19 +242,19 @@ function* savePost({ payload }) {
   formData.append('boxType', boxType)
   formData.append('title', title)
   formData.append('body', body)
-  formData.append('released', released)
+  formData.append('released', isBoolean(released) ? released : true)
   utilFiles.append(formData, files)
-  if (postId) {
+  if (!isUndefined(postId)) {
     formData.append('postId', postId)
   }
-  if (categoryIndex) {
+  if (!isUndefined(categoryIndex)) {
     formData.append('categoryIndex', categoryIndex)
   }
   Array.isArray(options) &&
     options.forEach(option => {
       formData.append('options[]', option)
     })
-  if (deadline) {
+  if (!isUndefined(deadline)) {
     formData.append('deadline', deadline)
   }
 
