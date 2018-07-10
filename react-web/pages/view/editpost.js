@@ -6,7 +6,6 @@ import Select from 'react-select'
 import omit from 'lodash/omit'
 import { withStyles } from '@material-ui/core/styles'
 import Input from '@material-ui/core/Input'
-import { setSuccess } from 'actions/application'
 import PostDropzone from 'components/molecules/PostDropzone'
 import { AppPost } from 'constants/ActionTypes'
 import BoxType from '/../shared/constants/BoxType'
@@ -65,7 +64,6 @@ class Editpost extends React.Component {
     data = omit(data, 'category')
 
     const successCb = async res => {
-      this.props.dispatch(setSuccess())
       Router.pushRoute(`/view/home`)
     }
     this.props.dispatch(
