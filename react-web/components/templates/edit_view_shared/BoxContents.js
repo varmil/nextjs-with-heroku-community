@@ -92,6 +92,7 @@ export default class BoxContents extends React.Component {
         <main>
           <section className="contents my-3">
             {this.createBoxContents()}
+            {/* <InfiniteScroll boxContents={this.props.boxContents} /> */}
           </section>
         </main>
       </React.Fragment>

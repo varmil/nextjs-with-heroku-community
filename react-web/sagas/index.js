@@ -141,27 +141,35 @@ function fetchContents(boxType) {
 
 function* fetchTalkContents({ payload }) {
   const func = fetchContents(BoxType.index.talk)
-  const { data } = yield call(func, { payload })
-  yield put(addTalkContents(data))
+  const res = yield call(func, { payload })
+  yield put(addTalkContents(res.data))
+  const { successCb } = payload
+  if (successCb) yield call(successCb, res)
 }
 
 function* fetchVoiceContents({ payload }) {
   const func = fetchContents(BoxType.index.voice)
-  const { data } = yield call(func, { payload })
-  yield put(addVoiceContents(data))
+  const res = yield call(func, { payload })
+  yield put(addVoiceContents(res.data))
+  const { successCb } = payload
+  if (successCb) yield call(successCb, res)
 }
 
 function* fetchNewsContents({ payload }) {
   const func = fetchContents(BoxType.index.news)
-  const { data } = yield call(func, { payload })
-  yield put(addNewsContents(data))
+  const res = yield call(func, { payload })
+  yield put(addNewsContents(res.data))
+  const { successCb } = payload
+  if (successCb) yield call(successCb, res)
 }
 
 function* fetchMypageContents({ payload }) {
   // TODO: 仮でNEWSを入れておく
   const func = fetchContents(BoxType.index.news)
-  const { data } = yield call(func, { payload })
-  yield put(addMypageContents(data))
+  const res = yield call(func, { payload })
+  yield put(addMypageContents(res.data))
+  const { successCb } = payload
+  if (successCb) yield call(successCb, res)
 }
 
 /**

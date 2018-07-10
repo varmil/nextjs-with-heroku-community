@@ -7,7 +7,7 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import objectPath from 'object-path'
 import { PATH_MAP } from 'reducers/site'
-import { SiteTop } from 'constants/ActionTypes'
+import { AppTalkRoom, AppVoice, AppNews, SiteTop } from 'constants/ActionTypes'
 import FixedButton from 'components/atoms/FixedButton'
 import Header from 'components/templates/container/Header'
 import TalkRoomContents from 'components/templates/edit_view_shared/TalkRoomContents'
@@ -15,6 +15,8 @@ import VoiceContents from 'components/templates/edit_view_shared/VoiceContents'
 import NewsContents from 'components/templates/edit_view_shared/NewsContents'
 import Classes from 'constants/Classes'
 import URL from 'constants/URL'
+
+import InfiniteScroll from 'components/templates/container/InfiniteScroll'
 
 const styles = {
   slideRoot: {},
@@ -39,13 +41,18 @@ class TopPage extends React.Component {
     // decide initial tab index with URL props.slug
     let activeTabIndex = findIndex(props.boxes, box => box.slug === props.slug)
     if (activeTabIndex === -1) activeTabIndex = 0
-    this.state = { tabIndex: activeTabIndex }
+
+    this.state = { tabIndex: activeTabIndex, mainHeight: null }
   }
 
   componentDidMount() {
+    // use state to render when height is changed
     // スワイパブルViewの高さをちょうどよく
     const headerHeight = document.getElementById('ViewHomeHeader').clientHeight
-    this.mainHeight = window.screen.height - headerHeight
+    this.setState({
+      ...this.state,
+      mainHeight: window.screen.height - headerHeight
+    })
   }
 
   getIndicatorStyle() {
@@ -111,18 +118,18 @@ class TopPage extends React.Component {
             enableMouseEvents
             index={this.state.tabIndex}
             onChangeIndex={this.handleChangeIndex}
-            containerStyle={{ height: this.mainHeight }}
+            containerStyle={{ height: this.state.mainHeight }}
           >
-            <div style={styles.slide}>
+            <InfiniteScroll action={AppTalkRoom.FETCH_REQUEST}>
               <TalkRoomContents />
-            </div>
-            <div style={styles.slide}>
+            </InfiniteScroll>
+            <InfiniteScroll action={AppVoice.FETCH_REQUEST}>
               <VoiceContents />
-            </div>
-            <div style={styles.slide}>
+            </InfiniteScroll>
+            <InfiniteScroll action={AppNews.FETCH_REQUEST}>
               <NewsContents />
-            </div>
-            <div style={styles.slide}>slide n°4</div>
+            </InfiniteScroll>
+            <InfiniteScroll>slide n°4</InfiniteScroll>
           </SwipeableViews>
 
           {this.isShowPenIcon() ? (
