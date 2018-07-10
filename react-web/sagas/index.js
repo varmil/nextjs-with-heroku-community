@@ -2,6 +2,8 @@
 import { all, fork, call, put, select, takeLatest } from 'redux-saga/effects'
 import isUndefined from 'lodash/isUndefined'
 import isBoolean from 'lodash/isBoolean'
+import isNumber from 'lodash/isNumber'
+import isNaN from 'lodash/isNaN'
 import qs from 'query-string'
 import {
   User,
@@ -244,11 +246,11 @@ function* savePost({ payload }) {
   formData.append('body', body)
   formData.append('released', isBoolean(released) ? released : true)
   utilFiles.append(formData, files)
-  if (!isUndefined(postId)) {
-    formData.append('postId', postId)
+  if (!isNaN(+postId) && isNumber(+postId) && +postId !== 0) {
+    formData.append('postId', +postId)
   }
-  if (!isUndefined(categoryIndex)) {
-    formData.append('categoryIndex', categoryIndex)
+  if (!isNaN(+categoryIndex) && isNumber(+categoryIndex)) {
+    formData.append('categoryIndex', +categoryIndex)
   }
   Array.isArray(options) &&
     options.forEach(option => {
