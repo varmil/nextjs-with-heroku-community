@@ -7,7 +7,9 @@ const Path = reqlib('/constants/Path')
 const Role = reqlib('/constants/Role')
 const BoxType = reqlib('/../shared/constants/BoxType')
 
-const PER_PAGE = 2
+// リストで取得する際に、1ページあたりの初期値
+// パラメタによって指定した場合はこの値は無効
+const DEFAULT_PER_PAGE = 20
 
 module.exports = class Post {
   // 投稿画像を一括して移動
@@ -91,7 +93,7 @@ module.exports = class Post {
     }
   }
 
-  static async fetchList(pageNum, where) {
+  static async fetchList(pageNum, where, options = {}) {
     // 特定条件なら関連テーブルも引っ張る
     let include = []
     if (where && where.boxType === BoxType.index.voice) {
@@ -103,11 +105,15 @@ module.exports = class Post {
       ]
     }
 
+    // optionsを展開
+    let { perPage } = options
+    perPage = +perPage || DEFAULT_PER_PAGE
+
     try {
       const posts = await models.Post.findAll({
         where: where,
-        limit: PER_PAGE,
-        offset: PER_PAGE * (pageNum - 1),
+        limit: perPage,
+        offset: perPage * (pageNum - 1),
         order: [['id', 'DESC']],
         include
       })

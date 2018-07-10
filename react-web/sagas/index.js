@@ -1,5 +1,6 @@
 // import { delay } from 'redux-saga'
 import { all, fork, call, put, select, takeLatest } from 'redux-saga/effects'
+import qs from 'query-string'
 import {
   User,
   IFrame,
@@ -122,54 +123,46 @@ function* fetchSiteDesign({ payload }) {
   // TODO: fetch category, subBanner, then put them into store
 }
 
+// perPage  : the amount of contents with each fetching
 // released : fetch released posts only if true
-function fetchContents(boxType) {
+function fetchContents(boxType, setAction) {
   return function*({ payload }) {
     const { jwtToken } = yield select(getUser)
-    const { pageNum, released } = payload
+    const { perPage, pageNum, released, successCb } = payload
 
     // qs
-    const qs = released ? `?released=1` : ''
+    const query = qs.stringify({ released, perPage })
 
-    return yield call(
+    const res = yield call(
       API.fetch,
-      `/post/list/box/${boxType}/${pageNum || 1}${qs}`,
+      `/post/list/box/${boxType}/${pageNum || 1}?${query}`,
       jwtToken
     )
+
+    yield put(setAction(res.data))
+    if (successCb) yield call(successCb, res)
   }
 }
 
 function* fetchTalkContents({ payload }) {
-  const func = fetchContents(BoxType.index.talk)
-  const res = yield call(func, { payload })
-  yield put(addTalkContents(res.data))
-  const { successCb } = payload
-  if (successCb) yield call(successCb, res)
+  const func = fetchContents(BoxType.index.talk, addTalkContents)
+  yield call(func, { payload })
 }
 
 function* fetchVoiceContents({ payload }) {
-  const func = fetchContents(BoxType.index.voice)
-  const res = yield call(func, { payload })
-  yield put(addVoiceContents(res.data))
-  const { successCb } = payload
-  if (successCb) yield call(successCb, res)
+  const func = fetchContents(BoxType.index.voice, addVoiceContents)
+  yield call(func, { payload })
 }
 
 function* fetchNewsContents({ payload }) {
-  const func = fetchContents(BoxType.index.news)
-  const res = yield call(func, { payload })
-  yield put(addNewsContents(res.data))
-  const { successCb } = payload
-  if (successCb) yield call(successCb, res)
+  const func = fetchContents(BoxType.index.news, addNewsContents)
+  yield call(func, { payload })
 }
 
 function* fetchMypageContents({ payload }) {
   // TODO: 仮でNEWSを入れておく
-  const func = fetchContents(BoxType.index.news)
-  const res = yield call(func, { payload })
-  yield put(addMypageContents(res.data))
-  const { successCb } = payload
-  if (successCb) yield call(successCb, res)
+  const func = fetchContents(BoxType.index.news, addNewsContents)
+  yield call(func, { payload })
 }
 
 /**

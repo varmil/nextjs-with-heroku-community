@@ -6,6 +6,8 @@ import InfiniteScroll from 'react-infinite-scroller'
 // NOTE: pageStartはstoreの状態によってかわる
 // ex) 記事詳細から戻ってきたときに初期化されてはならない。
 
+const PER_PAGE = 5
+
 class InfiniteContents extends React.Component {
   state = {
     hasMore: true,
@@ -14,9 +16,11 @@ class InfiniteContents extends React.Component {
 
   // https://github.com/CassetteRocks/react-infinite-scroller/issues/143
   // 引数が怪しいのでtwiceロードしないように注意
+  // action : ex) AppTalkRoom.FETCH_REQUEST
   loadMoreRows(page) {
-    console.info('loadMoreRows props::', this.props)
-    console.info('loadMoreRows page::', page, this.state)
+    // console.info('loadMoreRows props::', this.props)
+    // console.info('loadMoreRows page::', page, this.state)
+    const { dispatch, action } = this.props
     this.setState({ ...this.state, isLoading: true })
 
     const successCb = res => {
@@ -27,9 +31,9 @@ class InfiniteContents extends React.Component {
         isLoading: false
       })
     }
-    // BOXにあったコンテンツをFETCH
-    this.props.dispatch(
-      createAction(this.props.action)({
+    dispatch(
+      createAction(action)({
+        perPage: PER_PAGE,
         pageNum: page,
         released: true,
         successCb
@@ -42,10 +46,10 @@ class InfiniteContents extends React.Component {
       <InfiniteScroll
         useWindow={false}
         initialLoad={true}
-        pageStart={Math.ceil(this.props.length / 2)}
+        pageStart={Math.ceil(this.props.length / PER_PAGE)}
         loadMore={this.loadMoreRows.bind(this)}
         hasMore={!this.state.isLoading && this.state.hasMore}
-        threshold={130}
+        threshold={150}
         loader={
           <div className="loader" key={0}>
             Loading ...

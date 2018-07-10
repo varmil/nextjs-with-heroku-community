@@ -132,13 +132,13 @@ exports.fetchListOfBox = async (req, res) => {
     return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
   }
 
-  const { released } = req.query
+  const { perPage, released } = req.query
   const boxType = +req.params.boxType
   const pageNum = +req.params.pageNum || 1 // 1 origin
   const brandId = req.user.brand.id
 
   let where = { brandId, boxType }
   where = released ? { ...where, released: true } : where
-  const posts = await services.Post.fetchList(pageNum, where)
+  const posts = await services.Post.fetchList(pageNum, where, { perPage })
   res.json(posts)
 }
