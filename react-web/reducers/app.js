@@ -1,5 +1,7 @@
 import { handleActions } from 'redux-actions'
 import immutable from 'object-path-immutable'
+import objectPath from 'object-path'
+import findIndex from 'lodash/findIndex'
 import {
   AppBox,
   AppTalkRoom,
@@ -110,6 +112,24 @@ export default handleActions(
     [AppPost.PUSH_COMMENTS]: (state, action) => {
       // spread payload because it is array
       return immutable.push(state, `post.comments`, ...action.payload)
+    },
+
+    /**
+     * POST VOTE
+     */
+    [AppPost.INCREMENT_VOTE_SUM]: (state, action) => {
+      // 存在チェック
+      const contents = objectPath.get(state, `voice.boxContents`)
+      if (!contents) return state
+
+      const index = findIndex(contents, c => c.id === +action.payload.postId)
+      if (index === -1) return state
+
+      return immutable.update(
+        state,
+        `voice.boxContents.${index}.Voice.count`,
+        c => c + 1
+      )
     }
   },
   initialState

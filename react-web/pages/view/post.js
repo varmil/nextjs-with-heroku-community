@@ -22,11 +22,18 @@ class VoteOptions extends React.Component {
     const { dispatch, postId } = this.props
     const successCb = async res => {
       dispatch(setSuccess())
+
+      // このコンポーネントの状態更新
       this.setState({
         ...this.state,
         choiceIndex: index,
         count: res.data.isFirstVote ? count + 1 : count
       })
+
+      // store内の当該Postの投票数をカウントアップ
+      if (res.data.isFirstVote) {
+        dispatch(createAction(AppPost.INCREMENT_VOTE_SUM)({ postId }))
+      }
     }
     dispatch(
       createAction(AppPost.SAVE_VOTE_REQUEST)({

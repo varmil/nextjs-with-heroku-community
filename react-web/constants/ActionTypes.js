@@ -67,6 +67,8 @@ export const AppPost = createTypes(
   'PREPEND_COMMENT',
   'SET_COMMENTS',
   'PUSH_COMMENTS',
+  // 総投票を増加
+  'INCREMENT_VOTE_SUM',
   // 新規投稿
   async('SAVE'),
   // 新規コメント
