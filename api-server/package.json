@@ -9,6 +9,7 @@
     "db:init": "npm run db:uninstall && npm run db:install",
     "db:seed": "sequelize db:seed:undo:all && sequelize db:seed:all",
     "start": "NODE_ENV=production node index.js",
+    "pm2": "pm2 startOrRestart pm2config.json --env production --update-env",
     "dev": "nodemon ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
