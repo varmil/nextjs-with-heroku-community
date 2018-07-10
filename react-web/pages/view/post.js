@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
+import isUndefined from 'lodash/isUndefined'
 import { setSuccess } from 'actions/application'
 import BoxContent, { VoteCounter } from 'components/organisms/site/BoxContent'
 import { AppPost } from 'constants/ActionTypes'
@@ -10,11 +11,15 @@ import BoxType from '/../shared/constants/BoxType'
 const BOTTOM_Y = 9999
 
 class VoteOptions extends React.Component {
-  state = {
-    // 自分自身が投票した結果があればそれをぶちこむ。
-    choiceIndex: this.props.Voice.choiceIndex || null,
-    // 投票後にローカルでインクリメントするためにstateで保持
-    count: this.props.Voice.count || 0
+  constructor(props) {
+    super(props)
+    const { choiceIndex, count } = this.props.Voice
+    this.state = {
+      // 自分自身が投票した結果があればそれをぶちこむ。
+      choiceIndex: !isUndefined(choiceIndex) ? choiceIndex : null,
+      // 投票後にローカルでインクリメントするためにstateで保持
+      count: !isUndefined(count) ? count : null
+    }
   }
 
   onVote(index) {
