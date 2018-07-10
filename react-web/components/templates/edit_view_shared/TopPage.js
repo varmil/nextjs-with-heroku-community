@@ -7,13 +7,12 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import objectPath from 'object-path'
 import { PATH_MAP } from 'reducers/site'
-import { AppTalkRoom, AppVoice, AppNews, SiteTop } from 'constants/ActionTypes'
+import { SiteTop } from 'constants/ActionTypes'
 import FixedButton from 'components/atoms/FixedButton'
 import Header from 'components/templates/container/Header'
 import TalkRoomContents from 'components/templates/edit_view_shared/TalkRoomContents'
 import VoiceContents from 'components/templates/edit_view_shared/VoiceContents'
 import NewsContents from 'components/templates/edit_view_shared/NewsContents'
-import InfiniteScroll from 'components/templates/container/InfiniteScroll'
 import Classes from 'constants/Classes'
 import URL from 'constants/URL'
 
@@ -119,15 +118,9 @@ class TopPage extends React.Component {
             onChangeIndex={this.handleChangeIndex}
             containerStyle={{ height: this.state.mainHeight }}
           >
-            <InfiniteScroll action={AppTalkRoom.FETCH_REQUEST}>
-              <TalkRoomContents />
-            </InfiniteScroll>
-            <InfiniteScroll action={AppVoice.FETCH_REQUEST}>
-              <VoiceContents />
-            </InfiniteScroll>
-            <InfiniteScroll action={AppNews.FETCH_REQUEST}>
-              <NewsContents />
-            </InfiniteScroll>
+            <TalkRoomContents />
+            <VoiceContents />
+            <NewsContents />
           </SwipeableViews>
 
           {this.isShowPenIcon() ? (

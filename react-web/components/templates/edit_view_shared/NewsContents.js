@@ -2,8 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import objectPath from 'object-path'
 import { PATH_MAP } from 'reducers/site'
-import { SiteNews } from 'constants/ActionTypes'
+import { AppNews, SiteNews } from 'constants/ActionTypes'
 import BoxContents from 'components/templates/edit_view_shared/BoxContents'
+import InfiniteScroll from 'components/templates/container/InfiniteScroll'
 
 class NewsContents extends BoxContents {
   constructor(props) {
@@ -19,10 +20,16 @@ class NewsContents extends BoxContents {
   }
 
   render() {
+    const { boxContents } = this.props
     return (
       <React.Fragment>
-        {this.createCategorySelect()}
-        {super.render()}
+        <InfiniteScroll
+          action={AppNews.FETCH_REQUEST}
+          length={boxContents.length}
+        >
+          {this.createCategorySelect()}
+          {super.render()}
+        </InfiniteScroll>
       </React.Fragment>
     )
   }

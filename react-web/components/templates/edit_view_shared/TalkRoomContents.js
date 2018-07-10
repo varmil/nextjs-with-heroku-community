@@ -3,9 +3,10 @@ import { connect } from 'react-redux'
 import range from 'lodash/range'
 import objectPath from 'object-path'
 import { PATH_MAP } from 'reducers/site'
-import { SiteTalkRoom } from 'constants/ActionTypes'
+import { AppTalkRoom, SiteTalkRoom } from 'constants/ActionTypes'
 import BoxContents from 'components/templates/edit_view_shared/BoxContents'
 import MainBanner from 'components/organisms/site/base/MainBanner'
+import InfiniteScroll from 'components/templates/container/InfiniteScroll'
 
 class TalkRoomContents extends BoxContents {
   constructor(props) {
@@ -21,25 +22,30 @@ class TalkRoomContents extends BoxContents {
   }
 
   render() {
-    const { mainBanner } = this.props
+    const { mainBanner, boxContents } = this.props
     return (
       <React.Fragment>
-        {this.createCategorySelect()}
+        <InfiniteScroll
+          action={AppTalkRoom.FETCH_REQUEST}
+          length={boxContents.length}
+        >
+          {this.createCategorySelect()}
 
-        {range(mainBanner.length).map(i => (
-          <MainBanner
-            key={i}
-            className="mb-3"
-            contentState={mainBanner[i].contentState}
-            src={mainBanner[i].src}
-            backgroundColor={mainBanner[i].backgroundColor}
-            href={mainBanner[i].href}
-            index={i}
-            propsPath={`${PATH_MAP.MAIN_BANNER}.${i}`}
-          />
-        ))}
+          {range(mainBanner.length).map(i => (
+            <MainBanner
+              key={i}
+              className="mb-3"
+              contentState={mainBanner[i].contentState}
+              src={mainBanner[i].src}
+              backgroundColor={mainBanner[i].backgroundColor}
+              href={mainBanner[i].href}
+              index={i}
+              propsPath={`${PATH_MAP.MAIN_BANNER}.${i}`}
+            />
+          ))}
 
-        {super.render()}
+          {super.render()}
+        </InfiniteScroll>
       </React.Fragment>
     )
   }

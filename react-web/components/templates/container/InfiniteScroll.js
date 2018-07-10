@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
 import InfiniteScroll from 'react-infinite-scroller'
 
-// TODO: pageStartはstoreの状態によってかわる
+// NOTE: pageStartはstoreの状態によってかわる
 // ex) 記事詳細から戻ってきたときに初期化されてはならない。
 
 class InfiniteContents extends React.Component {
@@ -42,7 +42,7 @@ class InfiniteContents extends React.Component {
       <InfiniteScroll
         useWindow={false}
         initialLoad={true}
-        pageStart={0}
+        pageStart={Math.ceil(this.props.length / 2)}
         loadMore={this.loadMoreRows.bind(this)}
         hasMore={!this.state.isLoading && this.state.hasMore}
         threshold={130}

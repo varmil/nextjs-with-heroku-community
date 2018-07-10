@@ -7,7 +7,7 @@ const Path = reqlib('/constants/Path')
 const Role = reqlib('/constants/Role')
 const BoxType = reqlib('/../shared/constants/BoxType')
 
-const PER_PAGE = 20
+const PER_PAGE = 2
 
 module.exports = class Post {
   // 投稿画像を一括して移動

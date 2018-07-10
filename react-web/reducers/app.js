@@ -12,22 +12,18 @@ import {
 
 const initialState = {
   talk: {
-    currentPage: 1, // use with infinite scroll
     boxContents: [] // use in /view/home
   },
 
   voice: {
-    currentPage: 1,
     boxContents: []
   },
 
   news: {
-    currentPage: 1,
     boxContents: []
   },
 
   mypage: {
-    currentPage: 1,
     boxContents: []
   },
 
