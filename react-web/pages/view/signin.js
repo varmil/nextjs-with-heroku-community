@@ -35,7 +35,9 @@ class Signin extends React.Component {
   // ERRORハンドリングしやすいのでここでPOST
   async signin(e) {
     const { email, password } = this.state
-    const successCb = async res => Router.pushRoute(`/view/home`)
+    const successCb = async res => {
+      Router.pushRoute(`/view/home`)
+    }
     this.props.dispatch(
       createAction(User.SIGNIN_REQUEST)({
         email,

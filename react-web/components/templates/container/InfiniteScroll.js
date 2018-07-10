@@ -23,7 +23,7 @@ class InfiniteContents extends React.Component {
     const { dispatch, action } = this.props
     this.setState({ ...this.state, isLoading: true })
 
-    const successCb = res => {
+    const successCb = async res => {
       // set no more load flag if response is null
       this.setState({
         ...this.state,

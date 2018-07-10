@@ -30,7 +30,9 @@ class SignupProfile extends React.Component {
 
   async onSubmit(e) {
     const { nickname, files } = this.state
-    const successCb = async res => Router.pushRoute(`/view/home`)
+    const successCb = async res => {
+      Router.pushRoute(`/view/home`)
+    }
     this.props.dispatch(
       createAction(User.SAVE_PROFILE_REQUEST)({
         successCb,
