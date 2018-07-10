@@ -51,9 +51,11 @@ export const VoteCounter = props => (
       )}
 
       {props.showButton && (
-        <button type="button" className="btn">
-          投票する
-        </button>
+        <Link route={props.route}>
+          <button type="button" className="btn">
+            投票する
+          </button>
+        </Link>
       )}
 
       <style jsx>{`
@@ -270,6 +272,7 @@ class BoxContent extends React.Component {
           count={Voice.count || 0}
           showButton={true}
           voteButtonColor={voteButtonColor}
+          route={this.postLink}
         />
       </div>
     )
