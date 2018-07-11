@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import withModalFactory from 'components/organisms/site/edit/withModalFactory'
 import { createAction } from 'redux-actions'
+import { SiteState } from 'constants/ActionTypes'
 import OverlayEdit from 'components/organisms/OverlayEdit'
 import objectPath from 'object-path'
 import { postMessage } from 'actions/iframe'
@@ -39,6 +40,8 @@ class OverlayEditWithModal extends React.Component {
           console.log('ONSAVE', state, attr.action, attr.index)
 
           // update store, and pass the same action to iframe
+          // Redux guarantees the store has received the next state before accepting the next action
+          // https://github.com/reduxjs/redux/issues/1199
           const action = actionMethod({ ...state, index: attr.index })
           dispatch(action)
           dispatch(
@@ -48,6 +51,9 @@ class OverlayEditWithModal extends React.Component {
               payload: action
             })
           )
+
+          // post current state.site entirely
+          dispatch(createAction(SiteState.SAVE_REQUEST)({ siteState: site }))
         }}
       />
     )

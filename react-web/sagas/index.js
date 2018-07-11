@@ -7,6 +7,7 @@ import isNaN from 'lodash/isNaN'
 import qs from 'query-string'
 import {
   User,
+  SiteState,
   IFrame,
   AppBox,
   AppTalkRoom,
@@ -123,9 +124,27 @@ function* fetchUser({ payload }) {
   }
 }
 
-function* fetchSiteDesign({ payload }) {
+/**
+ * SITE
+ */
+
+function* saveSiteState({ payload }) {
+  const { jwtToken } = yield select(getUser)
+  const { siteState } = payload
+  try {
+    yield call(API.post, '/site/design', { siteState }, jwtToken)
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
+}
+
+function* fetchSiteState({ payload }) {
   // TODO: fetch category, subBanner, then put them into store
 }
+
+/**
+ * BOX CONTENTS
+ */
 
 // perPage  : the amount of contents with each fetching
 // released : fetch released posts only if true
@@ -346,6 +365,11 @@ const userSaga = [
   takeLatest(User.FETCH_REQUEST, fetchUser)
 ]
 
+const siteSaga = [
+  takeLatest(SiteState.SAVE_REQUEST, saveSiteState),
+  takeLatest(SiteState.FETCH_REQUEST, fetchSiteState)
+]
+
 const appSaga = [
   takeLatest(AppTalkRoom.FETCH_REQUEST, fetchTalkContents),
   takeLatest(AppVoice.FETCH_REQUEST, fetchVoiceContents),
@@ -368,6 +392,7 @@ const appAdminSaga = [
 function* rootSaga() {
   yield all([
     ...userSaga,
+    ...siteSaga,
     ...appSaga,
     ...appAdminSaga,
     takeLatest(IFrame.POST_MESSAGE, postIFrameMessageSaga)

@@ -3,6 +3,15 @@ import { createTypes, async } from './redux-action-types'
 // -----
 // -- SITE: BrandごとにEditできるレイアウト情報 --
 // -----
+// まるごと state.site 保存 / ロード
+export const SiteState = createTypes(
+  'site/state/',
+  'SET',
+  async('FETCH'),
+  async('SAVE')
+)
+
+// 不要かも？ PC, Tablet, Mobile 切り替え
 export const SitePreview = createTypes('site/preview/', 'SET_DEVICE')
 
 // （Edit, View）全ページ共通で使用するデータ
