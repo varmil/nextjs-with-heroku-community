@@ -5,9 +5,34 @@ const models = reqlib('/models')
 const Path = reqlib('/constants/Path')
 const Role = reqlib('/constants/Role')
 
-const PER_PAGE = 3
+const PER_PAGE = 5
 
 module.exports = class Comment {
+  static async save(postId, userId, body) {
+    const transaction = await models.sequelize.transaction()
+    try {
+      const comment = await models.Comment.create(
+        {
+          postId,
+          commenterId: userId,
+          body
+        },
+        { transaction }
+      )
+
+      await models.Post.update(
+        { comment: models.sequelize.literal('comment + 1') },
+        { where: { id: postId } },
+        { transaction }
+      )
+
+      const merged = (await Comment.associateWithUser([comment.dataValues]))[0]
+      return merged
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   static async fetchList(pageNum, where) {
     try {
       const comments = await models.Comment.findAll({

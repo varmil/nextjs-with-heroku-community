@@ -10,7 +10,7 @@ const Message = reqlib('/constants/Message')
  * 新規コメント
  */
 exports.save = async (req, res, next) => {
-  console.log('[profile]body', req.body)
+  console.log('[saveComment]body', req.body)
   const { postId, body } = req.body
   const userId = req.user.id
 
@@ -19,15 +19,8 @@ exports.save = async (req, res, next) => {
   }
 
   try {
-    const comment = await models.Comment.create({
-      postId,
-      commenterId: userId,
-      body
-    })
-    const merged = (await services.Comment.associateWithUser([
-      comment.dataValues
-    ]))[0]
-    res.json(merged)
+    const result = services.Comment.save(postId, userId, body)
+    res.json(result)
   } catch (e) {
     return next(e)
   }
