@@ -120,11 +120,28 @@ exports.fetch = async (req, res) => {
   res.json(result)
 }
 
+/**
+ * 主にAdmin用。brandIdにひもづく記事をカウント
+ */
+exports.countAll = async (req, res) => {
+  const brandId = req.user.brand.id
+  const count = await models.Post.count({ where: { brandId }, raw: true })
+  res.json(count)
+}
+
+/**
+ * 主にAdmin用。brandIdにひもづく記事をまとめて取得
+ */
 exports.fetchList = async (req, res) => {
+  const { perPage } = req.query
   const pageNum = req.params.pageNum || 1 // 1 origin
   const brandId = req.user.brand.id
-  const posts = await services.Post.fetchList(pageNum, { brandId })
-  res.json(posts)
+
+  // 記事データ
+  const posts = await services.Post.fetchList(pageNum, { brandId }, { perPage })
+  // 総カウント
+  const count = await models.Post.count({ where: { brandId }, raw: true })
+  res.json({ count, item: posts })
 }
 
 exports.fetchListOfBox = async (req, res) => {

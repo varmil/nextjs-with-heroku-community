@@ -173,11 +173,18 @@ function* fetchMypageContents({ payload }) {
  * POST
  */
 
+// (Admin用)一覧
 function* fetchPosts({ payload }) {
-  const { pageNum } = payload
+  const { pageNum, perPage } = payload
   const { jwtToken } = yield select(getUser)
+
   try {
-    const { data } = yield call(API.fetch, `/post/list/${pageNum}`, jwtToken)
+    const query = qs.stringify({ perPage })
+    const { data } = yield call(
+      API.fetch,
+      `/post/list/${pageNum}?${query}`,
+      jwtToken
+    )
     const action = createAction(AppAdminPost.SET_LIST)
     yield put(action(data))
   } catch (e) {

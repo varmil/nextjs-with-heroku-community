@@ -112,6 +112,7 @@ module.exports = function(app) {
   app.post('/post/vote', requireAuth, PostController.saveVote)
   app.get('/post/:postId', requireAuth, PostController.fetch)
   app.get('/post/list/:pageNum', requireAuth, PostController.fetchList)
+  app.get('/post/list/count', requireAuth, PostController.countAll)
   app.get(
     '/post/list/box/:boxType/:pageNum',
     requireAuth,
