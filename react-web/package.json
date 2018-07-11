@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
     "pm2": "pm2 startOrRestart pm2config.json --env production --update-env",
-    "heroku-postbuild": "npm run build",
+    "analyze": "BUNDLE_ANALYZE=browser yarn build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Akihiro Yamamoto",
