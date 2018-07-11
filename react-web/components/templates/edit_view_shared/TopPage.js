@@ -14,6 +14,7 @@ import TalkRoomContents from 'components/templates/edit_view_shared/TalkRoomCont
 import VoiceContents from 'components/templates/edit_view_shared/VoiceContents'
 import NewsContents from 'components/templates/edit_view_shared/NewsContents'
 import Classes from 'constants/Classes'
+import BoxType from '/../shared/constants/BoxType'
 import URL from 'constants/URL'
 
 // const styles = {
@@ -46,11 +47,11 @@ class TopPage extends React.Component {
   componentDidMount() {
     // use state to render when height is changed
     // スワイパブルViewの高さをちょうどよく
-    const headerHeight = document.getElementById('ViewHomeHeader').clientHeight
-    this.setState({
-      ...this.state,
-      mainHeight: window.screen.height - headerHeight
-    })
+    // const headerHeight = document.getElementById('ViewHomeHeader').clientHeight
+    // this.setState({
+    //   ...this.state,
+    //   mainHeight: window.screen.height - headerHeight
+    // })
   }
 
   getIndicatorStyle() {
@@ -75,6 +76,12 @@ class TopPage extends React.Component {
   handleChangeIndex = tabIndex => {
     Router.pushRoute(`${URL.VIEW_HOME}/${this.props.boxes[tabIndex].slug}`)
     this.setState({ tabIndex })
+  }
+
+  // 引数のindexが現在のActiveTabIndexと一致すればtrue
+  isActive(targetTabIndex) {
+    console.info('isActive', targetTabIndex, this.state.tabIndex)
+    return targetTabIndex === this.state.tabIndex
   }
 
   render() {
@@ -118,9 +125,9 @@ class TopPage extends React.Component {
             onChangeIndex={this.handleChangeIndex}
             containerStyle={{ height: this.state.mainHeight }}
           >
-            <TalkRoomContents />
-            <VoiceContents />
-            <NewsContents />
+            <TalkRoomContents disabled={!this.isActive(BoxType.index.talk)} />
+            <VoiceContents disabled={!this.isActive(BoxType.index.voice)} />
+            <NewsContents disabled={!this.isActive(BoxType.index.news)} />
           </SwipeableViews>
 
           {this.isShowPenIcon() ? (

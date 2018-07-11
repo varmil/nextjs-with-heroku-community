@@ -18,8 +18,8 @@ class InfiniteContents extends React.Component {
   // 引数が怪しいのでtwiceロードしないように注意
   // action : ex) AppTalkRoom.FETCH_REQUEST
   loadMoreRows(page) {
-    // console.info('loadMoreRows props::', this.props)
-    // console.info('loadMoreRows page::', page, this.state)
+    console.info('loadMoreRows props::', this.props)
+    console.info('loadMoreRows page::', page, this.state)
     const { dispatch, action } = this.props
     this.setState({ ...this.state, isLoading: true })
 
@@ -42,13 +42,14 @@ class InfiniteContents extends React.Component {
   }
 
   render() {
+    const { disabled } = this.props
     return (
       <InfiniteScroll
-        useWindow={false}
+        useWindow={true}
         initialLoad={true}
         pageStart={Math.ceil(this.props.length / PER_PAGE)}
         loadMore={this.loadMoreRows.bind(this)}
-        hasMore={!this.state.isLoading && this.state.hasMore}
+        hasMore={!disabled && !this.state.isLoading && this.state.hasMore}
         threshold={150}
         loader={
           <div className="loader" key={0}>

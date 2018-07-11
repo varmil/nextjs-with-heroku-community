@@ -25,10 +25,11 @@ class NewsContents extends BoxContents {
   }
 
   render() {
-    const { boxContents } = this.props
+    const { boxContents, disabled } = this.props
     return (
       <React.Fragment>
         <InfiniteScroll
+          disabled={disabled}
           action={AppVoice.FETCH_REQUEST}
           length={boxContents.length}
         >
