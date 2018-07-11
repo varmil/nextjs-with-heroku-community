@@ -18,8 +18,8 @@ class InfiniteContents extends React.Component {
   // 引数が怪しいのでtwiceロードしないように注意
   // action : ex) AppTalkRoom.FETCH_REQUEST
   loadMoreRows(page) {
-    console.info('loadMoreRows props::', this.props)
-    console.info('loadMoreRows page::', page, this.state)
+    // console.info('loadMoreRows props::', this.props)
+    // console.info('loadMoreRows page::', page, this.state)
     const { dispatch, action } = this.props
     this.setState({ ...this.state, isLoading: true })
 
