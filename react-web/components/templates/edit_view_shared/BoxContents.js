@@ -3,6 +3,7 @@ import range from 'lodash/range'
 import BoxContent from 'components/organisms/site/BoxContent'
 import SubBanner from 'components/organisms/site/base/SubBanner'
 import CategorySelect from 'components/organisms/site/base/CategorySelect'
+import Fade from 'react-reveal/Fade'
 
 // POST概要を並べる系のベースクラス
 export default class BoxContents extends React.Component {
@@ -41,7 +42,9 @@ export default class BoxContents extends React.Component {
         {firstArray.map((content, i) => {
           return (
             <div key={i} className="c">
-              <MyBoxContent {...content} />
+              <Fade>
+                <MyBoxContent {...content} />
+              </Fade>
             </div>
           )
         })}
@@ -51,7 +54,9 @@ export default class BoxContents extends React.Component {
         {secondArray.map((content, i) => {
           return (
             <div key={i} className="c">
-              <MyBoxContent {...content} />
+              <Fade>
+                <MyBoxContent {...content} />
+              </Fade>
             </div>
           )
         })}
