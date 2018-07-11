@@ -50,7 +50,7 @@ class InfiniteContents extends React.Component {
         pageStart={Math.ceil(this.props.length / PER_PAGE)}
         loadMore={this.loadMoreRows.bind(this)}
         hasMore={!disabled && !this.state.isLoading && this.state.hasMore}
-        threshold={130}
+        threshold={250}
         loader={
           <div className="loader" key={0}>
             Loading ...
