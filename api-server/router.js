@@ -5,6 +5,7 @@ const uuidv1 = require('uuid/v1')
 const Role = require('./constants/Role')
 const AuthController = require('./controllers/authentication')
 const UserController = require('./controllers/user')
+const SiteController = require('./controllers/site')
 const PostController = require('./controllers/post')
 const CommentController = require('./controllers/comment')
 
@@ -106,12 +107,30 @@ module.exports = function(app) {
   app.post('/signup/admin', upload.single('image'), AuthController.signup)
 
   /**
+   * SITE （ブランドごとのデザイン）
+   */
+  app.post(
+    '/site/design',
+    requireAuth,
+    userRole.is('adminGuest'),
+    SiteController.saveDesign
+  )
+  app.get(
+    '/site/design',
+    requireAuth,
+    userRole.is('adminGuest'),
+    SiteController.fetchDesign
+  )
+
+  /**
    * POST
    */
   app.post('/post', requireAuth, upload.array('image'), PostController.save)
   app.post('/post/vote', requireAuth, PostController.saveVote)
   app.get('/post/:postId', requireAuth, PostController.fetch)
+  app.get('/post/list/count', requireAuth, PostController.countAll)
   app.get('/post/list/:pageNum', requireAuth, PostController.fetchList)
+  app.get('/post/list/me/:pageNum', requireAuth, PostController.fetchMyPosts)
   app.get(
     '/post/list/box/:boxType/:pageNum',
     requireAuth,

@@ -7,6 +7,7 @@ import isNaN from 'lodash/isNaN'
 import qs from 'query-string'
 import {
   User,
+  SiteState,
   IFrame,
   AppBox,
   AppTalkRoom,
@@ -123,9 +124,27 @@ function* fetchUser({ payload }) {
   }
 }
 
-function* fetchSiteDesign({ payload }) {
+/**
+ * SITE
+ */
+
+function* saveSiteState({ payload }) {
+  const { jwtToken } = yield select(getUser)
+  const { siteState } = payload
+  try {
+    yield call(API.post, '/site/design', { siteState }, jwtToken)
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
+}
+
+function* fetchSiteState({ payload }) {
   // TODO: fetch category, subBanner, then put them into store
 }
+
+/**
+ * BOX CONTENTS
+ */
 
 // perPage  : the amount of contents with each fetching
 // released : fetch released posts only if true
@@ -164,20 +183,39 @@ function* fetchNewsContents({ payload }) {
 }
 
 function* fetchMypageContents({ payload }) {
-  // TODO: 仮でNEWSを入れておく
-  const func = fetchContents(BoxType.index.news, addMypageContents)
-  yield call(func, { payload })
+  const { jwtToken } = yield select(getUser)
+  const { perPage, pageNum, successCb } = payload
+
+  try {
+    const query = qs.stringify({ perPage })
+    const res = yield call(
+      API.fetch,
+      `/post/list/me/${pageNum || 1}?${query}`,
+      jwtToken
+    )
+    yield put(addMypageContents(res.data))
+    if (successCb) yield call(successCb, res)
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
 }
 
 /**
  * POST
  */
 
+// (Admin用)一覧
 function* fetchPosts({ payload }) {
-  const { pageNum } = payload
+  const { pageNum, perPage } = payload
   const { jwtToken } = yield select(getUser)
+
   try {
-    const { data } = yield call(API.fetch, `/post/list/${pageNum}`, jwtToken)
+    const query = qs.stringify({ perPage })
+    const { data } = yield call(
+      API.fetch,
+      `/post/list/${pageNum}?${query}`,
+      jwtToken
+    )
     const action = createAction(AppAdminPost.SET_LIST)
     yield put(action(data))
   } catch (e) {
@@ -327,6 +365,11 @@ const userSaga = [
   takeLatest(User.FETCH_REQUEST, fetchUser)
 ]
 
+const siteSaga = [
+  takeLatest(SiteState.SAVE_REQUEST, saveSiteState),
+  takeLatest(SiteState.FETCH_REQUEST, fetchSiteState)
+]
+
 const appSaga = [
   takeLatest(AppTalkRoom.FETCH_REQUEST, fetchTalkContents),
   takeLatest(AppVoice.FETCH_REQUEST, fetchVoiceContents),
@@ -349,6 +392,7 @@ const appAdminSaga = [
 function* rootSaga() {
   yield all([
     ...userSaga,
+    ...siteSaga,
     ...appSaga,
     ...appAdminSaga,
     takeLatest(IFrame.POST_MESSAGE, postIFrameMessageSaga)

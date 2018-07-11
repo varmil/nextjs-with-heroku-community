@@ -11,8 +11,9 @@ routes.add('/view/home/:slug', '/view/home')
 // 投稿詳細
 routes.add('/view/post/:boxType/:postId', '/view/post')
 
+// （admin）記事一覧
+routes.add('/admin/post/list/:pageNum', '/admin/post/list')
 // （admin）投稿編集
-// routes.add('/admin/post/list/:slug', '/admin/post/list')
 // postIdがある == 下書き or 記事Update
 routes.add('/admin/post/add/:boxType', '/admin/post/add')
 routes.add('/admin/post/add/:boxType/:postId', '/admin/post/add')

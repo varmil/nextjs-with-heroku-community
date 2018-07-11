@@ -42,14 +42,15 @@ class InfiniteContents extends React.Component {
   }
 
   render() {
+    const { disabled } = this.props
     return (
       <InfiniteScroll
-        useWindow={false}
+        useWindow={true}
         initialLoad={true}
         pageStart={Math.ceil(this.props.length / PER_PAGE)}
         loadMore={this.loadMoreRows.bind(this)}
-        hasMore={!this.state.isLoading && this.state.hasMore}
-        threshold={150}
+        hasMore={!disabled && !this.state.isLoading && this.state.hasMore}
+        threshold={250}
         loader={
           <div className="loader" key={0}>
             Loading ...

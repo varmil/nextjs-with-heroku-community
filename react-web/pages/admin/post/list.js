@@ -12,14 +12,18 @@ import SimpleTable from 'components/organisms/admin/SimpleTable'
 class AdminPostList extends React.Component {
   static async getInitialProps({ ctx }) {
     const { dispatch } = ctx.store
-    const pageNum = ctx.query.pageNum || 1
+    // one-start のページ番号
+    const pageNum = +ctx.query.pageNum || 1
+    // 1ページあたり記事数
+    const PER_PAGE = 30
 
-    // const { posts } = ctx.store.getState().app
-    // if (ctx.isServer || posts.length === 0) {
-    dispatch(createAction(AppAdminPost.FETCH_LIST_REQUEST)({ pageNum }))
-    // }
-
-    return { pageNum }
+    dispatch(
+      createAction(AppAdminPost.FETCH_LIST_REQUEST)({
+        pageNum,
+        perPage: PER_PAGE
+      })
+    )
+    return { pageNum, perPage: PER_PAGE }
   }
 
   state = {
@@ -89,7 +93,12 @@ class AdminPostList extends React.Component {
           )}
 
           <section className="regNote mt-3 text-center">
-            <SimpleTable posts={props.posts} />
+            <SimpleTable
+              posts={props.posts.item}
+              count={props.posts.count}
+              page={props.pageNum}
+              rowsPerPage={props.perPage}
+            />
           </section>
         </AdminPageContainer>
 

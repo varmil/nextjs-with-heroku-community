@@ -43,7 +43,7 @@ class Mypage extends React.Component {
           </section>
 
           <section className="name mt-2 text-center">
-            <span>{props.user.nickname || 'Your Name'}</span>
+            <span>{props.user.nickname || 'スタッフ'}</span>
 
             <Link route={'/view/settings/account'}>
               <div className="edit">編集</div>

@@ -1,16 +1,23 @@
 import React from 'react'
 import { connect } from 'react-redux'
-// import objectPath from 'object-path'
-// import { PATH_MAP } from 'reducers/site'
+import { AppMypage } from 'constants/ActionTypes'
 import BoxContents from 'components/templates/edit_view_shared/BoxContents'
+import InfiniteScroll from 'components/templates/container/InfiniteScroll'
 
 class MypageContents extends BoxContents {
-  // constructor(props) {
-  //   super(props)
-  // }
-
   render() {
-    return <React.Fragment>{super.render()}</React.Fragment>
+    const { boxContents } = this.props
+    return (
+      <React.Fragment>
+        <InfiniteScroll
+          disabled={false}
+          action={AppMypage.FETCH_REQUEST}
+          length={boxContents.length}
+        >
+          {super.render()}
+        </InfiniteScroll>
+      </React.Fragment>
+    )
   }
 }
 

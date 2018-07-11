@@ -1,4 +1,5 @@
 import React from 'react'
+import isEmpty from 'lodash/isEmpty'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
 import isUndefined from 'lodash/isUndefined'
@@ -122,7 +123,7 @@ class Post extends React.Component {
   // boxType, postId などは文字列なので注意
   static async getInitialProps({ ctx }) {
     const { dispatch } = ctx.store
-    const { boxType, postId } = ctx.query
+    const { boxType } = ctx.query
     dispatch(createAction(AppPost.FETCH_REQUEST)(ctx.query))
     return { focus: !!ctx.query.focus, boxType: +boxType }
   }
@@ -136,7 +137,9 @@ class Post extends React.Component {
   render() {
     const props = this.props
     const { data, comments } = props.post
-    const isVoice = props.boxType === BoxType.index.voice
+    const isVoice =
+      !isEmpty(data.Voice) || props.boxType === BoxType.index.voice
+
     return (
       <React.Fragment>
         <BoxContent

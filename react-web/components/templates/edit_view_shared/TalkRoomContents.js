@@ -22,10 +22,11 @@ class TalkRoomContents extends BoxContents {
   }
 
   render() {
-    const { mainBanner, boxContents } = this.props
+    const { mainBanner, boxContents, disabled } = this.props
     return (
       <React.Fragment>
         <InfiniteScroll
+          disabled={disabled}
           action={AppTalkRoom.FETCH_REQUEST}
           length={boxContents.length}
         >

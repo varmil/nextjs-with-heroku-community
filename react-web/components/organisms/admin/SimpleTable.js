@@ -1,7 +1,7 @@
 import React from 'react'
 import fecha from 'fecha'
 // import { connect } from 'react-redux'
-import { Link } from 'routes'
+import { Link, Router } from 'routes'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
@@ -9,6 +9,7 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
+import TablePagination from '@material-ui/core/TablePagination'
 import Paper from '@material-ui/core/Paper'
 import ColorButton from 'components/atoms/ColorButton'
 
@@ -58,9 +59,19 @@ const styles = theme => ({
 })
 
 class SimpleTable extends React.Component {
+  // NOTE: our page count starts with 1, not 0
+  handleChangePage = async (event, page) => {
+    const nextPage = page + 1
+    await Router.pushRoute(`/admin/post/list/${nextPage}`)
+  }
+
+  // handleChangeRowsPerPage = event => {
+  //   this.setState({ ...this.state, rowsPerPage: event.target.value })
+  // }
+
   render() {
     const props = this.props
-    const { classes, posts } = props
+    const { classes, posts, count, page, rowsPerPage } = props
 
     return (
       <Paper className={classes.root}>
@@ -104,6 +115,21 @@ class SimpleTable extends React.Component {
             })}
           </TableBody>
         </Table>
+        <TablePagination
+          component="div"
+          count={count}
+          rowsPerPage={rowsPerPage}
+          rowsPerPageOptions={[rowsPerPage]}
+          // zero-start
+          page={page - 1}
+          backIconButtonProps={{
+            'aria-label': 'Previous Page'
+          }}
+          nextIconButtonProps={{
+            'aria-label': 'Next Page'
+          }}
+          onChangePage={this.handleChangePage}
+        />
       </Paper>
     )
   }

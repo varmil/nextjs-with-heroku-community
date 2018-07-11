@@ -3,6 +3,18 @@ import range from 'lodash/range'
 import BoxContent from 'components/organisms/site/BoxContent'
 import SubBanner from 'components/organisms/site/base/SubBanner'
 import CategorySelect from 'components/organisms/site/base/CategorySelect'
+import BoxType from '/../shared/constants/BoxType'
+import Fade from 'react-reveal/Fade'
+
+// return Component Class
+const factoryBox = boxType => {
+  switch (boxType) {
+    case BoxType.index.voice:
+      return props => <BoxContent {...props} topPhoto goingVote />
+    default:
+      return props => <BoxContent {...props} />
+  }
+}
 
 // POST概要を並べる系のベースクラス
 export default class BoxContents extends React.Component {
@@ -28,9 +40,6 @@ export default class BoxContents extends React.Component {
     // dont render if no contents
     if (!Array.isArray(boxContents) || boxContents.length === 0) return null
 
-    // custom content
-    const MyBoxContent = this.BoxContent || BoxContent
-
     // サブバナー用に分割
     const FIRST_NUM = 2
     const firstArray = boxContents.slice(0, FIRST_NUM)
@@ -39,9 +48,12 @@ export default class BoxContents extends React.Component {
     return (
       <div className="wrap">
         {firstArray.map((content, i) => {
+          const MyBoxContent = factoryBox(content.boxType)
           return (
             <div key={i} className="c">
-              <MyBoxContent {...content} />
+              <Fade>
+                <MyBoxContent {...content} />
+              </Fade>
             </div>
           )
         })}
@@ -49,9 +61,12 @@ export default class BoxContents extends React.Component {
         {this.createSubBanners()}
 
         {secondArray.map((content, i) => {
+          const MyBoxContent = factoryBox(content.boxType)
           return (
             <div key={i} className="c">
-              <MyBoxContent {...content} />
+              <Fade>
+                <MyBoxContent {...content} />
+              </Fade>
             </div>
           )
         })}

@@ -120,13 +120,33 @@ exports.fetch = async (req, res) => {
   res.json(result)
 }
 
-exports.fetchList = async (req, res) => {
-  const pageNum = req.params.pageNum || 1 // 1 origin
+/**
+ * 主にAdmin用。brandIdにひもづく記事をカウント
+ */
+exports.countAll = async (req, res) => {
   const brandId = req.user.brand.id
-  const posts = await services.Post.fetchList(pageNum, { brandId })
-  res.json(posts)
+  const count = await models.Post.count({ where: { brandId }, raw: true })
+  res.json(count)
 }
 
+/**
+ * 主にAdmin用。brandIdにひもづく記事をまとめて取得
+ */
+exports.fetchList = async (req, res) => {
+  const { perPage } = req.query
+  const pageNum = req.params.pageNum || 1 // 1 origin
+  const brandId = req.user.brand.id
+
+  // 記事データ
+  const posts = await services.Post.fetchList(pageNum, { brandId }, { perPage })
+  // 総カウント
+  const count = await models.Post.count({ where: { brandId }, raw: true })
+  res.json({ count, item: posts })
+}
+
+/**
+ * 主にUser用。各BOXで表示する記事一覧取得
+ */
 exports.fetchListOfBox = async (req, res) => {
   if (!req.params.boxType) {
     return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
@@ -140,5 +160,22 @@ exports.fetchListOfBox = async (req, res) => {
   let where = { brandId, boxType }
   where = released ? { ...where, released: true } : where
   const posts = await services.Post.fetchList(pageNum, where, { perPage })
+  res.json(posts)
+}
+
+/**
+ * 主にUser用。Mypageで表示する記事一覧取得
+ */
+exports.fetchMyPosts = async (req, res) => {
+  const { perPage } = req.query
+  const { id, brand } = req.user
+  const pageNum = +req.params.pageNum || 1 // 1 origin
+
+  let where = { posterId: id, brandId: brand.id, released: true }
+  const posts = await services.Post.fetchList(pageNum, where, {
+    perPage,
+    // Voice情報等もごったで表示したいので
+    assoc: true
+  })
   res.json(posts)
 }

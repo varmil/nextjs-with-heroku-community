@@ -30,7 +30,7 @@ const initialState = {
   },
 
   // Admin用。投稿一覧画面
-  posts: [],
+  posts: { count: 0, item: [] },
 
   // Admin, User兼用。記事詳細画面
   post: {
@@ -82,16 +82,23 @@ export default handleActions(
     },
 
     /**
-     * POSTS
+     *  POSTS
+     *  SET   : payload is { count, item }
+     *  PUSH  : payload is []
      */
     [AppAdminPost.SET_LIST]: (state, action) => {
-      // spread payload because it is array
       return immutable.set(state, `posts`, action.payload)
     },
 
     [AppAdminPost.PUSH_LIST]: (state, action) => {
       // spread payload because it is array
-      return immutable.push(state, `posts`, ...action.payload)
+      let newState = immutable.push(state, `posts.item`, ...action.payload)
+      newState = immutable.update(
+        state,
+        `posts.count`,
+        c => c + action.payload.length
+      )
+      return newState
     },
 
     /**

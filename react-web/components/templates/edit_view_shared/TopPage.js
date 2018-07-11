@@ -14,12 +14,16 @@ import TalkRoomContents from 'components/templates/edit_view_shared/TalkRoomCont
 import VoiceContents from 'components/templates/edit_view_shared/VoiceContents'
 import NewsContents from 'components/templates/edit_view_shared/NewsContents'
 import Classes from 'constants/Classes'
+import BoxType from '/../shared/constants/BoxType'
 import URL from 'constants/URL'
 
 // const styles = {
 //   slideRoot: {},
 //   slide: {}
 // }
+
+// container height
+// https://stackoverflow.com/questions/47095900/dynamic-height-for-material-ui-tab-containers
 
 const Label = props => (
   <span>
@@ -40,17 +44,20 @@ class TopPage extends React.Component {
     let activeTabIndex = findIndex(props.boxes, box => box.slug === props.slug)
     if (activeTabIndex === -1) activeTabIndex = 0
 
-    this.state = { tabIndex: activeTabIndex, mainHeight: null }
+    this.state = { tabIndex: activeTabIndex, mainHeight: 0 }
   }
 
   componentDidMount() {
-    // use state to render when height is changed
-    // スワイパブルViewの高さをちょうどよく
-    const headerHeight = document.getElementById('ViewHomeHeader').clientHeight
-    this.setState({
-      ...this.state,
-      mainHeight: window.screen.height - headerHeight
-    })
+    // this.setContentsHeight()
+  }
+
+  setContentsHeight() {
+    // get current height of active tab
+    const height = document.querySelector(
+      ".react-swipeable-view-container > div[aria-hidden='false']"
+    ).clientHeight
+    console.log('*****', height)
+    this.setState({ ...this.state, mainHeight: height })
   }
 
   getIndicatorStyle() {
@@ -75,6 +82,11 @@ class TopPage extends React.Component {
   handleChangeIndex = tabIndex => {
     Router.pushRoute(`${URL.VIEW_HOME}/${this.props.boxes[tabIndex].slug}`)
     this.setState({ tabIndex })
+  }
+
+  // 引数のindexが現在のActiveTabIndexと一致すればtrue
+  isActive(targetTabIndex) {
+    return targetTabIndex === this.state.tabIndex
   }
 
   render() {
@@ -113,14 +125,15 @@ class TopPage extends React.Component {
 
         <main>
           <SwipeableViews
+            id="_SWViews"
             enableMouseEvents
             index={this.state.tabIndex}
             onChangeIndex={this.handleChangeIndex}
-            containerStyle={{ height: this.state.mainHeight }}
+            onTransitionEnd={() => this.setContentsHeight()}
           >
-            <TalkRoomContents />
-            <VoiceContents />
-            <NewsContents />
+            <TalkRoomContents disabled={!this.isActive(BoxType.index.talk)} />
+            <VoiceContents disabled={!this.isActive(BoxType.index.voice)} />
+            <NewsContents disabled={!this.isActive(BoxType.index.news)} />
           </SwipeableViews>
 
           {this.isShowPenIcon() ? (
@@ -141,6 +154,14 @@ class TopPage extends React.Component {
           .tab {
             width: 120px;
             outline: none !important;
+          }
+
+          .react-swipeable-view-container > div[aria-hidden='false'] {
+            min-height: 300px;
+            height: 100%;
+          }
+          .react-swipeable-view-container > div[aria-hidden='true'] {
+            height: ${this.state.mainHeight}px;
           }
         `}</style>
       </React.Fragment>
