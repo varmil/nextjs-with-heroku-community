@@ -9,32 +9,38 @@ import { createAction } from 'redux-actions'
 import { AppPost } from 'constants/ActionTypes'
 import { setSuccess } from 'actions/application'
 import autosize from 'autosize'
+import LazyLoad from 'react-lazyload'
 
 const AVATAR_SIZE = 44
 // アンカーで飛んだときになんとなく真ん中あたりに表示するため
 const OFFSET_IMG_TOP = -100
 
-const PreviewImage = props => (
-  <React.Fragment>
-    <div
-      onClick={async () => {
-        const id = `img${props.index}`
-        await Router.pushRoute(`${props.route}#${id}`)
-        const top = document.getElementById(id).offsetTop
-        window.scrollTo(0, top + OFFSET_IMG_TOP)
-      }}
-    >
-      <img className="card-img-top" src={props.src} alt="" />
-    </div>
-    <style jsx>{`
-      img {
-        border-radius: 0;
-        object-fit: cover;
-        height: 110px;
-      }
-    `}</style>
-  </React.Fragment>
-)
+const PreviewImage = props => {
+  const HEIGHT = 110
+  return (
+    <React.Fragment>
+      <div
+        onClick={async () => {
+          const id = `img${props.index}`
+          await Router.pushRoute(`${props.route}#${id}`)
+          const top = document.getElementById(id).offsetTop
+          window.scrollTo(0, top + OFFSET_IMG_TOP)
+        }}
+      >
+        <LazyLoad height={HEIGHT} once>
+          <img className="card-img-top" src={props.src} alt="" />
+        </LazyLoad>
+      </div>
+      <style jsx>{`
+        img {
+          border-radius: 0;
+          object-fit: cover;
+          height: ${HEIGHT}px;
+        }
+      `}</style>
+    </React.Fragment>
+  )
+}
 
 export const VoteCounter = props => (
   <React.Fragment>
