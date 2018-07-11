@@ -2,10 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
 import InfiniteScroll from 'react-infinite-scroller'
+import LinearProgress from '@material-ui/core/LinearProgress'
+// const timeout = ms => new Promise(res => setTimeout(res, ms))
 
 // NOTE: pageStartはstoreの状態によってかわる
 // ex) 記事詳細から戻ってきたときに初期化されてはならない。
-
 const PER_PAGE = 5
 
 class InfiniteContents extends React.Component {
@@ -17,7 +18,7 @@ class InfiniteContents extends React.Component {
   // https://github.com/CassetteRocks/react-infinite-scroller/issues/143
   // 引数が怪しいのでtwiceロードしないように注意
   // action : ex) AppTalkRoom.FETCH_REQUEST
-  loadMoreRows(page) {
+  async loadMoreRows(page) {
     // console.info('loadMoreRows props::', this.props)
     // console.info('loadMoreRows page::', page, this.state)
     const { dispatch, action } = this.props
@@ -51,13 +52,14 @@ class InfiniteContents extends React.Component {
         loadMore={this.loadMoreRows.bind(this)}
         hasMore={!disabled && !this.state.isLoading && this.state.hasMore}
         threshold={250}
-        loader={
-          <div className="loader" key={0}>
-            Loading ...
-          </div>
-        }
+        loader={null}
       >
         {this.props.children}
+        {this.state.isLoading && (
+          <div className="text-center">
+            <LinearProgress />
+          </div>
+        )}
       </InfiniteScroll>
     )
   }
