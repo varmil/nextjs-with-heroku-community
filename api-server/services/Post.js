@@ -163,6 +163,36 @@ module.exports = class Post {
     }
   }
 
+  // Like（UPDATE対応済）
+  static async saveLike(postId, userId, upOrDown) {
+    const transaction = await models.sequelize.transaction()
+    try {
+      await models.PostLike.upsert(
+        {
+          postId,
+          userId,
+          upOrDown
+        },
+        { transaction }
+      )
+
+      // increment if up
+      let query = upOrDown ? 'like + 1' : 'like - 1'
+      await models.Post.update(
+        { like: models.sequelize.literal(query) },
+        { where: { id: postId } },
+        { transaction }
+      )
+
+      transaction.commit()
+      return true
+    } catch (e) {
+      transaction.rollback()
+      console.error(e)
+      return false
+    }
+  }
+
   // 特定のユーザの投票結果（choiceIndex）を取得
   static async fetchVote(postId, voterId) {
     try {

@@ -127,6 +127,7 @@ module.exports = function(app) {
    */
   app.post('/post', requireAuth, upload.array('image'), PostController.save)
   app.post('/post/vote', requireAuth, PostController.saveVote)
+  app.post('/post/like', requireAuth, PostController.saveLike)
   app.get('/post/:postId', requireAuth, PostController.fetch)
   app.get('/post/list/count', requireAuth, PostController.countAll)
   app.get('/post/list/:pageNum', requireAuth, PostController.fetchList)

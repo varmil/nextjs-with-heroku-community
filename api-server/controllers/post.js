@@ -91,6 +91,20 @@ exports.saveVote = async (req, res, next) => {
 }
 
 /**
+ * LIKE
+ */
+exports.saveLike = async (req, res, next) => {
+  console.log('[saveLike]body', req.body)
+  const { postId, upOrDown } = req.body
+  if (!postId || _.isUndefined(upOrDown)) {
+    return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
+  }
+  const userId = req.user.id
+  await services.Post.saveLike(postId, userId, upOrDown)
+  res.json(true)
+}
+
+/**
  * 個別記事 取得
  */
 exports.fetch = async (req, res) => {
