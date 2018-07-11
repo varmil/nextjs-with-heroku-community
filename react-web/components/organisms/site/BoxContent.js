@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import fecha from 'fecha'
 import { Link, Router } from 'routes'
+import objectPath from 'object-path'
+import { PATH_MAP } from 'reducers/site'
 import MultiLineText from 'components/atoms/MultiLineText'
 import Avatar from 'components/atoms/Avatar'
 import AvatarAndName from 'components/molecules/AvatarAndName'
@@ -489,4 +491,9 @@ class BoxContent extends React.Component {
   }
 }
 
-export default connect()(BoxContent)
+export default connect(state => ({
+  voteButtonColor: objectPath.get(
+    state.site,
+    `${PATH_MAP.COLOR}.backgroundColor`
+  )
+}))(BoxContent)

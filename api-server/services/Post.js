@@ -94,9 +94,13 @@ module.exports = class Post {
   }
 
   static async fetchList(pageNum, where, options = {}) {
+    // optionsを展開
+    let { perPage, assoc } = options
+    perPage = +perPage || DEFAULT_PER_PAGE
+
     // 特定条件なら関連テーブルも引っ張る
     let include = []
-    if (where && where.boxType === BoxType.index.voice) {
+    if (assoc || (where && where.boxType === BoxType.index.voice)) {
       include = [
         {
           model: models.Voice,
@@ -104,10 +108,6 @@ module.exports = class Post {
         }
       ]
     }
-
-    // optionsを展開
-    let { perPage } = options
-    perPage = +perPage || DEFAULT_PER_PAGE
 
     try {
       const posts = await models.Post.findAll({

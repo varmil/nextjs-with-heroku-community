@@ -164,9 +164,21 @@ function* fetchNewsContents({ payload }) {
 }
 
 function* fetchMypageContents({ payload }) {
-  // TODO: 仮でNEWSを入れておく
-  const func = fetchContents(BoxType.index.news, addMypageContents)
-  yield call(func, { payload })
+  const { jwtToken } = yield select(getUser)
+  const { perPage, pageNum, successCb } = payload
+
+  try {
+    const query = qs.stringify({ perPage })
+    const res = yield call(
+      API.fetch,
+      `/post/list/me/${pageNum || 1}?${query}`,
+      jwtToken
+    )
+    yield put(addMypageContents(res.data))
+    if (successCb) yield call(successCb, res)
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
 }
 
 /**
