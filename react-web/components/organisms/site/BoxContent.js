@@ -10,6 +10,7 @@ import Avatar from 'components/atoms/Avatar'
 import AvatarAndName from 'components/molecules/AvatarAndName'
 import { createAction } from 'redux-actions'
 import { AppPost } from 'constants/ActionTypes'
+import Color from 'constants/Color'
 import { setSuccess } from 'actions/application'
 import autosize from 'autosize'
 import LazyLoad from 'react-lazyload'
@@ -436,7 +437,13 @@ class BoxContent extends React.Component {
   }
 
   onLikeToggle(e) {
-    const { dispatch, id } = this.props
+    const { dispatch, id, PostLikes } = this.props
+
+    if (PostLikes && PostLikes.length > 0) {
+      console.log('you already liked, so do nothing')
+      return
+    }
+
     dispatch(
       createAction(AppPost.SAVE_LIKE_REQUEST)({
         postId: id,
@@ -447,7 +454,9 @@ class BoxContent extends React.Component {
   }
 
   render() {
+    const FOOTER_FONTSIZE = 14
     const props = this.props
+    const { PostLikes } = this.props
     return (
       <div style={props.style}>
         <div className={`card`}>
@@ -463,12 +472,18 @@ class BoxContent extends React.Component {
           <div className="card-footer text-center p-2">
             <IconButton
               className="mr-1"
-              style={{ fontSize: 14 }}
+              style={{
+                fontSize: FOOTER_FONTSIZE,
+                color:
+                  PostLikes && PostLikes.length > 0
+                    ? Color.MAIN_BLUE
+                    : 'inherit'
+              }}
               onClick={this.onLikeToggle.bind(this)}
             >
               <i className="fas fa-heart mr-1" /> {props.like}
             </IconButton>
-            <IconButton className="mr-2" style={{ fontSize: 14 }}>
+            <IconButton className="mr-2" style={{ fontSize: FOOTER_FONTSIZE }}>
               <i className="fas fa-comment mr-1" /> {props.comment}
             </IconButton>
             {this.createCommentButton(props.showDetail)}
@@ -502,7 +517,7 @@ class BoxContent extends React.Component {
 
             .card-footer {
               color: gray;
-              font-size: 14px;
+              font-size: ${FOOTER_FONTSIZE}px;
               border: none !important;
               background-color: initial !important;
             }

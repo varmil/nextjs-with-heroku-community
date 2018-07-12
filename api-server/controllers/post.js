@@ -178,7 +178,6 @@ exports.fetchListOfBox = async (req, res) => {
     assoc: true,
     userId: req.user.id
   })
-  console.log('********', posts)
   res.json(posts)
 }
 
