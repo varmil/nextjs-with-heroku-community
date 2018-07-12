@@ -319,6 +319,8 @@ class BoxContent extends React.Component {
     if (!isExpanded) return null
     const props = this.props
     const copiedArray = [...props.comments].reverse()
+    const node = typeof window === 'undefined' ? null : document.body
+
     return (
       <div className="comments w-100 mx-auto pt-2">
         <div className="load my-3 text-center" onClick={() => {}}>
@@ -338,7 +340,7 @@ class BoxContent extends React.Component {
           ))}
         </div>
 
-        <Portal>
+        <Portal node={node}>
           <div className="commentForm fixed-bottom input-group">
             <textarea
               type="text"
@@ -385,6 +387,10 @@ class BoxContent extends React.Component {
             border-radius: 15px;
             padding: 10px 20px;
             // margin-left: 8px;
+          }
+
+          .commentForm {
+            position: sticky !important;
           }
         `}</style>
       </div>
