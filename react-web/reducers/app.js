@@ -210,6 +210,17 @@ export default handleActions(
         c => true
       )
       return newState
+    },
+
+    /**
+     * POST COMMENT
+     */
+    [AppPost.INCREMENT_COMMENT_SUM]: (state, action) => {
+      const { postId } = action.payload
+      let newState
+      // LIKE総数を増加
+      newState = findAllAndUpdate(state, +postId, `comment`, c => c + 1)
+      return newState
     }
   },
   initialState

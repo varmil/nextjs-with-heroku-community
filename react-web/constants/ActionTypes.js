@@ -79,6 +79,7 @@ export const AppPost = createTypes(
   // ユーザアクション後、ローカル反映用
   'INCREMENT_VOTE_SUM',
   'INCREMENT_LIKE_SUM',
+  'INCREMENT_COMMENT_SUM',
   // 新規投稿
   async('SAVE'),
   // 新規コメント

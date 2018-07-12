@@ -318,6 +318,9 @@ function* saveComment({ payload }) {
     const res = yield call(API.post, '/comment', { postId, body }, jwtToken)
     // 今の投稿をPREPEND（postと違ってコメントデータそのものが返却される）
     yield put(createAction(AppPost.PREPEND_COMMENT)(res.data))
+    // storeに保存されてる当該データ（複数ありうる）のcommentを更新
+    yield put(createAction(AppPost.INCREMENT_COMMENT_SUM)({ postId }))
+
     yield call(successCb, res)
   } catch (e) {
     yield put(setCommonError(e.response))
@@ -334,7 +337,7 @@ function* saveLike({ payload }) {
       { postId, upOrDown },
       jwtToken
     )
-    // storeに保存されてる当該データ（複数ありうる）のLIKEを更新
+    // storeに保存されてる当該データ（複数ありうる）のlikeを更新
     yield put(createAction(AppPost.INCREMENT_LIKE_SUM)({ postId }))
     if (successCb) yield call(successCb, res)
   } catch (e) {
