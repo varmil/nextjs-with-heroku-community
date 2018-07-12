@@ -154,10 +154,10 @@ module.exports = class Post {
         )
       }
 
-      transaction.commit()
+      await transaction.commit()
       return isFirstVote
     } catch (e) {
-      transaction.rollback()
+      await transaction.rollback()
       console.error(e)
       return false
     }
@@ -184,10 +184,10 @@ module.exports = class Post {
         { transaction }
       )
 
-      transaction.commit()
+      await transaction.commit()
       return true
     } catch (e) {
-      transaction.rollback()
+      await transaction.rollback()
       console.error(e)
       return false
     }

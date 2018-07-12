@@ -26,9 +26,11 @@ module.exports = class Comment {
         { transaction }
       )
 
+      await transaction.commit()
       const merged = (await Comment.associateWithUser([comment.dataValues]))[0]
       return merged
     } catch (e) {
+      await transaction.rollback()
       console.error(e)
     }
   }

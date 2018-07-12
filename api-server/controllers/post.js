@@ -68,10 +68,10 @@ exports.save = async (req, res, next) => {
         console.warn('boxType not match, so treat as basic post', boxType)
     }
 
-    trans.commit()
+    await trans.commit()
     res.json({ id: savedPostId })
   } catch (e) {
-    trans.rollback()
+    await trans.rollback()
     return next(e)
   }
 }

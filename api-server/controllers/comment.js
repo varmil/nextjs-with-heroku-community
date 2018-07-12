@@ -19,7 +19,7 @@ exports.save = async (req, res, next) => {
   }
 
   try {
-    const result = services.Comment.save(postId, userId, body)
+    const result = await services.Comment.save(postId, userId, body)
     res.json(result)
   } catch (e) {
     return next(e)
