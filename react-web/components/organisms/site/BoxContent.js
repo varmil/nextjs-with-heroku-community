@@ -1,4 +1,5 @@
 import React from 'react'
+import { Portal } from 'react-portal'
 import { connect } from 'react-redux'
 import isEmpty from 'lodash/isEmpty'
 import fecha from 'fecha'
@@ -336,30 +337,33 @@ class BoxContent extends React.Component {
             </div>
           ))}
         </div>
-        <div className="commentForm fixed-bottom input-group">
-          <textarea
-            type="text"
-            rows="1"
-            ref={input => {
-              this.commentInput = input
-            }}
-            className="form-control"
-            placeholder="コメントする..."
-            value={this.state.comment}
-            onChange={e =>
-              this.setState({ ...this.state, comment: e.target.value })
-            }
-          />
-          <div className="input-group-append">
-            <button
-              className="btn btn-outline-secondary"
-              type="button"
-              onClick={this.onSubmitComment.bind(this)}
-            >
-              <i className="fas fa-chevron-right" />
-            </button>
-          </div>
-        </div>
+
+        <Portal>
+          <div className="commentForm fixed-bottom input-group">
+            <textarea
+              type="text"
+              rows="1"
+              ref={input => {
+                this.commentInput = input
+              }}
+              className="form-control"
+              placeholder="コメントする..."
+              value={this.state.comment}
+              onChange={e =>
+                this.setState({ ...this.state, comment: e.target.value })
+              }
+            />
+            <div className="input-group-append">
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick={this.onSubmitComment.bind(this)}
+              >
+                <i className="fas fa-chevron-right" />
+              </button>
+            </div>
+          </div>,
+        </Portal>
 
         <style jsx>{`
           a {
@@ -426,6 +430,7 @@ class BoxContent extends React.Component {
     const successCb = async res => {
       dispatch(setSuccess())
       this.setState({ ...this.state, comment: '' })
+      autosize.update(this.commentInput)
       window.scrollTo(0, 9999)
     }
     dispatch(
