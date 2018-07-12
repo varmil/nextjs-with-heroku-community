@@ -103,7 +103,7 @@ module.exports = class Post {
     if (assoc || (where && where.boxType === BoxType.index.voice)) {
       include.push({
         model: models.Voice,
-        attributes: ['count']
+        attributes: ['options', 'deadline', 'count']
       })
     }
     if (assoc && userId) {

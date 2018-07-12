@@ -47,12 +47,13 @@ function findAllAndUpdate(state, postId, path, updater) {
   const voice = objectPath.get(state, `voice.boxContents`)
   const news = objectPath.get(state, `news.boxContents`)
   const mypage = objectPath.get(state, `mypage.boxContents`)
+  const post = objectPath.get(state, `post.data`)
 
   if (talk) {
     const i = findIndex(talk, c => c.id === +postId)
     if (i !== -1) {
       newState = immutable.update(
-        state,
+        newState,
         `talk.boxContents.${i}.${path}`,
         updater
       )
@@ -62,7 +63,7 @@ function findAllAndUpdate(state, postId, path, updater) {
     const i = findIndex(voice, c => c.id === +postId)
     if (i !== -1) {
       newState = immutable.update(
-        state,
+        newState,
         `voice.boxContents.${i}.${path}`,
         updater
       )
@@ -72,7 +73,7 @@ function findAllAndUpdate(state, postId, path, updater) {
     const i = findIndex(news, c => c.id === +postId)
     if (i !== -1) {
       newState = immutable.update(
-        state,
+        newState,
         `news.boxContents.${i}.${path}`,
         updater
       )
@@ -82,12 +83,20 @@ function findAllAndUpdate(state, postId, path, updater) {
     const i = findIndex(mypage, c => c.id === +postId)
     if (i !== -1) {
       newState = immutable.update(
-        state,
+        newState,
         `mypage.boxContents.${i}.${path}`,
         updater
       )
     }
   }
+
+  // 記事詳細は配列ではない
+  if (post) {
+    if (post.id === +postId) {
+      newState = immutable.update(newState, `post.data.${path}`, updater)
+    }
+  }
+
   return newState
 }
 
