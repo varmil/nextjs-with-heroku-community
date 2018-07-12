@@ -100,8 +100,8 @@ exports.saveLike = async (req, res, next) => {
     return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
   }
   const userId = req.user.id
-  await services.Post.saveLike(postId, userId, upOrDown)
-  res.json(true)
+  const success = await services.Post.saveLike(postId, userId, upOrDown)
+  res.json(success)
 }
 
 /**
@@ -173,7 +173,12 @@ exports.fetchListOfBox = async (req, res) => {
 
   let where = { brandId, boxType }
   where = released ? { ...where, released: true } : where
-  const posts = await services.Post.fetchList(pageNum, where, { perPage })
+  const posts = await services.Post.fetchList(pageNum, where, {
+    perPage,
+    assoc: true,
+    userId: req.user.id
+  })
+  console.log('********', posts)
   res.json(posts)
 }
 
@@ -188,8 +193,8 @@ exports.fetchMyPosts = async (req, res) => {
   let where = { posterId: id, brandId: brand.id, released: true }
   const posts = await services.Post.fetchList(pageNum, where, {
     perPage,
-    // Voice情報等もごったで表示したいので
-    assoc: true
+    assoc: true,
+    userId: req.user.id
   })
   res.json(posts)
 }

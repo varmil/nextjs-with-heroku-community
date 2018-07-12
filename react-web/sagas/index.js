@@ -324,6 +324,24 @@ function* saveComment({ payload }) {
   }
 }
 
+function* saveLike({ payload }) {
+  const { jwtToken } = yield select(getUser)
+  const { postId, upOrDown, successCb } = payload
+  try {
+    const res = yield call(
+      API.post,
+      '/post/like',
+      { postId, upOrDown },
+      jwtToken
+    )
+    // TODO storeに保存されてる当該データ（複数ありうる）のLIKEを更新
+    // yield put(createAction(AppPost.PREPEND_COMMENT)())
+    if (successCb) yield call(successCb, res)
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
+}
+
 function* saveVote({ payload }) {
   const { jwtToken } = yield select(getUser)
   const { postId, choiceIndex, successCb } = payload
@@ -380,6 +398,7 @@ const appSaga = [
   takeLatest(AppPost.FETCH_COMMENTS_REQUEST, fetchComments),
   takeLatest(AppPost.SAVE_REQUEST, savePost),
   takeLatest(AppPost.SAVE_COMMENT_REQUEST, saveComment),
+  takeLatest(AppPost.SAVE_LIKE_REQUEST, saveLike),
   takeLatest(AppPost.SAVE_VOTE_REQUEST, saveVote)
 ]
 

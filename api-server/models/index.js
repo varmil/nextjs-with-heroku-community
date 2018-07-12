@@ -20,7 +20,8 @@ if (config.use_env_variable) {
   )
 }
 
-fs.readdirSync(__dirname)
+fs
+  .readdirSync(__dirname)
   .filter(function(file) {
     return (
       file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
@@ -43,5 +44,6 @@ db.Sequelize = Sequelize
 
 // relation
 db.Post.hasOne(db.Voice)
+db.Post.hasMany(db.PostLike)
 
 module.exports = db

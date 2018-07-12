@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import fecha from 'fecha'
 import { Link, Router } from 'routes'
+import IconButton from '@material-ui/core/IconButton'
 import objectPath from 'object-path'
 import { PATH_MAP } from 'reducers/site'
 import MultiLineText from 'components/atoms/MultiLineText'
@@ -299,7 +300,13 @@ class BoxContent extends React.Component {
       }
     }
     return (
-      <span onClick={onClick}>
+      <span
+        onClick={onClick}
+        style={{
+          position: 'relative',
+          top: 2
+        }}
+      >
         <a>コメントする</a>
       </span>
     )
@@ -428,6 +435,17 @@ class BoxContent extends React.Component {
     )
   }
 
+  onLikeToggle(e) {
+    const { dispatch, id } = this.props
+    dispatch(
+      createAction(AppPost.SAVE_LIKE_REQUEST)({
+        postId: id,
+        // いったん常にPositive
+        upOrDown: true
+      })
+    )
+  }
+
   render() {
     const props = this.props
     return (
@@ -443,12 +461,16 @@ class BoxContent extends React.Component {
           {this.createGoingVote()}
 
           <div className="card-footer text-center p-2">
-            <span className="mr-3">
-              <i className="fas fa-heart" /> {props.like}
-            </span>
-            <span className="mr-3">
-              <i className="fas fa-comment" /> {props.comment}
-            </span>
+            <IconButton
+              className="mr-1"
+              style={{ fontSize: 14 }}
+              onClick={this.onLikeToggle.bind(this)}
+            >
+              <i className="fas fa-heart mr-1" /> {props.like}
+            </IconButton>
+            <IconButton className="mr-2" style={{ fontSize: 14 }}>
+              <i className="fas fa-comment mr-1" /> {props.comment}
+            </IconButton>
             {this.createCommentButton(props.showDetail)}
           </div>
 

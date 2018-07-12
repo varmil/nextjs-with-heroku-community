@@ -95,18 +95,25 @@ module.exports = class Post {
 
   static async fetchList(pageNum, where, options = {}) {
     // optionsを展開
-    let { perPage, assoc } = options
+    let { perPage, userId, assoc } = options
     perPage = +perPage || DEFAULT_PER_PAGE
 
     // 特定条件なら関連テーブルも引っ張る
     let include = []
     if (assoc || (where && where.boxType === BoxType.index.voice)) {
-      include = [
-        {
-          model: models.Voice,
-          attributes: ['count']
-        }
-      ]
+      include.push({
+        model: models.Voice,
+        attributes: ['count']
+      })
+    }
+    if (assoc && userId) {
+      // 自分がそのPostにLike済みか PostLike: [] or [{ upOrDown: true or false }]
+      include.push({
+        model: models.PostLike,
+        attributes: ['upOrDown'],
+        where: { userId },
+        required: false
+      })
     }
 
     try {
@@ -177,7 +184,7 @@ module.exports = class Post {
       )
 
       // increment if up
-      let query = upOrDown ? 'like + 1' : 'like - 1'
+      let query = upOrDown ? '`like` + 1' : '`like` - 1'
       await models.Post.update(
         { like: models.sequelize.literal(query) },
         { where: { id: postId } },
