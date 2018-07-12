@@ -198,16 +198,21 @@ export default handleActions(
      * POST LIKE
      */
     [AppPost.INCREMENT_LIKE_SUM]: (state, action) => {
-      const { postId } = action.payload
+      const { postId, upOrDown } = action.payload
       let newState
       // LIKE総数を増加
-      newState = findAllAndUpdate(state, +postId, `like`, c => c + 1)
+      newState = findAllAndUpdate(
+        state,
+        +postId,
+        `like`,
+        c => (upOrDown ? c + 1 : c - 1)
+      )
       // 自分がLIKEしてるかを更新。1POSTにLikeは1つなのでindexは0。また、とりあえず常にTRUE
       newState = findAllAndUpdate(
         newState,
         +postId,
         `PostLikes.0.upOrDown`,
-        c => true
+        c => upOrDown
       )
       return newState
     },

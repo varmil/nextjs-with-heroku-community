@@ -338,7 +338,7 @@ function* saveLike({ payload }) {
       jwtToken
     )
     // storeに保存されてる当該データ（複数ありうる）のlikeを更新
-    yield put(createAction(AppPost.INCREMENT_LIKE_SUM)({ postId }))
+    yield put(createAction(AppPost.INCREMENT_LIKE_SUM)({ postId, upOrDown }))
     if (successCb) yield call(successCb, res)
   } catch (e) {
     yield put(setCommonError(e.response))

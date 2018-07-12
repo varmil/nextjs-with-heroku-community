@@ -111,26 +111,6 @@ exports.fetch = async (req, res) => {
   const { postId } = req.params
   if (!postId) return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
 
-  // let result = {}
-  // const post = await models.Post.findById(postId, {
-  //   raw: true
-  // })
-  // result = (await services.Post.associateWithUser([post]))[0]
-  //
-  // // boxTypeによって追加取得
-  // if (post.boxType === BoxType.index.voice) {
-  //   // hasOneで取得するときと同様パスカルで。
-  //   const Voice = await models.Voice.findOne({
-  //     attributes: ['options', 'deadline', 'count'],
-  //     where: { postId: post.id },
-  //     raw: true
-  //   })
-  //   // 自分の投票を取得
-  //   const voterId = req.user.id || 0
-  //   const choiceIndex = await services.Post.fetchVote(post.id, voterId)
-  //   result = { ...result, Voice: { ...Voice, choiceIndex } }
-  // }
-
   // fetchListを流用（楽なので）
   const where = { id: postId }
   const posts = await services.Post.fetchList(1, where, {

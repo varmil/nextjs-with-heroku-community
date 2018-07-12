@@ -362,7 +362,7 @@ class BoxContent extends React.Component {
                 <i className="fas fa-chevron-right" />
               </button>
             </div>
-          </div>,
+          </div>
         </Portal>
 
         <style jsx>{`
@@ -444,17 +444,21 @@ class BoxContent extends React.Component {
 
   onLikeToggle(e) {
     const { dispatch, id, PostLikes } = this.props
+    let upOrDown = null
 
-    if (PostLikes && PostLikes.length > 0) {
-      console.log('you already liked, so do nothing')
-      return
+    // 最初のLIKE or current is DOWN
+    if (isEmpty(PostLikes) || !PostLikes[0].upOrDown) {
+      console.log('next state is UP')
+      upOrDown = true
+    } else {
+      console.log('next state is DOWN')
+      upOrDown = false
     }
 
     dispatch(
       createAction(AppPost.SAVE_LIKE_REQUEST)({
         postId: id,
-        // いったん常にPositive
-        upOrDown: true
+        upOrDown
       })
     )
   }
