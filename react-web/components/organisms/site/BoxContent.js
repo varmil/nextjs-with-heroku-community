@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import isEmpty from 'lodash/isEmpty'
 import fecha from 'fecha'
 import { Link, Router } from 'routes'
 import IconButton from '@material-ui/core/IconButton'
@@ -474,8 +475,9 @@ class BoxContent extends React.Component {
               className="mr-1"
               style={{
                 fontSize: FOOTER_FONTSIZE,
+                // LIKE済みなら青色に
                 color:
-                  PostLikes && PostLikes.length > 0
+                  !isEmpty(PostLikes) && PostLikes[0].upOrDown
                     ? Color.MAIN_BLUE
                     : 'inherit'
               }}

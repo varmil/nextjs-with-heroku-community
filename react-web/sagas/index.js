@@ -334,8 +334,8 @@ function* saveLike({ payload }) {
       { postId, upOrDown },
       jwtToken
     )
-    // TODO storeに保存されてる当該データ（複数ありうる）のLIKEを更新
-    // yield put(createAction(AppPost.PREPEND_COMMENT)())
+    // storeに保存されてる当該データ（複数ありうる）のLIKEを更新
+    yield put(createAction(AppPost.INCREMENT_LIKE_SUM)({ postId }))
     if (successCb) yield call(successCb, res)
   } catch (e) {
     yield put(setCommonError(e.response))

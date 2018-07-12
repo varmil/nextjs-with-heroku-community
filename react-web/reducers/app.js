@@ -39,6 +39,58 @@ const initialState = {
   }
 }
 
+// すべてのboxContentsを走査して、データ更新
+function findAllAndUpdate(state, postId, path, updater) {
+  let newState = state
+
+  const talk = objectPath.get(state, `talk.boxContents`)
+  const voice = objectPath.get(state, `voice.boxContents`)
+  const news = objectPath.get(state, `news.boxContents`)
+  const mypage = objectPath.get(state, `mypage.boxContents`)
+
+  if (talk) {
+    const i = findIndex(talk, c => c.id === +postId)
+    if (i !== -1) {
+      newState = immutable.update(
+        state,
+        `talk.boxContents.${i}.${path}`,
+        updater
+      )
+    }
+  }
+  if (voice) {
+    const i = findIndex(voice, c => c.id === +postId)
+    if (i !== -1) {
+      newState = immutable.update(
+        state,
+        `voice.boxContents.${i}.${path}`,
+        updater
+      )
+    }
+  }
+  if (news) {
+    const i = findIndex(news, c => c.id === +postId)
+    if (i !== -1) {
+      newState = immutable.update(
+        state,
+        `news.boxContents.${i}.${path}`,
+        updater
+      )
+    }
+  }
+  if (mypage) {
+    const i = findIndex(mypage, c => c.id === +postId)
+    if (i !== -1) {
+      newState = immutable.update(
+        state,
+        `mypage.boxContents.${i}.${path}`,
+        updater
+      )
+    }
+  }
+  return newState
+}
+
 export default handleActions(
   {
     /**
@@ -125,18 +177,30 @@ export default handleActions(
      * POST VOTE
      */
     [AppPost.INCREMENT_VOTE_SUM]: (state, action) => {
-      // 存在チェック
-      const contents = objectPath.get(state, `voice.boxContents`)
-      if (!contents) return state
-
-      const index = findIndex(contents, c => c.id === +action.payload.postId)
-      if (index === -1) return state
-
-      return immutable.update(
+      return findAllAndUpdate(
         state,
-        `voice.boxContents.${index}.Voice.count`,
+        +action.payload.postId,
+        `Voice.count`,
         c => c + 1
       )
+    },
+
+    /**
+     * POST LIKE
+     */
+    [AppPost.INCREMENT_LIKE_SUM]: (state, action) => {
+      const { postId } = action.payload
+      let newState
+      // LIKE総数を増加
+      newState = findAllAndUpdate(state, +postId, `like`, c => c + 1)
+      // 自分がLIKEしてるかを更新。1POSTにLikeは1つなのでindexは0。また、とりあえず常にTRUE
+      newState = findAllAndUpdate(
+        newState,
+        +postId,
+        `PostLikes.0.upOrDown`,
+        c => true
+      )
+      return newState
     }
   },
   initialState
