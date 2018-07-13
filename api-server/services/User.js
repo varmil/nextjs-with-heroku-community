@@ -4,6 +4,7 @@ const models = reqlib('/models')
 const moveFile = require('move-file')
 const Path = reqlib('/constants/Path')
 const Role = reqlib('/constants/Role')
+const moment = require('moment')
 
 // リストで取得する際に、1ページあたりの初期値
 // パラメタによって指定した場合はこの値は無効
@@ -32,6 +33,12 @@ module.exports = class User {
         [cur.id]: { name, iconPath: cur.iconPath }
       }
     }, {})
+  }
+
+  static async updateLastLoginedAtIfNeeded(userId, lastLoginedAt) {
+    // DBデータより、1時間以上経っていたら更新
+    const elapsed = moment().diff(lastLoginedAt, 'm')
+    console.log('elapsed', elapsed)
   }
 
   static async moveProfileIcon(file) {
