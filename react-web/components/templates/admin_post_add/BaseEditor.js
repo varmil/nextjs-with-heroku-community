@@ -11,7 +11,7 @@ import { withStyles } from '@material-ui/core/styles'
 import BoxType from '/../shared/constants/BoxType'
 import AdminPostFormLabel from 'components/atoms/AdminPostFormLabel'
 import PostDropzone from 'components/molecules/PostDropzone'
-import AdminPageContainer from 'components/molecules/AdminPageContainer'
+import { Container } from 'components/molecules/AdminPageContainer'
 import * as utilFiles from 'utils/files'
 
 const SelectLabel = props => (
@@ -115,7 +115,7 @@ class AdminBaseEditor extends React.Component {
 
     return (
       <React.Fragment>
-        <AdminPageContainer>
+        <Container>
           <header className="borderB">
             <nav className="navbar justify-content-between">
               <Link route={'/admin/post/list'}>
@@ -190,7 +190,7 @@ class AdminBaseEditor extends React.Component {
           </section>
 
           {props.children}
-        </AdminPageContainer>
+        </Container>
 
         <style global jsx>{`
           body {

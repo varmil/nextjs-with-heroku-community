@@ -40,14 +40,14 @@ class AdminFanList extends React.Component {
 
         <WhiteBreadcrumb>
           <li className="breadcrumb-item">ファン</li>
-          <li className="breadcrumb-item active">一覧</li>
+          <li className="breadcrumb-item active">ファンの追加</li>
         </WhiteBreadcrumb>
 
         <Container>
           <Header
-            title="ファン一覧"
-            route="/admin/fan/add"
-            buttonText="ファンの追加"
+            title="ファンの追加"
+            route="/admin/fan/invite"
+            buttonText="招待リンクを発行"
           />
 
           <Filter onChange={this.handleChange.bind(this)} />
