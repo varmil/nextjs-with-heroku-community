@@ -86,12 +86,6 @@ class AdminFanList extends React.Component {
             </div>
           </section>
 
-          {this.state.errorMessage && (
-            <div className="alert alert-danger" role="alert">
-              {this.state.errorMessage}
-            </div>
-          )}
-
           <section className="regNote mt-3 text-center">
             <SimpleTable
               posts={props.posts.item}
