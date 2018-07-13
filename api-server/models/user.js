@@ -8,6 +8,8 @@ module.exports = function(sequelize, DataTypes) {
     iconPath: DataTypes.STRING,
     // 管理者が登録したときはそれ用のId定数を入れる
     roleId: DataTypes.INTEGER,
+    // 最終ログイン
+    lastLoginedAt: DataTypes.DATE,
 
     // 任意登録
     introduction: DataTypes.TEXT,
