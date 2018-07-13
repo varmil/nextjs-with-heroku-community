@@ -388,10 +388,6 @@ class BoxContent extends React.Component {
             padding: 10px 20px;
             // margin-left: 8px;
           }
-
-          .commentForm {
-            position: sticky !important;
-          }
         `}</style>
       </div>
     )
