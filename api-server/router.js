@@ -103,6 +103,7 @@ module.exports = function(app) {
     upload.single('image'),
     UserController.profile
   )
+  app.post('/loginedat', requireAuth, UserController.updateLoginedAt)
   // 管理者（アイコンも同時登録）
   app.post('/signup/admin', upload.single('image'), AuthController.signup)
 

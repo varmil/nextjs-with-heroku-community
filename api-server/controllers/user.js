@@ -27,6 +27,21 @@ exports.profile = async (req, res, next) => {
   }
 }
 
+/**
+ * 最終ログイン日時を更新
+ */
+exports.updateLoginedAt = async (req, res, next) => {
+  const { userId, lastLoginedAt } = req.user
+
+  try {
+    // 待たなくていいのでawaitしない
+    services.User.updateLastLoginedAtIfNeeded(userId, lastLoginedAt)
+    res.json(true)
+  } catch (e) {
+    return next(e)
+  }
+}
+
 exports.fetchInBrand = async (req, res, next) => {
   const { perPage } = req.query
   const pageNum = req.params.pageNum || 1 // 1 origin

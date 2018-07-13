@@ -11,6 +11,8 @@ const moment = require('moment')
 const DEFAULT_PER_PAGE = 20
 const DEFAULT_ICON_PATH = 'https://www.w3schools.com/w3images/avatar4.png'
 
+const LAST_LOGINED_AT_UPDATE_INTERVAL_MIN = 10
+
 module.exports = class User {
   // { <id>: { name, iconPath }, ... } というObjectを返す
   static async fetchAllObj(ids) {
@@ -36,9 +38,20 @@ module.exports = class User {
   }
 
   static async updateLastLoginedAtIfNeeded(userId, lastLoginedAt) {
-    // DBデータより、1時間以上経っていたら更新
+    // DBデータより、10分以上経っていたら更新
     const elapsed = moment().diff(lastLoginedAt, 'm')
-    console.log('elapsed', elapsed)
+    try {
+      if (elapsed > LAST_LOGINED_AT_UPDATE_INTERVAL_MIN) {
+        await models.User.update(
+          { lastLoginedAt: new Date() },
+          {
+            where: { id: userId }
+          }
+        )
+      }
+    } catch (e) {
+      throw e
+    }
   }
 
   static async moveProfileIcon(file) {
@@ -279,7 +292,8 @@ module.exports = class User {
   }
 
   static arrToObj(arr, key, value) {
-    return _.chain(arr)
+    return _
+      .chain(arr)
       .keyBy(key)
       .mapValues(value)
       .value()

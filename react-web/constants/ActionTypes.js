@@ -134,11 +134,12 @@ export const User = createTypes(
   'user/',
   'AUTHENTICATE',
   'DEAUTHENTICATE',
-  // user signup, signin
+  // user
   async('SIGNUP'),
   async('SIGNIN'),
   async('SAVE_PROFILE'),
-  // admin signup
+  async('UPDATE_LOGINED_AT'),
+  // admin
   async('AUTH_ADMIN'),
   // fetch basic info (id, nickname)
   async('FETCH'),

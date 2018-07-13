@@ -1,4 +1,4 @@
-import Router from 'next/router'
+// import Router from 'next/router'
 import { reauthenticate } from 'actions/user'
 import { createAction } from 'redux-actions'
 import { User, SiteState } from 'constants/ActionTypes'
@@ -15,8 +15,10 @@ export default function(ctx) {
         ctx.store.dispatch(reauthenticate(token))
         // fetch and set user basic info from API server with token
         ctx.store.dispatch(createAction(User.FETCH_REQUEST)(token))
-        // HACK: performance is low
+        // HACK: low performance, fetch design of the brand
         ctx.store.dispatch(createAction(SiteState.FETCH_REQUEST)())
+        // update
+        ctx.store.dispatch(createAction(User.UPDATE_LOGINED_AT_REQUEST)())
       }
     }
   } else {
@@ -25,10 +27,8 @@ export default function(ctx) {
       token &&
       (ctx.pathname === '/view/signin' || ctx.pathname === '/view/signup')
     ) {
-      setTimeout(function() {
-        console.log('you are already logined')
-        // Router.push('/')
-      }, 0)
+      console.log('you are already logined')
+      // Router.push('/')
     }
   }
 }

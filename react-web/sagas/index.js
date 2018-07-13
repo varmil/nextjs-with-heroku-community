@@ -125,6 +125,16 @@ function* fetchUser({ payload }) {
   }
 }
 
+// 必要ならサーバ側で最終ログイン日時を更新
+function* updateLoginedAt({ payload }) {
+  const { jwtToken } = yield select(getUser)
+  try {
+    yield call(API.post, '/loginedat', {}, jwtToken)
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
+}
+
 /**
  * SITE
  */
@@ -419,7 +429,8 @@ const userSaga = [
   takeLatest(User.SIGNIN_REQUEST, signin),
   takeLatest(User.AUTH_ADMIN_REQUEST, signupAdmin),
   takeLatest(User.SAVE_PROFILE_REQUEST, saveUserProfile),
-  takeLatest(User.FETCH_REQUEST, fetchUser)
+  takeLatest(User.FETCH_REQUEST, fetchUser),
+  takeLatest(User.UPDATE_LOGINED_AT_REQUEST, updateLoginedAt)
 ]
 
 const siteSaga = [

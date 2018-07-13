@@ -38,12 +38,9 @@ const jwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
     const user = await models.User.findById(payload.sub.id, { raw: true })
 
     if (user) {
-      const { id, lastLoginedAt } = user
+      const { id } = user
       // ユーザが所属するブランド情報
       const brand = await services.User.fetchBrand(id)
-      // 必要なら最終ログイン日時を更新
-      await services.User.updateLastLoginedAtIfNeeded(id, lastLoginedAt)
-
       done(null, { ...user, brand })
     } else {
       done(null, false)
