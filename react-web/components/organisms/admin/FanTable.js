@@ -12,6 +12,7 @@ import TableRow from '@material-ui/core/TableRow'
 import TablePagination from '@material-ui/core/TablePagination'
 import Paper from '@material-ui/core/Paper'
 import ColorButton from 'components/atoms/ColorButton'
+import Avatar from 'components/atoms/Avatar'
 
 // const TITLE_LEN = 11
 //
@@ -97,17 +98,23 @@ class FanTable extends React.Component {
               return (
                 <TableRow key={n.id}>
                   <DensedCell>
-                    <img src={n.iconPath} />
+                    <Avatar src={n.iconPath} size={40} />
                   </DensedCell>
                   <DensedCell component="th" scope="row">
-                    {n.name}
+                    {n.nickname || `${n.lastName} ${n.firstName}`}
                   </DensedCell>
                   <DensedCell>{n.email}</DensedCell>
                   <DensedCell>
-                    {fecha.format(new Date(n.createdAt), 'YYYY-MM-DD hh:mm')}
+                    {fecha.format(
+                      new Date(n.createdAt || null),
+                      'YYYY-MM-DD hh:mm'
+                    )}
                   </DensedCell>
                   <DensedCell>
-                    {fecha.format(new Date(n.lastLoginedAt), 'YYYY-MM-DD')}
+                    {fecha.format(
+                      new Date(n.lastLoginedAt || null),
+                      'YYYY-MM-DD'
+                    )}
                   </DensedCell>
                   <DensedCell numeric>{n.loyalty}</DensedCell>
                   <DensedCell numeric>{n.post}</DensedCell>

@@ -142,4 +142,9 @@ module.exports = function(app) {
     requireAuth,
     CommentController.fetchList
   )
+
+  /**
+   * FAN
+   */
+  app.get('/fan/list/:pageNum', requireAuth, UserController.fetchInBrand)
 }

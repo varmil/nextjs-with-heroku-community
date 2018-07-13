@@ -1,5 +1,6 @@
 const reqlib = require('app-root-path').require
 const services = reqlib('/services')
+const models = reqlib('/models')
 const Message = reqlib('/constants/Message')
 
 /**
@@ -24,4 +25,16 @@ exports.profile = async (req, res, next) => {
   } catch (e) {
     return next(e)
   }
+}
+
+exports.fetchInBrand = async (req, res, next) => {
+  const { perPage } = req.query
+  const pageNum = req.params.pageNum || 1 // 1 origin
+  const brandId = req.user.brand.id
+
+  // 記事データ
+  const users = await services.User.fetchList(pageNum, { brandId }, { perPage })
+  // 総カウント
+  const count = await models.UserBrand.count({ where: { brandId }, raw: true })
+  res.json({ count, item: users })
 }

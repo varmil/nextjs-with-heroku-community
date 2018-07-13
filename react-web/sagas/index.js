@@ -15,7 +15,8 @@ import {
   AppNews,
   AppMypage,
   AppPost,
-  AppAdminPost
+  AppAdminPost,
+  AppAdminFan
 } from 'constants/ActionTypes'
 import {
   addTalkContents,
@@ -374,6 +375,29 @@ function* saveVote({ payload }) {
 }
 
 /**
+ * Fans
+ */
+
+// (Admin用)一覧
+function* fetchFans({ payload }) {
+  const { pageNum, perPage } = payload
+  const { jwtToken } = yield select(getUser)
+
+  try {
+    const query = qs.stringify({ perPage })
+    const { data } = yield call(
+      API.fetch,
+      `/fan/list/${pageNum}?${query}`,
+      jwtToken
+    )
+    const action = createAction(AppAdminFan.SET_LIST)
+    yield put(action(data))
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
+}
+
+/**
  * iFrame
  */
 
@@ -420,7 +444,9 @@ const appSaga = [
 const appAdminSaga = [
   takeLatest(AppAdminPost.SAVE_REQUEST, savePost),
   takeLatest(AppAdminPost.FETCH_REQUEST, fetchPost),
-  takeLatest(AppAdminPost.FETCH_LIST_REQUEST, fetchPosts)
+  takeLatest(AppAdminPost.FETCH_LIST_REQUEST, fetchPosts),
+
+  takeLatest(AppAdminFan.FETCH_LIST_REQUEST, fetchFans)
 ]
 
 function* rootSaga() {

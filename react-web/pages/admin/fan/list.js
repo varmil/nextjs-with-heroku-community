@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'routes'
 import { createAction } from 'redux-actions'
-import { AppAdminPost } from 'constants/ActionTypes'
+import { AppAdminFan } from 'constants/ActionTypes'
 import AdminPageContainer from 'components/molecules/AdminPageContainer'
 import AdminHeader from 'components/organisms/admin/AdminHeader'
 import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
@@ -18,7 +18,7 @@ class AdminFanList extends React.Component {
     const PER_PAGE = 30
 
     dispatch(
-      createAction(AppAdminPost.FETCH_LIST_REQUEST)({
+      createAction(AppAdminFan.FETCH_LIST_REQUEST)({
         pageNum,
         perPage: PER_PAGE
       })

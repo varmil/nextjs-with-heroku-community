@@ -5,14 +5,9 @@ const moveFile = require('move-file')
 const Path = reqlib('/constants/Path')
 const Role = reqlib('/constants/Role')
 
-// import Promise from 'bluebird'
-// const fs = Promise.promisifyAll(require('fs-extra'))
-// const PUBLIC_ROOT_DIRECTORY = 'public'
-// const PROFILE_PHOTO_DIRECTORY = '/img/profile/fcb'
-// const PROFILE_PHOTO_FILENAME = 'p200x200'
-// const FACEBOOK_GRAPH_API_VERSION = '2.8'
-// const FACEBOOK_PICTURE_SIZE_PX = 200
-
+// リストで取得する際に、1ページあたりの初期値
+// パラメタによって指定した場合はこの値は無効
+const DEFAULT_PER_PAGE = 20
 const DEFAULT_ICON_PATH = 'https://www.w3schools.com/w3images/avatar4.png'
 
 module.exports = class User {
@@ -199,6 +194,41 @@ module.exports = class User {
     } catch (e) {
       console.error(e)
       return null
+    }
+  }
+
+  // ユーザを複数取得（Admin画面のファン一覧など）
+  static async fetchList(pageNum, where, options = {}) {
+    if (!where.brandId) {
+      console.warn('[User.fetchList] brandId is nil')
+      return []
+    }
+
+    // optionsを展開
+    let { perPage } = options
+    perPage = +perPage || DEFAULT_PER_PAGE
+
+    try {
+      // 関連テーブルからIDフェッチ
+      const usersBrands = await models.UserBrand.findAll({
+        attributes: ['userId', 'createdAt'],
+        where: where,
+        limit: perPage,
+        offset: perPage * (pageNum - 1),
+        order: [['id', 'DESC']],
+        raw: true
+      })
+
+      // ユーザ取得
+      const users = await models.User.findAll({
+        where: { id: _.map(usersBrands, 'userId') },
+        order: [['id', 'DESC']],
+        raw: true
+      })
+
+      return users
+    } catch (e) {
+      throw e
     }
   }
 }
