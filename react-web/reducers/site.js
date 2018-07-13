@@ -15,6 +15,7 @@ import {
   NewsCategoriesDefault
 } from 'constants/SitePropsDefault'
 import {
+  SiteState,
   SitePreview,
   SiteCommon,
   SiteTop,
@@ -70,6 +71,14 @@ export const PATH_MAP = {
 
 export default handleActions(
   {
+    /**
+     * まるっとSET (payloadがそのままnew-state)
+     */
+    [SiteState.SET]: (state, action) => {
+      console.log('まるっとセット', action.payload)
+      return action.payload
+    },
+
     /**
      * PREVIEW
      */

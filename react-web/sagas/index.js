@@ -139,7 +139,14 @@ function* saveSiteState({ payload }) {
 }
 
 function* fetchSiteState({ payload }) {
-  // TODO: fetch category, subBanner, then put them into store
+  // fetch brand design (category, subBanner, etc.) then put them into store
+  const { jwtToken } = yield select(getUser)
+  try {
+    const res = yield call(API.fetch, '/site/design', jwtToken)
+    yield put(createAction(SiteState.SET)({ ...res.data.design }))
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
 }
 
 /**

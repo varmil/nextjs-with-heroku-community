@@ -30,6 +30,9 @@ exports.saveDesign = async (req, res, next) => {
  */
 exports.fetchDesign = async (req, res) => {
   const brandId = req.user.brand.id
-  const state = await models.Brand.findById(brandId, { raw: true })
-  res.json({ state })
+  const { design } = await models.Brand.findById(brandId, {
+    attributes: ['design'],
+    raw: true
+  })
+  res.json({ design })
 }
