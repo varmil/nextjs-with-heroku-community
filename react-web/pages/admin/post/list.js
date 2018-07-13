@@ -7,7 +7,7 @@ import AdminPageContainer from 'components/molecules/AdminPageContainer'
 import AdminHeader from 'components/organisms/admin/AdminHeader'
 import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
 import ColorButton from 'components/atoms/ColorButton'
-import SimpleTable from 'components/organisms/admin/SimpleTable'
+import PostTable from 'components/organisms/admin/PostTable'
 
 class AdminPostList extends React.Component {
   static async getInitialProps({ ctx }) {
@@ -87,7 +87,7 @@ class AdminPostList extends React.Component {
           </section>
 
           <section className="regNote mt-3 text-center">
-            <SimpleTable
+            <PostTable
               posts={props.posts.item}
               count={props.posts.count}
               page={props.pageNum}
