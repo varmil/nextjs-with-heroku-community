@@ -108,7 +108,7 @@ function* saveUserProfile({ payload }) {
   try {
     const res = yield call(API.post, '/user/profile', formData, jwtToken)
     // 冗長だが、再度最新のUser情報をfetch
-    // yield put(createAction(User.FETCH_REQUEST)(jwtToken))
+    yield put(createAction(User.FETCH_REQUEST)(jwtToken))
     yield call(successCb, res)
   } catch (e) {
     yield put(setCommonError(e.response))

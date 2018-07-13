@@ -7,6 +7,8 @@ const Message = reqlib('/constants/Message')
  * Profile編集
  */
 exports.profile = async (req, res, next) => {
+  console.log('[profilesave]body', req.body)
+  console.log('[profilesave]file', req.files)
   const { nickname, fromServerFiles } = req.body
   const userId = req.user.id
 
