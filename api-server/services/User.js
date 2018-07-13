@@ -258,7 +258,10 @@ module.exports = class User {
           ...user,
           post: postCountObj[user.id] || 0,
           like: likeCountObj[user.id] || 0,
-          comment: commentCountObj[user.id] || 0
+          comment: commentCountObj[user.id] || 0,
+          loyalty: null,
+          badge: null,
+          event: null
         }
       })
       // console.log(merged)
