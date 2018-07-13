@@ -7,7 +7,7 @@ import AdminPageContainer from 'components/molecules/AdminPageContainer'
 import AdminHeader from 'components/organisms/admin/AdminHeader'
 import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
 import ColorButton from 'components/atoms/ColorButton'
-import PostTable from 'components/organisms/admin/PostTable'
+import FanTable from 'components/organisms/admin/FanTable'
 
 class AdminFanList extends React.Component {
   static async getInitialProps({ ctx }) {
@@ -87,9 +87,9 @@ class AdminFanList extends React.Component {
           </section>
 
           <section className="regNote mt-3 text-center">
-            <PostTable
-              posts={props.posts.item}
-              count={props.posts.count}
+            <FanTable
+              fans={props.fans.item}
+              count={props.fans.count}
               page={props.pageNum}
               rowsPerPage={props.perPage}
             />
@@ -125,5 +125,5 @@ class AdminFanList extends React.Component {
 }
 
 export default connect(state => ({
-  posts: state.app.posts
+  fans: state.app.fans
 }))(AdminFanList)
