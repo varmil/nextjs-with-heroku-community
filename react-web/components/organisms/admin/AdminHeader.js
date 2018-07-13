@@ -41,9 +41,11 @@ class AdminHeader extends React.Component {
               </Link>
             </NavItem>
             <NavItem>
-              <div className="linkItem" style={linkItemStyle}>
-                <i className="fas fa-user" />
-              </div>
+              <Link route={'/admin/fan/list'}>
+                <div className="linkItem" style={linkItemStyle}>
+                  <i className="fas fa-users" />
+                </div>
+              </Link>
             </NavItem>
             <NavItem>
               <div className="linkItem" style={linkItemStyle}>

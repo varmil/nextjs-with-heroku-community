@@ -9,7 +9,7 @@ import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
 import ColorButton from 'components/atoms/ColorButton'
 import SimpleTable from 'components/organisms/admin/SimpleTable'
 
-class AdminPostList extends React.Component {
+class AdminFanList extends React.Component {
   static async getInitialProps({ ctx }) {
     const { dispatch } = ctx.store
     // one-start のページ番号
@@ -43,14 +43,14 @@ class AdminPostList extends React.Component {
         <AdminHeader />
 
         <WhiteBreadcrumb>
-          <li className="breadcrumb-item">投稿</li>
+          <li className="breadcrumb-item">ファン</li>
           <li className="breadcrumb-item active">一覧</li>
         </WhiteBreadcrumb>
 
         <AdminPageContainer>
           <section className="borderB pageHeader text-center position-relative pb-3">
-            <span className="title">投稿</span>
-            <Link route={'/admin/post/add/0'} passHref>
+            <span className="title">ファン一覧</span>
+            <Link route={'/admin/fan/add'} passHref>
               <a>
                 <ColorButton
                   className="addButton w-25"
@@ -63,7 +63,7 @@ class AdminPostList extends React.Component {
                   }}
                   icon={<i className="fas fa-plus" />}
                 >
-                  新規投稿
+                  ファンの追加
                 </ColorButton>
               </a>
             </Link>
@@ -132,4 +132,4 @@ class AdminPostList extends React.Component {
 
 export default connect(state => ({
   posts: state.app.posts
-}))(AdminPostList)
+}))(AdminFanList)

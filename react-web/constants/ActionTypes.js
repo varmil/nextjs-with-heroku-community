@@ -98,7 +98,7 @@ export const AppPost = createTypes(
 // -- APP_ADMIN: AdminViewで詰めるデータ --
 // -----
 
-// post/add （UserViewとは扱う情報が微妙に違うかもなので分ける）
+// /admin/post （UserViewとは扱う情報が微妙に違うかもなので分ける）
 export const AppAdminPost = createTypes(
   'app/admin/post/',
   // 新規投稿
@@ -106,6 +106,21 @@ export const AppAdminPost = createTypes(
   // 下書き or 編集時のデータ取得
   async('FETCH'),
   'SET',
+  // 一覧表示用
+  async('FETCH_LIST'),
+  'SET_LIST',
+  'PUSH_LIST'
+)
+
+// /admin/fans （ファン管理）
+export const AppAdminFan = createTypes(
+  'app/admin/fan/',
+  // // 新規投稿
+  // async('SAVE'),
+  // // 下書き or 編集時のデータ取得
+  // async('FETCH'),
+  // 'SET',
+
   // 一覧表示用
   async('FETCH_LIST'),
   'SET_LIST',

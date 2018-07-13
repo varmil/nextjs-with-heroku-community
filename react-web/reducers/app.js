@@ -9,34 +9,33 @@ import {
   AppNews,
   AppMypage,
   AppPost,
-  AppAdminPost
+  AppAdminPost,
+  AppAdminFan
 } from 'constants/ActionTypes'
 
 const initialState = {
-  talk: {
-    boxContents: [] // use in /view/home
-  },
-
-  voice: {
-    boxContents: []
-  },
-
-  news: {
-    boxContents: []
-  },
-
-  mypage: {
-    boxContents: []
-  },
-
-  // Admin用。投稿一覧画面
-  posts: { count: 0, item: [] },
+  /**
+   * USERページ
+   */
+  // use in /view/home
+  talk: { boxContents: [] },
+  voice: { boxContents: [] },
+  news: { boxContents: [] },
+  mypage: { boxContents: [] },
 
   // Admin, User兼用。記事詳細画面
   post: {
     data: {},
     comments: []
-  }
+  },
+
+  /**
+   * ADMINページ
+   */
+  // Admin用。投稿一覧画面
+  posts: { count: 0, item: [] },
+  // Admin用。ファン一覧画面
+  fans: { count: 0, item: [] }
 }
 
 // すべてのboxContentsを走査して、データ更新
@@ -143,26 +142,6 @@ export default handleActions(
     },
 
     /**
-     *  POSTS
-     *  SET   : payload is { count, item }
-     *  PUSH  : payload is []
-     */
-    [AppAdminPost.SET_LIST]: (state, action) => {
-      return immutable.set(state, `posts`, action.payload)
-    },
-
-    [AppAdminPost.PUSH_LIST]: (state, action) => {
-      // spread payload because it is array
-      let newState = immutable.push(state, `posts.item`, ...action.payload)
-      newState = immutable.update(
-        state,
-        `posts.count`,
-        c => c + action.payload.length
-      )
-      return newState
-    },
-
-    /**
      * POST
      */
     [AppAdminPost.SET]: (state, action) => {
@@ -225,6 +204,46 @@ export default handleActions(
       let newState
       // LIKE総数を増加
       newState = findAllAndUpdate(state, +postId, `comment`, c => c + 1)
+      return newState
+    },
+
+    /**
+     *  ADMIN POSTS
+     *  SET   : payload is { count, item }
+     *  PUSH  : payload is []
+     */
+    [AppAdminPost.SET_LIST]: (state, action) => {
+      return immutable.set(state, `posts`, action.payload)
+    },
+
+    [AppAdminPost.PUSH_LIST]: (state, action) => {
+      // spread payload because it is array
+      let newState = immutable.push(state, `posts.item`, ...action.payload)
+      newState = immutable.update(
+        state,
+        `posts.count`,
+        c => c + action.payload.length
+      )
+      return newState
+    },
+
+    /**
+     *  ADMIN FANS
+     *  SET   : payload is { count, item }
+     *  PUSH  : payload is []
+     */
+    [AppAdminFan.SET_LIST]: (state, action) => {
+      return immutable.set(state, `fans`, action.payload)
+    },
+
+    [AppAdminFan.PUSH_LIST]: (state, action) => {
+      // spread payload because it is array
+      let newState = immutable.push(state, `fans.item`, ...action.payload)
+      newState = immutable.update(
+        state,
+        `fans.count`,
+        c => c + action.payload.length
+      )
       return newState
     }
   },

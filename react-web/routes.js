@@ -17,3 +17,6 @@ routes.add('/admin/post/list/:pageNum', '/admin/post/list')
 // postIdがある == 下書き or 記事Update
 routes.add('/admin/post/add/:boxType', '/admin/post/add')
 routes.add('/admin/post/add/:boxType/:postId', '/admin/post/add')
+
+// （admin）ファン一覧
+routes.add('/admin/fan/list/:pageNum', '/admin/fan/list')
