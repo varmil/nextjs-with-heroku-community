@@ -1,7 +1,7 @@
 import Router from 'next/router'
 import { reauthenticate } from 'actions/user'
 import { createAction } from 'redux-actions'
-import { User } from 'constants/ActionTypes'
+import { User, SiteState } from 'constants/ActionTypes'
 import { getCookie } from 'utils/cookie'
 import Rule from 'constants/Rule'
 
@@ -15,6 +15,8 @@ export default function(ctx) {
         ctx.store.dispatch(reauthenticate(token))
         // fetch and set user basic info from API server with token
         ctx.store.dispatch(createAction(User.FETCH_REQUEST)(token))
+        // HACK: performance is low
+        ctx.store.dispatch(createAction(SiteState.FETCH_REQUEST)())
       }
     }
   } else {

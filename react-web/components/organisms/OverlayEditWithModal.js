@@ -37,13 +37,15 @@ class OverlayEditWithModal extends React.Component {
         // action   : string    起動するAction
         // index    : int       WrappedComponentが配列で管理される場合のIndex
         onSave={state => {
-          console.log('ONSAVE', state, attr.action, attr.index)
-
-          // update store, and pass the same action to iframe
           // Redux guarantees the store has received the next state before accepting the next action
           // https://github.com/reduxjs/redux/issues/1199
+          console.log('ONSAVE', state, attr.action, attr.index)
+
+          // update state.site, then post current state.site entirely
           const action = actionMethod({ ...state, index: attr.index })
-          dispatch(action)
+          dispatch(createAction(SiteState.SAVE_REQUEST)({ action }))
+
+          // pass the same action to iframe
           dispatch(
             postMessage({
               iWindow,
@@ -51,9 +53,6 @@ class OverlayEditWithModal extends React.Component {
               payload: action
             })
           )
-
-          // post current state.site entirely
-          dispatch(createAction(SiteState.SAVE_REQUEST)({ siteState: site }))
         }}
       />
     )

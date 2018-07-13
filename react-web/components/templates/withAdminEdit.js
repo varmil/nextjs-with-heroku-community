@@ -44,11 +44,8 @@ export default function ppHOC(WrappedComponent) {
         // ちょっと手抜き。本当はEventでやりとりすべき
         // HACK: fixed要素の計算も行うため定期的に強制re-render (reactパワーで何とかなるっしょ)
         this.timer = setInterval(() => {
-          // const frameHeight = iWindow.document.body.scrollHeight
-          // if (this.state.iframeHeight === frameHeight) return
-          // console.info('height ::', frameHeight)
           updateOverlays()
-        }, 500)
+        }, 800)
       })
 
       // iWindow.postMessage({ type: IFrame.EVENT_TYPE_LOAD, payload: {} }, '*')

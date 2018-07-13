@@ -130,7 +130,12 @@ function* fetchUser({ payload }) {
 
 function* saveSiteState({ payload }) {
   const { jwtToken } = yield select(getUser)
-  const { siteState } = payload
+  const { action } = payload
+
+  // まずstate.siteを更新させる。更新後のstate.siteをサーバへ送信
+  yield put(action)
+  const siteState = yield select(state => state.site)
+
   try {
     yield call(API.post, '/site/design', { siteState }, jwtToken)
   } catch (e) {

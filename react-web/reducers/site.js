@@ -1,6 +1,7 @@
 import { handleActions } from 'redux-actions'
 import pickBy from 'lodash/pickBy'
 import identity from 'lodash/identity'
+import isEmpty from 'lodash/isEmpty'
 import update from 'immutability-helper'
 import immutable from 'object-path-immutable'
 import {
@@ -75,7 +76,9 @@ export default handleActions(
      * まるっとSET (payloadがそのままnew-state)
      */
     [SiteState.SET]: (state, action) => {
-      console.log('まるっとセット', action.payload)
+      // console.log('まるっとセット', action.payload)
+      // do nothing if payload is empty
+      if (isEmpty(action.payload)) return state
       return action.payload
     },
 
