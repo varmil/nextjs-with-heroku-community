@@ -3,43 +3,45 @@ const tableName = db.Category.tableName
 
 module.exports = {
   up: function(queryInterface, Sequelize) {
-    return queryInterface.createTable(tableName, {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      brandId: {
-        allowNull: false,
-        defaultValue: 0,
-        type: Sequelize.INTEGER
-      },
-      boxType: {
-        allowNull: false,
-        defaultValue: 0,
-        type: Sequelize.INTEGER
-      },
-      categoryIndex: {
-        allowNull: false,
-        defaultValue: 0,
-        type: Sequelize.INTEGER
-      },
-      name: {
-        allowNull: false,
-        defaultValue: '',
-        type: Sequelize.STRING
-      },
+    return queryInterface
+      .createTable(tableName, {
+        id: {
+          allowNull: false,
+          autoIncrement: true,
+          primaryKey: true,
+          type: Sequelize.INTEGER
+        },
+        brandId: {
+          allowNull: false,
+          defaultValue: 0,
+          type: Sequelize.INTEGER
+        },
+        boxType: {
+          allowNull: false,
+          defaultValue: 0,
+          type: Sequelize.INTEGER
+        },
+        categoryIndex: {
+          allowNull: false,
+          defaultValue: 0,
+          type: Sequelize.INTEGER
+        },
+        name: {
+          allowNull: false,
+          defaultValue: '',
+          type: Sequelize.STRING
+        },
 
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
-    })
+        createdAt: {
+          allowNull: false,
+          type: Sequelize.DATE
+        },
+        updatedAt: {
+          allowNull: false,
+          type: Sequelize.DATE
+        }
+      })
+      .then(() => queryInterface.addIndex(tableName, { fields: ['brandId'] }))
   },
   down: function(queryInterface, Sequelize) {
     return queryInterface.dropTable(tableName)

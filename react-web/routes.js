@@ -1,8 +1,10 @@
 const nextRoutes = require('next-routes')
 const routes = (module.exports = nextRoutes())
 
-// routes.add('blog', '/blog/:slug')
 // routes.add('/view/about', '/about-us/:foo(bar|baz)')
+
+// signup (with invitation)
+routes.add('/view/signup/:code', '/view/signup')
 
 // box page
 routes.add('/admin/site/edit/home/:slug', '/admin/site/edit/home')
