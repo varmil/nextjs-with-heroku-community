@@ -11,12 +11,16 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import TablePagination from '@material-ui/core/TablePagination'
 import Paper from '@material-ui/core/Paper'
+import { getBaseDomain } from 'utils/API'
+import Invitation from '/../shared/constants/Invitation'
 
 const StatusLabel = props => {
-  if (props.status) {
-    return <span className="badge badge-info">参加済み</span>
-  } else {
+  if (props.status === Invitation.NOT_SEND) {
+    return <span className="badge badge-info">未送付</span>
+  } else if (props.status === Invitation.NOT_JOINED) {
     return <span className="badge badge-secondary">未参加</span>
+  } else if (props.status === Invitation.JOINED) {
+    return <span className="badge badge-info">参加済</span>
   }
 }
 
@@ -33,7 +37,7 @@ const styles = theme => ({
     boxShadow: 'none'
   },
   table: {
-    minWidth: 1020
+    minWidth: 920
   },
   tableWrapper: {
     overflowX: 'auto'
@@ -83,12 +87,13 @@ class FanTable extends React.Component {
                       )}
                     </DensedCell>
                     <DensedCell>
-                      {fecha.format(
-                        new Date(n.lastLoginedAt || null),
-                        'YYYY-MM-DD'
-                      )}
+                      {n.joinedAt
+                        ? fecha.format(new Date(n.joinedAt), 'YYYY-MM-DD')
+                        : null}
                     </DensedCell>
-                    <DensedCell>{n.url}</DensedCell>
+                    <DensedCell>{`${getBaseDomain()}:3000/view/signup/${
+                      n.code
+                    }`}</DensedCell>
                   </TableRow>
                 )
               })}

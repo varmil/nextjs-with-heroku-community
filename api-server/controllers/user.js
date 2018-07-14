@@ -66,13 +66,13 @@ exports.fetchInvitedFans = async (req, res, next) => {
   const pageNum = req.params.pageNum || 1 // 1 origin
   const brandId = req.user.brand.id
 
-  const users = await services.Invitation.fetchList(
+  const invitedFans = await services.Invitation.fetchList(
     pageNum,
     { brandId },
     { perPage }
   )
   const count = await models.Invitation.count({ where: { brandId }, raw: true })
-  res.json({ count, item: users })
+  res.json({ count, item: invitedFans })
 }
 
 /**
@@ -97,6 +97,10 @@ exports.saveInvitation = async (req, res, next) => {
     await services.Invitation.save(brandId, emails, defaultRole)
     res.json(true)
   } catch (e) {
-    return next(e)
+    if (e.name === 'SequelizeUniqueConstraintError') {
+      return res.status(500).json('そのメールアドレスは既に招待済みです。')
+    } else {
+      return res.status(500).json(e.name)
+    }
   }
 }

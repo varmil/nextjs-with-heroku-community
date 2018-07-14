@@ -20,7 +20,7 @@ class AdminFanAdd extends React.Component {
     const PER_PAGE = 30
 
     dispatch(
-      createAction(AppAdminFan.FETCH_LIST_REQUEST)({
+      createAction(AppAdminFan.FETCH_INVITATION_LIST_REQUEST)({
         pageNum,
         perPage: PER_PAGE
       })

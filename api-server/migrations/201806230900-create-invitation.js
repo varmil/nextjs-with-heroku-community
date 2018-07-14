@@ -39,7 +39,7 @@ module.exports = {
         code: {
           allowNull: false,
           defaultValue: '',
-          type: Sequelize.STRING
+          type: Sequelize.CHAR(8)
         },
 
         createdAt: {
@@ -52,7 +52,10 @@ module.exports = {
         }
       })
       .then(() =>
-        queryInterface.addIndex(tableName, { fields: ['email'], unique: true })
+        queryInterface.addIndex(tableName, {
+          fields: ['brandId', 'email'],
+          unique: true
+        })
       )
       .then(() =>
         queryInterface.addIndex(tableName, {

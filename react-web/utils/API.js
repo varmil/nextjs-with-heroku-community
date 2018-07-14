@@ -5,17 +5,21 @@ const LOCALHOST = 'localhost'
 const PRODUCTION_SERVER = '35.200.99.144'
 const PORT = 5000
 
-const getBaseURL = () => {
+export const getBaseDomain = () => {
   // server
   const isServer = typeof window === 'undefined'
-  if (isServer) return `${HTTP_SCHEMA}${LOCALHOST}:${PORT}`
+  if (isServer) return `${HTTP_SCHEMA}${LOCALHOST}`
 
   // browser
   if (process.env.NODE_ENV === 'production') {
-    return `${HTTP_SCHEMA}${PRODUCTION_SERVER}:${PORT}`
+    return `${HTTP_SCHEMA}${PRODUCTION_SERVER}`
   } else {
-    return `${HTTP_SCHEMA}${LOCALHOST}:${PORT}`
+    return `${HTTP_SCHEMA}${LOCALHOST}`
   }
+}
+
+const getBaseURL = () => {
+  return `${getBaseDomain()}:${PORT}`
 }
 
 // serverではシングルトンなので注意
