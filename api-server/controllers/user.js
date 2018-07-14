@@ -44,14 +44,32 @@ exports.updateLoginedAt = async (req, res, next) => {
   }
 }
 
+/**
+ * 特定ブランドに紐づくユーザ一覧（ファン一覧取得などに使う）
+ */
 exports.fetchInBrand = async (req, res, next) => {
   const { perPage } = req.query
   const pageNum = req.params.pageNum || 1 // 1 origin
   const brandId = req.user.brand.id
 
-  // 記事データ
   const users = await services.User.fetchList(pageNum, { brandId }, { perPage })
-  // 総カウント
   const count = await models.UserBrand.count({ where: { brandId }, raw: true })
+  res.json({ count, item: users })
+}
+
+/**
+ * 招待ファン一覧取得
+ */
+exports.fetchInvitedFans = async (req, res, next) => {
+  const { perPage } = req.query
+  const pageNum = req.params.pageNum || 1 // 1 origin
+  const brandId = req.user.brand.id
+
+  const users = await services.Invitation.fetchList(
+    pageNum,
+    { brandId },
+    { perPage }
+  )
+  const count = await models.Invitation.count({ where: { brandId }, raw: true })
   res.json({ count, item: users })
 }

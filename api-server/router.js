@@ -147,5 +147,16 @@ module.exports = function(app) {
   /**
    * FAN
    */
-  app.get('/fan/list/:pageNum', requireAuth, UserController.fetchInBrand)
+  app.get(
+    '/fan/list/:pageNum',
+    requireAuth,
+    userRole.is('adminGuest'),
+    UserController.fetchInBrand
+  )
+  app.get(
+    '/fan/list/invited/:pageNum',
+    requireAuth,
+    userRole.is('adminGuest'),
+    UserController.fetchInvitedFans
+  )
 }

@@ -35,7 +35,9 @@ const initialState = {
   // Admin用。投稿一覧画面
   posts: { count: 0, item: [] },
   // Admin用。ファン一覧画面
-  fans: { count: 0, item: [] }
+  fans: { count: 0, item: [] },
+  // Admin用。招待ファン一覧画面
+  invitedFans: { count: 0, item: [] }
 }
 
 // すべてのboxContentsを走査して、データ更新
@@ -230,21 +232,12 @@ export default handleActions(
     /**
      *  ADMIN FANS
      *  SET   : payload is { count, item }
-     *  PUSH  : payload is []
      */
     [AppAdminFan.SET_LIST]: (state, action) => {
       return immutable.set(state, `fans`, action.payload)
     },
-
-    [AppAdminFan.PUSH_LIST]: (state, action) => {
-      // spread payload because it is array
-      let newState = immutable.push(state, `fans.item`, ...action.payload)
-      newState = immutable.update(
-        state,
-        `fans.count`,
-        c => c + action.payload.length
-      )
-      return newState
+    [AppAdminFan.SET_INVITATION_LIST]: (state, action) => {
+      return immutable.set(state, `invitedFans`, action.payload)
     }
   },
   initialState

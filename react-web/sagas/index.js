@@ -400,8 +400,25 @@ function* fetchFans({ payload }) {
       `/fan/list/${pageNum}?${query}`,
       jwtToken
     )
-    const action = createAction(AppAdminFan.SET_LIST)
-    yield put(action(data))
+    yield put(createAction(AppAdminFan.SET_LIST)(data))
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
+}
+
+// (Admin用)招待ファン一覧
+function* fetchInvitedFans({ payload }) {
+  const { pageNum, perPage } = payload
+  const { jwtToken } = yield select(getUser)
+
+  try {
+    const query = qs.stringify({ perPage })
+    const { data } = yield call(
+      API.fetch,
+      `/fan/list/invited/${pageNum}?${query}`,
+      jwtToken
+    )
+    yield put(createAction(AppAdminFan.SET_INVITATION_LIST)(data))
   } catch (e) {
     yield put(setCommonError(e.response))
   }
@@ -457,7 +474,8 @@ const appAdminSaga = [
   takeLatest(AppAdminPost.FETCH_REQUEST, fetchPost),
   takeLatest(AppAdminPost.FETCH_LIST_REQUEST, fetchPosts),
 
-  takeLatest(AppAdminFan.FETCH_LIST_REQUEST, fetchFans)
+  takeLatest(AppAdminFan.FETCH_LIST_REQUEST, fetchFans),
+  takeLatest(AppAdminFan.FETCH_INVITATION_LIST_REQUEST, fetchInvitedFans)
 ]
 
 function* rootSaga() {

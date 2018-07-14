@@ -17,10 +17,19 @@ export const Container = props => {
 }
 
 export const Header = props => {
+  const LinkOrDiv = props =>
+    props.route ? (
+      <Link route={props.route} passHref>
+        {props.children}
+      </Link>
+    ) : (
+      <div>{props.children}</div>
+    )
+
   return (
     <section className="borderB pageHeader text-center position-relative pb-3">
       <span className="title">{props.title}</span>
-      <Link route={props.route} passHref>
+      <LinkOrDiv route={props.route}>
         <a>
           <ColorButton
             className="addButton w-25"
@@ -36,7 +45,7 @@ export const Header = props => {
             {props.buttonText}
           </ColorButton>
         </a>
-      </Link>
+      </LinkOrDiv>
 
       <style jsx>{`
         .borderB {

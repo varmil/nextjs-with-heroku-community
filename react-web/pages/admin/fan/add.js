@@ -9,9 +9,9 @@ import {
 } from 'components/molecules/AdminPageContainer'
 import AdminHeader from 'components/organisms/admin/AdminHeader'
 import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
-import FanTable from 'components/organisms/admin/FanTable'
+import InvitationTable from 'components/organisms/admin/InvitationTable'
 
-class AdminFanList extends React.Component {
+class AdminFanAdd extends React.Component {
   static async getInitialProps({ ctx }) {
     const { dispatch } = ctx.store
     // one-start のページ番号
@@ -52,10 +52,10 @@ class AdminFanList extends React.Component {
 
           <Filter onChange={this.handleChange.bind(this)} />
 
-          <section className="regNote mt-3 text-center">
-            <FanTable
-              fans={props.fans.item}
-              count={props.fans.count}
+          <section className="mt-3 text-center">
+            <InvitationTable
+              data={props.invitedFans.item}
+              count={props.invitedFans.count}
               page={props.pageNum}
               rowsPerPage={props.perPage}
             />
@@ -73,5 +73,5 @@ class AdminFanList extends React.Component {
 }
 
 export default connect(state => ({
-  fans: state.app.fans
-}))(AdminFanList)
+  invitedFans: state.app.invitedFans
+}))(AdminFanAdd)

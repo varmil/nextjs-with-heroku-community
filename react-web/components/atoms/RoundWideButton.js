@@ -3,11 +3,11 @@ import ColorButton from 'components/atoms/ColorButton'
 
 export default props => (
   <React.Fragment>
-    <div>
+    <div style={props.containerStyle}>
       <ColorButton
         {...props}
-        outline={true}
-        style={{ borderRadius: 30, width: '100%' }}
+        outline={props.outline !== undefined ? props.outline : true}
+        style={{ ...props.style, borderRadius: 30, width: '100%' }}
       >
         {props.children}
       </ColorButton>
