@@ -3,7 +3,7 @@ const reqlib = require('app-root-path').require
 const services = reqlib('/services')
 const models = reqlib('/models')
 const BoxType = reqlib('/../shared/constants/BoxType')
-const Role = reqlib('/constants/Role')
+const Role = reqlib('/../shared/constants/Role')
 const Message = reqlib('/constants/Message')
 
 /**

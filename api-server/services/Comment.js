@@ -3,7 +3,7 @@ const _ = require('lodash')
 const UserService = reqlib('/services/User')
 const models = reqlib('/models')
 const Path = reqlib('/constants/Path')
-const Role = reqlib('/constants/Role')
+const Role = reqlib('/../shared/constants/Role')
 
 const PER_PAGE = 5
 

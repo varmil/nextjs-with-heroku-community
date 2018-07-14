@@ -2,12 +2,13 @@ const express = require('express')
 const ConnectRoles = require('connect-roles')
 const multer = require('multer')
 const uuidv1 = require('uuid/v1')
-const Role = require('./constants/Role')
-const AuthController = require('./controllers/authentication')
-const UserController = require('./controllers/user')
-const SiteController = require('./controllers/site')
-const PostController = require('./controllers/post')
-const CommentController = require('./controllers/comment')
+const reqlib = require('app-root-path').require
+const Role = reqlib('/../shared/constants/Role')
+const AuthController = reqlib('/controllers/authentication')
+const UserController = reqlib('/controllers/user')
+const SiteController = reqlib('/controllers/site')
+const PostController = reqlib('/controllers/post')
+const CommentController = reqlib('/controllers/comment')
 
 const passport = require('passport')
 require('./services/passport')
@@ -145,8 +146,14 @@ module.exports = function(app) {
   )
 
   /**
-   * FAN
+   * FAN (意味合い的にはUserなのでUserController使用)
    */
+  app.post(
+    '/fan/invitation',
+    requireAuth,
+    userRole.is('adminGuest'),
+    UserController.saveInvitation
+  )
   app.get(
     '/fan/list/:pageNum',
     requireAuth,

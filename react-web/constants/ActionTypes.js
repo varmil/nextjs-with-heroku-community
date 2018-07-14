@@ -119,6 +119,7 @@ export const AppAdminFan = createTypes(
   async('FETCH_LIST'),
   'SET_LIST',
   // 招待ファン
+  async('SAVE_INVITATION'),
   async('FETCH_INVITATION_LIST'),
   'SET_INVITATION_LIST'
 )

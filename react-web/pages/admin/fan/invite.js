@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
-import Select from 'react-select'
 import CreatableSelect from 'react-select/lib/Creatable'
 import { AppAdminFan } from 'constants/ActionTypes'
 import { Container, Header } from 'components/molecules/AdminPageContainer'
@@ -40,18 +39,28 @@ class AdminFanInvite extends React.Component {
     return { pageNum, perPage: PER_PAGE }
   }
 
+  state = { emails: [] }
+
   handleChange = (newValue, actionMeta) => {
     console.group('Value Changed')
     console.log(newValue)
-    console.log(`action: ${actionMeta.action}`)
+    // console.log(`action: ${actionMeta.action}`)
     console.groupEnd()
+
+    const emails = newValue.map(v => v.value)
+    this.setState({ ...this.state, emails })
   }
 
-  handleInputChange = (inputValue, actionMeta) => {
-    console.group('Input Changed')
-    console.log(inputValue)
-    console.log(`action: ${actionMeta.action}`)
-    console.groupEnd()
+  handleInputChange = (inputValue, actionMeta) => {}
+
+  onSubmit = () => {
+    console.log(this.state)
+    const { emails } = this.state
+    this.props.dispatch(
+      createAction(AppAdminFan.SAVE_INVITATION_REQUEST)({
+        emails
+      })
+    )
   }
 
   render() {
@@ -77,10 +86,9 @@ class AdminFanInvite extends React.Component {
               <label className="mb-4">メールアドレス</label>
               <CreatableSelect
                 isMulti
-                isClearable
                 placeholder={'メールアドレスを入力'}
-                onChange={this.handleChange.bind(this)}
-                onInputChange={this.handleInputChange.bind(this)}
+                onChange={this.handleChange}
+                onInputChange={this.handleInputChange}
                 styles={colourStyles}
               />
             </div>
@@ -97,6 +105,7 @@ class AdminFanInvite extends React.Component {
                   fontSize: 14
                 }}
                 color={'#B2B2B2'}
+                onClick={this.onSubmit}
               >
                 発行
               </RoundWideButton>

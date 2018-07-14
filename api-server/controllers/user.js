@@ -2,6 +2,7 @@ const reqlib = require('app-root-path').require
 const services = reqlib('/services')
 const models = reqlib('/models')
 const Message = reqlib('/constants/Message')
+const Role = reqlib('/../shared/constants/Role')
 
 /**
  * Profile編集
@@ -72,4 +73,30 @@ exports.fetchInvitedFans = async (req, res, next) => {
   )
   const count = await models.Invitation.count({ where: { brandId }, raw: true })
   res.json({ count, item: users })
+}
+
+/**
+ * 招待発行
+ */
+exports.saveInvitation = async (req, res, next) => {
+  console.log('[profilesave]body', req.body)
+  const { emails, roleId } = req.body
+  const brandId = req.user.brand.id
+
+  if (!emails) {
+    return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
+  }
+
+  // 複数人追加するときのデフォルト権限（管理者専用）
+  let defaultRole
+  if (!roleId) {
+    defaultRole = roleId
+  }
+
+  try {
+    await services.Invitation.save(brandId, emails, defaultRole)
+    res.json(true)
+  } catch (e) {
+    return next(e)
+  }
 }

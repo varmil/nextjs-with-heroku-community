@@ -388,6 +388,17 @@ function* saveVote({ payload }) {
  * Fans
  */
 
+// (Admin用)招待コード発行
+function* saveInvitation({ payload }) {
+  const { jwtToken } = yield select(getUser)
+  const { emails, roleId } = payload
+  try {
+    yield call(API.post, '/fan/invitation', { emails, roleId }, jwtToken)
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
+}
+
 // (Admin用)一覧
 function* fetchFans({ payload }) {
   const { pageNum, perPage } = payload
@@ -474,6 +485,7 @@ const appAdminSaga = [
   takeLatest(AppAdminPost.FETCH_REQUEST, fetchPost),
   takeLatest(AppAdminPost.FETCH_LIST_REQUEST, fetchPosts),
 
+  takeLatest(AppAdminFan.SAVE_INVITATION_REQUEST, saveInvitation),
   takeLatest(AppAdminFan.FETCH_LIST_REQUEST, fetchFans),
   takeLatest(AppAdminFan.FETCH_INVITATION_LIST_REQUEST, fetchInvitedFans)
 ]

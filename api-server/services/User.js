@@ -3,7 +3,7 @@ const reqlib = require('app-root-path').require
 const models = reqlib('/models')
 const moveFile = require('move-file')
 const Path = reqlib('/constants/Path')
-const Role = reqlib('/constants/Role')
+const Role = reqlib('/../shared/constants/Role')
 const moment = require('moment')
 
 // リストで取得する際に、1ページあたりの初期値
