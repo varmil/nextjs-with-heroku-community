@@ -74,3 +74,7 @@ exports.signup = async function(req, res, next) {
     return next(e)
   }
 }
+
+exports.authInvitationCode = async function(req, res, next) {
+  res.json(true)
+}

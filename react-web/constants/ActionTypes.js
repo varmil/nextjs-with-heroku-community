@@ -136,6 +136,7 @@ export const User = createTypes(
   async('SIGNIN'),
   async('SAVE_PROFILE'),
   async('UPDATE_LOGINED_AT'),
+  async('FETCH_CODE_INFO'), // invitation code
   // admin
   async('AUTH_ADMIN'),
   // fetch basic info (id, nickname)

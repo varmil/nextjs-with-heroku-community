@@ -135,6 +135,16 @@ function* updateLoginedAt({ payload }) {
   }
 }
 
+function* fetchCodeInfo({ payload }) {
+  const { code } = payload
+  try {
+    const res = yield call(API.fetch, `/auth/code/${code}`)
+    yield put(createAction(User.SET)({ ...res.data }))
+  } catch (e) {
+    console.warn('failed fetch user info', e.response.statusText)
+  }
+}
+
 /**
  * SITE
  */
@@ -458,7 +468,8 @@ const userSaga = [
   takeLatest(User.AUTH_ADMIN_REQUEST, signupAdmin),
   takeLatest(User.SAVE_PROFILE_REQUEST, saveUserProfile),
   takeLatest(User.FETCH_REQUEST, fetchUser),
-  takeLatest(User.UPDATE_LOGINED_AT_REQUEST, updateLoginedAt)
+  takeLatest(User.UPDATE_LOGINED_AT_REQUEST, updateLoginedAt),
+  takeLatest(User.FETCH_CODE_INFO_REQUEST, fetchCodeInfo)
 ]
 
 const siteSaga = [

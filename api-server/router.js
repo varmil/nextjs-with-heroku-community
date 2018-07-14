@@ -95,6 +95,7 @@ module.exports = function(app) {
   /**
    * USER
    */
+  app.get('/auth/code/:code', AuthController.authInvitationCode)
   app.post('/signin', requireSignIn, AuthController.signin)
   // 一般ユーザ
   app.post('/signup', AuthController.signup)

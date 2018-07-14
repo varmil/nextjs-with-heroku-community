@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from 'routes'
+import { createAction } from 'redux-actions'
+import { User } from 'constants/ActionTypes'
 import RoundWideButton from 'components/atoms/RoundWideButton'
 import CenteredContainer from 'components/molecules/CenteredContainer'
 
@@ -8,6 +10,13 @@ const btnStyle = {
 }
 
 export default class SignUp extends React.Component {
+  static async getInitialProps({ ctx }) {
+    const { dispatch } = ctx.store
+    const { code } = ctx.query
+    dispatch(createAction(User.FETCH_CODE_INFO_REQUEST)({ code }))
+    return {}
+  }
+
   render() {
     return (
       <React.Fragment>
