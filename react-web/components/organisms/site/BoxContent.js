@@ -334,6 +334,7 @@ class BoxContent extends React.Component {
     const props = this.props
     const copiedArray = [...props.comments].reverse()
     const node = typeof window === 'undefined' ? null : document.body
+    const isEmptyComment = this.state.comment.length === 0
 
     return (
       <div className="comments w-100 mx-auto pt-2">
@@ -374,12 +375,20 @@ class BoxContent extends React.Component {
                 className="btn btn-outline-secondary"
                 type="button"
                 onClick={this.onSubmitComment.bind(this)}
+                disabled={isEmptyComment}
               >
-                <i className="fas fa-chevron-right" />
+                <i className="far fa-paper-plane" />
               </button>
             </div>
           </div>
         </Portal>
+
+        <style global jsx>{`
+          .form-control:focus {
+            border-color: #ced4da !important;
+            box-shadow: none !important;
+          }
+        `}</style>
 
         <style jsx>{`
           a {
@@ -400,7 +409,11 @@ class BoxContent extends React.Component {
             background-color: #eff1f3;
             border-radius: 15px;
             padding: 10px 20px;
-            // margin-left: 8px;
+          }
+
+          .btn.btn-outline-secondary {
+            border-color: #ced4da !important;
+            color: ${!isEmptyComment ? Color.MAIN_BLUE : '#ced4da'};
           }
         `}</style>
       </div>
