@@ -415,12 +415,18 @@ class BoxContent extends React.Component {
             border-color: #ced4da !important;
             color: ${!isEmptyComment ? Color.MAIN_BLUE : '#ced4da'};
           }
+
+          button i {
+            position: relative;
+            left: -1px;
+          }
         `}</style>
       </div>
     )
   }
 
   createMainContent() {
+    const TEXT_FONT_SIZE = 14
     const state = this.state
     const props = this.props
     const Body = (
@@ -430,13 +436,13 @@ class BoxContent extends React.Component {
 
         <style jsx>{`
           .card-text {
-            font-size: 12px;
+            font-size: ${TEXT_FONT_SIZE}px;
             color: #505050;
             white-space: normal;
           }
 
           h5 {
-            font-size: 14px;
+            font-size: ${TEXT_FONT_SIZE}px;
             font-weight: bold;
           }
         `}</style>
