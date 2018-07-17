@@ -2,9 +2,9 @@ const reqlib = require('app-root-path').require
 const _ = require('lodash')
 const UserService = reqlib('/services/User')
 const models = reqlib('/models')
-const moveFile = require('move-file')
 const Path = reqlib('/constants/Path')
 const Role = reqlib('/constants/Role')
+const { moveImage } = reqlib('/utils/image')
 const BoxType = reqlib('/../shared/constants/BoxType')
 
 // リストで取得する際に、1ページあたりの初期値
@@ -19,7 +19,7 @@ module.exports = class Post {
         const { path, filename } = file
         const dbPath = `${Path.POST_IMG_DIR}/${filename}`
         const fullPath = `${Path.STATIC_BASE_DIR}${dbPath}`
-        await moveFile(path, fullPath)
+        await moveImage(path, fullPath)
         return dbPath
       })
       return Promise.all(promises)
