@@ -127,6 +127,8 @@ class Editpost extends React.Component {
             placeholder="本文"
             value={this.state.body}
             onChange={this.handleChange('body')}
+            rows={5}
+            rowsMax={50}
             fullWidth
             multiline
           />
