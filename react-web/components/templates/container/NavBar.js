@@ -57,9 +57,9 @@ class NavBar extends React.Component {
             data-action={SiteCommon.SET_NAV_ICON_COLOR}
             data-path={`${PATH_MAP.NAV_ICON}`}
           >
-            <i className="fas fa-search mr-2 navIcon" />
+            <i className="fas fa-search mr-3 navIcon" />
             <NotificationIcon
-              className="mr-2 navIcon"
+              className="mr-3 navIcon"
               color={props.navIcon.color}
             />
 
