@@ -2,7 +2,6 @@ const reqlib = require('app-root-path').require
 const _ = require('lodash')
 const UserService = reqlib('/services/User')
 const models = reqlib('/models')
-const moveFile = require('move-file')
 const Path = reqlib('/constants/Path')
 const Role = reqlib('/constants/Role')
 const BoxType = reqlib('/../shared/constants/BoxType')

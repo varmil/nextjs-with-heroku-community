@@ -1,9 +1,9 @@
 const _ = require('lodash')
 const reqlib = require('app-root-path').require
 const models = reqlib('/models')
-const moveFile = require('move-file')
 const Path = reqlib('/constants/Path')
 const Role = reqlib('/constants/Role')
+const { moveImage } = reqlib('/utils/image')
 const moment = require('moment')
 
 // リストで取得する際に、1ページあたりの初期値
@@ -61,7 +61,7 @@ module.exports = class User {
       const { path, filename } = file
       dbPath = `${Path.USER_ICON_DIR}/${filename}`
       const fullPath = `${Path.STATIC_BASE_DIR}${dbPath}`
-      await moveFile(path, fullPath)
+      await moveImage(path, fullPath)
     } else {
       // fileがない場合は何もしない
     }
@@ -292,8 +292,7 @@ module.exports = class User {
   }
 
   static arrToObj(arr, key, value) {
-    return _
-      .chain(arr)
+    return _.chain(arr)
       .keyBy(key)
       .mapValues(value)
       .value()
