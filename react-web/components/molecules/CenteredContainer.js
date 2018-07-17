@@ -12,8 +12,8 @@ export default class extends React.Component {
             max-width: 360px;
             margin: auto;
             position: absolute;
-            top: 0;
-            bottom: 0;
+            top: ${this.props.center ? '0' : '10%'};
+            bottom: ${this.props.center ? '0' : 'initial'};
             left: 0;
             right: 0;
             height: ${this.props.height}px;

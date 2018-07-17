@@ -14,7 +14,7 @@ class SignupComplete extends React.Component {
 
   render() {
     return (
-      <CenteredContainer height={200}>
+      <CenteredContainer height={200} center>
         <section>
           <SignInUpHeader text="アカウント登録完了" />
         </section>
