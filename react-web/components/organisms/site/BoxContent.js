@@ -20,6 +20,8 @@ import LazyLoad from 'react-lazyload'
 const AVATAR_SIZE = 44
 // アンカーで飛んだときになんとなく真ん中あたりに表示するため
 const OFFSET_IMG_TOP = -100
+const SCROLL_BOTTOM = 9999
+const FOOTER_FONTSIZE = 14
 
 const PreviewImage = props => {
   const HEIGHT = 110
@@ -291,10 +293,12 @@ class BoxContent extends React.Component {
   }
 
   createCommentButton(showDetail) {
+    const { comment } = this.props
+
     let onClick = null
     if (showDetail) {
       onClick = () => {
-        window.scrollTo(0, 9999)
+        window.scrollTo(0, SCROLL_BOTTOM)
         this.commentInput.focus()
       }
     } else {
@@ -302,16 +306,26 @@ class BoxContent extends React.Component {
         await Router.pushRoute(`${this.postLink}?focus=true`)
       }
     }
+
     return (
-      <span
-        onClick={onClick}
-        style={{
-          position: 'relative',
-          top: 2
-        }}
-      >
-        <a>コメントする</a>
-      </span>
+      <React.Fragment>
+        <IconButton
+          className="mr-2"
+          style={{ fontSize: FOOTER_FONTSIZE }}
+          onClick={onClick}
+        >
+          <i className="fas fa-comment mr-1" /> {comment}
+        </IconButton>
+        <span
+          onClick={onClick}
+          style={{
+            position: 'relative',
+            top: 2
+          }}
+        >
+          <a>コメントする</a>
+        </span>
+      </React.Fragment>
     )
   }
 
@@ -433,7 +447,7 @@ class BoxContent extends React.Component {
       dispatch(setSuccess())
       this.setState({ ...this.state, comment: '' })
       autosize.update(this.commentInput)
-      window.scrollTo(0, 9999)
+      window.scrollTo(0, SCROLL_BOTTOM)
     }
     dispatch(
       createAction(AppPost.SAVE_COMMENT_REQUEST)({
@@ -466,7 +480,6 @@ class BoxContent extends React.Component {
   }
 
   render() {
-    const FOOTER_FONTSIZE = 14
     const props = this.props
     const { PostLikes } = this.props
     return (
@@ -495,9 +508,6 @@ class BoxContent extends React.Component {
               onClick={this.onLikeToggle.bind(this)}
             >
               <i className="fas fa-heart mr-1" /> {props.like}
-            </IconButton>
-            <IconButton className="mr-2" style={{ fontSize: FOOTER_FONTSIZE }}>
-              <i className="fas fa-comment mr-1" /> {props.comment}
             </IconButton>
             {this.createCommentButton(props.showDetail)}
           </div>
