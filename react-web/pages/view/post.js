@@ -80,11 +80,6 @@ class VoteOptions extends React.Component {
           })}
         </section>
 
-        <section className="note mt-3 py-4 mx-4">
-          他のアイデアやお気に入りのアイテムを<br />
-          コメントでも教えてください
-        </section>
-
         <style jsx>{`
           .wrap {
             border-bottom: 1px solid #c1c0c0;
@@ -103,14 +98,6 @@ class VoteOptions extends React.Component {
             color: white;
             background-color: black;
             transition: all 0.25s ease;
-          }
-
-          .note {
-            font-size: 12px;
-            color: gray;
-            text-align: center;
-            border: 1px solid #c1c0c0;
-            border-radius: 30px;
           }
         `}</style>
       </div>

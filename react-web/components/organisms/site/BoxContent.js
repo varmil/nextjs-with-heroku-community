@@ -13,7 +13,6 @@ import AvatarAndName from 'components/molecules/AvatarAndName'
 import { createAction } from 'redux-actions'
 import { AppPost } from 'constants/ActionTypes'
 import Color from 'constants/Color'
-import { setSuccess } from 'actions/application'
 import autosize from 'autosize'
 import LazyLoad from 'react-lazyload'
 
@@ -463,7 +462,6 @@ class BoxContent extends React.Component {
     const { dispatch, id } = this.props
     const { comment } = this.state
     const successCb = async res => {
-      dispatch(setSuccess())
       this.setState({ ...this.state, comment: '' })
       autosize.update(this.commentInput)
       window.scrollTo(0, SCROLL_BOTTOM)
