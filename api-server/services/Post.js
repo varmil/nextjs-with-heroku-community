@@ -13,7 +13,7 @@ const DEFAULT_PER_PAGE = 20
 
 module.exports = class Post {
   // 投稿画像を一括して移動
-  static async moveProfileIcon(files) {
+  static async moveImages(files) {
     if (Array.isArray(files)) {
       const promises = files.map(async file => {
         const { path, filename } = file
@@ -55,7 +55,7 @@ module.exports = class Post {
         data = { ...data, categoryIndex }
       }
       // save images if needed (union)
-      const newImages = await Post.moveProfileIcon(files)
+      const newImages = await Post.moveImages(files)
       data = { ...data, images: _.union(fromServerFiles, newImages) }
 
       if (postId) {
