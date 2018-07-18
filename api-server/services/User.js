@@ -9,7 +9,7 @@ const moment = require('moment')
 // リストで取得する際に、1ページあたりの初期値
 // パラメタによって指定した場合はこの値は無効
 const DEFAULT_PER_PAGE = 20
-const DEFAULT_ICON_PATH = 'https://www.w3schools.com/w3images/avatar4.png'
+const DEFAULT_ICON_PATH = '/static/img/icon/usericon_default.png'
 
 const LAST_LOGINED_AT_UPDATE_INTERVAL_MIN = 10
 
@@ -76,7 +76,7 @@ module.exports = class User {
           // すでにサーバに保存されている画像があれば使用
           dbPath = fromServerFiles[0]
         } else {
-          // TODO: デフォルトは卵
+          // デフォルトは卵
           dbPath = DEFAULT_ICON_PATH
         }
       }
