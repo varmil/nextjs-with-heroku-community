@@ -138,8 +138,9 @@ function* updateLoginedAt({ payload }) {
 function* fetchCodeInfo({ payload }) {
   const { code } = payload
   try {
-    const res = yield call(API.fetch, `/auth/code/${code}`)
-    yield put(createAction(User.SET)({ ...res.data }))
+    const { data } = yield call(API.fetch, `/auth/code/${code}`)
+    // 招待コードもStoreに保存しておいてsignup時に一緒にPOSTする
+    yield put(createAction(User.SET)({ email: data, invitationCode: code }))
   } catch (e) {
     console.warn('failed fetch user info', e.response.statusText)
   }

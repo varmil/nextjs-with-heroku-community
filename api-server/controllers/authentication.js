@@ -76,5 +76,8 @@ exports.signup = async function(req, res, next) {
 }
 
 exports.authInvitationCode = async function(req, res, next) {
+  // TODO email情報を拾って返す。
+  // レコードが存在しない == 招待されてないユーザ
+  // codeを使ったチェックは実際には POST /signup 時に行う
   res.json(true)
 }

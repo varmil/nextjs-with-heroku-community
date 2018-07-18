@@ -8,7 +8,11 @@ const initialState = {
   nickname: '',
   iconPath: 'https://www.w3schools.com/w3images/avatar2.png',
   // (Admin, User) 今自分が見ているブランド
-  brand: { id: undefined, name: '' }
+  brand: { id: undefined, name: '' },
+
+  // 招待コードとそれに紐づく情報
+  invitationCode: null,
+  email: null
 
   // NOTE: これらは分ける必要ないかも？
   // (Admin) 所有するブランド一覧
