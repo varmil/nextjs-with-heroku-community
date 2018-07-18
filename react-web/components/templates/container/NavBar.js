@@ -31,7 +31,7 @@ class NavBar extends React.Component {
           className={`row ${props.className || ''}`}
           style={{
             padding: '0.6rem 0.8rem 0.5rem',
-            borderBottom: '1px solid black',
+            borderBottom: '1px solid gray',
             ...props.style
           }}
         >
