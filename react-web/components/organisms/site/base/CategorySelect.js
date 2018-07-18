@@ -23,6 +23,7 @@ const Item = props => {
         button {
           width: 95px;
           font-size: 11px;
+          font-weight: bold;
 
           white-space: nowrap;
           text-overflow: ellipsis;
