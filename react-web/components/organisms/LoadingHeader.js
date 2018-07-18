@@ -3,16 +3,22 @@ import Head from 'next/head'
 import NProgress from 'nprogress'
 import Router from 'next/router'
 
-// これがURLに含まれている場合はローディング出さない
-const excludeRoutes = ['/view/home']
+// これが現在、次のURLに含まれている場合はローディング出さない
+const excludeRoutes = [
+  {
+    current: '/view/home',
+    next: '/view/home'
+  }
+]
 
 Router.onRouteChangeStart = url => {
   console.log(`Loading: ${url}`)
-  // 特定のrouteではローディング出さない
-  const shouldExclude = excludeRoutes.some(route => url.includes(route))
-  if (!shouldExclude) {
-    NProgress.start()
-  }
+  // 特定のrouteではローディング出さない。（現在のrouteと次のrouteをみて判断）
+  const shouldExclude = excludeRoutes.some(route => {
+    const currentPath = window.location.pathname
+    return currentPath.includes(route.current) && url.includes(route.next)
+  })
+  if (!shouldExclude) NProgress.start()
 }
 Router.onRouteChangeComplete = () => NProgress.done()
 Router.onRouteChangeError = () => NProgress.done()
