@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Router } from 'routes'
+import { withStyles } from '@material-ui/core/styles'
 import findIndex from 'lodash/findIndex'
 import SwipeableViews from 'react-swipeable-views'
 import Tabs from '@material-ui/core/Tabs'
@@ -17,10 +18,10 @@ import Classes from 'constants/Classes'
 import BoxType from '/../shared/constants/BoxType'
 import URL from 'constants/URL'
 
-// const styles = {
-//   slideRoot: {},
-//   slide: {}
-// }
+const styles = {
+  tabRoot: { minHeight: 40 },
+  labelContainer: { paddingBottom: 4, marginBottom: -10 }
+}
 
 // container height
 // https://stackoverflow.com/questions/47095900/dynamic-height-for-material-ui-tab-containers
@@ -99,6 +100,7 @@ class TopPage extends React.Component {
 
   render() {
     const props = this.props
+    const { classes } = this.props
 
     return (
       <React.Fragment>
@@ -133,6 +135,10 @@ class TopPage extends React.Component {
                     />
                   }
                   className={`tab`}
+                  classes={{
+                    root: classes.tabRoot,
+                    labelContainer: classes.labelContainer
+                  }}
                 />
               ))}
             </Tabs>
@@ -186,7 +192,9 @@ class TopPage extends React.Component {
 }
 
 // export default withStyles(uiStyles)(TopPage)
-export default connect(state => ({
-  boxes: objectPath.get(state.site, `${PATH_MAP.BOXES}.item`),
-  color: objectPath.get(state.site, `${PATH_MAP.COLOR}`)
-}))(TopPage)
+export default withStyles(styles)(
+  connect(state => ({
+    boxes: objectPath.get(state.site, `${PATH_MAP.BOXES}.item`),
+    color: objectPath.get(state.site, `${PATH_MAP.COLOR}`)
+  }))(TopPage)
+)
