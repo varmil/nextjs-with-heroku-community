@@ -30,8 +30,9 @@ const Label = props => (
     {props.text}
     <style jsx>{`
       span {
-        font-size: 25px;
-        font-weight: 900;
+        color: ${props.color};
+        font-size: 17px;
+        font-weight: bold;
       }
     `}</style>
   </span>
@@ -42,7 +43,14 @@ class TopPage extends React.Component {
     super(props)
     // decide initial tab index with URL props.slug
     let activeTabIndex = findIndex(props.boxes, box => box.slug === props.slug)
-    if (activeTabIndex === -1) activeTabIndex = 0
+    // デフォルトはTALK
+    // NOTE: Boxの並び順を示すindexと、BoxTypeのindexは異なるものなので注意
+    if (activeTabIndex === -1) {
+      activeTabIndex = findIndex(
+        props.boxes,
+        box => box.type === BoxType.index.talk
+      )
+    }
 
     this.state = { tabIndex: activeTabIndex, mainHeight: 0 }
   }
@@ -109,13 +117,21 @@ class TopPage extends React.Component {
               onChange={this.handleChange}
               TabIndicatorProps={{ style: this.getIndicatorStyle() }}
               // fullWidth
+              // centered
               scrollable
               scrollButtons="off"
             >
               {props.boxes.map((box, i) => (
                 <Tab
                   key={i}
-                  label={<Label text={box.header.text} />}
+                  label={
+                    <Label
+                      text={box.header.text}
+                      color={
+                        this.isActive(i) ? props.color.backgroundColor : ''
+                      }
+                    />
+                  }
                   className={`tab`}
                 />
               ))}
@@ -131,9 +147,9 @@ class TopPage extends React.Component {
             onChangeIndex={this.handleChangeIndex}
             onTransitionEnd={() => this.setContentsHeight()}
           >
-            <TalkRoomContents disabled={!this.isActive(BoxType.index.talk)} />
-            <VoiceContents disabled={!this.isActive(BoxType.index.voice)} />
-            <NewsContents disabled={!this.isActive(BoxType.index.news)} />
+            <VoiceContents disabled={!this.isActive(0)} />
+            <TalkRoomContents disabled={!this.isActive(1)} />
+            <NewsContents disabled={!this.isActive(2)} />
           </SwipeableViews>
 
           {this.isShowPenIcon() ? (
@@ -152,7 +168,7 @@ class TopPage extends React.Component {
           }
 
           .tab {
-            width: 120px;
+            width: 130px;
             outline: none !important;
           }
 

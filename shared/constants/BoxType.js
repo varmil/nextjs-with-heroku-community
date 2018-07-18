@@ -1,3 +1,4 @@
+// 固定のBOXIDみたいなやつ
 module.exports = {
   index: {
     talk: 0,
