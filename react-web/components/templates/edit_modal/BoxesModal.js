@@ -36,6 +36,8 @@ const SortableList = SortableContainer(({ items, onChange }) => {
           value={value}
           orderIndex={index}
           onChange={onChange}
+          // TODO: ボックス並び替えは 2018/07/18 現在、停止中
+          disabled={true}
         />
       ))}
     </div>
