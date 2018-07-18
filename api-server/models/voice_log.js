@@ -1,4 +1,4 @@
-// VOICEの集計テーブルは現状ないので、ここを毎回SELECT COUNTするイメージ
+// ユーザの１票。
 module.exports = function(sequelize, DataTypes) {
   const VoiceLog = sequelize.define('VoiceLog', {
     postId: DataTypes.INTEGER,
