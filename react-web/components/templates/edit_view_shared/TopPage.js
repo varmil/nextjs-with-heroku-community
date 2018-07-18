@@ -75,12 +75,12 @@ class TopPage extends React.Component {
 
   // tabIndex
   handleChange = (event, tabIndex) => {
-    Router.pushRoute(`${URL.VIEW_HOME}/${this.props.boxes[tabIndex].slug}`)
+    Router.replaceRoute(`${URL.VIEW_HOME}/${this.props.boxes[tabIndex].slug}`)
     this.setState({ tabIndex })
   }
 
   handleChangeIndex = tabIndex => {
-    Router.pushRoute(`${URL.VIEW_HOME}/${this.props.boxes[tabIndex].slug}`)
+    Router.replaceRoute(`${URL.VIEW_HOME}/${this.props.boxes[tabIndex].slug}`)
     this.setState({ tabIndex })
   }
 

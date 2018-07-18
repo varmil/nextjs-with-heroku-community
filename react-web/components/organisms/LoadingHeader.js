@@ -3,9 +3,16 @@ import Head from 'next/head'
 import NProgress from 'nprogress'
 import Router from 'next/router'
 
+// これがURLに含まれている場合はローディング出さない
+const excludeRoutes = ['/view/home']
+
 Router.onRouteChangeStart = url => {
   console.log(`Loading: ${url}`)
-  NProgress.start()
+  // 特定のrouteではローディング出さない
+  const shouldExclude = excludeRoutes.some(route => url.includes(route))
+  if (!shouldExclude) {
+    NProgress.start()
+  }
 }
 Router.onRouteChangeComplete = () => NProgress.done()
 Router.onRouteChangeError = () => NProgress.done()
@@ -22,7 +29,7 @@ const LoadingHeader = () => (
 
     <style global jsx>{`
       #nprogress .bar {
-        height: 6px;
+        height: 5px;
         background: #27c4f5
           linear-gradient(to right, #27c4f5, #a307ba, #fd8d32, #70c050, #27c4f5);
         background-size: 500%;
