@@ -15,20 +15,28 @@ class InfiniteContents extends React.Component {
     isLoading: false
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    // ロード中にこのコンポーネントがdisabledになったら、ローディング状態を解除
+    if (prevState.isLoading && nextProps.disabled) {
+      return { isLoading: false }
+    }
+    return null
+  }
+
   // https://github.com/CassetteRocks/react-infinite-scroller/issues/143
   // 引数が怪しいのでtwiceロードしないように注意
   // action : ex) AppTalkRoom.FETCH_REQUEST
-  async loadMoreRows(page) {
+  loadMoreRows(page) {
     // console.info('loadMoreRows props::', this.props)
     // console.info('loadMoreRows page::', page, this.state)
     const { dispatch, action } = this.props
     this.setState({ ...this.state, isLoading: true })
 
-    const successCb = async res => {
-      // set no more load flag if response is null
+    const successCb = res => {
+      // 結果配列が埋まっていれば、hasMoreをたてる
       this.setState({
         ...this.state,
-        hasMore: Array.isArray(res.data) && res.data.length > 0,
+        hasMore: Array.isArray(res.data) && res.data.length === PER_PAGE,
         isLoading: false
       })
     }

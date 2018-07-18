@@ -2,9 +2,9 @@ const reqlib = require('app-root-path').require
 const _ = require('lodash')
 const UserService = reqlib('/services/User')
 const models = reqlib('/models')
-const moveFile = require('move-file')
 const Path = reqlib('/constants/Path')
 const Role = reqlib('/../shared/constants/Role')
+const { moveImage } = reqlib('/utils/image')
 const BoxType = reqlib('/../shared/constants/BoxType')
 
 // リストで取得する際に、1ページあたりの初期値
@@ -13,13 +13,13 @@ const DEFAULT_PER_PAGE = 20
 
 module.exports = class Post {
   // 投稿画像を一括して移動
-  static async moveProfileIcon(files) {
+  static async moveImages(files) {
     if (Array.isArray(files)) {
       const promises = files.map(async file => {
         const { path, filename } = file
         const dbPath = `${Path.POST_IMG_DIR}/${filename}`
         const fullPath = `${Path.STATIC_BASE_DIR}${dbPath}`
-        await moveFile(path, fullPath)
+        await moveImage(path, fullPath)
         return dbPath
       })
       return Promise.all(promises)
@@ -55,7 +55,7 @@ module.exports = class Post {
         data = { ...data, categoryIndex }
       }
       // save images if needed (union)
-      const newImages = await Post.moveProfileIcon(files)
+      const newImages = await Post.moveImages(files)
       data = { ...data, images: _.union(fromServerFiles, newImages) }
 
       if (postId) {

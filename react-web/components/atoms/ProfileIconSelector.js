@@ -13,7 +13,7 @@ const ImgPreview = props => {
   if (!props.files.length) {
     return (
       <Avatar
-        src={'https://www.w3schools.com/w3images/avatar2.png'}
+        src={'/static/img/icon/usericon_default.png'}
         className=""
         size={props.size}
         style={imgStyle}

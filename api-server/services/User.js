@@ -1,15 +1,15 @@
 const _ = require('lodash')
 const reqlib = require('app-root-path').require
 const models = reqlib('/models')
-const moveFile = require('move-file')
 const Path = reqlib('/constants/Path')
 const Role = reqlib('/../shared/constants/Role')
+const { moveImage } = reqlib('/utils/image')
 const moment = require('moment')
 
 // リストで取得する際に、1ページあたりの初期値
 // パラメタによって指定した場合はこの値は無効
 const DEFAULT_PER_PAGE = 20
-const DEFAULT_ICON_PATH = 'https://www.w3schools.com/w3images/avatar4.png'
+const DEFAULT_ICON_PATH = '/static/img/icon/usericon_default.png'
 
 const LAST_LOGINED_AT_UPDATE_INTERVAL_MIN = 10
 
@@ -61,7 +61,7 @@ module.exports = class User {
       const { path, filename } = file
       dbPath = `${Path.USER_ICON_DIR}/${filename}`
       const fullPath = `${Path.STATIC_BASE_DIR}${dbPath}`
-      await moveFile(path, fullPath)
+      await moveImage(path, fullPath)
     } else {
       // fileがない場合は何もしない
     }
@@ -76,7 +76,7 @@ module.exports = class User {
           // すでにサーバに保存されている画像があれば使用
           dbPath = fromServerFiles[0]
         } else {
-          // TODO: デフォルトは卵
+          // デフォルトは卵
           dbPath = DEFAULT_ICON_PATH
         }
       }

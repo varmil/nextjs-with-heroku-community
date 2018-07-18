@@ -41,7 +41,7 @@ class SignupEmail extends React.Component {
     const { email, password } = this.state
     const passLength = password.length
     return (
-      <CenteredContainer height={460}>
+      <CenteredContainer height={430}>
         <section>
           <SignInUpHeader text="アカウント登録" route={'/view/signup'} />
         </section>
@@ -51,19 +51,17 @@ class SignupEmail extends React.Component {
             <label>メールアドレス</label>
             <Input
               type="email"
-              placeholder="foo@example.com"
+              placeholder="メールアドレスを入力"
               value={email}
               onChange={this.handleChange('email')}
             />
           </div>
-        </section>
 
-        <section className="mt-3">
-          <div className="form-group">
-            <label>パスワード</label>
+          <div className="mt-4 form-group">
+            <label>パスワード（半角英数字で8 ~ 40文字）</label>
             <Input
               type="text"
-              placeholder={`${Rule.PASS_MIN_LENGTH}文字以上`}
+              placeholder={`パスワードを入力`}
               value={password}
               onChange={this.handleChange('password')}
               invalid={passLength > 0 && passLength < Rule.PASS_MIN_LENGTH}
@@ -74,9 +72,9 @@ class SignupEmail extends React.Component {
           </div>
         </section>
 
-        <section className="text-center" onClick={this.signup.bind(this)}>
+        <section className="mt-5 text-center" onClick={this.signup.bind(this)}>
           <ColorButton
-            className="w-75 mt-4"
+            className="w-75"
             color="#2b6db2"
             disabled={!email || password.length < Rule.PASS_MIN_LENGTH}
           >
@@ -91,10 +89,7 @@ class SignupEmail extends React.Component {
 
         <style jsx>{`
           .regNote,
-          label {
-            font-size: 12px;
-          }
-
+          label,
           .alert {
             font-size: 12px;
           }

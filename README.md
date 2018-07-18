@@ -29,3 +29,4 @@ npm run dev
 cd api-server
 npm run db:init
 ```
+* port: `3306`, db: `commune` で外部から接続できる環境が予め必要です。

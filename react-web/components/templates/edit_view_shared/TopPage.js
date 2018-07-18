@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Router } from 'routes'
+import { withStyles } from '@material-ui/core/styles'
 import findIndex from 'lodash/findIndex'
 import SwipeableViews from 'react-swipeable-views'
 import Tabs from '@material-ui/core/Tabs'
@@ -17,10 +18,10 @@ import Classes from 'constants/Classes'
 import BoxType from '/../shared/constants/BoxType'
 import URL from 'constants/URL'
 
-// const styles = {
-//   slideRoot: {},
-//   slide: {}
-// }
+const styles = {
+  tabRoot: { minHeight: 40 },
+  labelContainer: { paddingBottom: 4, marginBottom: -10 }
+}
 
 // container height
 // https://stackoverflow.com/questions/47095900/dynamic-height-for-material-ui-tab-containers
@@ -30,8 +31,9 @@ const Label = props => (
     {props.text}
     <style jsx>{`
       span {
-        font-size: 25px;
-        font-weight: 900;
+        color: ${props.color};
+        font-size: 17px;
+        font-weight: bold;
       }
     `}</style>
   </span>
@@ -42,7 +44,14 @@ class TopPage extends React.Component {
     super(props)
     // decide initial tab index with URL props.slug
     let activeTabIndex = findIndex(props.boxes, box => box.slug === props.slug)
-    if (activeTabIndex === -1) activeTabIndex = 0
+    // デフォルトはTALK
+    // NOTE: Boxの並び順を示すindexと、BoxTypeのindexは異なるものなので注意
+    if (activeTabIndex === -1) {
+      activeTabIndex = findIndex(
+        props.boxes,
+        box => box.type === BoxType.index.talk
+      )
+    }
 
     this.state = { tabIndex: activeTabIndex, mainHeight: 0 }
   }
@@ -75,12 +84,12 @@ class TopPage extends React.Component {
 
   // tabIndex
   handleChange = (event, tabIndex) => {
-    Router.pushRoute(`${URL.VIEW_HOME}/${this.props.boxes[tabIndex].slug}`)
+    Router.replaceRoute(`${URL.VIEW_HOME}/${this.props.boxes[tabIndex].slug}`)
     this.setState({ tabIndex })
   }
 
   handleChangeIndex = tabIndex => {
-    Router.pushRoute(`${URL.VIEW_HOME}/${this.props.boxes[tabIndex].slug}`)
+    Router.replaceRoute(`${URL.VIEW_HOME}/${this.props.boxes[tabIndex].slug}`)
     this.setState({ tabIndex })
   }
 
@@ -91,6 +100,7 @@ class TopPage extends React.Component {
 
   render() {
     const props = this.props
+    const { classes } = this.props
 
     return (
       <React.Fragment>
@@ -109,14 +119,26 @@ class TopPage extends React.Component {
               onChange={this.handleChange}
               TabIndicatorProps={{ style: this.getIndicatorStyle() }}
               // fullWidth
+              // centered
               scrollable
               scrollButtons="off"
             >
               {props.boxes.map((box, i) => (
                 <Tab
                   key={i}
-                  label={<Label text={box.header.text} />}
+                  label={
+                    <Label
+                      text={box.header.text}
+                      color={
+                        this.isActive(i) ? props.color.backgroundColor : ''
+                      }
+                    />
+                  }
                   className={`tab`}
+                  classes={{
+                    root: classes.tabRoot,
+                    labelContainer: classes.labelContainer
+                  }}
                 />
               ))}
             </Tabs>
@@ -131,9 +153,9 @@ class TopPage extends React.Component {
             onChangeIndex={this.handleChangeIndex}
             onTransitionEnd={() => this.setContentsHeight()}
           >
-            <TalkRoomContents disabled={!this.isActive(BoxType.index.talk)} />
-            <VoiceContents disabled={!this.isActive(BoxType.index.voice)} />
-            <NewsContents disabled={!this.isActive(BoxType.index.news)} />
+            <VoiceContents disabled={!this.isActive(0)} />
+            <TalkRoomContents disabled={!this.isActive(1)} />
+            <NewsContents disabled={!this.isActive(2)} />
           </SwipeableViews>
 
           {this.isShowPenIcon() ? (
@@ -152,7 +174,7 @@ class TopPage extends React.Component {
           }
 
           .tab {
-            width: 120px;
+            width: 130px;
             outline: none !important;
           }
 
@@ -170,7 +192,9 @@ class TopPage extends React.Component {
 }
 
 // export default withStyles(uiStyles)(TopPage)
-export default connect(state => ({
-  boxes: objectPath.get(state.site, `${PATH_MAP.BOXES}.item`),
-  color: objectPath.get(state.site, `${PATH_MAP.COLOR}`)
-}))(TopPage)
+export default withStyles(styles)(
+  connect(state => ({
+    boxes: objectPath.get(state.site, `${PATH_MAP.BOXES}.item`),
+    color: objectPath.get(state.site, `${PATH_MAP.COLOR}`)
+  }))(TopPage)
+)

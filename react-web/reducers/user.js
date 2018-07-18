@@ -6,7 +6,7 @@ const initialState = {
   id: undefined,
   jwtToken: null,
   nickname: '',
-  iconPath: 'https://www.w3schools.com/w3images/avatar2.png',
+  iconPath: '/static/img/icon/usericon_default.png',
   // (Admin, User) 今自分が見ているブランド
   brand: { id: undefined, name: '' },
 

@@ -26,16 +26,16 @@ class VoteOptions extends React.Component {
   onVote(index) {
     const { count } = this.state
     const { dispatch, postId } = this.props
-    const successCb = async res => {
-      dispatch(setSuccess())
 
-      // このコンポーネントの状態更新
+    // 先行してローカルステートを更新
+    this.setState({ ...this.state, choiceIndex: index })
+
+    const successCb = async res => {
+      // レスポンスを待って状態更新
       this.setState({
         ...this.state,
-        choiceIndex: index,
         count: res.data.isFirstVote ? count + 1 : count
       })
-
       // store内の当該Postの投票数をカウントアップ
       if (res.data.isFirstVote) {
         dispatch(createAction(AppPost.INCREMENT_VOTE_SUM)({ postId }))
@@ -80,11 +80,6 @@ class VoteOptions extends React.Component {
           })}
         </section>
 
-        <section className="note mt-3 py-4 mx-4">
-          他のアイデアやお気に入りのアイテムを<br />
-          コメントでも教えてください
-        </section>
-
         <style jsx>{`
           .wrap {
             border-bottom: 1px solid #c1c0c0;
@@ -103,14 +98,6 @@ class VoteOptions extends React.Component {
             color: white;
             background-color: black;
             transition: all 0.25s ease;
-          }
-
-          .note {
-            font-size: 12px;
-            color: gray;
-            text-align: center;
-            border: 1px solid #c1c0c0;
-            border-radius: 30px;
           }
         `}</style>
       </div>

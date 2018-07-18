@@ -86,19 +86,19 @@ const boxesBase = range(3).map(i => ({
 export const Boxes = {
   item: [
     update(boxesBase[0], {
-      type: { $set: BoxType.index.talk },
-      slug: { $set: URL.TALK_SLUG },
-      header: { text: { $set: 'TALK' } }
-    }),
-    update(boxesBase[1], {
       type: { $set: BoxType.index.voice },
       slug: { $set: URL.VOICE_SLUG },
-      header: { text: { $set: 'VOICE' } }
+      header: { text: { $set: 'アンケート' } }
+    }),
+    update(boxesBase[1], {
+      type: { $set: BoxType.index.talk },
+      slug: { $set: URL.TALK_SLUG },
+      header: { text: { $set: 'トークルーム' } }
     }),
     update(boxesBase[2], {
       type: { $set: BoxType.index.news },
       slug: { $set: URL.NEWS_SLUG },
-      header: { text: { $set: 'NEWS' } }
+      header: { text: { $set: 'ニュース' } }
     })
     // update(boxesBase[3], {
     //   type: { $set: BoxType.index.event },
