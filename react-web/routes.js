@@ -12,6 +12,8 @@ routes.add('/view/home/:slug', '/view/home')
 
 // 投稿詳細
 routes.add('/view/post/:boxType/:postId', '/view/post')
+routes.add('/view/post/:id/voice/option', '/view/post/voice/option')
+routes.add('/view/post/:id/voice/result', '/view/post/voice/result')
 
 // （admin）記事一覧
 routes.add('/admin/post/list/:pageNum', '/admin/post/list')
