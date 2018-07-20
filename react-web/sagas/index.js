@@ -381,12 +381,12 @@ function* saveLike({ payload }) {
 
 function* saveVote({ payload }) {
   const { jwtToken } = yield select(getUser)
-  const { postId, choiceIndex, successCb } = payload
+  const { postId, choiceIndex, comment, successCb } = payload
   try {
     const res = yield call(
       API.post,
       '/post/vote',
-      { postId, choiceIndex },
+      { postId, choiceIndex, comment },
       jwtToken
     )
     yield call(successCb, res)

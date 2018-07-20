@@ -1,6 +1,7 @@
 const reqlib = require('app-root-path').require
 const _ = require('lodash')
 const UserService = reqlib('/services/User')
+const CommentService = reqlib('/services/Comment')
 const models = reqlib('/models')
 const Path = reqlib('/constants/Path')
 const Role = reqlib('/../shared/constants/Role')
@@ -132,7 +133,7 @@ module.exports = class Post {
   }
 
   // 投票（UPDATE対応済）
-  static async saveVote(postId, voterId, choiceIndex) {
+  static async saveVote(postId, voterId, choiceIndex, comment) {
     // 初投票ならtrue, 更新ならfalse
     let isFirstVote = false
     const transaction = await models.sequelize.transaction()
@@ -146,14 +147,27 @@ module.exports = class Post {
       } else {
         // INSERT and count up sum table
         isFirstVote = true
+
+        // insert comment if exist, nested transaction
+        // NOTE: ネストしたトランザクションになるけど大丈夫か？
+        let commentId = 0
+        if (comment) {
+          const created = await CommentService.save(postId, voterId, comment)
+          commentId = created.id
+        }
+
+        // insert log
         await models.VoiceLog.create(
           {
             postId,
             voterId,
-            choiceIndex
+            choiceIndex,
+            commentId
           },
           { transaction }
         )
+
+        // count up vote count
         await models.Voice.update(
           { count: models.sequelize.literal('count + 1') },
           { where: { postId } },

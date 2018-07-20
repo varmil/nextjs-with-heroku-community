@@ -81,12 +81,17 @@ exports.save = async (req, res, next) => {
  */
 exports.saveVote = async (req, res, next) => {
   console.log('[saveVote]body', req.body)
-  const { postId, choiceIndex } = req.body
+  const { postId, choiceIndex, comment } = req.body
   if (!postId || _.isUndefined(choiceIndex)) {
     return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
   }
   const voterId = req.user.id
-  const isFirstVote = await services.Post.saveVote(postId, voterId, choiceIndex)
+  const isFirstVote = await services.Post.saveVote(
+    postId,
+    voterId,
+    choiceIndex,
+    comment
+  )
   res.json({ isFirstVote })
 }
 

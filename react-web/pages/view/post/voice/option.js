@@ -12,46 +12,23 @@ import BoxType from '/../shared/constants/BoxType'
 class VoteOptions extends React.Component {
   constructor(props) {
     super(props)
-    const { choiceIndex, count } = this.props.Voice
+    const { choiceIndex } = this.props.Voice
     this.state = {
       // 自分自身が投票した結果があればそれをぶちこむ。
-      choiceIndex: !isUndefined(choiceIndex) ? choiceIndex : null,
-      // 投票後にローカルでインクリメントするためにstateで保持
-      count: !isUndefined(count) ? count : null
+      choiceIndex: !isUndefined(choiceIndex) ? choiceIndex : null
     }
   }
 
   onVote(index) {
-    const { count } = this.state
-    const { dispatch, postId } = this.props
-
-    // 先行してローカルステートを更新
+    const { onVote } = this.props
     this.setState({ ...this.state, choiceIndex: index })
-
-    const successCb = async res => {
-      // レスポンスを待って状態更新
-      this.setState({
-        ...this.state,
-        count: res.data.isFirstVote ? count + 1 : count
-      })
-      // store内の当該Postの投票数をカウントアップ
-      if (res.data.isFirstVote) {
-        dispatch(createAction(AppPost.INCREMENT_VOTE_SUM)({ postId }))
-      }
-    }
-    dispatch(
-      createAction(AppPost.SAVE_VOTE_REQUEST)({
-        postId,
-        choiceIndex: index,
-        successCb
-      })
-    )
+    // 外へ通知
+    onVote(index)
   }
 
   render() {
-    const { count } = this.state
     const props = this.props
-    const { options, deadline } = props.Voice
+    const { count, options, deadline } = props.Voice
 
     return (
       <div className="wrap">
@@ -107,18 +84,44 @@ class PostVoiceOption extends React.Component {
   // boxType, postId などは文字列なので注意
   static async getInitialProps({ ctx }) {
     const { dispatch } = ctx.store
-    dispatch(createAction(AppPost.FETCH_REQUEST)({ postId: +ctx.query.postId }))
-    return {}
+    const postId = +ctx.query.postId
+    dispatch(createAction(AppPost.FETCH_REQUEST)({ postId }))
+    return { postId }
   }
 
   constructor(props) {
     super(props)
     this.commentInput = React.createRef()
-    this.state = { comment: '' }
+    this.state = { choiceIndex: undefined, comment: '' }
   }
 
   componentDidMount() {
     if (this.commentInput) autosize(this.commentInput)
+  }
+
+  onVote = index => {
+    this.setState({ ...this.state, choiceIndex: index })
+  }
+
+  onSubmit = () => {
+    console.log('submitted')
+    const { dispatch, postId } = this.props
+    const { choiceIndex, comment } = this.state
+
+    const successCb = async res => {
+      // store内の当該Postの投票数をカウントアップ
+      if (res.data.isFirstVote) {
+        dispatch(createAction(AppPost.INCREMENT_VOTE_SUM)({ postId }))
+      }
+    }
+    dispatch(
+      createAction(AppPost.SAVE_VOTE_REQUEST)({
+        postId,
+        choiceIndex,
+        comment,
+        successCb
+      })
+    )
   }
 
   render() {
@@ -139,6 +142,7 @@ class PostVoiceOption extends React.Component {
             Voice={data.Voice}
             postId={data.id}
             dispatch={props.dispatch}
+            onVote={this.onVote}
           />
 
           <div className="px-5 mt-4">
@@ -161,6 +165,7 @@ class PostVoiceOption extends React.Component {
                 padding: '10px 0px',
                 width: 170
               }}
+              onClick={this.onSubmit}
             />
           </div>
         </BoxContent>

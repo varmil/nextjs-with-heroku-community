@@ -15,7 +15,12 @@ const Linked = props => {
 const VoteButton = props => (
   <React.Fragment>
     <Linked route={props.route}>
-      <button type="button" className="btn" style={{ ...props.style }}>
+      <button
+        type="button"
+        className="btn"
+        style={{ ...props.style }}
+        onClick={props.onClick}
+      >
         投票する
       </button>
     </Linked>
