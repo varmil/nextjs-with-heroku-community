@@ -10,10 +10,10 @@ routes.add('/view/signup/:code', '/view/signup')
 routes.add('/admin/site/edit/home/:slug', '/admin/site/edit/home')
 routes.add('/view/home/:slug', '/view/home')
 
-// 投稿詳細
+// 投稿詳細（VOICEなど特殊BOXは汎用postを使わない）
 routes.add('/view/post/:boxType/:postId', '/view/post')
-routes.add('/view/post/:id/voice/option', '/view/post/voice/option')
-routes.add('/view/post/:id/voice/result', '/view/post/voice/result')
+routes.add('/view/post/:postId/voice/option', '/view/post/voice/option')
+routes.add('/view/post/:postId/voice/result', '/view/post/voice/result')
 
 // （admin）記事一覧
 routes.add('/admin/post/list/:pageNum', '/admin/post/list')

@@ -15,6 +15,7 @@ import { AppPost } from 'constants/ActionTypes'
 import Color from 'constants/Color'
 import autosize from 'autosize'
 import LazyLoad from 'react-lazyload'
+import BoxType from '/../shared/constants/BoxType'
 
 const AVATAR_SIZE = 44
 // アンカーで飛んだときになんとなく真ん中あたりに表示するため
@@ -113,7 +114,18 @@ class BoxContent extends React.Component {
   constructor(props) {
     super(props)
     this.commentInput = React.createRef()
-    this.postLink = `/view/post/${props.boxType}/${props.id}`
+
+    let link
+    switch (props.boxType) {
+      // voice専用リンク
+      case BoxType.index.voice:
+        link = `/view/post/${props.id}/voice/option`
+        break
+      // 汎用リンク
+      default:
+        link = `/view/post/${props.boxType}/${props.id}`
+    }
+    this.postLink = link
   }
 
   componentDidMount() {
