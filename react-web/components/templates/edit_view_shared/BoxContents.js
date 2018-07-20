@@ -10,7 +10,9 @@ import Fade from 'react-reveal/Fade'
 const factoryBox = boxType => {
   switch (boxType) {
     case BoxType.index.voice:
-      return props => <BoxContent {...props} topPhoto goingVote />
+      return props => (
+        <BoxContent {...props} topPhoto goingVote comments={false} />
+      )
     default:
       return props => <BoxContent {...props} />
   }

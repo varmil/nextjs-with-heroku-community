@@ -21,7 +21,7 @@ const AVATAR_SIZE = 44
 // アンカーで飛んだときになんとなく真ん中あたりに表示するため
 const OFFSET_IMG_TOP = -100
 const SCROLL_BOTTOM = 9999
-const FOOTER_FONTSIZE = 14
+const FOOTER_FONTSIZE = 16
 
 /**
  * Voice用。
@@ -294,19 +294,40 @@ class BoxContent extends React.Component {
     )
   }
 
-  createCommentButton(showDetail) {
-    const { comment } = this.props
+  createCommentButton() {
+    // comments === false なら、吹き出しだけ表示してクリックハンドラも無効化
+    const { comment, showDetail, comments } = this.props
+    const disableComment = comments === false
 
     let onClick = null
-    if (showDetail) {
+    if (disableComment) {
+      // do nothing
+    } else if (showDetail) {
+      // 記事詳細画面
       onClick = () => {
         window.scrollTo(0, SCROLL_BOTTOM)
         this.commentInput.focus()
       }
     } else {
+      // 一覧 --> 詳細へリンクしてさらにコメントボックスへFocus
       onClick = async () => {
         await Router.pushRoute(`${this.postLink}?focus=true`)
       }
+    }
+
+    const DoCommentText = props => {
+      if (disableComment) return null
+      return (
+        <span
+          onClick={onClick}
+          style={{
+            position: 'relative',
+            top: 2
+          }}
+        >
+          <a>コメントする</a>
+        </span>
+      )
     }
 
     return (
@@ -318,15 +339,7 @@ class BoxContent extends React.Component {
         >
           <i className="fas fa-comment mr-1" /> {comment}
         </IconButton>
-        <span
-          onClick={onClick}
-          style={{
-            position: 'relative',
-            top: 2
-          }}
-        >
-          <a>コメントする</a>
-        </span>
+        <DoCommentText disableComment={disableComment} />
       </React.Fragment>
     )
   }
@@ -532,7 +545,7 @@ class BoxContent extends React.Component {
             >
               <i className="fas fa-heart mr-1" /> {props.like}
             </IconButton>
-            {this.createCommentButton(props.showDetail)}
+            {this.createCommentButton()}
           </div>
 
           {this.props.children}
