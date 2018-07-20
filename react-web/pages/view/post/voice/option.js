@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
 import autosize from 'autosize'
 import isUndefined from 'lodash/isUndefined'
+import VoteButton from 'components/atoms/VoteButton'
 import BoxContent, { VoteCounter } from 'components/organisms/site/BoxContent'
 import { AppPost } from 'constants/ActionTypes'
 import BoxType from '/../shared/constants/BoxType'
@@ -53,7 +54,7 @@ class VoteOptions extends React.Component {
     const { options, deadline } = props.Voice
 
     return (
-      <div className="wrap my-3">
+      <div className="wrap">
         <section className="px-5">
           <VoteCounter
             className="mb-3"
@@ -129,7 +130,6 @@ class PostVoiceOption extends React.Component {
         <BoxContent
           {...data}
           comments={false}
-          expandBody={true}
           showDetail={true}
           focus={props.focus}
           // vote
@@ -141,19 +141,35 @@ class PostVoiceOption extends React.Component {
             dispatch={props.dispatch}
           />
 
-          <textarea
-            placeholder="AAA"
-            className="form-control"
-            rows="1"
-            ref={input => (this.commentInput = input)}
-            value={this.state.comment}
-            onChange={e =>
-              this.setState({ ...this.state, comment: e.target.value })
-            }
-          />
+          <div className="px-5 mt-4">
+            <textarea
+              placeholder="コメントをくわえる"
+              className="form-control mx-auto py-3"
+              rows="1"
+              ref={input => (this.commentInput = input)}
+              value={this.state.comment}
+              onChange={e =>
+                this.setState({ ...this.state, comment: e.target.value })
+              }
+            />
+          </div>
+
+          <div className="mt-4 text-center">
+            <VoteButton
+              style={{
+                fontSize: 14,
+                padding: '10px 0px',
+                width: 170
+              }}
+            />
+          </div>
         </BoxContent>
 
         <style jsx>{`
+          textarea {
+            border-radius: 30px;
+          }
+
           ::-webkit-input-placeholder {
             text-align: center;
           }

@@ -5,8 +5,6 @@ import isEmpty from 'lodash/isEmpty'
 import fecha from 'fecha'
 import { Link, Router } from 'routes'
 import IconButton from '@material-ui/core/IconButton'
-import objectPath from 'object-path'
-import { PATH_MAP } from 'reducers/site'
 import MultiLineText from 'components/atoms/MultiLineText'
 import Avatar from 'components/atoms/Avatar'
 import VoteButton from 'components/atoms/VoteButton'
@@ -75,7 +73,6 @@ export const VoteCounter = props => (
           margin: 0 auto;
           text-align: center;
           background-color: #e8e8e8;
-          // width: 250px;
         }
 
         .voteNum {
@@ -172,7 +169,7 @@ class BoxContent extends React.Component {
 
   createBody(isExpanded) {
     const props = this.props
-    if (isExpanded) {
+    if (isExpanded || props.showDetail) {
       return <MultiLineText>{props.body}</MultiLineText>
     } else {
       const sliced = `${props.body.slice(0, 60)}...`

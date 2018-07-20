@@ -4,13 +4,21 @@ import { Link } from 'routes'
 import objectPath from 'object-path'
 import { PATH_MAP } from 'reducers/site'
 
+const Linked = props => {
+  return props.route ? (
+    <Link route={props.route}>{props.children}</Link>
+  ) : (
+    props.children
+  )
+}
+
 const VoteButton = props => (
   <React.Fragment>
-    <Link route={props.route}>
-      <button type="button" className="btn">
+    <Linked route={props.route}>
+      <button type="button" className="btn" style={{ ...props.style }}>
         投票する
       </button>
-    </Link>
+    </Linked>
 
     <style jsx>{`
       button {
