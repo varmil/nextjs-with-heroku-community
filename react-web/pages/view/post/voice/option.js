@@ -2,13 +2,11 @@ import React from 'react'
 import isEmpty from 'lodash/isEmpty'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
+import autosize from 'autosize'
 import isUndefined from 'lodash/isUndefined'
 import BoxContent, { VoteCounter } from 'components/organisms/site/BoxContent'
 import { AppPost } from 'constants/ActionTypes'
 import BoxType from '/../shared/constants/BoxType'
-
-// コメントする際にBottomに飛ばしたい
-const BOTTOM_Y = 9999
 
 class VoteOptions extends React.Component {
   constructor(props) {
@@ -55,7 +53,7 @@ class VoteOptions extends React.Component {
     const { options, deadline } = props.Voice
 
     return (
-      <div className="wrap mt-3 pb-5">
+      <div className="wrap my-3">
         <section className="px-5">
           <VoteCounter
             className="mb-3"
@@ -81,7 +79,7 @@ class VoteOptions extends React.Component {
 
         <style jsx>{`
           .wrap {
-            border-bottom: 1px solid #c1c0c0;
+            // border-bottom: 1px solid #c1c0c0;
           }
 
           .option {
@@ -105,29 +103,32 @@ class VoteOptions extends React.Component {
 }
 
 class PostVoiceOption extends React.Component {
-  // boxTypeに応じてFETCHするBoxContentを変える
   // boxType, postId などは文字列なので注意
   static async getInitialProps({ ctx }) {
     const { dispatch } = ctx.store
-    dispatch(createAction(AppPost.FETCH_REQUEST)(ctx.query))
-    return { focus: !!ctx.query.focus }
+    dispatch(createAction(AppPost.FETCH_REQUEST)({ postId: +ctx.query.postId }))
+    return {}
+  }
+
+  constructor(props) {
+    super(props)
+    this.commentInput = React.createRef()
+    this.state = { comment: '' }
   }
 
   componentDidMount() {
-    if (this.props.focus) {
-      window.scrollTo(0, BOTTOM_Y)
-    }
+    if (this.commentInput) autosize(this.commentInput)
   }
 
   render() {
     const props = this.props
-    const { data, comments } = props.post
+    const { data } = props.post
 
     return (
       <React.Fragment>
         <BoxContent
           {...data}
-          comments={comments}
+          comments={false}
           expandBody={true}
           showDetail={true}
           focus={props.focus}
@@ -139,7 +140,38 @@ class PostVoiceOption extends React.Component {
             postId={data.id}
             dispatch={props.dispatch}
           />
+
+          <textarea
+            placeholder="AAA"
+            className="form-control"
+            rows="1"
+            ref={input => (this.commentInput = input)}
+            value={this.state.comment}
+            onChange={e =>
+              this.setState({ ...this.state, comment: e.target.value })
+            }
+          />
         </BoxContent>
+
+        <style jsx>{`
+          ::-webkit-input-placeholder {
+            text-align: center;
+          }
+
+          :-moz-placeholder {
+            /* Firefox 18- */
+            text-align: center;
+          }
+
+          ::-moz-placeholder {
+            /* Firefox 19+ */
+            text-align: center;
+          }
+
+          :-ms-input-placeholder {
+            text-align: center;
+          }
+        `}</style>
       </React.Fragment>
     )
   }

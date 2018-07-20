@@ -9,6 +9,7 @@ import objectPath from 'object-path'
 import { PATH_MAP } from 'reducers/site'
 import MultiLineText from 'components/atoms/MultiLineText'
 import Avatar from 'components/atoms/Avatar'
+import VoteButton from 'components/atoms/VoteButton'
 import AvatarAndName from 'components/molecules/AvatarAndName'
 import { createAction } from 'redux-actions'
 import { AppPost } from 'constants/ActionTypes'
@@ -64,13 +65,7 @@ export const VoteCounter = props => (
         </div>
       )}
 
-      {props.showButton && (
-        <Link route={props.route}>
-          <button type="button" className="btn">
-            投票する
-          </button>
-        </Link>
-      )}
+      {props.showButton && <VoteButton route={props.route} />}
 
       <style jsx>{`
         span {
@@ -91,14 +86,6 @@ export const VoteCounter = props => (
         .deadline {
           color: gray;
           font-size: 11px;
-        }
-
-        button {
-          font-size: 12px;
-          width: 120px;
-          border-radius: 30px;
-          color: white;
-          background-color: ${props.voteButtonColor};
         }
       `}</style>
     </div>
@@ -211,9 +198,9 @@ class BoxContent extends React.Component {
     }
   }
 
-  createPhoto(isExpanded) {
+  createPhoto(showDetail) {
     const props = this.props
-    if (isExpanded) {
+    if (showDetail) {
       return (
         <React.Fragment>
           {props.images.map((src, i) => (
@@ -289,14 +276,13 @@ class BoxContent extends React.Component {
   }
 
   createGoingVote() {
-    const { goingVote, Voice, voteButtonColor } = this.props
+    const { goingVote, Voice } = this.props
     if (!goingVote) return null
     return (
       <div className="mt-2 mb-3 px-5">
         <VoteCounter
           count={Voice.count || 0}
           showButton={true}
-          voteButtonColor={voteButtonColor}
           route={this.postLink}
         />
       </div>
@@ -340,9 +326,11 @@ class BoxContent extends React.Component {
     )
   }
 
-  createComment(isExpanded) {
-    if (!isExpanded) return null
+  createComment(showDetail) {
     const props = this.props
+    if (!showDetail) return null
+    if (props.comments === false) return null
+
     const copiedArray = [...props.comments].reverse()
     const node = typeof window === 'undefined' ? null : document.body
     const isEmptyComment = this.state.comment.length === 0
@@ -580,9 +568,4 @@ class BoxContent extends React.Component {
   }
 }
 
-export default connect(state => ({
-  voteButtonColor: objectPath.get(
-    state.site,
-    `${PATH_MAP.COLOR}.backgroundColor`
-  )
-}))(BoxContent)
+export default connect()(BoxContent)
