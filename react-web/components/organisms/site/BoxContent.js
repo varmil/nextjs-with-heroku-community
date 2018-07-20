@@ -330,11 +330,8 @@ class BoxContent extends React.Component {
     )
   }
 
-  createComment(showDetail) {
+  createComment() {
     const props = this.props
-    if (!showDetail) return null
-    if (props.comments === false) return null
-
     const copiedArray = [...props.comments].reverse()
     const node = typeof window === 'undefined' ? null : document.body
     const isEmptyComment = this.state.comment.length === 0
@@ -539,7 +536,8 @@ class BoxContent extends React.Component {
 
           {this.props.children}
 
-          {this.createComment(props.showDetail)}
+          {/* コメント機能がそもそも存在しないページなら非表示 */}
+          {props.comments !== false && props.showDetail && this.createComment()}
 
           <style jsx>{`
             .media-body span {
