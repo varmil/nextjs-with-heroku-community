@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Portal } from 'react-portal'
 import { connect } from 'react-redux'
 import isEmpty from 'lodash/isEmpty'
@@ -336,6 +337,23 @@ class BoxContent extends React.Component {
     const node = typeof window === 'undefined' ? null : document.body
     const isEmptyComment = this.state.comment.length === 0
 
+    const onSubmitComment = e => {
+      const { dispatch, id } = this.props
+      const { comment } = this.state
+      const successCb = async res => {
+        this.setState({ ...this.state, comment: '' })
+        autosize.update(this.commentInput)
+        window.scrollTo(0, SCROLL_BOTTOM)
+      }
+      dispatch(
+        createAction(AppPost.SAVE_COMMENT_REQUEST)({
+          postId: id,
+          body: comment,
+          successCb
+        })
+      )
+    }
+
     return (
       <div className="comments w-100 mx-auto pt-2">
         <div className="load my-3 text-center" onClick={() => {}}>
@@ -374,7 +392,7 @@ class BoxContent extends React.Component {
               <button
                 className="btn btn-outline-secondary"
                 type="button"
-                onClick={this.onSubmitComment.bind(this)}
+                onClick={onSubmitComment}
                 disabled={isEmptyComment}
               >
                 <i className="far fa-paper-plane" />
@@ -461,23 +479,6 @@ class BoxContent extends React.Component {
       ) : null
 
     return props.topPhoto ? [Photo, Body] : [Body, Photo]
-  }
-
-  onSubmitComment(e) {
-    const { dispatch, id } = this.props
-    const { comment } = this.state
-    const successCb = async res => {
-      this.setState({ ...this.state, comment: '' })
-      autosize.update(this.commentInput)
-      window.scrollTo(0, SCROLL_BOTTOM)
-    }
-    dispatch(
-      createAction(AppPost.SAVE_COMMENT_REQUEST)({
-        postId: id,
-        body: comment,
-        successCb
-      })
-    )
   }
 
   onLikeToggle(e) {
@@ -572,6 +573,15 @@ class BoxContent extends React.Component {
       </div>
     )
   }
+}
+
+BoxContent.propTypes = {
+  // falseの場合、汎用のコメント機能をOFFにする
+  comments: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  topPhoto: PropTypes.bool,
+  showDetail: PropTypes.bool,
+  expandBody: PropTypes.bool,
+  focus: PropTypes.bool
 }
 
 export default connect()(BoxContent)
