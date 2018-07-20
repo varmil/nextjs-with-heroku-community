@@ -294,7 +294,7 @@ class BoxContent extends React.Component {
     )
   }
 
-  createCommentButton() {
+  createCommentButtonAndText() {
     // comments === false なら、吹き出しだけ表示してクリックハンドラも無効化
     const { comment, showDetail, comments } = this.props
     const disableComment = comments === false
@@ -545,7 +545,7 @@ class BoxContent extends React.Component {
             >
               <i className="fas fa-heart mr-1" /> {props.like}
             </IconButton>
-            {this.createCommentButton()}
+            {this.createCommentButtonAndText()}
           </div>
 
           {this.props.children}

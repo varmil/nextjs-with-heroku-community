@@ -1,12 +1,13 @@
 import React from 'react'
+import isEmpty from 'lodash/isEmpty'
 import { connect } from 'react-redux'
-import { Router } from 'routes'
 import { createAction } from 'redux-actions'
 import autosize from 'autosize'
 import isUndefined from 'lodash/isUndefined'
 import VoteButton from 'components/atoms/VoteButton'
 import BoxContent, { VoteCounter } from 'components/organisms/site/BoxContent'
 import { AppPost } from 'constants/ActionTypes'
+import BoxType from '/../shared/constants/BoxType'
 
 class VoteOptions extends React.Component {
   constructor(props) {
@@ -109,8 +110,6 @@ class PostVoiceOption extends React.Component {
       if (res.data.isFirstVote) {
         dispatch(createAction(AppPost.INCREMENT_VOTE_SUM)({ postId }))
       }
-      // 結果表示ページへ
-      Router.pushRoute(`/view/post/${postId}/voice/result`)
     }
     dispatch(
       createAction(AppPost.SAVE_VOTE_REQUEST)({
