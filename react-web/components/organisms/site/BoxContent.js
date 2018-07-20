@@ -22,33 +22,9 @@ const OFFSET_IMG_TOP = -100
 const SCROLL_BOTTOM = 9999
 const FOOTER_FONTSIZE = 14
 
-const PreviewImage = props => {
-  const HEIGHT = 110
-  return (
-    <React.Fragment>
-      <div
-        onClick={async () => {
-          const id = `img${props.index}`
-          await Router.pushRoute(`${props.route}#${id}`)
-          const top = document.getElementById(id).offsetTop
-          window.scrollTo(0, top + OFFSET_IMG_TOP)
-        }}
-      >
-        <LazyLoad height={HEIGHT} once>
-          <img className="card-img-top" src={props.src} alt="" />
-        </LazyLoad>
-      </div>
-      <style jsx>{`
-        img {
-          border-radius: 0;
-          object-fit: cover;
-          height: ${HEIGHT}px;
-        }
-      `}</style>
-    </React.Fragment>
-  )
-}
-
+/**
+ * Voice用。
+ */
 export const VoteCounter = props => (
   <React.Fragment>
     <div className={`wrap py-2 ${props.className}`}>
@@ -89,6 +65,114 @@ export const VoteCounter = props => (
   </React.Fragment>
 )
 
+/**
+ * 画像一覧。一覧用と詳細表示をshowDetailで切り替える
+ */
+const Photos = props => {
+  /**
+   * 一覧用の個別画像
+   */
+  const PreviewImage = props => {
+    const HEIGHT = 110
+    return (
+      <React.Fragment>
+        <div
+          onClick={async () => {
+            const id = `img${props.index}`
+            await Router.pushRoute(`${props.route}#${id}`)
+            const top = document.getElementById(id).offsetTop
+            window.scrollTo(0, top + OFFSET_IMG_TOP)
+          }}
+        >
+          <LazyLoad height={HEIGHT} once>
+            <img className="card-img-top" src={props.src} alt="" />
+          </LazyLoad>
+        </div>
+        <style jsx>{`
+          img {
+            border-radius: 0;
+            object-fit: cover;
+            height: ${HEIGHT}px;
+          }
+        `}</style>
+      </React.Fragment>
+    )
+  }
+
+  if (props.showDetail) {
+    return (
+      <React.Fragment>
+        {props.images.map((src, i) => (
+          <div key={i} id={`img${i}`}>
+            <img src={src} className="card-img-top my-2" alt="" />
+          </div>
+        ))}
+      </React.Fragment>
+    )
+  } else {
+    const length = props.images.length
+    let result = null
+    switch (length) {
+      case 1:
+        result = (
+          <React.Fragment>
+            <div className="row">
+              <div className="col-12 px-0">
+                <PreviewImage
+                  route={props.route}
+                  src={props.images[0]}
+                  index={0}
+                />
+              </div>
+            </div>
+          </React.Fragment>
+        )
+        break
+
+      case 2:
+      case 4:
+        result = (
+          <React.Fragment>
+            <div className="row">
+              {props.images.map((src, i) => (
+                <div key={i} className="col-6 px-0">
+                  <PreviewImage route={props.route} src={src} index={i} />
+                </div>
+              ))}
+            </div>
+          </React.Fragment>
+        )
+        break
+
+      case 3:
+        result = (
+          <React.Fragment>
+            <div className="row">
+              <div className="col-12 px-0">
+                <PreviewImage
+                  route={props.route}
+                  src={props.images[0]}
+                  index={0}
+                />
+              </div>
+              {props.images.slice(1).map((src, i) => (
+                <div key={i} className="col-6 px-0">
+                  <PreviewImage route={props.route} src={src} index={i + 1} />
+                </div>
+              ))}
+            </div>
+          </React.Fragment>
+        )
+        break
+      default:
+    }
+    return result
+  }
+}
+
+/**
+ * 記事一覧用と詳細表示双方を担う
+ */
 class BoxContent extends React.Component {
   state = {
     expandBody: this.props.expandBody,
@@ -192,83 +276,6 @@ class BoxContent extends React.Component {
           `}</style>
         </React.Fragment>
       )
-    }
-  }
-
-  createPhoto(showDetail) {
-    const props = this.props
-    if (showDetail) {
-      return (
-        <React.Fragment>
-          {props.images.map((src, i) => (
-            <div key={i} id={`img${i}`}>
-              <img src={src} className="card-img-top my-2" alt="" />
-            </div>
-          ))}
-        </React.Fragment>
-      )
-    } else {
-      const length = props.images.length
-      let result = null
-      switch (length) {
-        case 1:
-          result = (
-            <React.Fragment>
-              <div className="row">
-                <div className="col-12 px-0">
-                  <PreviewImage
-                    route={this.postLink}
-                    src={props.images[0]}
-                    index={0}
-                  />
-                </div>
-              </div>
-            </React.Fragment>
-          )
-          break
-
-        case 2:
-        case 4:
-          result = (
-            <React.Fragment>
-              <div className="row">
-                {props.images.map((src, i) => (
-                  <div key={i} className="col-6 px-0">
-                    <PreviewImage route={this.postLink} src={src} index={i} />
-                  </div>
-                ))}
-              </div>
-            </React.Fragment>
-          )
-          break
-
-        case 3:
-          result = (
-            <React.Fragment>
-              <div className="row">
-                <div className="col-12 px-0">
-                  <PreviewImage
-                    route={this.postLink}
-                    src={props.images[0]}
-                    index={0}
-                  />
-                </div>
-                {props.images.slice(1).map((src, i) => (
-                  <div key={i} className="col-6 px-0">
-                    <PreviewImage
-                      route={this.postLink}
-                      src={src}
-                      index={i + 1}
-                    />
-                  </div>
-                ))}
-              </div>
-            </React.Fragment>
-          )
-          break
-        default:
-      }
-      return result
     }
   }
 
@@ -448,7 +455,11 @@ class BoxContent extends React.Component {
     const Photo =
       props.images && props.images.length > 0 ? (
         <div key="photo" className="mb-3 px-5">
-          {this.createPhoto(props.showDetail)}
+          <Photos
+            showDetail={props.showDetail}
+            images={props.images}
+            route={this.postLink}
+          />
         </div>
       ) : null
 
