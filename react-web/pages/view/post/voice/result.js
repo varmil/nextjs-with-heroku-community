@@ -1,81 +1,14 @@
 import React from 'react'
+import find from 'lodash/find'
 import isEmpty from 'lodash/isEmpty'
+import isUndefined from 'lodash/isUndefined'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
-import autosize from 'autosize'
-import isUndefined from 'lodash/isUndefined'
-import VoteButton from 'components/atoms/VoteButton'
 import BoxContent, { VoteCounter } from 'components/organisms/site/BoxContent'
 import { AppPost } from 'constants/ActionTypes'
 import BoxType from '/../shared/constants/BoxType'
 
-class VoteOptions extends React.Component {
-  constructor(props) {
-    super(props)
-    const { choiceIndex } = this.props.Voice
-    this.state = {
-      // 自分自身が投票した結果があればそれをぶちこむ。
-      choiceIndex: !isUndefined(choiceIndex) ? choiceIndex : null
-    }
-  }
-
-  onVote(index) {
-    const { onVote } = this.props
-    this.setState({ ...this.state, choiceIndex: index })
-    // 外へ通知
-    onVote(index)
-  }
-
-  render() {
-    const props = this.props
-    const { count, options, deadline } = props.Voice
-
-    return (
-      <div className="wrap">
-        <section className="px-5">
-          <VoteCounter
-            className="mb-3"
-            count={count}
-            deadline={deadline}
-            showDeadline={true}
-          />
-
-          {options.map((text, i) => {
-            return (
-              <div
-                key={i}
-                className={`option my-1 ${
-                  i === this.state.choiceIndex ? 'active' : ''
-                }`}
-                onClick={e => this.onVote(i)}
-              >
-                {text}
-              </div>
-            )
-          })}
-        </section>
-
-        <style jsx>{`
-          .option {
-            font-size: 20px;
-            font-weight: bold;
-            text-align: center;
-            padding: 20px 0;
-            border: 1px solid #c1c0c0;
-            box-shadow: 0px 5px 7px darkgrey;
-          }
-
-          .option:hover,
-          .option.active {
-            color: white;
-            background-color: black;
-            transition: all 0.25s ease;
-          }
-        `}</style>
-      </div>
-    )
-  }
-}
+const OPTION_HEIGHT = 66
 
 class PostVoiceOption extends React.Component {
   // boxType, postId などは文字列なので注意
@@ -86,44 +19,53 @@ class PostVoiceOption extends React.Component {
     return { postId }
   }
 
-  constructor(props) {
-    super(props)
-    this.commentInput = React.createRef()
-    this.state = { choiceIndex: undefined, comment: '' }
-  }
+  // onVote = index => {
+  //   this.setState({ ...this.state, choiceIndex: index })
+  // }
 
-  componentDidMount() {
-    if (this.commentInput) autosize(this.commentInput)
-  }
+  createPercentageDiv(optionIndex) {
+    const { percentages } = this.props.post.data.Voice
+    const e = find(percentages, { choiceIndex: optionIndex })
+    const percentage = e ? e.percentage : 0
+    return (
+      <div className={'percent'}>
+        <span>{percentage}%</span>
+        <style jsx>{`
+          .percent {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: left;
+            line-height: ${OPTION_HEIGHT}px;
+          }
 
-  onVote = index => {
-    this.setState({ ...this.state, choiceIndex: index })
-  }
+          span {
+            position: relative;
+            left: 6%;
+            z-index: 3;
+          }
 
-  onSubmit = () => {
-    console.log('submitted')
-    const { dispatch, postId } = this.props
-    const { choiceIndex, comment } = this.state
-
-    const successCb = async res => {
-      // store内の当該Postの投票数をカウントアップ
-      if (res.data.isFirstVote) {
-        dispatch(createAction(AppPost.INCREMENT_VOTE_SUM)({ postId }))
-      }
-    }
-    dispatch(
-      createAction(AppPost.SAVE_VOTE_REQUEST)({
-        postId,
-        choiceIndex,
-        comment,
-        successCb
-      })
+          .percent:after {
+            content: '';
+            position: absolute;
+            background: ${e && e.isMostPopular ? '#509FEF' : '#c1c0c0'};
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: ${percentage}%;
+            z-index: 2;
+          }
+        `}</style>
+      </div>
     )
   }
 
   render() {
     const props = this.props
     const { data } = props.post
+    const { count, deadline, options } = data.Voice
 
     return (
       <React.Fragment>
@@ -131,63 +73,48 @@ class PostVoiceOption extends React.Component {
           {...data}
           comments={false}
           showDetail={true}
-          focus={props.focus}
-          // vote
           topPhoto={true}
         >
-          <VoteOptions
-            Voice={data.Voice}
-            postId={data.id}
-            dispatch={props.dispatch}
-            onVote={this.onVote}
-          />
-
-          <div className="px-5 mt-4">
-            <textarea
-              placeholder="コメントをくわえる"
-              className="form-control mx-auto py-3"
-              rows="1"
-              ref={input => (this.commentInput = input)}
-              value={this.state.comment}
-              onChange={e =>
-                this.setState({ ...this.state, comment: e.target.value })
-              }
+          <section className="px-5">
+            <VoteCounter
+              className="mb-3"
+              count={count}
+              deadline={deadline}
+              showDeadline={true}
             />
-          </div>
+          </section>
 
-          <div className="mt-4 text-center">
-            <VoteButton
-              style={{
-                fontSize: 14,
-                padding: '10px 0px',
-                width: 170
-              }}
-              onClick={this.onSubmit}
-            />
-          </div>
+          <section className="px-5">
+            {options.map((text, i) => {
+              return (
+                <div key={i} className={`option my-1`}>
+                  {this.createPercentageDiv(i)}
+                  <div className={'text'}>{text}</div>
+                </div>
+              )
+            })}
+          </section>
         </BoxContent>
 
         <style jsx>{`
-          textarea {
-            border-radius: 30px;
+          .option {
+            position: relative;
+            font-size: 20px;
+            text-align: center;
+            height: ${OPTION_HEIGHT}px;
           }
 
-          ::-webkit-input-placeholder {
-            text-align: center;
+          .option.active {
+            color: white;
+            background-color: black;
+            transition: all 0.25s ease;
           }
 
-          :-moz-placeholder {
-            /* Firefox 18- */
-            text-align: center;
-          }
-
-          ::-moz-placeholder {
-            /* Firefox 19+ */
-            text-align: center;
-          }
-
-          :-ms-input-placeholder {
-            text-align: center;
+          .option .text {
+            position: relative;
+            z-index: 5;
+            font-weight: bold;
+            line-height: ${OPTION_HEIGHT}px;
           }
         `}</style>
       </React.Fragment>

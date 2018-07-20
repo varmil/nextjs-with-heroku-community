@@ -129,6 +129,11 @@ exports.fetch = async (req, res) => {
     const voterId = req.user.id || 0
     const choiceIndex = await services.Post.fetchVote(postId, voterId)
     result = { ...result, Voice: { ...result.Voice, choiceIndex } }
+
+    // それぞれの得票数割合を計算
+    // [ { choiceIndex, percentage, count }, ... ]
+    const percentages = await services.Post.fetchPercentageOfVotes(postId)
+    result = { ...result, Voice: { ...result.Voice, percentages } }
   }
 
   res.json(result)

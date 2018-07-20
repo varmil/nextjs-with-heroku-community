@@ -234,6 +234,29 @@ module.exports = class Post {
     }
   }
 
+  // Optionごとの得票割合を取得 (choiceInde)
+  // return : [ 60, 32, 8 ]
+  static async fetchPercentageOfVotes(postId) {
+    try {
+      let choiceCounts = await models.VoiceLog.findAll({
+        attributes: ['choiceIndex', Post.getCountAttr()],
+        where: { postId },
+        group: 'choiceIndex',
+        order: [['choiceIndex', 'ASC']],
+        raw: true
+      })
+
+      const countSum = _.sumBy(choiceCounts, 'count')
+      const mostPopularOption = _.maxBy(choiceCounts, 'count').choiceIndex
+      return _.map(choiceCounts, e => {
+        const isMostPopular = e.choiceIndex === mostPopularOption
+        return { ...e, percentage: e.count / countSum * 100, isMostPopular }
+      })
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   // NOTE: mutate original posts
   // postIdsをもとに表示するのに必要なユーザ情報を追加
   static async associateWithUser(posts) {
@@ -243,5 +266,10 @@ module.exports = class Post {
       return { ...p, name, iconPath }
     })
     return merged
+  }
+
+  // sequelizeで count クエリを発行するための関数
+  static getCountAttr() {
+    return [models.sequelize.fn('COUNT', models.sequelize.col('id')), 'count']
   }
 }
