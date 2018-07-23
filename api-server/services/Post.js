@@ -250,7 +250,11 @@ module.exports = class Post {
       const mostPopularOption = _.maxBy(choiceCounts, 'count').choiceIndex
       return _.map(choiceCounts, e => {
         const isMostPopular = e.choiceIndex === mostPopularOption
-        return { ...e, percentage: e.count / countSum * 100, isMostPopular }
+        return {
+          ...e,
+          percentage: Math.ceil(e.count / countSum * 100),
+          isMostPopular
+        }
       })
     } catch (e) {
       console.error(e)
