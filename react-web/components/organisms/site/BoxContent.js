@@ -347,25 +347,6 @@ class BoxContent extends React.Component {
   createComment() {
     const props = this.props
     const copiedArray = [...props.comments].reverse()
-    const node = typeof window === 'undefined' ? null : document.body
-    const isEmptyComment = this.state.comment.length === 0
-
-    const onSubmitComment = e => {
-      const { dispatch, id } = this.props
-      const { comment } = this.state
-      const successCb = async res => {
-        this.setState({ ...this.state, comment: '' })
-        autosize.update(this.commentInput)
-        window.scrollTo(0, SCROLL_BOTTOM)
-      }
-      dispatch(
-        createAction(AppPost.SAVE_COMMENT_REQUEST)({
-          postId: id,
-          body: comment,
-          successCb
-        })
-      )
-    }
 
     return (
       <div className="comments w-100 mx-auto pt-2">
@@ -385,41 +366,6 @@ class BoxContent extends React.Component {
             </div>
           ))}
         </div>
-
-        <Portal node={node}>
-          <div className="commentForm fixed-bottom input-group">
-            <textarea
-              type="text"
-              rows="1"
-              ref={input => {
-                this.commentInput = input
-              }}
-              className="form-control"
-              placeholder="コメントする..."
-              value={this.state.comment}
-              onChange={e =>
-                this.setState({ ...this.state, comment: e.target.value })
-              }
-            />
-            <div className="input-group-append">
-              <button
-                className="btn btn-outline-secondary"
-                type="button"
-                onClick={onSubmitComment}
-                disabled={isEmptyComment}
-              >
-                <i className="far fa-paper-plane" />
-              </button>
-            </div>
-          </div>
-        </Portal>
-
-        <style global jsx>{`
-          .form-control:focus {
-            border-color: #ced4da !important;
-            box-shadow: none !important;
-          }
-        `}</style>
 
         <style jsx>{`
           a {
@@ -441,6 +387,65 @@ class BoxContent extends React.Component {
             border-radius: 15px;
             padding: 10px 20px;
           }
+        `}</style>
+      </div>
+    )
+  }
+
+  createCommentPortal() {
+    const node = typeof window === 'undefined' ? null : document.body
+    const isEmptyComment = this.state.comment.length === 0
+
+    const onSubmitComment = e => {
+      const { dispatch, id } = this.props
+      const { comment } = this.state
+      const successCb = async res => {
+        this.setState({ ...this.state, comment: '' })
+        autosize.update(this.commentInput)
+        window.scrollTo(0, SCROLL_BOTTOM)
+      }
+      dispatch(
+        createAction(AppPost.SAVE_COMMENT_REQUEST)({
+          postId: id,
+          body: comment,
+          successCb
+        })
+      )
+    }
+
+    return (
+      <Portal node={node}>
+        <div className="commentForm fixed-bottom input-group">
+          <textarea
+            type="text"
+            rows="1"
+            ref={input => {
+              this.commentInput = input
+            }}
+            className="form-control"
+            placeholder="コメントする..."
+            value={this.state.comment}
+            onChange={e =>
+              this.setState({ ...this.state, comment: e.target.value })
+            }
+          />
+          <div className="input-group-append">
+            <button
+              className="btn btn-outline-secondary"
+              type="button"
+              onClick={onSubmitComment}
+              disabled={isEmptyComment}
+            >
+              <i className="far fa-paper-plane" />
+            </button>
+          </div>
+        </div>
+
+        <style jsx>{`
+          .form-control:focus {
+            border-color: #ced4da !important;
+            box-shadow: none !important;
+          }
 
           .btn.btn-outline-secondary {
             border-color: #ced4da !important;
@@ -452,7 +457,7 @@ class BoxContent extends React.Component {
             left: -1px;
           }
         `}</style>
-      </div>
+      </Portal>
     )
   }
 
@@ -551,7 +556,18 @@ class BoxContent extends React.Component {
           {this.props.children}
 
           {/* コメント機能がそもそも存在しないページなら非表示 */}
-          {props.comments !== false && props.showDetail && this.createComment()}
+          {(() => {
+            if (props.comments !== false && props.showDetail) {
+              return (
+                <React.Fragment>
+                  {this.createComment()}
+                  {this.createCommentPortal()}
+                </React.Fragment>
+              )
+            } else {
+              return null
+            }
+          })()}
 
           <style jsx>{`
             .media-body span {
