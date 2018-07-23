@@ -4,8 +4,8 @@ const routes = (module.exports = nextRoutes())
 // routes.add('/view/about', '/about-us/:foo(bar|baz)')
 
 // signup (with invitation)
-routes.add('/view/signup/:code', '/view/signup')
-routes.add('/view/signup/:code/email', '/view/signup/email')
+routes.add('/view/signup/top/:code', '/view/signup')
+routes.add('/view/signup/email/:code', '/view/signup/email')
 
 // box page
 routes.add('/admin/site/edit/home/:slug', '/admin/site/edit/home')

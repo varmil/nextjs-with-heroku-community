@@ -56,7 +56,7 @@ class Signin extends React.Component {
       <React.Fragment>
         <CenteredContainer height={430}>
           <section>
-            <SignInUpHeader text="ログイン" route={'/view/signup'} />
+            <SignInUpHeader text="ログイン" route={'/view/signup/top/foobar'} />
           </section>
 
           {/* <section className="oauth mt-5">

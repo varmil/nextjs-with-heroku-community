@@ -72,6 +72,7 @@ module.exports = class Comment {
         const commentIds = _.map(rows, 'commentId')
         const comments = await models.Comment.findAll({
           where: { id: commentIds },
+          order: [['id', 'DESC']],
           raw: true
         })
         const merged = await Comment.associateWithUser(comments)

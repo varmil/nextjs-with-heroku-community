@@ -23,10 +23,7 @@ export default function(ctx) {
     }
   } else {
     const token = ctx.store.getState().user.jwtToken
-    if (
-      token &&
-      (ctx.pathname === '/view/signin' || ctx.pathname === '/view/signup')
-    ) {
+    if (token && ctx.pathname === '/view/signin') {
       console.log('you are already logined')
       // Router.push('/')
     }

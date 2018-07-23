@@ -49,7 +49,7 @@ export default class SignUp extends React.Component {
           </section>
 
           <section className="">
-            <Link route={'/view/signup/foobar/email'} passHref>
+            <Link route={'/view/signup/email/foobar'} passHref>
               <a>
                 <RoundWideButton
                   className="my-2"
