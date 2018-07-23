@@ -7,7 +7,7 @@ import Input from 'reactstrap/lib/Input'
 import ColorButton from 'components/atoms/ColorButton'
 import CenteredContainer from 'components/molecules/CenteredContainer'
 import SignInUpHeader from 'components/molecules/SignInUpHeader'
-import Rule from 'constants/Rule'
+import Rule from '/../shared/constants/Rule'
 
 // import RoundWideButton from 'components/atoms/RoundWideButton'
 // const btnStyle = {

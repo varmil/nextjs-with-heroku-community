@@ -1,6 +1,6 @@
 import React from 'react'
 import DropzoneIcon from 'components/atoms/Dropzone'
-import Rule from 'constants/Rule'
+import Rule from '/../shared/constants/Rule'
 
 class PostDropzone extends React.Component {
   state = {

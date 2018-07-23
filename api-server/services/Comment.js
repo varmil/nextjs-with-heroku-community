@@ -79,16 +79,8 @@ module.exports = class Comment {
       })
       // [ [ {comment}, {comment} ], [] ... ]
       const comments = await Promise.all(commentPromises)
-      console.log('###########comments', comments)
 
-      // const comments = await models.Comment.findAll({
-      //   where: where,
-      //   limit: PER_PAGE,
-      //   offset: PER_PAGE * (pageNum - 1),
-      //   order: [['id', 'DESC']],
-      //   raw: true
-      // })
-      // const merged = await Comment.associateWithUser(comments)
+      console.log('###########comments', comments)
       return comments
     } catch (e) {
       console.error(e)
