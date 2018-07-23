@@ -475,6 +475,8 @@ class BoxContent extends React.Component {
   render() {
     const props = this.props
     const { PostLikes } = this.props
+    const INITIAL_COMMENT_NUM = 3
+
     return (
       <div style={props.style}>
         <div className={`card`}>
@@ -513,10 +515,10 @@ class BoxContent extends React.Component {
               return (
                 <React.Fragment>
                   <CommentZone
+                    key={props.id}
                     className="pt-2 px-5"
                     postId={props.id}
-                    // comments={props.comments}
-                    initialNum={3}
+                    initialNum={INITIAL_COMMENT_NUM}
                   />
                   {this.createCommentPortal()}
                 </React.Fragment>

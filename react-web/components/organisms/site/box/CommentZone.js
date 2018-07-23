@@ -14,9 +14,6 @@ const PER_PAGE = 6
 
 /**
  * コメント一覧表示ゾーン
- * props:
- * comments
- * initialNum
  */
 class CommentZone extends React.Component {
   state = { nextPageNum: INITIAL_PAGE, hasMore: true, nowLoading: false }
@@ -90,7 +87,6 @@ class CommentZone extends React.Component {
 
   render() {
     const props = this.props
-    const { nowLoading, hasMore } = this.state
 
     // const sliced = props.comments.slice(0, props.initialNum || INITIAL_NUM)
     const copiedArray = [...props.comments].reverse()

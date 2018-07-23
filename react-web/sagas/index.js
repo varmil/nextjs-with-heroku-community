@@ -285,8 +285,9 @@ function* fetchComments({ payload }) {
       jwtToken
     )
 
-    // reset が有効なら配列初期化してset
-    const type = reset ? AppPost.SET_COMMENTS : AppPost.PUSH_COMMENTS
+    // reset が有効 OR ページ番号が１なら配列初期化してset
+    const type =
+      reset || +pageNum === 1 ? AppPost.SET_COMMENTS : AppPost.PUSH_COMMENTS
     let action = createAction(type)
     yield put(action(data))
     if (successCb) yield call(successCb, data)
