@@ -1,15 +1,13 @@
 import React from 'react'
 import find from 'lodash/find'
-import isEmpty from 'lodash/isEmpty'
-import isUndefined from 'lodash/isUndefined'
+// import isEmpty from 'lodash/isEmpty'
+// import isUndefined from 'lodash/isUndefined'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
-import BoxContent, {
-  VoteCounter,
-  CommentZone
-} from 'components/organisms/site/BoxContent'
+import BoxContent, { VoteCounter } from 'components/organisms/site/BoxContent'
+import CommentZone from 'components/organisms/site/box/CommentZone'
 import { AppPost } from 'constants/ActionTypes'
-import BoxType from '/../shared/constants/BoxType'
+// import BoxType from '/../shared/constants/BoxType'
 
 const OPTION_HEIGHT = 66
 
