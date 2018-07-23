@@ -259,7 +259,7 @@ function* fetchPosts({ payload }) {
 
 // 個別記事詳細ページ
 function* fetchPost({ payload }) {
-  const { postId } = payload
+  const { postId, successCb } = payload
   const { jwtToken } = yield select(getUser)
   try {
     const { data } = yield call(API.fetch, `/post/${postId}`, jwtToken)
@@ -268,6 +268,7 @@ function* fetchPost({ payload }) {
 
     // fetch-set comments
     yield call(fetchComments, { payload: { postId, reset: true } })
+    if (successCb) yield call(successCb, data)
   } catch (e) {
     yield put(setCommonError(e.response))
   }

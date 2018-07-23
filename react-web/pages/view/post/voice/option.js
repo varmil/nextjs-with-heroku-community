@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Router } from 'routes'
 import { createAction } from 'redux-actions'
 import autosize from 'autosize'
-import isUndefined from 'lodash/isUndefined'
+import isNil from 'lodash/isNil'
 import VoteButton from 'components/atoms/VoteButton'
 import BoxContent, { VoteCounter } from 'components/organisms/site/BoxContent'
 import { AppPost } from 'constants/ActionTypes'
@@ -11,11 +11,7 @@ import { AppPost } from 'constants/ActionTypes'
 class VoteOptions extends React.Component {
   constructor(props) {
     super(props)
-    const { choiceIndex } = this.props.Voice
-    this.state = {
-      // 自分自身が投票した結果があればそれをぶちこむ。
-      choiceIndex: !isUndefined(choiceIndex) ? choiceIndex : null
-    }
+    this.state = { choiceIndex: undefined }
   }
 
   onVote(index) {
@@ -81,7 +77,16 @@ class PostVoiceOption extends React.Component {
   static async getInitialProps({ ctx }) {
     const { dispatch } = ctx.store
     const postId = +ctx.query.postId
-    dispatch(createAction(AppPost.FETCH_REQUEST)({ postId }))
+
+    // すでに投票済みの場合はリダイレクト
+    const successCb = data => {
+      if (!isNil(data.Voice.choiceIndex)) {
+        console.log('you already voted, so go to result')
+        Router.pushRoute(`/view/post/${postId}/voice/result`)
+      }
+    }
+    dispatch(createAction(AppPost.FETCH_REQUEST)({ postId, successCb }))
+
     return { postId }
   }
 
