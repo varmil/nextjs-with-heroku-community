@@ -118,7 +118,7 @@ class PostVoiceOption extends React.Component {
             font-size: 20px;
             text-align: center;
             height: ${OPTION_HEIGHT}px;
-            width: 80%;
+            // width: 80%;
           }
 
           .option.active {
