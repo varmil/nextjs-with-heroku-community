@@ -115,7 +115,7 @@ class PostVoiceOption extends React.Component {
         dispatch(createAction(AppPost.INCREMENT_VOTE_SUM)({ postId }))
       }
       // 結果表示ページへ
-      Router.pushRoute(`/view/post/${postId}/voice/result`)
+      Router.replaceRoute(`/view/post/${postId}/voice/result`)
     }
     dispatch(
       createAction(AppPost.SAVE_VOTE_REQUEST)({
