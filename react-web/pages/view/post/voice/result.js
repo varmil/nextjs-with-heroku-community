@@ -66,8 +66,8 @@ class PostVoiceOption extends React.Component {
   }
 
   render() {
-    const props = this.props
-    const { data } = props.post
+    const post = this.props.post
+    const { data, comments } = post
     const { count, deadline, options } = data.Voice
 
     return (
@@ -91,13 +91,15 @@ class PostVoiceOption extends React.Component {
             {options.map((text, i) => {
               return (
                 <React.Fragment key={i}>
-                  <section className={`option my-1`}>
-                    {this.createPercentageDiv(i)}
-                    <div className={'text'}>{text}</div>
-                  </section>
-                  <section>
-                    <CommentZone comments={[]} />
-                  </section>
+                  <div className={`mt-1 mb-3`}>
+                    <section className={`option mx-auto`}>
+                      {this.createPercentageDiv(i)}
+                      <div className={'text'}>{text}</div>
+                    </section>
+                    <section>
+                      <CommentZone comments={comments} />
+                    </section>
+                  </div>
                 </React.Fragment>
               )
             })}
@@ -110,6 +112,7 @@ class PostVoiceOption extends React.Component {
             font-size: 20px;
             text-align: center;
             height: ${OPTION_HEIGHT}px;
+            width: 80%;
           }
 
           .option.active {

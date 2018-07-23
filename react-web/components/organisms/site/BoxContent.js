@@ -80,7 +80,7 @@ export const CommentZone = props => {
       <div className="load my-3 text-center" onClick={() => {}}>
         以前のコメントを見る
       </div>
-      <div className="commentsPost my-3 mb-5 px-5">
+      <div className="commentsPost my-3 mb-5">
         {copiedArray.map((e, i) => (
           <div key={e.id} className="row justify-content-around my-3">
             <Avatar className="col-2 px-0" src={e.iconPath} />
@@ -565,7 +565,10 @@ class BoxContent extends React.Component {
             if (props.comments !== false && props.showDetail) {
               return (
                 <React.Fragment>
-                  <CommentZone className="pt-2" comments={props.comments} />
+                  <CommentZone
+                    className="pt-2 px-5"
+                    comments={props.comments}
+                  />
                   {this.createCommentPortal()}
                 </React.Fragment>
               )
