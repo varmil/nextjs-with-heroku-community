@@ -267,7 +267,7 @@ function* fetchPost({ payload }) {
     yield put(action({ ...data }))
 
     // fetch-set comments
-    yield call(fetchComments, { payload: { postId, reset: true } })
+    // yield call(fetchComments, { payload: { postId, reset: true } })
     if (successCb) yield call(successCb, data)
   } catch (e) {
     yield put(setCommonError(e.response))
@@ -275,12 +275,13 @@ function* fetchPost({ payload }) {
 }
 
 function* fetchComments({ payload }) {
-  const { postId, pageNum, reset } = payload
+  const { postId, pageNum, perPage, initialOffset, successCb, reset } = payload
   const { jwtToken } = yield select(getUser)
   try {
+    const query = qs.stringify({ perPage, initialOffset })
     const { data } = yield call(
       API.fetch,
-      `/comments/${postId}/${pageNum || 1}`,
+      `/comments/${postId}/${pageNum || 1}?${query}`,
       jwtToken
     )
 
@@ -288,6 +289,7 @@ function* fetchComments({ payload }) {
     const type = reset ? AppPost.SET_COMMENTS : AppPost.PUSH_COMMENTS
     let action = createAction(type)
     yield put(action(data))
+    if (successCb) yield call(successCb, data)
   } catch (e) {
     yield put(setCommonError(e.response))
   }

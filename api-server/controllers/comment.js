@@ -30,8 +30,13 @@ exports.save = async (req, res, next) => {
  * まとめて 取得
  */
 exports.fetchList = async (req, res) => {
-  const postId = req.params.postId
-  const pageNum = req.params.pageNum || 1 // 1 origin
+  const postId = +req.params.postId
+  const pageNum = +req.params.pageNum || 1 // 1 origin
+
+  // 最初に表示されてる件数とページングの件数は必ずしも一致しない
+  let { perPage, initialOffset } = req.query
+  perPage = pageNum === 1 ? initialOffset : perPage
+  initialOffset = pageNum === 1 ? 0 : initialOffset
 
   if (!postId) {
     return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
@@ -40,14 +45,14 @@ exports.fetchList = async (req, res) => {
   // boxTypeごとに返却するデータが異なるのでまずfetch
   const boxType = (await models.Post.findById(postId)).boxType
 
-  let data = null
+  let fetchFunc = null
   switch (boxType) {
     case BoxType.index.voice:
-      data = await services.Comment.fetchListOfVoice(pageNum, { postId })
+      fetchFunc = services.Comment.fetchListOfVoice
       break
     default:
-      data = await services.Comment.fetchList(pageNum, { postId })
+      fetchFunc = services.Comment.fetchList
   }
-
+  const data = await fetchFunc(pageNum, { postId }, { perPage, initialOffset })
   res.json(data)
 }

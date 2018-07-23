@@ -1,23 +1,104 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { createAction } from 'redux-actions'
 import { Link } from 'routes'
+import LinearProgress from '@material-ui/core/LinearProgress'
+import { AppPost } from 'constants/ActionTypes'
 import Avatar from 'components/atoms/Avatar'
+
+// ページ番号は1から
+const INITIAL_PAGE = 1
+// 一回のFETCHでとってくる件数。
+const PER_PAGE = 6
 
 /**
  * コメント一覧表示ゾーン
+ * props:
+ * comments
+ * initialNum
  */
-export default class CommentZone extends React.Component {
+class CommentZone extends React.Component {
+  state = { nextPageNum: INITIAL_PAGE, hasMore: true, nowLoading: false }
+
+  // このコンポーネントがMountされたときに最初の読み込みを行う
+  componentDidMount() {
+    this.loadPage(INITIAL_PAGE)
+  }
+
+  loadPage(pageNum) {
+    const { dispatch, postId, initialNum } = this.props
+    const { nowLoading } = this.state
+    console.log('next pageNum', pageNum, this.state)
+
+    if (nowLoading) return
+    this.setState({ ...this.state, nowLoading: true })
+
+    const successCb = data => {
+      // 結果配列が埋まっていれば、hasMoreをたてる
+      this.setState({
+        ...this.state,
+        nextPageNum: pageNum + 1,
+        hasMore: Array.isArray(data) && data.length > 0,
+        nowLoading: false
+      })
+    }
+    dispatch(
+      createAction(AppPost.FETCH_COMMENTS_REQUEST)({
+        postId,
+        pageNum,
+        perPage: PER_PAGE,
+        initialOffset: initialNum, // 最初に表示されてる件数とページングの件数は必ずしも一致しない
+        successCb
+      })
+    )
+  }
+
+  // 次ページ読み込み
+  onClickLoad = () => {
+    this.loadPage(this.state.nextPageNum)
+  }
+
+  createReadMoreAndLoading() {
+    const { nowLoading, hasMore } = this.state
+
+    // 全コメント表示済みなら何も出さない
+    if (!hasMore) return null
+
+    // loading表示
+    if (nowLoading) {
+      return (
+        <div className="text-center">
+          <LinearProgress />
+        </div>
+      )
+    }
+
+    return (
+      <div className="load my-3 text-center" onClick={this.onClickLoad}>
+        以前のコメントを見る
+        <style jsx>{`
+          .load {
+            color: #2b6eb2;
+            font-size: 13px;
+            cursor: pointer;
+          }
+        `}</style>
+      </div>
+    )
+  }
+
   render() {
     const props = this.props
-    // 最初に見えてる件数を絞る。最初に20件とか撮ってくる必要ない HACK
-    const INITIAL_NUM = 3
-    const sliced = props.comments.slice(0, props.initialNum || INITIAL_NUM)
-    const copiedArray = [...sliced].reverse()
+    const { nowLoading, hasMore } = this.state
+
+    // const sliced = props.comments.slice(0, props.initialNum || INITIAL_NUM)
+    const copiedArray = [...props.comments].reverse()
 
     return (
       <div className={`comments w-100 mx-auto ${props.className || ''}`}>
-        <div className="load my-3 text-center" onClick={() => {}}>
-          以前のコメントを見る
-        </div>
+        {this.createReadMoreAndLoading()}
+
         <div className="commentsPost my-3 mb-5">
           {copiedArray.map((e, i) => (
             <div key={e.id} className="row justify-content-around my-3">
@@ -38,12 +119,6 @@ export default class CommentZone extends React.Component {
             font-weight: bold;
           }
 
-          .load {
-            color: #2b6eb2;
-            font-size: 13px;
-            cursor: pointer;
-          }
-
           .commentsPost {
             font-size: 12px;
           }
@@ -58,3 +133,14 @@ export default class CommentZone extends React.Component {
     )
   }
 }
+
+CommentZone.propTypes = {
+  postId: PropTypes.number,
+  // falseの場合、汎用のコメント機能をOFFにする
+  comments: PropTypes.array,
+  initialNum: PropTypes.number
+}
+
+export default connect(state => ({
+  comments: state.app.post.comments
+}))(CommentZone)

@@ -514,7 +514,9 @@ class BoxContent extends React.Component {
                 <React.Fragment>
                   <CommentZone
                     className="pt-2 px-5"
-                    comments={props.comments}
+                    postId={props.id}
+                    // comments={props.comments}
+                    initialNum={3}
                   />
                   {this.createCommentPortal()}
                 </React.Fragment>

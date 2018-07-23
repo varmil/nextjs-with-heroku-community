@@ -5,7 +5,7 @@ const models = reqlib('/models')
 const Path = reqlib('/constants/Path')
 const Rule = reqlib('/../shared/constants/Rule')
 
-const PER_PAGE = 8
+const DEFAULT_PER_PAGE = 6
 
 module.exports = class Comment {
   static async save(postId, userId, body) {
@@ -35,12 +35,19 @@ module.exports = class Comment {
     }
   }
 
-  static async fetchList(pageNum, where) {
+  static async fetchList(pageNum, where, options = {}) {
+    console.log('WWFWAAWA', options)
+
+    // optionsを展開
+    let { perPage, initialOffset } = options
+    perPage = +perPage || DEFAULT_PER_PAGE
+    initialOffset = +initialOffset || 0
+
     try {
       const comments = await models.Comment.findAll({
         where: where,
-        limit: PER_PAGE,
-        offset: PER_PAGE * (pageNum - 1),
+        limit: perPage,
+        offset: perPage * (pageNum - 1) - initialOffset,
         order: [['id', 'DESC']],
         raw: true
       })
@@ -52,14 +59,19 @@ module.exports = class Comment {
   }
 
   // 初回フェッチ用
-  static async fetchListOfVoice(pageNum, where) {
+  static async fetchListOfVoice(pageNum, where, options = {}) {
+    // optionsを展開
+    let { perPage, initialOffset } = options
+    perPage = +perPage || DEFAULT_PER_PAGE
+    initialOffset = +initialOffset || 0
+
     try {
       // まずVoiceLogから各OptionごとのコメントIDを取得
       const logPromises = _.range(Rule.MAX_OPTIONS).map(async i => {
         return models.VoiceLog.findAll({
           where: { ...where, choiceIndex: i },
-          limit: PER_PAGE,
-          offset: PER_PAGE * (pageNum - 1),
+          limit: perPage,
+          offset: perPage * (pageNum - 1) - initialOffset,
           order: [['id', 'DESC']],
           raw: true
         })
