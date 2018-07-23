@@ -65,9 +65,15 @@ class PostVoiceOption extends React.Component {
     )
   }
 
+  // 引数のindex（==choiceIndex）に応じて、comments
+  getCommentsForOption(index) {
+    const comments = this.props.post.comments
+    return comments[index]
+  }
+
   render() {
     const post = this.props.post
-    const { data, comments } = post
+    const { data } = post
     const { count, deadline, options } = data.Voice
 
     return (
@@ -97,7 +103,7 @@ class PostVoiceOption extends React.Component {
                       <div className={'text'}>{text}</div>
                     </section>
                     <section>
-                      <CommentZone comments={comments} />
+                      <CommentZone comments={this.getCommentsForOption(i)} />
                     </section>
                   </div>
                 </React.Fragment>

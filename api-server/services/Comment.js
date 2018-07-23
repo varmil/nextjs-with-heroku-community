@@ -3,7 +3,7 @@ const _ = require('lodash')
 const UserService = reqlib('/services/User')
 const models = reqlib('/models')
 const Path = reqlib('/constants/Path')
-const Role = reqlib('/../shared/constants/Role')
+const Rule = reqlib('/../shared/constants/Rule')
 
 const PER_PAGE = 5
 
@@ -46,6 +46,50 @@ module.exports = class Comment {
       })
       const merged = await Comment.associateWithUser(comments)
       return merged
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  // 初回フェッチ用
+  static async fetchListOfVoice(pageNum, where) {
+    try {
+      // まずVoiceLogから各OptionごとのコメントIDを取得
+      const logPromises = _.range(Rule.MAX_OPTIONS).map(async i => {
+        return models.VoiceLog.findAll({
+          where: { ...where, choiceIndex: i },
+          limit: PER_PAGE,
+          offset: PER_PAGE * (pageNum - 1),
+          order: [['id', 'DESC']],
+          raw: true
+        })
+      })
+      // [ [ {row}, {row} ], [] ... ]
+      const logs = await Promise.all(logPromises)
+
+      // その後、コメントIDからコメント本文を取得
+      const commentPromises = logs.map(async rows => {
+        const commentIds = _.map(rows, 'commentId')
+        const comments = await models.Comment.findAll({
+          where: { id: commentIds },
+          raw: true
+        })
+        const merged = await Comment.associateWithUser(comments)
+        return merged
+      })
+      // [ [ {comment}, {comment} ], [] ... ]
+      const comments = await Promise.all(commentPromises)
+      console.log('###########comments', comments)
+
+      // const comments = await models.Comment.findAll({
+      //   where: where,
+      //   limit: PER_PAGE,
+      //   offset: PER_PAGE * (pageNum - 1),
+      //   order: [['id', 'DESC']],
+      //   raw: true
+      // })
+      // const merged = await Comment.associateWithUser(comments)
+      return comments
     } catch (e) {
       console.error(e)
     }

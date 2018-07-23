@@ -37,6 +37,17 @@ exports.fetchList = async (req, res) => {
     return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
   }
 
-  const data = await services.Comment.fetchList(pageNum, { postId })
+  // boxTypeごとに返却するデータが異なるのでまずfetch
+  const boxType = (await models.Post.findById(postId)).boxType
+
+  let data = null
+  switch (boxType) {
+    case BoxType.index.voice:
+      data = await services.Comment.fetchListOfVoice(pageNum, { postId })
+      break
+    default:
+      data = await services.Comment.fetchList(pageNum, { postId })
+  }
+
   res.json(data)
 }
