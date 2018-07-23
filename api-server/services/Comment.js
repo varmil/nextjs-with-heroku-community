@@ -5,7 +5,7 @@ const models = reqlib('/models')
 const Path = reqlib('/constants/Path')
 const Rule = reqlib('/../shared/constants/Rule')
 
-const PER_PAGE = 5
+const PER_PAGE = 8
 
 module.exports = class Comment {
   static async save(postId, userId, body) {

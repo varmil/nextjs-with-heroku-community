@@ -103,6 +103,7 @@ export const CommentZone = props => {
         .load {
           color: #2b6eb2;
           font-size: 13px;
+          cursor: pointer;
         }
 
         .commentsPost {
