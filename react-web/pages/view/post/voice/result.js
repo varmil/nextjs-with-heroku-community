@@ -4,7 +4,10 @@ import isEmpty from 'lodash/isEmpty'
 import isUndefined from 'lodash/isUndefined'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
-import BoxContent, { VoteCounter } from 'components/organisms/site/BoxContent'
+import BoxContent, {
+  VoteCounter,
+  CommentZone
+} from 'components/organisms/site/BoxContent'
 import { AppPost } from 'constants/ActionTypes'
 import BoxType from '/../shared/constants/BoxType'
 
@@ -87,10 +90,15 @@ class PostVoiceOption extends React.Component {
           <section className="px-5">
             {options.map((text, i) => {
               return (
-                <div key={i} className={`option my-1`}>
-                  {this.createPercentageDiv(i)}
-                  <div className={'text'}>{text}</div>
-                </div>
+                <React.Fragment key={i}>
+                  <section className={`option my-1`}>
+                    {this.createPercentageDiv(i)}
+                    <div className={'text'}>{text}</div>
+                  </section>
+                  <section>
+                    <CommentZone comments={[]} />
+                  </section>
+                </React.Fragment>
               )
             })}
           </section>

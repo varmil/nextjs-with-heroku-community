@@ -67,6 +67,59 @@ export const VoteCounter = props => (
 )
 
 /**
+ * コメント一覧表示ゾーン
+ */
+export const CommentZone = props => {
+  // 最初に見えてる件数を絞る。最初に20件とか撮ってくる必要ない HACK
+  const INITIAL_NUM = 3
+  const sliced = props.comments.slice(0, props.initialNum || INITIAL_NUM)
+  const copiedArray = [...sliced].reverse()
+
+  return (
+    <div className={`comments w-100 mx-auto ${props.className || ''}`}>
+      <div className="load my-3 text-center" onClick={() => {}}>
+        以前のコメントを見る
+      </div>
+      <div className="commentsPost my-3 mb-5 px-5">
+        {copiedArray.map((e, i) => (
+          <div key={e.id} className="row justify-content-around my-3">
+            <Avatar className="col-2 px-0" src={e.iconPath} />
+            <div className="col-9 body">
+              <Link route={`/view/mypage/${e.commenterId}`}>
+                <a>{e.name}</a>
+              </Link>
+              <div>{e.body}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <style jsx>{`
+        a {
+          color: #2b6eb2;
+          font-weight: bold;
+        }
+
+        .load {
+          color: #2b6eb2;
+          font-size: 13px;
+        }
+
+        .commentsPost {
+          font-size: 12px;
+        }
+
+        .body {
+          background-color: #eff1f3;
+          border-radius: 15px;
+          padding: 10px 20px;
+        }
+      `}</style>
+    </div>
+  )
+}
+
+/**
  * 画像一覧。一覧用と詳細表示をshowDetailで切り替える
  */
 const Photos = props => {
@@ -344,54 +397,6 @@ class BoxContent extends React.Component {
     )
   }
 
-  createComment() {
-    const props = this.props
-    const copiedArray = [...props.comments].reverse()
-
-    return (
-      <div className="comments w-100 mx-auto pt-2">
-        <div className="load my-3 text-center" onClick={() => {}}>
-          以前のコメントを見る
-        </div>
-        <div className="commentsPost my-3 mb-5 px-5">
-          {copiedArray.map((e, i) => (
-            <div key={e.id} className="row justify-content-around my-3">
-              <Avatar className="col-2 px-0" src={e.iconPath} />
-              <div className="col-9 body">
-                <Link route={this.postLink}>
-                  <a>{e.name}</a>
-                </Link>
-                <div>{e.body}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <style jsx>{`
-          a {
-            color: #2b6eb2;
-            font-weight: bold;
-          }
-
-          .load {
-            color: #2b6eb2;
-            font-size: 13px;
-          }
-
-          .commentsPost {
-            font-size: 12px;
-          }
-
-          .body {
-            background-color: #eff1f3;
-            border-radius: 15px;
-            padding: 10px 20px;
-          }
-        `}</style>
-      </div>
-    )
-  }
-
   createCommentPortal() {
     const node = typeof window === 'undefined' ? null : document.body
     const isEmptyComment = this.state.comment.length === 0
@@ -560,7 +565,7 @@ class BoxContent extends React.Component {
             if (props.comments !== false && props.showDetail) {
               return (
                 <React.Fragment>
-                  {this.createComment()}
+                  <CommentZone className="pt-2" comments={props.comments} />
                   {this.createCommentPortal()}
                 </React.Fragment>
               )
