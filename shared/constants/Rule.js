@@ -4,5 +4,7 @@ module.exports = {
   // パスワードの最低文字数
   PASS_MIN_LENGTH: 8,
   // 最大選択肢（VOICE）
-  MAX_OPTIONS: 5
+  MAX_OPTIONS: 5,
+  // カテゴリインデックス（全て表示）
+  ALL_CATEGORY_INDX: 99999
 }

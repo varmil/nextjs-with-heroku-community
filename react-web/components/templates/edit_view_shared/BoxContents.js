@@ -25,17 +25,12 @@ export default class BoxContents extends React.Component {
     if (!this.categories) return null
     const props = this.props
 
-    const onClick = categoryIndex => {
-      console.log('clicked', categoryIndex)
-    }
-
     return (
       <section className="cat my-3">
         <CategorySelect
           item={props.pageData.categories.item}
           action={this.categories.action}
           propsPath={this.categories.propsPath}
-          onClick={onClick}
         />
       </section>
     )

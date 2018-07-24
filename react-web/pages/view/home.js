@@ -14,6 +14,7 @@ class Home extends React.Component {
     // 最初のFETCHはInfiniteScrollで行ってくれる想定
 
     // TODO: querystringに、カテゴリフィルタが付与されていたら表示するコンテンツを限定する
+    console.log('getInitialProps')
 
     // ctx.query contains URL params
     // ?edit=true is added when the page is edit mode
