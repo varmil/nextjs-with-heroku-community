@@ -6,5 +6,5 @@ module.exports = {
   // 最大選択肢（VOICE）
   MAX_OPTIONS: 5,
   // カテゴリインデックス（全て表示）
-  ALL_CATEGORY_INDX: 99999
+  ALL_CATEGORY_INDEX: 99999
 }

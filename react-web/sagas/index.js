@@ -195,8 +195,16 @@ function fetchContents(boxType, setAction) {
     const { jwtToken } = yield select(getUser)
     const { perPage, pageNum, released, successCb } = payload
 
-    // qs
-    const query = qs.stringify({ released, perPage })
+    // 現在のURLについているqsをパース
+    let parsed = {}
+    parsed = qs.parse(location.search)
+
+    // APIサーバに投げるqsを生成
+    const query = qs.stringify({
+      released,
+      perPage,
+      categoryIndex: parsed.categoryIndex
+    })
 
     const res = yield call(
       API.fetch,

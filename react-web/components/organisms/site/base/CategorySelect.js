@@ -54,10 +54,10 @@ export default class CategorySelect extends React.Component {
           {/* default all */}
           <Item
             onClick={() =>
-              props.onClick && props.onClick(Rule.ALL_CATEGORY_INDX)
+              props.onClick && props.onClick(Rule.ALL_CATEGORY_INDEX)
             }
             text={'全て'}
-            categoryIndex={Rule.ALL_CATEGORY_INDX}
+            categoryIndex={Rule.ALL_CATEGORY_INDEX}
           />
 
           {/* skip null text */}

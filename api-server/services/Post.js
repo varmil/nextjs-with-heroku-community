@@ -5,6 +5,7 @@ const CommentService = reqlib('/services/Comment')
 const models = reqlib('/models')
 const Path = reqlib('/constants/Path')
 const Role = reqlib('/../shared/constants/Role')
+const Rule = reqlib('/../shared/constants/Rule')
 const { moveImage } = reqlib('/utils/image')
 const BoxType = reqlib('/../shared/constants/BoxType')
 
@@ -99,9 +100,18 @@ module.exports = class Post {
     let { perPage, userId, assoc } = options
     perPage = +perPage || DEFAULT_PER_PAGE
 
+    // カテゴリ絞り込み
+    if (
+      !_.isNil(where.categoryIndex) &&
+      +where.categoryIndex === Rule.ALL_CATEGORY_INDEX
+    ) {
+      // 特殊カテゴリ（すべて）の対処
+      delete where.categoryIndex
+    }
+
     // 特定条件なら関連テーブルも引っ張る
     let include = []
-    if (assoc || (where && where.boxType === BoxType.index.voice)) {
+    if (assoc || where.boxType === BoxType.index.voice) {
       include.push({
         model: models.Voice,
         attributes: ['options', 'deadline', 'count']

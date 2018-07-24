@@ -171,13 +171,20 @@ exports.fetchListOfBox = async (req, res) => {
     return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
   }
 
-  const { perPage, released } = req.query
+  const { released, perPage, categoryIndex } = req.query
   const boxType = +req.params.boxType
   const pageNum = +req.params.pageNum || 1 // 1 origin
   const brandId = req.user.brand.id
 
+  // where条件
   let where = { brandId, boxType }
-  where = released ? { ...where, released: true } : where
+  if (released) {
+    where = { ...where, released: true }
+  }
+  if (!_.isNil(categoryIndex) && _.isNumber(+categoryIndex)) {
+    where = { ...where, categoryIndex: +categoryIndex }
+  }
+
   const posts = await services.Post.fetchList(pageNum, where, {
     perPage,
     assoc: true,
