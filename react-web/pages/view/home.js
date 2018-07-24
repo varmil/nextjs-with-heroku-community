@@ -12,19 +12,8 @@ class Home extends React.Component {
   // different route via the Link component or using the routing APIs.
   static async getInitialProps({ ctx }) {
     // 最初のFETCHはInfiniteScrollで行ってくれる想定
-    // const { talk, voice, news } = ctx.store.getState().app
-    // const { dispatch } = ctx.store
-    // if (ctx.isServer || talk.boxContents.length === 0) {
-    //   // dispatch(createAction(AppTalkRoom.FETCH_REQUEST)({ released: true }))
-    // }
-    // if (ctx.isServer || voice.boxContents.length === 0) {
-    //   // dispatch(createAction(AppVoice.FETCH_REQUEST)({ released: true }))
-    // }
-    // if (ctx.isServer || news.boxContents.length === 0) {
-    //   // dispatch(createAction(AppNews.FETCH_REQUEST)({ released: true }))
-    // }
 
-    // TODO: 見た目のデザインは一括でsetする（DBにstate.siteがまるっと入っているので）
+    // TODO: querystringに、カテゴリフィルタが付与されていたら表示するコンテンツを限定する
 
     // ctx.query contains URL params
     // ?edit=true is added when the page is edit mode
@@ -46,6 +35,4 @@ class Home extends React.Component {
   }
 }
 
-export default connect(state => ({
-  // top: state.site.top
-}))(Home)
+export default connect()(Home)

@@ -56,10 +56,6 @@ class TopPage extends React.Component {
     this.state = { tabIndex: activeTabIndex, mainHeight: 0 }
   }
 
-  componentDidMount() {
-    // this.setContentsHeight()
-  }
-
   setContentsHeight() {
     // get current height of active tab
     const height = document.querySelector(

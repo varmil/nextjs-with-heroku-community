@@ -6,7 +6,11 @@ const Item = props => {
   return (
     <li className={`scroll_item ${props.className || ''}`}>
       <Link href="">
-        <button type="button" className="btn btn-secondary">
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={props.onClick}
+        >
           {props.text}
         </button>
       </Link>
@@ -47,11 +51,17 @@ export default class CategorySelect extends React.Component {
       >
         <ul className="scroll_lst">
           {/* default all */}
-          <Item text={'全て'} />
+          <Item onClick={() => props.onClick(9999)} text={'全て'} />
 
           {/* skip null text */}
           {props.item.filter(e => e.text).map((e, i) => {
-            return <Item key={i} text={e.text} />
+            return (
+              <Item
+                key={i}
+                onClick={() => props.onClick(e.categoryIndex)}
+                text={e.text}
+              />
+            )
           })}
         </ul>
 
