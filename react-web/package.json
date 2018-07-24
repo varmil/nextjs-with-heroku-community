@@ -31,7 +31,7 @@
     "js-cookie": "^2.2.0",
     "jss": "^9.8.7",
     "lodash": "^4.17.10",
-    "next": "^6.1.1-canary.2",
+    "next": "6.1.1-canary.2",
     "next-redux-saga": "3.0.0-beta.2",
     "next-redux-wrapper": "2.0.0-beta.6",
     "next-routes": "^1.4.2",
