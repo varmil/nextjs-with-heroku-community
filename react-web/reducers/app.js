@@ -1,6 +1,7 @@
 import { handleActions } from 'redux-actions'
 import immutable from 'object-path-immutable'
 import objectPath from 'object-path'
+import isNil from 'lodash/isNil'
 import findIndex from 'lodash/findIndex'
 import {
   AppBox,
@@ -26,6 +27,7 @@ const initialState = {
   // Admin, User兼用。記事詳細画面
   post: {
     data: {},
+    // voiceでは [[]] になるので注意。それ以外は１次元
     comments: []
   },
 
@@ -156,11 +158,14 @@ export default handleActions(
       return immutable.insert(state, `post.comments`, action.payload, 0)
     },
     [AppPost.SET_COMMENTS]: (state, action) => {
-      return immutable.set(state, `post.comments`, action.payload)
+      const { data, index } = action.payload
+      const path = !isNil(index) ? `post.comments.${index}` : `post.comments`
+      return immutable.set(state, path, data)
     },
     [AppPost.PUSH_COMMENTS]: (state, action) => {
-      // spread payload because it is array
-      return immutable.push(state, `post.comments`, ...action.payload)
+      const { data, index } = action.payload
+      const path = !isNil(index) ? `post.comments.${index}` : `post.comments`
+      return immutable.push(state, path, ...data)
     },
 
     /**

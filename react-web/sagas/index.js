@@ -1,5 +1,13 @@
 // import { delay } from 'redux-saga'
-import { all, fork, call, put, select, takeLatest } from 'redux-saga/effects'
+import {
+  all,
+  fork,
+  call,
+  put,
+  select,
+  takeLatest,
+  takeEvery
+} from 'redux-saga/effects'
 import isUndefined from 'lodash/isUndefined'
 import isBoolean from 'lodash/isBoolean'
 import isNumber from 'lodash/isNumber'
@@ -275,10 +283,19 @@ function* fetchPost({ payload }) {
 }
 
 function* fetchComments({ payload }) {
-  const { postId, pageNum, perPage, initialOffset, successCb, reset } = payload
+  const {
+    postId,
+    pageNum,
+    perPage,
+    initialOffset,
+    // --- option ---
+    successCb,
+    index,
+    reset
+  } = payload
   const { jwtToken } = yield select(getUser)
   try {
-    const query = qs.stringify({ perPage, initialOffset })
+    const query = qs.stringify({ perPage, initialOffset, index })
     const { data } = yield call(
       API.fetch,
       `/comments/${postId}/${pageNum || 1}?${query}`,
@@ -288,8 +305,8 @@ function* fetchComments({ payload }) {
     // reset が有効 OR ページ番号が１なら配列初期化してset
     const type =
       reset || +pageNum === 1 ? AppPost.SET_COMMENTS : AppPost.PUSH_COMMENTS
-    let action = createAction(type)
-    yield put(action(data))
+    // index指定するとcommentsを[[]]とみなして、指定indexにSET, PUSHする
+    yield put(createAction(type)({ data, index }))
     if (successCb) yield call(successCb, data)
   } catch (e) {
     yield put(setCommonError(e.response))
@@ -489,7 +506,7 @@ const appSaga = [
   takeLatest(AppMypage.FETCH_REQUEST, fetchMypageContents),
 
   takeLatest(AppPost.FETCH_REQUEST, fetchPost),
-  takeLatest(AppPost.FETCH_COMMENTS_REQUEST, fetchComments),
+  takeEvery(AppPost.FETCH_COMMENTS_REQUEST, fetchComments),
   takeLatest(AppPost.SAVE_REQUEST, savePost),
   takeLatest(AppPost.SAVE_COMMENT_REQUEST, saveComment),
   takeLatest(AppPost.SAVE_LIKE_REQUEST, saveLike),

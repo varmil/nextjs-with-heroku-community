@@ -33,14 +33,16 @@ exports.fetchList = async (req, res) => {
   const postId = +req.params.postId
   const pageNum = +req.params.pageNum || 1 // 1 origin
 
-  // 最初に表示されてる件数とページングの件数は必ずしも一致しない
-  let { perPage, initialOffset } = req.query
-  perPage = pageNum === 1 ? initialOffset : perPage
-  initialOffset = pageNum === 1 ? 0 : initialOffset
-
   if (!postId) {
     return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
   }
+
+  // 最初に表示されてる件数とページングの件数は必ずしも一致しない
+  let { perPage, initialOffset } = req.query
+  perPage = pageNum === 1 ? initialOffset : perPage
+
+  // 各種オプション
+  let { index } = req.query
 
   // boxTypeごとに返却するデータが異なるのでまずfetch
   const boxType = (await models.Post.findById(postId)).boxType
@@ -53,6 +55,10 @@ exports.fetchList = async (req, res) => {
     default:
       fetchFunc = services.Comment.fetchList
   }
-  const data = await fetchFunc(pageNum, { postId }, { perPage, initialOffset })
+  const data = await fetchFunc(
+    pageNum,
+    { postId },
+    { perPage, initialOffset, index }
+  )
   res.json(data)
 }

@@ -36,18 +36,17 @@ module.exports = class Comment {
   }
 
   static async fetchList(pageNum, where, options = {}) {
-    console.log('WWFWAAWA', options)
-
     // optionsを展開
     let { perPage, initialOffset } = options
     perPage = +perPage || DEFAULT_PER_PAGE
     initialOffset = +initialOffset || 0
 
     try {
+      const offset = pageNum <= 1 ? 0 : perPage * (pageNum - 2) + initialOffset
       const comments = await models.Comment.findAll({
         where: where,
         limit: perPage,
-        offset: perPage * (pageNum - 1) - initialOffset,
+        offset,
         order: [['id', 'DESC']],
         raw: true
       })
@@ -61,40 +60,38 @@ module.exports = class Comment {
   // 初回フェッチ用
   static async fetchListOfVoice(pageNum, where, options = {}) {
     // optionsを展開
-    let { perPage, initialOffset } = options
+    let { perPage, initialOffset, index } = options
+
+    if (_.isNil(index)) {
+      console.error('[fetchListOfVoice] index is must exist !')
+      return null
+    }
+
     perPage = +perPage || DEFAULT_PER_PAGE
     initialOffset = +initialOffset || 0
 
     try {
       // まずVoiceLogから各OptionごとのコメントIDを取得
-      const logPromises = _.range(Rule.MAX_OPTIONS).map(async i => {
-        return models.VoiceLog.findAll({
-          where: { ...where, choiceIndex: i },
-          limit: perPage,
-          offset: perPage * (pageNum - 1) - initialOffset,
-          order: [['id', 'DESC']],
-          raw: true
-        })
+      const offset = pageNum <= 1 ? 0 : perPage * (pageNum - 2) + initialOffset
+      const rows = await models.VoiceLog.findAll({
+        where: { ...where, choiceIndex: +index },
+        limit: perPage,
+        offset,
+        order: [['id', 'DESC']],
+        raw: true
       })
-      // [ [ {row}, {row} ], [] ... ]
-      const logs = await Promise.all(logPromises)
 
       // その後、コメントIDからコメント本文を取得
-      const commentPromises = logs.map(async rows => {
-        const commentIds = _.map(rows, 'commentId')
-        const comments = await models.Comment.findAll({
-          where: { id: commentIds },
-          order: [['id', 'DESC']],
-          raw: true
-        })
-        const merged = await Comment.associateWithUser(comments)
-        return merged
+      const commentIds = _.map(rows, 'commentId')
+      const comments = await models.Comment.findAll({
+        where: { id: commentIds },
+        order: [['id', 'DESC']],
+        raw: true
       })
-      // [ [ {comment}, {comment} ], [] ... ]
-      const comments = await Promise.all(commentPromises)
+      const merged = await Comment.associateWithUser(comments)
 
-      console.log('###########comments', comments)
-      return comments
+      console.log('###########merged', merged)
+      return merged
     } catch (e) {
       console.error(e)
     }

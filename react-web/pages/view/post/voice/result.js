@@ -10,6 +10,7 @@ import { AppPost } from 'constants/ActionTypes'
 // import BoxType from '/../shared/constants/BoxType'
 
 const OPTION_HEIGHT = 66
+const INITIAL_COMMENT_NUM = 1
 
 class PostVoiceOption extends React.Component {
   // boxType, postId などは文字列なので注意
@@ -101,7 +102,14 @@ class PostVoiceOption extends React.Component {
                       <div className={'text'}>{text}</div>
                     </section>
                     <section>
-                      <CommentZone comments={this.getCommentsForOption(i)} />
+                      <CommentZone
+                        key={i}
+                        postId={data.id}
+                        comments={this.getCommentsForOption(i)}
+                        initialNum={INITIAL_COMMENT_NUM}
+                        // voice用option
+                        index={i}
+                      />
                     </section>
                   </div>
                 </React.Fragment>

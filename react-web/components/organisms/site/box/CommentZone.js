@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import isEmpty from 'lodash/isEmpty'
+import uniqueId from 'lodash/uniqueId'
 import { createAction } from 'redux-actions'
 import { Link } from 'routes'
 import LinearProgress from '@material-ui/core/LinearProgress'
@@ -11,6 +13,42 @@ import Avatar from 'components/atoms/Avatar'
 const INITIAL_PAGE = 1
 // 一回のFETCHでとってくる件数。
 const PER_PAGE = 6
+
+/**
+ * 各コメント
+ */
+class Comments extends React.Component {
+  render() {
+    const { data } = this.props
+
+    const mapped = data.filter(e => !isEmpty(e)).map((e, i) => (
+      <div key={e.id + uniqueId()} className="row justify-content-around my-3">
+        <Avatar className="col-2 px-0" src={e.iconPath} />
+        <div className="col-9 body">
+          <Link route={`/view/mypage/${e.commenterId}`}>
+            <a>{e.name}</a>
+          </Link>
+          <div>{e.body}</div>
+        </div>
+
+        <style jsx>{`
+          a {
+            color: #2b6eb2;
+            font-weight: bold;
+          }
+
+          .body {
+            background-color: #eff1f3;
+            border-radius: 15px;
+            padding: 10px 20px;
+          }
+        `}</style>
+      </div>
+    ))
+
+    return mapped
+  }
+}
 
 /**
  * コメント一覧表示ゾーン
@@ -24,7 +62,7 @@ class CommentZone extends React.Component {
   }
 
   loadPage(pageNum) {
-    const { dispatch, postId, initialNum } = this.props
+    const { dispatch, postId, initialNum, index } = this.props
     const { nowLoading } = this.state
     console.log('next pageNum', pageNum, this.state)
 
@@ -46,7 +84,10 @@ class CommentZone extends React.Component {
         pageNum,
         perPage: PER_PAGE,
         initialOffset: initialNum, // 最初に表示されてる件数とページングの件数は必ずしも一致しない
-        successCb
+        successCb,
+
+        // --- option ---
+        index
       })
     )
   }
@@ -88,41 +129,25 @@ class CommentZone extends React.Component {
   render() {
     const props = this.props
 
-    // const sliced = props.comments.slice(0, props.initialNum || INITIAL_NUM)
-    const copiedArray = [...props.comments].reverse()
+    // 外から渡されていればそちらを優先する
+    const comments = Array.isArray(props.comments)
+      ? props.comments
+      : props.defaultComments
+    const copiedArray = [...comments].reverse()
 
     return (
       <div className={`comments w-100 mx-auto ${props.className || ''}`}>
         {this.createReadMoreAndLoading()}
 
         <div className="commentsPost my-3 mb-5">
-          {copiedArray.map((e, i) => (
-            <div key={e.id} className="row justify-content-around my-3">
-              <Avatar className="col-2 px-0" src={e.iconPath} />
-              <div className="col-9 body">
-                <Link route={`/view/mypage/${e.commenterId}`}>
-                  <a>{e.name}</a>
-                </Link>
-                <div>{e.body}</div>
-              </div>
-            </div>
-          ))}
+          {/* {copiedArray.map((e, i) => ( */}
+          <Comments data={copiedArray} />
+          {/* ))} */}
         </div>
 
         <style jsx>{`
-          a {
-            color: #2b6eb2;
-            font-weight: bold;
-          }
-
           .commentsPost {
             font-size: 12px;
-          }
-
-          .body {
-            background-color: #eff1f3;
-            border-radius: 15px;
-            padding: 10px 20px;
           }
         `}</style>
       </div>
@@ -131,12 +156,18 @@ class CommentZone extends React.Component {
 }
 
 CommentZone.propTypes = {
-  postId: PropTypes.number,
-  // falseの場合、汎用のコメント機能をOFFにする
+  postId: PropTypes.number.isRequired,
+  // 外から渡す
   comments: PropTypes.array,
-  initialNum: PropTypes.number
+  // storeから拾う
+  defaultComments: PropTypes.array,
+  // １ページ目の表示件数
+  initialNum: PropTypes.number,
+
+  // 1POST内に複数の種類のコメントがある場合、そのindex（choiceIndexなど）
+  index: PropTypes.number
 }
 
 export default connect(state => ({
-  comments: state.app.post.comments
+  defaultComments: state.app.post.comments
 }))(CommentZone)
