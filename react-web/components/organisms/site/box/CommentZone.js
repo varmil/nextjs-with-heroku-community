@@ -12,7 +12,7 @@ import Avatar from 'components/atoms/Avatar'
 // ページ番号は1から
 const INITIAL_PAGE = 1
 // 一回のFETCHでとってくる件数。
-const PER_PAGE = 6
+const PER_PAGE = 10
 
 /**
  * 各コメント
