@@ -64,11 +64,11 @@ class CategorySelect extends React.Component {
   // http://blog.keisuke11.com/webdesign/horizontal-scroll/
   createContents() {
     const props = this.props
+
     // const { activeCategoryIndex } = this.state
     const activeCategoryIndex = !isNaN(+props.categoryIndex)
       ? +props.categoryIndex
       : Rule.ALL_CATEGORY_INDEX
-
     console.log('activeCategoryIndex', activeCategoryIndex)
 
     return (

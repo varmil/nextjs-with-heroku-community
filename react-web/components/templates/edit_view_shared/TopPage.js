@@ -152,11 +152,11 @@ class TopPage extends React.Component {
             <VoiceContents disabled={!this.isActive(0)} />
             <TalkRoomContents
               disabled={!this.isActive(1)}
-              categoryIndex={categoryIndex}
+              categoryIndex={this.isActive(1) ? categoryIndex : undefined}
             />
             <NewsContents
               disabled={!this.isActive(2)}
-              categoryIndex={categoryIndex}
+              categoryIndex={this.isActive(2) ? categoryIndex : undefined}
             />
           </SwipeableViews>
 
