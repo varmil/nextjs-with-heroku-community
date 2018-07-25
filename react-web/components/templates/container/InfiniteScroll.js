@@ -3,9 +3,7 @@ import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
 import InfiniteScroll from 'react-infinite-scroller'
 import LinearProgress from '@material-ui/core/LinearProgress'
-// const timeout = ms => new Promise(res => setTimeout(res, ms))
 
-// NOTE: pageStartはstoreの状態によってかわる
 // ex) 記事詳細から戻ってきたときに初期化されてはならない。
 const PER_PAGE = 5
 
@@ -55,7 +53,9 @@ class InfiniteContents extends React.Component {
     return (
       <InfiniteScroll
         useWindow={true}
+        // クライアント側でロードさせる（SSRしない）
         initialLoad={true}
+        // NOTE: pageStartはstoreの状態によってかわる
         pageStart={Math.ceil(this.props.length / PER_PAGE)}
         loadMore={this.loadMoreRows.bind(this)}
         hasMore={!disabled && !this.state.isLoading && this.state.hasMore}

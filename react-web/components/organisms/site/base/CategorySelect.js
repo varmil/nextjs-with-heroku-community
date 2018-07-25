@@ -55,7 +55,6 @@ class CategorySelect extends React.Component {
     const { onClick } = this.props
 
     // クエリストリングのみ変更する。(クライアントでしか実行されないのでwindowを使う)
-    console.log(window.location.pathname)
     Router.replaceRoute(`${window.location.pathname}?categoryIndex=${index}`)
 
     onClick && onClick(index)
