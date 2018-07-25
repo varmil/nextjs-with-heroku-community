@@ -10,7 +10,12 @@ const Item = props => {
 
   return (
     <li className={`scroll_item`}>
-      <button type="button" className={btnClassName} onClick={onClick}>
+      <button
+        type="button"
+        className={btnClassName}
+        // すでにActiveなボタンを押してもなにをしない
+        onClick={!isActive && onClick}
+      >
         {text}
       </button>
 
