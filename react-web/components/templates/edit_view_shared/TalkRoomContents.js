@@ -26,8 +26,6 @@ class TalkRoomContents extends BoxContents {
     }
   }
 
-  // reset contents
-  //
   // HACK:
   // ここでContentsを空にする --> 同時にreplaceRouteも走っている
   // --> routeChangeが終わるとprops.categoryIndexが変わる。
@@ -37,9 +35,7 @@ class TalkRoomContents extends BoxContents {
   // 待つ秒数は適当
   onChangeCategory(index) {
     this.setState({ ...this.state, disableInfiniteScroll: true })
-
     this.props.dispatch(createAction(AppTalkRoom.RESET_CONTENTS)())
-
     setTimeout(() => {
       this.setState({ ...this.state, disableInfiniteScroll: false })
     }, 50)

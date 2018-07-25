@@ -52,6 +52,7 @@ export const AppTalkRoom = createTypes(
   'app/talk/',
   'ADD_CONTENTS',
   'RESET_CONTENTS',
+  'SET_ACTIVE_CATEGORY',
   async('FETCH')
 )
 
@@ -65,6 +66,7 @@ export const AppNews = createTypes(
   'app/news/',
   'ADD_CONTENTS',
   'RESET_CONTENTS',
+  'SET_ACTIVE_CATEGORY',
   async('FETCH')
 )
 

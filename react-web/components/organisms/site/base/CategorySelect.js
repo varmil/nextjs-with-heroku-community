@@ -56,7 +56,6 @@ class CategorySelect extends React.Component {
     const activeCategoryIndex = !isNaN(+props.categoryIndex)
       ? +props.categoryIndex
       : Rule.ALL_CATEGORY_INDEX
-    console.log('activeCategoryIndex', activeCategoryIndex)
 
     return (
       <div

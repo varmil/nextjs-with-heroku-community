@@ -2,7 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Router } from 'routes'
 import { withStyles } from '@material-ui/core/styles'
+import qs from 'query-string'
 import findIndex from 'lodash/findIndex'
+import isNil from 'lodash/isNil'
 import SwipeableViews from 'react-swipeable-views'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
@@ -61,7 +63,7 @@ class TopPage extends React.Component {
     const height = document.querySelector(
       ".react-swipeable-view-container > div[aria-hidden='false']"
     ).clientHeight
-    console.log('*****', height)
+    // console.log('*****', height)
     this.setState({ ...this.state, mainHeight: height })
   }
 
@@ -79,13 +81,32 @@ class TopPage extends React.Component {
   }
 
   // tabIndex
-  handleChange = (event, tabIndex) => {
-    Router.replaceRoute(`${URL.VIEW_HOME}/${this.props.boxes[tabIndex].slug}`)
-    this.setState({ tabIndex })
-  }
-
   handleChangeIndex = tabIndex => {
-    Router.replaceRoute(`${URL.VIEW_HOME}/${this.props.boxes[tabIndex].slug}`)
+    const {
+      boxes,
+      talkActiveCategoryIndex,
+      newsActiveCategoryIndex
+    } = this.props
+
+    // 切り替え後のタブにcategoryIndexが設定されていればそれを復元
+    let categoryIndex
+    switch (boxes[tabIndex].type) {
+      case BoxType.index.talk:
+        if (!isNil(talkActiveCategoryIndex)) {
+          categoryIndex = talkActiveCategoryIndex
+        }
+        break
+      case BoxType.index.news:
+        if (!isNil(newsActiveCategoryIndex)) {
+          categoryIndex = newsActiveCategoryIndex
+        }
+        break
+    }
+    const query = qs.stringify({ categoryIndex })
+
+    Router.replaceRoute(
+      `${URL.VIEW_HOME}/${this.props.boxes[tabIndex].slug}?${query}`
+    )
     this.setState({ tabIndex })
   }
 
@@ -96,7 +117,11 @@ class TopPage extends React.Component {
 
   render() {
     const props = this.props
-    const { classes, categoryIndex } = this.props
+    const {
+      classes,
+      talkActiveCategoryIndex,
+      newsActiveCategoryIndex
+    } = this.props
 
     return (
       <React.Fragment>
@@ -112,7 +137,7 @@ class TopPage extends React.Component {
             <Tabs
               className="tabs"
               value={this.state.tabIndex}
-              onChange={this.handleChange}
+              onChange={(e, index) => this.handleChangeIndex(index)}
               TabIndicatorProps={{ style: this.getIndicatorStyle() }}
               // fullWidth
               // centered
@@ -152,11 +177,11 @@ class TopPage extends React.Component {
             <VoiceContents disabled={!this.isActive(0)} />
             <TalkRoomContents
               disabled={!this.isActive(1)}
-              categoryIndex={this.isActive(1) ? categoryIndex : undefined}
+              categoryIndex={talkActiveCategoryIndex}
             />
             <NewsContents
               disabled={!this.isActive(2)}
-              categoryIndex={this.isActive(2) ? categoryIndex : undefined}
+              categoryIndex={newsActiveCategoryIndex}
             />
           </SwipeableViews>
 
@@ -197,6 +222,10 @@ class TopPage extends React.Component {
 export default withStyles(styles)(
   connect(state => ({
     boxes: objectPath.get(state.site, `${PATH_MAP.BOXES}.item`),
-    color: objectPath.get(state.site, `${PATH_MAP.COLOR}`)
+    color: objectPath.get(state.site, `${PATH_MAP.COLOR}`),
+
+    // カテゴリインデックス
+    talkActiveCategoryIndex: state.app.talk.activeCategoryIndex,
+    newsActiveCategoryIndex: state.app.news.activeCategoryIndex
   }))(TopPage)
 )

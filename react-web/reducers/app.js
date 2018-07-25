@@ -19,9 +19,9 @@ const initialState = {
    * USERページ
    */
   // use in /view/home
-  talk: { boxContents: [] },
+  talk: { activeCategoryIndex: undefined, boxContents: [] },
   voice: { boxContents: [] },
-  news: { boxContents: [] },
+  news: { activeCategoryIndex: undefined, boxContents: [] },
   mypage: { boxContents: [] },
 
   // Admin, User兼用。記事詳細画面
@@ -123,6 +123,9 @@ export default handleActions(
     [AppTalkRoom.RESET_CONTENTS]: (state, action) => {
       return immutable.set(state, `talk.boxContents`, [])
     },
+    [AppTalkRoom.SET_ACTIVE_CATEGORY]: (state, action) => {
+      return immutable.set(state, `talk.activeCategoryIndex`, action.payload)
+    },
 
     /**
      * VOICE
@@ -141,6 +144,9 @@ export default handleActions(
     },
     [AppNews.RESET_CONTENTS]: (state, action) => {
       return immutable.set(state, `news.boxContents`, [])
+    },
+    [AppNews.SET_ACTIVE_CATEGORY]: (state, action) => {
+      return immutable.set(state, `news.activeCategoryIndex`, action.payload)
     },
 
     /**

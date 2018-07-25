@@ -198,6 +198,7 @@ function fetchContents(boxType, setAction) {
     // 現在のURLについているqsをパース
     let parsed = {}
     parsed = qs.parse(location.search)
+    console.log('parsed', parsed, window.location.pathname)
 
     // APIサーバに投げるqsを生成
     const query = qs.stringify({
