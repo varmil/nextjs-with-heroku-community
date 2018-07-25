@@ -33,6 +33,7 @@ export default class BoxContents extends React.Component {
           propsPath={this.categories.propsPath}
           // 現在アクティブなカテゴリ
           categoryIndex={categoryIndex}
+          onClick={i => this.onChangeCategory(i)}
         />
       </section>
     )

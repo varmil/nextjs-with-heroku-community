@@ -51,6 +51,7 @@ export const AppBox = createTypes('app/box/', 'PREPEND_CONTENT')
 export const AppTalkRoom = createTypes(
   'app/talk/',
   'ADD_CONTENTS',
+  'RESET_CONTENTS',
   async('FETCH')
 )
 
@@ -60,7 +61,12 @@ export const AppVoice = createTypes(
   async('FETCH')
 )
 
-export const AppNews = createTypes('app/news/', 'ADD_CONTENTS', async('FETCH'))
+export const AppNews = createTypes(
+  'app/news/',
+  'ADD_CONTENTS',
+  'RESET_CONTENTS',
+  async('FETCH')
+)
 
 export const AppMypage = createTypes(
   'app/mypage/',

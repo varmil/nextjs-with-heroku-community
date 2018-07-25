@@ -120,6 +120,9 @@ export default handleActions(
       // spread payload because it is array
       return immutable.push(state, `talk.boxContents`, ...action.payload)
     },
+    [AppTalkRoom.RESET_CONTENTS]: (state, action) => {
+      return immutable.set(state, `talk.boxContents`, [])
+    },
 
     /**
      * VOICE
@@ -135,6 +138,9 @@ export default handleActions(
     [AppNews.ADD_CONTENTS]: (state, action) => {
       // spread payload because it is array
       return immutable.push(state, `news.boxContents`, ...action.payload)
+    },
+    [AppNews.RESET_CONTENTS]: (state, action) => {
+      return immutable.set(state, `news.boxContents`, [])
     },
 
     /**

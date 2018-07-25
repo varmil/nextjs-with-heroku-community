@@ -39,32 +39,20 @@ const Item = props => {
 }
 
 class CategorySelect extends React.Component {
-  constructor(props) {
-    super(props)
-
-    console.info('CONST', props)
-
-    // this.state = {
-    //   activeCategoryIndex: !isNaN(+props.categoryIndex)
-    //     ? +props.categoryIndex
-    //     : Rule.ALL_CATEGORY_INDEX
-    // }
-  }
-
   onClickCategory = index => {
     const { onClick } = this.props
 
+    // 先にハンドラ処理を行って、コンテンツの初期化
+    onClick && onClick(index)
+
     // クエリストリングのみ変更する。(クライアントでしか実行されないのでwindowを使う)
     Router.replaceRoute(`${window.location.pathname}?categoryIndex=${index}`)
-
-    onClick && onClick(index)
   }
 
   // http://blog.keisuke11.com/webdesign/horizontal-scroll/
   createContents() {
     const props = this.props
 
-    // const { activeCategoryIndex } = this.state
     const activeCategoryIndex = !isNaN(+props.categoryIndex)
       ? +props.categoryIndex
       : Rule.ALL_CATEGORY_INDEX
