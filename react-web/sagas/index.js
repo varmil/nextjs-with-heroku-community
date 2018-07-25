@@ -100,10 +100,13 @@ function* signupAdmin({ payload }) {
 }
 
 // tokenをもとにして基本情報をset（AUTH後に基本呼ぶ）
+// initialize.jsと基本同じ感じ
 function* setUserInfo(token) {
   setCookie(Rule.COOKIE_JWT_TOKEN, token)
   yield put(createAction(User.AUTHENTICATE)(token))
   yield put(createAction(User.FETCH_REQUEST)(token))
+  yield put(createAction(SiteState.FETCH_REQUEST)())
+  yield put(createAction(User.UPDATE_LOGINED_AT_REQUEST)())
 }
 
 // （初期登録、プロフィール編集？）
