@@ -81,8 +81,9 @@ class PostVoiceOption extends React.Component {
     // すでに投票済みの場合はリダイレクト
     const successCb = data => {
       if (!isNil(data.Voice.choiceIndex)) {
-        console.log('you already voted, so go to result')
-        Router.pushRoute(`/view/post/${postId}/voice/result`)
+        // #img0 とか付いてる可能性を考慮して一部のみを置換
+        const path = ctx.asPath.replace('option', 'result')
+        Router.pushRoute(path)
       }
     }
     dispatch(createAction(AppPost.FETCH_REQUEST)({ postId, successCb }))

@@ -81,8 +81,6 @@ const Photos = props => {
           onClick={async () => {
             const id = `img${props.index}`
             await Router.pushRoute(`${props.route}#${id}`)
-            const top = document.getElementById(id).offsetTop
-            window.scrollTo(0, top + OFFSET_IMG_TOP)
           }}
         >
           <LazyLoad height={HEIGHT} once>
@@ -204,6 +202,13 @@ class BoxContent extends React.Component {
 
     if (this.commentInput && this.props.focus) {
       this.commentInput.focus()
+    }
+
+    // # hash で img がついていればスクロールする
+    const hash = window.location.hash.replace('#', '')
+    const img = document.getElementById(hash)
+    if (img) {
+      window.scrollTo(0, img.offsetTop + OFFSET_IMG_TOP)
     }
   }
 
