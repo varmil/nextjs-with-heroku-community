@@ -23,14 +23,16 @@ export default class BoxContents extends React.Component {
   createCategorySelect() {
     // hide categories in VOICE
     if (!this.categories) return null
-    const props = this.props
+    const { pageData, categoryIndex } = this.props
 
     return (
       <section className="cat my-3">
         <CategorySelect
-          item={props.pageData.categories.item}
+          item={pageData.categories.item}
           action={this.categories.action}
           propsPath={this.categories.propsPath}
+          // 現在アクティブなカテゴリ
+          categoryIndex={categoryIndex}
         />
       </section>
     )

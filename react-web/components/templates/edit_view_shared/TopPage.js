@@ -96,7 +96,7 @@ class TopPage extends React.Component {
 
   render() {
     const props = this.props
-    const { classes } = this.props
+    const { classes, categoryIndex } = this.props
 
     return (
       <React.Fragment>
@@ -150,8 +150,14 @@ class TopPage extends React.Component {
             onTransitionEnd={() => this.setContentsHeight()}
           >
             <VoiceContents disabled={!this.isActive(0)} />
-            <TalkRoomContents disabled={!this.isActive(1)} />
-            <NewsContents disabled={!this.isActive(2)} />
+            <TalkRoomContents
+              disabled={!this.isActive(1)}
+              categoryIndex={categoryIndex}
+            />
+            <NewsContents
+              disabled={!this.isActive(2)}
+              categoryIndex={categoryIndex}
+            />
           </SwipeableViews>
 
           {this.isShowPenIcon() ? (

@@ -1,20 +1,19 @@
 import React from 'react'
-import { Link } from 'routes'
+import { Router } from 'routes'
+import isNaN from 'lodash/isNaN'
 import Classes from 'constants/Classes'
 import Rule from '/../shared/constants/Rule'
 
 const Item = props => {
-  const { className, onClick, text, categoryIndex } = props
-  const isServer = typeof window === 'undefined'
-  const path = !isServer ? window.location.pathname : ''
+  const { onClick, text, isActive } = props
+  let btnClassName = 'btn btn-secondary'
+  if (isActive) btnClassName = `${btnClassName} active`
 
   return (
-    <li className={`scroll_item ${className || ''}`}>
-      <Link route={`${path}?categoryIndex=${categoryIndex}`}>
-        <button type="button" className="btn btn-secondary" onClick={onClick}>
-          {text}
-        </button>
-      </Link>
+    <li className={`scroll_item`}>
+      <button type="button" className={btnClassName} onClick={onClick}>
+        {text}
+      </button>
 
       <style jsx>{`
         .scroll_item {
@@ -39,10 +38,39 @@ const Item = props => {
   )
 }
 
-export default class CategorySelect extends React.Component {
+class CategorySelect extends React.Component {
+  constructor(props) {
+    super(props)
+
+    console.info('CONST', props)
+
+    // this.state = {
+    //   activeCategoryIndex: !isNaN(+props.categoryIndex)
+    //     ? +props.categoryIndex
+    //     : Rule.ALL_CATEGORY_INDEX
+    // }
+  }
+
+  onClickCategory = index => {
+    const { onClick } = this.props
+
+    // クエリストリングのみ変更する。(クライアントでしか実行されないのでwindowを使う)
+    console.log(window.location.pathname)
+    Router.replaceRoute(`${window.location.pathname}?categoryIndex=${index}`)
+
+    onClick && onClick(index)
+  }
+
   // http://blog.keisuke11.com/webdesign/horizontal-scroll/
   createContents() {
     const props = this.props
+    // const { activeCategoryIndex } = this.state
+    const activeCategoryIndex = !isNaN(+props.categoryIndex)
+      ? +props.categoryIndex
+      : Rule.ALL_CATEGORY_INDEX
+
+    console.log('activeCategoryIndex', activeCategoryIndex)
+
     return (
       <div
         className={`horizontal_scroll_wrap ${Classes.EDITABLE}`}
@@ -53,11 +81,10 @@ export default class CategorySelect extends React.Component {
         <ul className="scroll_lst">
           {/* default all */}
           <Item
-            onClick={() =>
-              props.onClick && props.onClick(Rule.ALL_CATEGORY_INDEX)
-            }
+            onClick={() => this.onClickCategory(Rule.ALL_CATEGORY_INDEX)}
             text={'全て'}
             categoryIndex={Rule.ALL_CATEGORY_INDEX}
+            isActive={activeCategoryIndex === Rule.ALL_CATEGORY_INDEX}
           />
 
           {/* skip null text */}
@@ -65,9 +92,10 @@ export default class CategorySelect extends React.Component {
             return (
               <Item
                 key={i}
-                onClick={() => props.onClick && props.onClick(e.categoryIndex)}
+                onClick={() => this.onClickCategory(e.categoryIndex)}
                 text={e.text}
                 categoryIndex={e.categoryIndex}
+                isActive={activeCategoryIndex === e.categoryIndex}
               />
             )
           })}
@@ -95,3 +123,5 @@ export default class CategorySelect extends React.Component {
     return <React.Fragment>{this.createContents()}</React.Fragment>
   }
 }
+
+export default CategorySelect
