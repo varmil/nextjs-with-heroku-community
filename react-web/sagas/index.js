@@ -11,6 +11,7 @@ import {
 import isUndefined from 'lodash/isUndefined'
 import isBoolean from 'lodash/isBoolean'
 import isNumber from 'lodash/isNumber'
+import isEmpty from 'lodash/isEmpty'
 import isNaN from 'lodash/isNaN'
 import qs from 'query-string'
 import {
@@ -193,23 +194,20 @@ function* fetchSiteState({ payload }) {
 function fetchContents(boxType, setAction) {
   return function*({ payload }) {
     const { jwtToken } = yield select(getUser)
-    const { perPage, pageNum, released, successCb } = payload
-
-    // 現在のURLについているqsをパース
-    let parsed = {}
-    parsed = qs.parse(location.search)
-    console.log('parsed', parsed, window.location.pathname)
+    const { perPage, pageNum, released, successCb, fetchOption } = payload
 
     // APIサーバに投げるqsを生成
-    const query = qs.stringify({
-      released,
-      perPage,
-      categoryIndex: parsed.categoryIndex
-    })
+    let query = { released, perPage }
+
+    // fetchOption展開
+    if (!isEmpty(fetchOption)) {
+      let { activeCategoryIndex } = fetchOption
+      query = { ...query, categoryIndex: activeCategoryIndex }
+    }
 
     const res = yield call(
       API.fetch,
-      `/post/list/box/${boxType}/${pageNum || 1}?${query}`,
+      `/post/list/box/${boxType}/${pageNum || 1}?${qs.stringify(query)}`,
       jwtToken
     )
 

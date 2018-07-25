@@ -1,5 +1,4 @@
 import React from 'react'
-import { Router } from 'routes'
 import isNaN from 'lodash/isNaN'
 import Classes from 'constants/Classes'
 import Rule from '/../shared/constants/Rule'
@@ -41,12 +40,7 @@ const Item = props => {
 class CategorySelect extends React.Component {
   onClickCategory = index => {
     const { onClick } = this.props
-
-    // 先にハンドラ処理を行って、コンテンツの初期化
     onClick && onClick(index)
-
-    // クエリストリングのみ変更する。(クライアントでしか実行されないのでwindowを使う)
-    Router.replaceRoute(`${window.location.pathname}?categoryIndex=${index}`)
   }
 
   // http://blog.keisuke11.com/webdesign/horizontal-scroll/

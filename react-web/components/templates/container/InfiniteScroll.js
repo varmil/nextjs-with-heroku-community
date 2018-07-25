@@ -34,7 +34,7 @@ class InfiniteContents extends React.Component {
   loadMoreRows(page) {
     // console.info('loadMoreRows props::', this.props)
     // console.info('loadMoreRows page::', page, this.state)
-    const { dispatch, action } = this.props
+    const { dispatch, action, fetchOption } = this.props
     this.setState({ ...this.state, isLoading: true })
 
     const successCb = res => {
@@ -50,7 +50,8 @@ class InfiniteContents extends React.Component {
         perPage: PER_PAGE,
         pageNum: page,
         released: true,
-        successCb
+        successCb,
+        fetchOption
       })
     )
   }

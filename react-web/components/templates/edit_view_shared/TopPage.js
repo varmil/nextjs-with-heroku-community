@@ -82,31 +82,6 @@ class TopPage extends React.Component {
 
   // tabIndex
   handleChangeIndex = tabIndex => {
-    const {
-      boxes,
-      talkActiveCategoryIndex,
-      newsActiveCategoryIndex
-    } = this.props
-
-    // 切り替え後のタブにcategoryIndexが設定されていればそれを復元
-    let categoryIndex
-    switch (boxes[tabIndex].type) {
-      case BoxType.index.talk:
-        if (!isNil(talkActiveCategoryIndex)) {
-          categoryIndex = talkActiveCategoryIndex
-        }
-        break
-      case BoxType.index.news:
-        if (!isNil(newsActiveCategoryIndex)) {
-          categoryIndex = newsActiveCategoryIndex
-        }
-        break
-    }
-    const query = qs.stringify({ categoryIndex })
-
-    Router.replaceRoute(
-      `${URL.VIEW_HOME}/${this.props.boxes[tabIndex].slug}?${query}`
-    )
     this.setState({ tabIndex })
   }
 
@@ -117,11 +92,7 @@ class TopPage extends React.Component {
 
   render() {
     const props = this.props
-    const {
-      classes,
-      talkActiveCategoryIndex,
-      newsActiveCategoryIndex
-    } = this.props
+    const { classes } = this.props
 
     return (
       <React.Fragment>
@@ -175,14 +146,8 @@ class TopPage extends React.Component {
             onTransitionEnd={() => this.setContentsHeight()}
           >
             <VoiceContents disabled={!this.isActive(0)} />
-            <TalkRoomContents
-              disabled={!this.isActive(1)}
-              categoryIndex={talkActiveCategoryIndex}
-            />
-            <NewsContents
-              disabled={!this.isActive(2)}
-              categoryIndex={newsActiveCategoryIndex}
-            />
+            <TalkRoomContents disabled={!this.isActive(1)} />
+            <NewsContents disabled={!this.isActive(2)} />
           </SwipeableViews>
 
           {this.isShowPenIcon() ? (
@@ -222,10 +187,6 @@ class TopPage extends React.Component {
 export default withStyles(styles)(
   connect(state => ({
     boxes: objectPath.get(state.site, `${PATH_MAP.BOXES}.item`),
-    color: objectPath.get(state.site, `${PATH_MAP.COLOR}`),
-
-    // カテゴリインデックス
-    talkActiveCategoryIndex: state.app.talk.activeCategoryIndex,
-    newsActiveCategoryIndex: state.app.news.activeCategoryIndex
+    color: objectPath.get(state.site, `${PATH_MAP.COLOR}`)
   }))(TopPage)
 )
