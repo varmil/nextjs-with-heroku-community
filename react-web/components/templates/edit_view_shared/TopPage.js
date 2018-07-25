@@ -63,7 +63,7 @@ class TopPage extends React.Component {
     const height = document.querySelector(
       ".react-swipeable-view-container > div[aria-hidden='false']"
     ).clientHeight
-    // console.log('*****', height)
+    console.log('*****', height)
     this.setState({ ...this.state, mainHeight: height })
   }
 
@@ -82,6 +82,7 @@ class TopPage extends React.Component {
 
   // tabIndex
   handleChangeIndex = tabIndex => {
+    Router.replaceRoute(`${URL.VIEW_HOME}/${this.props.boxes[tabIndex].slug}`)
     this.setState({ tabIndex })
   }
 
@@ -146,8 +147,14 @@ class TopPage extends React.Component {
             onTransitionEnd={() => this.setContentsHeight()}
           >
             <VoiceContents disabled={!this.isActive(0)} />
-            <TalkRoomContents disabled={!this.isActive(1)} />
-            <NewsContents disabled={!this.isActive(2)} />
+            <TalkRoomContents
+              disabled={!this.isActive(1)}
+              onCategoryChanged={() => this.setContentsHeight()}
+            />
+            <NewsContents
+              disabled={!this.isActive(2)}
+              onCategoryChanged={() => this.setContentsHeight()}
+            />
           </SwipeableViews>
 
           {this.isShowPenIcon() ? (

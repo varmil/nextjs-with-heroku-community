@@ -21,9 +21,11 @@ class NewsContents extends BoxContents {
   }
 
   onChangeCategory(index) {
-    const { dispatch } = this.props
+    const { dispatch, onCategoryChanged } = this.props
     dispatch(createAction(AppNews.RESET_CONTENTS)())
     dispatch(createAction(AppNews.SET_ACTIVE_CATEGORY)(index))
+    // HACK: state反映が終わってから発火
+    setTimeout(() => onCategoryChanged(), 0)
   }
 
   render() {
