@@ -60,6 +60,12 @@ module.exports = class Post {
       const newImages = await Post.moveImages(files)
       data = { ...data, images: _.union(fromServerFiles, newImages) }
 
+      // bodyを舐めてhashtagを見つける。
+      // 各々のタグに関して新規 or 既存を判断（find）
+      // 新規タグならhashtagテーブルにINSERT。既存タグであればtagIdをfind
+      const hashtagIds = Post.upsertHashtagsFrom(body, transaction)
+
+      // Postテーブルへの変更
       if (postId) {
         await models.Post.update(
           data,
@@ -71,6 +77,10 @@ module.exports = class Post {
         // 再代入なので微妙？
         postId = post.id
       }
+
+      // TODO 中間テーブル（post_hashtag）に紐づけ
+      // 記事更新も考えると、まず当該Postに紐づくHashtagデータを削除して、その後INSERTか
+
       return postId
     } catch (e) {
       console.error(e)
@@ -285,5 +295,38 @@ module.exports = class Post {
   // sequelizeで count クエリを発行するための関数
   static getCountAttr() {
     return [models.sequelize.fn('COUNT', models.sequelize.col('id')), 'count']
+  }
+
+  // 記事本文からHashtag情報を解析し、Hashtagテーブルに保存
+  static async upsertHashtagsFrom(body, transaction) {
+    const tags = Post.getHashtags(body)
+
+    // 既存タグ
+    const existingTags = await models.Hashtag.findAll({
+      where: { name: tags }
+    })
+    const existingTagIds = _.map(existingTags, 'id')
+    console.log('existingTagIds', existingTagIds)
+
+    // 新規タグ（入力タグから、既存タグの差をとったものを新規とみなす）
+    const newTagNames = _.difference(tags, _.map(existingTags, 'name'))
+    const newTagRows = await models.Hashtag.bulkCreate(
+      newTagNames.map(str => {
+        return { name: str }
+      }),
+      {
+        raw: true,
+        transaction
+      }
+    )
+    const newTgsIds = _.map(newTagRows, 'id')
+    console.log('newTgsIds', newTgsIds)
+
+    return [...existingTagIds, ...newTgsIds]
+  }
+
+  // # から始まって （半角|全角）スペース で終わる文字列をハッシュタグとして認識する
+  static getHashtags(body) {
+    return []
   }
 }
