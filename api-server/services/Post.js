@@ -1,5 +1,6 @@
 const reqlib = require('app-root-path').require
 const _ = require('lodash')
+const hashtagRegex = require('hashtag-regex')
 const UserService = reqlib('/services/User')
 const CommentService = reqlib('/services/Comment')
 const models = reqlib('/models')
@@ -60,11 +61,6 @@ module.exports = class Post {
       const newImages = await Post.moveImages(files)
       data = { ...data, images: _.union(fromServerFiles, newImages) }
 
-      // bodyを舐めてhashtagを見つける。
-      // 各々のタグに関して新規 or 既存を判断（find）
-      // 新規タグならhashtagテーブルにINSERT。既存タグであればtagIdをfind
-      const hashtagIds = Post.upsertHashtagsFrom(body, transaction)
-
       // Postテーブルへの変更
       if (postId) {
         await models.Post.update(
@@ -78,8 +74,11 @@ module.exports = class Post {
         postId = post.id
       }
 
-      // TODO 中間テーブル（post_hashtag）に紐づけ
-      // 記事更新も考えると、まず当該Postに紐づくHashtagデータを削除して、その後INSERTか
+      // bodyを舐めてhashtagを見つける。各々のタグに関して
+      // 新規タグならhashtagテーブルにINSERT。既存タグであればtagIdをfind
+      const hashtagIds = await Post.upsertHashtagsFrom(body, transaction)
+      // 中間テーブル（post_hashtag）に紐づけ
+      await Post.updatePostHashtagRelation(postId, hashtagIds, transaction)
 
       return postId
     } catch (e) {
@@ -306,7 +305,7 @@ module.exports = class Post {
       where: { name: tags }
     })
     const existingTagIds = _.map(existingTags, 'id')
-    console.log('existingTagIds', existingTagIds)
+    // console.log('existingTagIds', existingTagIds)
 
     // 新規タグ（入力タグから、既存タグの差をとったものを新規とみなす）
     const newTagNames = _.difference(tags, _.map(existingTags, 'name'))
@@ -320,13 +319,35 @@ module.exports = class Post {
       }
     )
     const newTgsIds = _.map(newTagRows, 'id')
-    console.log('newTgsIds', newTgsIds)
+    // console.log('newTgsIds', newTgsIds)
 
     return [...existingTagIds, ...newTgsIds]
   }
 
   // # から始まって （半角|全角）スペース で終わる文字列をハッシュタグとして認識する
   static getHashtags(body) {
-    return []
+    let result = []
+    const regex = hashtagRegex()
+
+    let match
+    while ((match = regex.exec(body))) {
+      // # 記号は省く
+      result.push(match[0].replace('#', ''))
+    }
+
+    return _.uniq(result)
+  }
+
+  static async updatePostHashtagRelation(postId, hashtagIds, transaction) {
+    // まず既存のタグ関係を削除
+    await models.PostHashtag.destroy({ where: { postId } }, { transaction })
+    // その後INSERT
+    const data = hashtagIds.map(hashtagId => {
+      return {
+        postId,
+        hashtagId
+      }
+    })
+    await models.PostHashtag.bulkCreate(data, { transaction })
   }
 }
