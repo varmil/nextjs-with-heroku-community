@@ -48,6 +48,7 @@
     "react-draft-wysiwyg": "^1.12.13",
     "react-dropzone": "^4.2.12",
     "react-frame-component": "^4.0.0",
+    "react-hashtag": "github:varmil/react-hashtag",
     "react-infinite-scroller": "^1.2.0",
     "react-jss": "^8.6.0",
     "react-lazyload": "^2.3.0",

@@ -6,7 +6,9 @@ import isEmpty from 'lodash/isEmpty'
 import fecha from 'fecha'
 import { Link, Router } from 'routes'
 import IconButton from '@material-ui/core/IconButton'
-import { getMultiLineHTML } from 'components/atoms/MultiLineText'
+import MultiLineHashtagText, {
+  getMultiLineHTML
+} from 'components/atoms/MultiLineHashtagText'
 import VoteButton from 'components/atoms/VoteButton'
 import AvatarAndName from 'components/molecules/AvatarAndName'
 import CommentZone from 'components/organisms/site/box/CommentZone'
@@ -16,7 +18,6 @@ import Color from 'constants/Color'
 import autosize from 'autosize'
 import LazyLoad from 'react-lazyload'
 import BoxType from '/../shared/constants/BoxType'
-const hashtagRegex = require('hashtag-regex')
 
 const AVATAR_SIZE = 44
 // アンカーで飛んだときになんとなく真ん中あたりに表示するため
@@ -171,6 +172,74 @@ const Photos = props => {
 }
 
 /**
+ * 折りたたみ状態の記事本文
+ */
+class FoldText extends React.Component {
+  state = {
+    height: 0
+  }
+
+  componentDidMount() {
+    const { id } = this.props
+    const dom = document.querySelector(`#foldText${id}`)
+    const height = dom ? dom.clientHeight : 0
+    this.setState({ ...this.state, height })
+  }
+
+  render() {
+    const TEXT_HEIGHT_OF_NOT_EXPAND = 95
+    const CLASS_GRADATION = 'gradation'
+
+    const { onClick, id, children } = this.props
+    const { height } = this.state
+    const showReadMore = height >= TEXT_HEIGHT_OF_NOT_EXPAND
+    const gradationClass = showReadMore ? CLASS_GRADATION : ''
+
+    return (
+      <React.Fragment>
+        <div onClick={onClick}>
+          <div id={`foldText${id}`} className={`foldText ${gradationClass}`}>
+            <MultiLineHashtagText>{children}</MultiLineHashtagText>
+          </div>
+
+          {showReadMore && <div>...もっとみる</div>}
+        </div>
+
+        <style jsx>{`
+          a {
+            color: inherit;
+          }
+          span {
+            color: gray;
+          }
+
+          .foldText {
+            position: relative;
+            max-height: ${TEXT_HEIGHT_OF_NOT_EXPAND}px;
+            overflow: hidden;
+          }
+
+          .foldText.${CLASS_GRADATION}::after {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            z-index: 2;
+            content: '';
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(
+              rgba(255, 255, 255, 0) 0,
+              rgba(255, 255, 255, 0.7) 20%,
+              rgba(255, 255, 255, 1) 80%
+            );
+          }
+        `}</style>
+      </React.Fragment>
+    )
+  }
+}
+
+/**
  * 記事一覧用と詳細表示双方を担う
  */
 class BoxContent extends React.Component {
@@ -259,43 +328,18 @@ class BoxContent extends React.Component {
   }
 
   createBody(isExpanded) {
-    const { showDetail, body } = this.props
-
-    // TODO: 事前にサニタイズしてからここでタグ付与かな
-
-    // hashtag対応
-    const regex = hashtagRegex()
-    const taggedBody = body.replace(regex, "<span class='hash_tag'>$&</span>")
-    // console.info('taggedBody', taggedBody)
+    const { showDetail, body, id } = this.props
 
     if (isExpanded || showDetail) {
-      return (
-        <div
-          dangerouslySetInnerHTML={{ __html: getMultiLineHTML(taggedBody) }}
-        />
-      )
+      return <MultiLineHashtagText>{body}</MultiLineHashtagText>
     } else {
-      const sliced = `${body.slice(0, 60)}...`
       return (
-        <React.Fragment>
-          <div
-            onClick={() => this.setState({ ...this.state, expandBody: true })}
-          >
-            <div
-              dangerouslySetInnerHTML={{ __html: getMultiLineHTML(sliced) }}
-            />
-            <span>もっとみる</span>
-          </div>
-
-          <style jsx>{`
-            a {
-              color: inherit;
-            }
-            span {
-              color: gray;
-            }
-          `}</style>
-        </React.Fragment>
+        <FoldText
+          id={id}
+          onClick={() => this.setState({ ...this.state, expandBody: true })}
+        >
+          {body}
+        </FoldText>
       )
     }
   }
