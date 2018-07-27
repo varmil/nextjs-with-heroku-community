@@ -4,6 +4,7 @@ const UserService = reqlib('/services/User')
 const models = reqlib('/models')
 const Path = reqlib('/constants/Path')
 const Rule = reqlib('/../shared/constants/Rule')
+const sanitizer = reqlib('/utils/sanitizer')
 
 const DEFAULT_PER_PAGE = 6
 
@@ -15,7 +16,7 @@ module.exports = class Comment {
         {
           postId,
           commenterId: userId,
-          body
+          body: sanitizer.html(body)
         },
         { transaction }
       )

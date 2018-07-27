@@ -5,6 +5,7 @@ const Path = reqlib('/constants/Path')
 const Role = reqlib('/../shared/constants/Role')
 const { moveImage } = reqlib('/utils/image')
 const moment = require('moment')
+const sanitizer = reqlib('/utils/sanitizer')
 
 // リストで取得する際に、1ページあたりの初期値
 // パラメタによって指定した場合はこの値は無効
@@ -82,7 +83,7 @@ module.exports = class User {
       }
 
       await models.User.update(
-        { nickname, iconPath: dbPath },
+        { nickname: sanitizer.html(nickname), iconPath: dbPath },
         {
           where: { id: userId }
         }
@@ -292,8 +293,7 @@ module.exports = class User {
   }
 
   static arrToObj(arr, key, value) {
-    return _
-      .chain(arr)
+    return _.chain(arr)
       .keyBy(key)
       .mapValues(value)
       .value()

@@ -9,6 +9,7 @@ const Role = reqlib('/../shared/constants/Role')
 const Rule = reqlib('/../shared/constants/Rule')
 const { moveImage } = reqlib('/utils/image')
 const BoxType = reqlib('/../shared/constants/BoxType')
+const sanitizer = reqlib('/utils/sanitizer')
 
 // リストで取得する際に、1ページあたりの初期値
 // パラメタによって指定した場合はこの値は無効
@@ -50,8 +51,8 @@ module.exports = class Post {
         boxType,
         released,
         posterId: userId,
-        title,
-        body
+        title: sanitizer.html(title),
+        body: sanitizer.html(body)
       }
       // optional params
       if (categoryIndex) {
