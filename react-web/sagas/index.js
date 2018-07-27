@@ -23,6 +23,7 @@ import {
   AppVoice,
   AppNews,
   AppMypage,
+  AppSearch,
   AppPost,
   AppAdminPost,
   AppAdminFan
@@ -246,6 +247,25 @@ function* fetchMypageContents({ payload }) {
       jwtToken
     )
     yield put(addMypageContents(res.data))
+    if (successCb) yield call(successCb, res)
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
+}
+
+function* fetchSearchContents({ payload }) {
+  const { jwtToken } = yield select(getUser)
+  const { perPage, pageNum, successCb } = payload
+
+  try {
+    const query = qs.stringify({ perPage })
+    const res = yield call(
+      API.fetch,
+      `/post/list/search/${pageNum || 1}?${query}`,
+      jwtToken
+    )
+    // TODO
+    // yield put(addSearchContents(res.data))
     if (successCb) yield call(successCb, res)
   } catch (e) {
     yield put(setCommonError(e.response))
@@ -514,6 +534,7 @@ const appSaga = [
   takeLatest(AppVoice.FETCH_REQUEST, fetchVoiceContents),
   takeLatest(AppNews.FETCH_REQUEST, fetchNewsContents),
   takeLatest(AppMypage.FETCH_REQUEST, fetchMypageContents),
+  takeLatest(AppSearch.FETCH_REQUEST, fetchSearchContents),
 
   takeLatest(AppPost.FETCH_REQUEST, fetchPost),
   takeEvery(AppPost.FETCH_COMMENTS_REQUEST, fetchComments),

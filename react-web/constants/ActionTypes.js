@@ -102,6 +102,15 @@ export const AppPost = createTypes(
   async('FETCH_COMMENTS')
 )
 
+// 検索画面
+export const AppSearch = createTypes(
+  'app/search/',
+  // 検索結果をつめる
+  'ADD_CONTENTS',
+  // 検索結果を取得
+  async('FETCH')
+)
+
 // -----
 // -- APP_ADMIN: AdminViewで詰めるデータ --
 // -----

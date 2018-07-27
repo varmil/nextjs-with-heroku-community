@@ -24,6 +24,9 @@ const initialState = {
   news: { activeCategoryIndex: undefined, boxContents: [] },
   mypage: { boxContents: [] },
 
+  // 検索
+  search: { boxContents: [] },
+
   // Admin, User兼用。記事詳細画面
   post: {
     data: {},

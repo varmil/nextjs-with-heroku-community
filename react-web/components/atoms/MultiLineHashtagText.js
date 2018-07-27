@@ -35,7 +35,9 @@ export default class MultiLineHashtagText extends React.Component {
                 renderHashtag={hashtagValue => (
                   <Link
                     key={hashtagValue + i}
-                    route={`/view/home/${hashtagValue}`}
+                    route={`/view/search/result/${encodeURIComponent(
+                      hashtagValue
+                    )}`}
                     passHref
                   >
                     <a className="hashtag">{hashtagValue}</a>

@@ -7,13 +7,6 @@ import LinearProgress from '@material-ui/core/LinearProgress'
 // ex) 記事詳細から戻ってきたときに初期化されてはならない。
 const PER_PAGE = 5
 
-// const TalkInfiniteContents = props => (
-//   <InfiniteContents
-//     {...props}
-//     fetchOption={{ ...props.fetchOption, categoryIndex: props.categoryIndex }}
-//   />
-// )
-
 class InfiniteContents extends React.Component {
   state = {
     hasMore: true,
