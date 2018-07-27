@@ -6,9 +6,7 @@ import isEmpty from 'lodash/isEmpty'
 import fecha from 'fecha'
 import { Link, Router } from 'routes'
 import IconButton from '@material-ui/core/IconButton'
-import MultiLineHashtagText, {
-  getMultiLineHTML
-} from 'components/atoms/MultiLineHashtagText'
+import MultiLineHashtagText from 'components/atoms/MultiLineHashtagText'
 import VoteButton from 'components/atoms/VoteButton'
 import AvatarAndName from 'components/molecules/AvatarAndName'
 import CommentZone from 'components/organisms/site/box/CommentZone'
