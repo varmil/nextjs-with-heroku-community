@@ -6,7 +6,7 @@ import isEmpty from 'lodash/isEmpty'
 import fecha from 'fecha'
 import { Link, Router } from 'routes'
 import IconButton from '@material-ui/core/IconButton'
-import MultiLineText from 'components/atoms/MultiLineText'
+import { getMultiLineHTML } from 'components/atoms/MultiLineText'
 import VoteButton from 'components/atoms/VoteButton'
 import AvatarAndName from 'components/molecules/AvatarAndName'
 import CommentZone from 'components/organisms/site/box/CommentZone'
@@ -16,6 +16,7 @@ import Color from 'constants/Color'
 import autosize from 'autosize'
 import LazyLoad from 'react-lazyload'
 import BoxType from '/../shared/constants/BoxType'
+const hashtagRegex = require('hashtag-regex')
 
 const AVATAR_SIZE = 44
 // アンカーで飛んだときになんとなく真ん中あたりに表示するため
@@ -258,17 +259,31 @@ class BoxContent extends React.Component {
   }
 
   createBody(isExpanded) {
-    const props = this.props
-    if (isExpanded || props.showDetail) {
-      return <MultiLineText>{props.body}</MultiLineText>
+    const { showDetail, body } = this.props
+
+    // TODO: 事前にサニタイズしてからここでタグ付与かな
+
+    // hashtag対応
+    const regex = hashtagRegex()
+    const taggedBody = body.replace(regex, "<span class='hash_tag'>$&</span>")
+    // console.info('taggedBody', taggedBody)
+
+    if (isExpanded || showDetail) {
+      return (
+        <div
+          dangerouslySetInnerHTML={{ __html: getMultiLineHTML(taggedBody) }}
+        />
+      )
     } else {
-      const sliced = `${props.body.slice(0, 60)}...`
+      const sliced = `${body.slice(0, 60)}...`
       return (
         <React.Fragment>
           <div
             onClick={() => this.setState({ ...this.state, expandBody: true })}
           >
-            <MultiLineText>{sliced}</MultiLineText>
+            <div
+              dangerouslySetInnerHTML={{ __html: getMultiLineHTML(sliced) }}
+            />
             <span>もっとみる</span>
           </div>
 
@@ -490,7 +505,7 @@ class BoxContent extends React.Component {
             <span className="date">{props.postDate}</span>
           </div>
 
-          <div className="">{this.createMainContent()}</div>
+          <div>{this.createMainContent()}</div>
 
           {this.createGoingVote()}
 

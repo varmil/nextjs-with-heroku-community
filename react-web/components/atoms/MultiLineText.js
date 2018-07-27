@@ -1,4 +1,23 @@
 import React from 'react'
+
+export function getMultiLineHTML(string) {
+  if (typeof string === 'string') {
+    const arr = string.split('\n')
+    return arr
+      .map(
+        (m, i) => `
+        <span>
+          ${m}
+          ${i !== arr.length - 1 ? '<br />' : ''}
+        </span>
+      `
+      )
+      .join('')
+  } else {
+    return ''
+  }
+}
+
 export default class MultiLineText extends React.Component {
   render() {
     const renderTexts = () => {
@@ -7,7 +26,7 @@ export default class MultiLineText extends React.Component {
         return arr.map((m, i) => (
           <span key={i}>
             {m}
-            {i !== arr.length - 1 ? <br /> : null}
+            {i !== arr.length - 1 ? '<br />' : ''}
           </span>
         ))
       } else {

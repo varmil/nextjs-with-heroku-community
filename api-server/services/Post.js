@@ -334,6 +334,7 @@ module.exports = class Post {
       // # 記号は省く
       result.push(match[0].replace('#', ''))
     }
+    console.log('Hashtag parsed', result)
 
     return _.uniq(result)
   }
