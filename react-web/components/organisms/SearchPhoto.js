@@ -73,10 +73,10 @@ class SearchPhoto extends React.Component {
 
     return (
       <React.Fragment>
-        <section className="header">
+        <section className="wrap pt-3 px-5">
           <div className="row">
             {this.sliceIfNeeded(photos).map((e, i) => (
-              <div key={i} className="col-6 px-1">
+              <div key={i} className="col-6 p-1">
                 <PreviewImage
                   route={`/view/post/${e.boxType}/${e.id}`}
                   src={e.photo}
@@ -87,14 +87,19 @@ class SearchPhoto extends React.Component {
           </div>
 
           <ReadMoreAndLoading
-            text={'もっとみる'}
+            text={
+              <span style={{ fontSize: 16, color: '#4B4B4B' }}>
+                もっと見る
+                <i className="fas fa-chevron-right pl-4" />
+              </span>
+            }
             nowLoading={nowLoading}
             hasMore={hasMore}
             onClick={this.onClickLoad}
           />
         </section>
         <style jsx>{`
-          .header {
+          .wrap {
           }
         `}</style>
       </React.Fragment>
