@@ -9,12 +9,12 @@ import IconButton from '@material-ui/core/IconButton'
 import MultiLineHashtagText from 'components/atoms/MultiLineHashtagText'
 import VoteButton from 'components/atoms/VoteButton'
 import AvatarAndName from 'components/molecules/AvatarAndName'
+import Photos from 'components/organisms/site/Photos'
 import CommentZone from 'components/organisms/site/box/CommentZone'
 import { createAction } from 'redux-actions'
 import { AppPost } from 'constants/ActionTypes'
 import Color from 'constants/Color'
 import autosize from 'autosize'
-import LazyLoad from 'react-lazyload'
 import BoxType from '/../shared/constants/BoxType'
 
 const AVATAR_SIZE = 44
@@ -65,109 +65,6 @@ export const VoteCounter = props => (
     </div>
   </React.Fragment>
 )
-
-/**
- * 画像一覧。一覧用と詳細表示をshowDetailで切り替える
- */
-const Photos = props => {
-  /**
-   * 一覧用の個別画像
-   */
-  const PreviewImage = props => {
-    const HEIGHT = 110
-    return (
-      <React.Fragment>
-        <div
-          onClick={async () => {
-            const id = `img${props.index}`
-            await Router.pushRoute(`${props.route}#${id}`)
-          }}
-        >
-          <LazyLoad height={HEIGHT} once>
-            <img className="card-img-top" src={props.src} alt="" />
-          </LazyLoad>
-        </div>
-        <style jsx>{`
-          img {
-            border-radius: 0;
-            object-fit: cover;
-            height: ${HEIGHT}px;
-          }
-        `}</style>
-      </React.Fragment>
-    )
-  }
-
-  if (props.showDetail) {
-    return (
-      <React.Fragment>
-        {props.images.map((src, i) => (
-          <div key={i} id={`img${i}`}>
-            <img src={src} className="card-img-top my-2" alt="" />
-          </div>
-        ))}
-      </React.Fragment>
-    )
-  } else {
-    const length = props.images.length
-    let result = null
-    switch (length) {
-      case 1:
-        result = (
-          <React.Fragment>
-            <div className="row">
-              <div className="col-12 px-0">
-                <PreviewImage
-                  route={props.route}
-                  src={props.images[0]}
-                  index={0}
-                />
-              </div>
-            </div>
-          </React.Fragment>
-        )
-        break
-
-      case 2:
-      case 4:
-        result = (
-          <React.Fragment>
-            <div className="row">
-              {props.images.map((src, i) => (
-                <div key={i} className="col-6 px-0">
-                  <PreviewImage route={props.route} src={src} index={i} />
-                </div>
-              ))}
-            </div>
-          </React.Fragment>
-        )
-        break
-
-      case 3:
-        result = (
-          <React.Fragment>
-            <div className="row">
-              <div className="col-12 px-0">
-                <PreviewImage
-                  route={props.route}
-                  src={props.images[0]}
-                  index={0}
-                />
-              </div>
-              {props.images.slice(1).map((src, i) => (
-                <div key={i} className="col-6 px-0">
-                  <PreviewImage route={props.route} src={src} index={i + 1} />
-                </div>
-              ))}
-            </div>
-          </React.Fragment>
-        )
-        break
-      default:
-    }
-    return result
-  }
-}
 
 /**
  * 折りたたみ状態の記事本文

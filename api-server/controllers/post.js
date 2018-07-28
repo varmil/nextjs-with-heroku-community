@@ -218,7 +218,7 @@ exports.fetchTypeahead = async (req, res) => {
  * 検索結果画面で表示する記事一覧取得
  */
 exports.fetchSearched = async (req, res) => {
-  const { perPage } = req.query
+  const { perPage, onlyPhoto } = req.query
   const { id, brand } = req.user
   const pageNum = +req.params.pageNum || 1 // 1 origin
   const word = req.params.word
@@ -234,10 +234,28 @@ exports.fetchSearched = async (req, res) => {
 
   // TODO ハッシュタグ以外の検索
 
-  const posts = await services.Post.fetchList(pageNum, where, {
+  let result = await services.Post.fetchList(pageNum, where, {
     perPage,
     assoc: true,
     userId: id
   })
-  res.json(posts)
+
+  // PHOTOデータのみ返す場合
+  if (onlyPhoto) {
+    result = _
+      .chain(result)
+      .flatMap(row => {
+        const { id, boxType } = row
+        return _.map(row.images, (photo, index) => ({
+          id,
+          boxType,
+          photo,
+          index
+        }))
+      })
+      .value()
+    console.log('#####result #####', result)
+  }
+
+  res.json(result)
 }

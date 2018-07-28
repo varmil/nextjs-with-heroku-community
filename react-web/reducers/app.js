@@ -26,7 +26,7 @@ const initialState = {
   mypage: { boxContents: [] },
 
   // 検索
-  search: { boxContents: [] },
+  search: { photos: [], boxContents: [] },
 
   // Admin, User兼用。記事詳細画面
   post: {
@@ -170,6 +170,10 @@ export default handleActions(
     },
     [AppSearch.RESET_CONTENTS]: (state, action) => {
       return immutable.set(state, `search.boxContents`, [])
+    },
+    [AppSearch.ADD_PHOTOS]: (state, action) => {
+      // spread payload because it is array
+      return immutable.push(state, `search.photos`, ...action.payload)
     },
 
     /**

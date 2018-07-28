@@ -257,9 +257,9 @@ function* fetchMypageContents({ payload }) {
 // 検索結果
 function* fetchSearchContents({ payload }) {
   const { jwtToken } = yield select(getUser)
-  const { perPage, pageNum, successCb, fetchOption } = payload
+  const { perPage, pageNum, successCb, fetchOption, onlyPhoto } = payload
   try {
-    const query = qs.stringify({ perPage })
+    const query = qs.stringify({ perPage, onlyPhoto })
     const { word } = fetchOption
     if (!word) return console.warn('wordが未指定です。')
 

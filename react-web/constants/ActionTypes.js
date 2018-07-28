@@ -81,9 +81,11 @@ export const AppSearch = createTypes(
   'app/search/',
   // 検索結果をつめる, RESET
   'ADD_CONTENTS',
+  'ADD_PHOTOS',
   'RESET_CONTENTS',
   // 検索結果を取得
-  async('FETCH')
+  async('FETCH'),
+  async('FETCH_PHOTOS')
 )
 
 // POST詳細画面

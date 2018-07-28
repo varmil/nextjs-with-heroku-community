@@ -4,6 +4,7 @@ import { AppSearch } from 'constants/ActionTypes'
 import { createAction } from 'redux-actions'
 import isEmpty from 'lodash/isEmpty'
 import SearchInput from 'components/organisms/SearchInput'
+import SearchPhoto from 'components/organisms/SearchPhoto'
 import SearchContents from 'components/templates/edit_view_shared/SearchContents'
 import BoxType from '/../shared/constants/BoxType'
 
@@ -24,8 +25,8 @@ class SearchResult extends React.Component {
 
     return (
       <React.Fragment>
-        <SearchInput word={word} />
-        Hello World
+        <SearchInput route={`/view/search/query`} word={word} />
+        <SearchPhoto word={word} />
         <SearchContents word={word} />
         <style global jsx>{`
           body {
