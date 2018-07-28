@@ -10,6 +10,7 @@ import {
 
 import withSaveCancelFooter from 'components/organisms/modal/withSaveCancelFooter'
 import MenuBlockEdit from 'components/organisms/edit_modal/MenuBlockEdit'
+import Rule from '/../shared/constants/Rule'
 
 const SortableItem = SortableElement(({ value, orderIndex, onChange }) => {
   const baseStyle = { zIndex: 1100 }
@@ -21,6 +22,7 @@ const SortableItem = SortableElement(({ value, orderIndex, onChange }) => {
       index={orderIndex}
       label={'ボックス' + value.slug}
       text={value.header.text}
+      maxLength={Rule.BOXNAME_MAX_LENGTH}
       onChange={onChange}
     />
   )

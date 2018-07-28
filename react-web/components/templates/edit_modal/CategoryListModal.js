@@ -11,6 +11,7 @@ import {
 
 import withSaveCancelFooter from 'components/organisms/modal/withSaveCancelFooter'
 import MenuBlockEdit from 'components/organisms/edit_modal/MenuBlockEdit'
+import Rule from '/../shared/constants/Rule'
 
 const SortableItem = SortableElement(({ value, orderIndex, onChange }) => {
   if (!value.editable) console.log(value)
@@ -26,6 +27,7 @@ const SortableItem = SortableElement(({ value, orderIndex, onChange }) => {
       style={{ ...baseStyle, ...addedStyle }}
       index={orderIndex}
       label={'カテゴリ' + value.categoryIndex}
+      maxLength={Rule.CATNAME_MAX_LENGTH}
       editable={value.editable}
       onChange={onChange}
     />

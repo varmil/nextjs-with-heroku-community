@@ -29,7 +29,8 @@ const Item = props => {
         }
 
         button {
-          width: 95px;
+          min-width: 95px;
+          max-width: 220px;
           font-size: 11px;
           font-weight: bold;
 

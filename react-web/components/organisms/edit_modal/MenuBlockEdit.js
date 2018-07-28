@@ -12,14 +12,21 @@ export default class MenuBlockEdit extends React.Component {
             <label className="col-2 col-form-label">
               {props.label || 'テキスト'}
             </label>
-            <div className="col-10">
+            <div className="col-8">
               <input
                 className="menuText"
                 type="text"
                 value={props.text || ''}
                 readOnly={props.editable === false}
-                onChange={e => props.onChange(e, props.index)}
+                onChange={e => {
+                  // 最大文字数を超えてる場合はそもそも発火しない
+                  if (e.target.value.length > props.maxLength) return
+                  props.onChange(e, props.index)
+                }}
               />
+            </div>
+            <div className="col-2">
+              {props.text.length} / {props.maxLength}
             </div>
           </div>
 
