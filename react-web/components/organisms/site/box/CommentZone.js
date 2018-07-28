@@ -110,6 +110,7 @@ class CommentZone extends React.Component {
     return (
       <div className={`comments w-100 mx-auto ${props.className || ''}`}>
         <ReadMoreAndLoading
+          text={'以前のコメントを見る'}
           nowLoading={nowLoading}
           hasMore={hasMore}
           onClick={this.onClickLoad}

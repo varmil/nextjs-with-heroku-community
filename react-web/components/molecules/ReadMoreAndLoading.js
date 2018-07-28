@@ -1,7 +1,7 @@
 import LinearProgress from '@material-ui/core/LinearProgress'
 
 export default props => {
-  const { nowLoading, hasMore, onClick } = props
+  const { text, nowLoading, hasMore, onClick } = props
 
   // 全コメント表示済みなら何も出さない
   if (!hasMore) return null
@@ -17,7 +17,7 @@ export default props => {
 
   return (
     <div className="load my-3 text-center" onClick={onClick}>
-      以前のコメントを見る
+      {text}
       <style jsx>{`
         .load {
           color: #2b6eb2;

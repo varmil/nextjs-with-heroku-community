@@ -34,6 +34,7 @@ import {
   addNewsContents,
   addMypageContents,
   addSearchContents,
+  addSearchPhotos,
   // setPost,
   setCommonError
 } from 'actions/application'
@@ -257,18 +258,30 @@ function* fetchMypageContents({ payload }) {
 // 検索結果
 function* fetchSearchContents({ payload }) {
   const { jwtToken } = yield select(getUser)
-  const { perPage, pageNum, successCb, fetchOption, onlyPhoto } = payload
+  const { perPage, pageNum, successCb, fetchOption } = payload
   try {
-    const query = qs.stringify({ perPage, onlyPhoto })
-    const { word } = fetchOption
+    const { word, onlyPhoto } = fetchOption
     if (!word) return console.warn('wordが未指定です。')
+
+    const query = qs.stringify({ perPage, onlyPhoto })
 
     const res = yield call(
       API.fetch,
       `/post/list/search/${encodeURIComponent(word)}/${pageNum || 1}?${query}`,
       jwtToken
     )
-    yield put(addSearchContents(res.data))
+
+    // 1ページ目なら事前にRESETしてからPUSH
+    if (+pageNum === 1) {
+      const resetAction = onlyPhoto
+        ? createAction(AppSearch.RESET_PHOTOS)
+        : createAction(AppSearch.RESET_CONTENTS)
+      yield put(resetAction())
+    }
+
+    // PHOTOのみなら、photosにつめる
+    const action = onlyPhoto ? addSearchPhotos : addSearchContents
+    yield put(action(res.data))
     if (successCb) yield call(successCb, res)
   } catch (e) {
     yield put(setCommonError(e.response))
@@ -537,7 +550,7 @@ const appSaga = [
   takeLatest(AppVoice.FETCH_REQUEST, fetchVoiceContents),
   takeLatest(AppNews.FETCH_REQUEST, fetchNewsContents),
   takeLatest(AppMypage.FETCH_REQUEST, fetchMypageContents),
-  takeLatest(AppSearch.FETCH_REQUEST, fetchSearchContents),
+  takeEvery(AppSearch.FETCH_REQUEST, fetchSearchContents),
 
   takeLatest(AppPost.FETCH_REQUEST, fetchPost),
   takeEvery(AppPost.FETCH_COMMENTS_REQUEST, fetchComments),

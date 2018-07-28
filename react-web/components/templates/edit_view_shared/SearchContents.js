@@ -10,7 +10,6 @@ class SearchContents extends BoxContents {
     return (
       <React.Fragment>
         <InfiniteScroll
-          key={word}
           disabled={false}
           action={AppSearch.FETCH_REQUEST}
           length={boxContents.length}

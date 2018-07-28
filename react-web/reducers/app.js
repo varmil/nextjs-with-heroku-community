@@ -175,6 +175,9 @@ export default handleActions(
       // spread payload because it is array
       return immutable.push(state, `search.photos`, ...action.payload)
     },
+    [AppSearch.RESET_PHOTOS]: (state, action) => {
+      return immutable.set(state, `search.photos`, [])
+    },
 
     /**
      * POST

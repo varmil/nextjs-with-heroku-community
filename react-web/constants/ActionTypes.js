@@ -83,9 +83,9 @@ export const AppSearch = createTypes(
   'ADD_CONTENTS',
   'ADD_PHOTOS',
   'RESET_CONTENTS',
+  'RESET_PHOTOS',
   // 検索結果を取得
-  async('FETCH'),
-  async('FETCH_PHOTOS')
+  async('FETCH')
 )
 
 // POST詳細画面

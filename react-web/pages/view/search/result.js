@@ -13,8 +13,11 @@ class SearchResult extends React.Component {
   static async getInitialProps({ ctx }) {
     const { dispatch } = ctx.store
     const { word } = ctx.query
-    // InfiniteScrollをページ１に戻すためにRESET
+
+    // Photo, InfiniteScrollをページ１に戻すためにRESET
+    dispatch(createAction(AppSearch.RESET_PHOTOS)())
     dispatch(createAction(AppSearch.RESET_CONTENTS)())
+
     return { word }
   }
 
@@ -26,8 +29,8 @@ class SearchResult extends React.Component {
     return (
       <React.Fragment>
         <SearchInput route={`/view/search/query`} word={word} />
-        <SearchPhoto word={word} />
-        <SearchContents word={word} />
+        <SearchPhoto key={'P' + word} word={word} />
+        <SearchContents key={'C' + word} word={word} />
         <style global jsx>{`
           body {
             background-color: #f0f0f0 !important;

@@ -226,10 +226,18 @@ exports.fetchSearched = async (req, res) => {
 
   let where = { posterId: id, brandId: brand.id, released: true }
 
+  // onlyPhotoの場合は、画像があるPOSTのみ取得
+  if (onlyPhoto) {
+    where = {
+      ...where,
+      images: { [models.Sequelize.Op.notLike]: [] }
+    }
+  }
+
   // wordがハッシュタグなら、ハッシュタグ完全一致のみ検索
   if (word.startsWith('#')) {
     const postIds = await services.Post.fetchPostIdsFromHashtag(word)
-    where = { ...where, id: postIds }
+    where = { id: postIds, ...where }
   }
 
   // TODO ハッシュタグ以外の検索

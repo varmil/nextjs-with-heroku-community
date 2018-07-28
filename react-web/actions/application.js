@@ -27,6 +27,7 @@ export let addMypageContents = createAction(AppMypage.ADD_CONTENTS)
 
 // search/result
 export let addSearchContents = createAction(AppSearch.ADD_CONTENTS)
+export let addSearchPhotos = createAction(AppSearch.ADD_PHOTOS)
 
 // post
 export let setPost = createAction(AppPost.SET_POST)
