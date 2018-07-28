@@ -5,6 +5,7 @@ import {
   AppVoice,
   AppNews,
   AppMypage,
+  AppSearch,
   AppPost,
   AppSuccesses,
   AppErrors
@@ -23,6 +24,9 @@ export let addNewsContents = createAction(AppNews.ADD_CONTENTS)
 
 // mypage
 export let addMypageContents = createAction(AppMypage.ADD_CONTENTS)
+
+// search/result
+export let addSearchContents = createAction(AppSearch.ADD_CONTENTS)
 
 // post
 export let setPost = createAction(AppPost.SET_POST)

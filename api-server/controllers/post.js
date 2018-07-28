@@ -171,16 +171,13 @@ exports.fetchListOfBox = async (req, res) => {
     return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
   }
 
-  const { released, perPage, categoryIndex } = req.query
+  const { perPage, categoryIndex } = req.query
   const boxType = +req.params.boxType
   const pageNum = +req.params.pageNum || 1 // 1 origin
   const brandId = req.user.brand.id
 
   // where条件
-  let where = { brandId, boxType }
-  if (released) {
-    where = { ...where, released: true }
-  }
+  let where = { brandId, boxType, released: true }
   if (!_.isNil(categoryIndex) && _.isNumber(+categoryIndex)) {
     where = { ...where, categoryIndex: +categoryIndex }
   }
@@ -200,6 +197,33 @@ exports.fetchMyPosts = async (req, res) => {
   const { perPage } = req.query
   const { id, brand } = req.user
   const pageNum = +req.params.pageNum || 1 // 1 origin
+
+  let where = { posterId: id, brandId: brand.id, released: true }
+  const posts = await services.Post.fetchList(pageNum, where, {
+    perPage,
+    assoc: true,
+    userId: req.user.id
+  })
+  res.json(posts)
+}
+
+/**
+ * オートコンプリート用。検索中に表示する候補一覧取得
+ */
+exports.fetchTypeahead = async (req, res) => {
+  res.json(true)
+}
+
+/**
+ * 検索結果画面で表示する記事一覧取得
+ */
+exports.fetchSearched = async (req, res) => {
+  const { perPage } = req.query
+  const { id, brand } = req.user
+  const pageNum = +req.params.pageNum || 1 // 1 origin
+  const word = req.params.word
+
+  console.info('sended word is', word)
 
   let where = { posterId: id, brandId: brand.id, released: true }
   const posts = await services.Post.fetchList(pageNum, where, {

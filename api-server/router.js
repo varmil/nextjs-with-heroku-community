@@ -130,11 +130,20 @@ module.exports = function(app) {
   app.get('/post/list/count', requireAuth, PostController.countAll)
   app.get('/post/list/:pageNum', requireAuth, PostController.fetchList)
   app.get('/post/list/me/:pageNum', requireAuth, PostController.fetchMyPosts)
-  // app.get('/post/list/search/:pageNum', requireAuth, PostController.fetchMyPosts)
   app.get(
     '/post/list/box/:boxType/:pageNum',
     requireAuth,
     PostController.fetchListOfBox
+  )
+  app.get(
+    '/post/list/typeahead/:word',
+    requireAuth,
+    PostController.fetchTypeahead
+  )
+  app.get(
+    '/post/list/search/:word/:pageNum',
+    requireAuth,
+    PostController.fetchSearched
   )
 
   /**

@@ -272,7 +272,7 @@ module.exports = class Post {
         const isMostPopular = e.choiceIndex === mostPopularOption
         return {
           ...e,
-          percentage: Math.ceil(e.count / countSum * 100),
+          percentage: Math.ceil((e.count / countSum) * 100),
           isMostPopular
         }
       })

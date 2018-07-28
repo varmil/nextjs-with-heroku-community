@@ -33,6 +33,7 @@ import {
   addVoiceContents,
   addNewsContents,
   addMypageContents,
+  addSearchContents,
   // setPost,
   setCommonError
 } from 'actions/application'
@@ -253,19 +254,21 @@ function* fetchMypageContents({ payload }) {
   }
 }
 
+// 検索結果
 function* fetchSearchContents({ payload }) {
   const { jwtToken } = yield select(getUser)
-  const { perPage, pageNum, successCb } = payload
-
+  const { perPage, pageNum, successCb, fetchOption } = payload
   try {
     const query = qs.stringify({ perPage })
+    const { word } = fetchOption
+    if (!word) return console.warn('wordが未指定です。')
+
     const res = yield call(
       API.fetch,
-      `/post/list/search/${pageNum || 1}?${query}`,
+      `/post/list/search/${encodeURIComponent(word)}/${pageNum || 1}?${query}`,
       jwtToken
     )
-    // TODO
-    // yield put(addSearchContents(res.data))
+    yield put(addSearchContents(res.data))
     if (successCb) yield call(successCb, res)
   } catch (e) {
     yield put(setCommonError(e.response))
