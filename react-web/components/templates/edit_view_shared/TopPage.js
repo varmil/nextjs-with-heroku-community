@@ -21,7 +21,7 @@ import URL from 'constants/URL'
 
 const styles = {
   tabRoot: { minHeight: 40 },
-  labelContainer: { paddingBottom: 4, marginBottom: -10 }
+  labelContainer: { paddingBottom: 0, marginBottom: 0 }
 }
 
 // container height
