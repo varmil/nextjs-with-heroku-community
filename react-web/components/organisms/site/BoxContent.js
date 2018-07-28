@@ -597,7 +597,8 @@ class BoxContent extends React.Component {
 
             .card {
               border-radius: 0px;
-              ${props.showDetail && 'border: none'};
+              // ${props.showDetail && 'border: none'};
+              border: none;
             }
 
             .card-header {

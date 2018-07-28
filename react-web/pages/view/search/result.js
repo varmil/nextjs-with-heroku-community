@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { AppSearch } from 'constants/ActionTypes'
 import { createAction } from 'redux-actions'
 import isEmpty from 'lodash/isEmpty'
+import SearchInput from 'components/organisms/SearchInput'
 import SearchContents from 'components/templates/edit_view_shared/SearchContents'
 import BoxType from '/../shared/constants/BoxType'
 
@@ -23,8 +24,14 @@ class SearchResult extends React.Component {
 
     return (
       <React.Fragment>
+        <SearchInput word={word} />
         Hello World
         <SearchContents word={word} />
+        <style global jsx>{`
+          body {
+            background-color: #f0f0f0 !important;
+          }
+        `}</style>
       </React.Fragment>
     )
   }

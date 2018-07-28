@@ -44,7 +44,7 @@ class TalkRoomContents extends BoxContents {
         {range(mainBanner.length).map(i => (
           <MainBanner
             key={i}
-            className="mb-3"
+            className="mb-0"
             contentState={mainBanner[i].contentState}
             src={mainBanner[i].src}
             backgroundColor={mainBanner[i].backgroundColor}

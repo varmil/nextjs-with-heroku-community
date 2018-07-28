@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Router } from 'routes'
 import { withStyles } from '@material-ui/core/styles'
-import qs from 'query-string'
 import findIndex from 'lodash/findIndex'
 import isNil from 'lodash/isNil'
 import SwipeableViews from 'react-swipeable-views'
@@ -178,7 +177,7 @@ class TopPage extends React.Component {
           }
 
           .react-swipeable-view-container > div[aria-hidden='false'] {
-            min-height: 300px;
+            min-height: 700px;
             height: 100%;
           }
           .react-swipeable-view-container > div[aria-hidden='true'] {

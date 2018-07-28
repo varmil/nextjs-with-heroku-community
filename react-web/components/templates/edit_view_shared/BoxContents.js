@@ -26,7 +26,7 @@ export default class BoxContents extends React.Component {
     const { pageData, activeCategoryIndex } = this.props
 
     return (
-      <section className="cat my-3">
+      <section className="cat py-3 bg-white">
         <CategorySelect
           item={pageData.categories.item}
           action={this.categories.action}
@@ -52,38 +52,44 @@ export default class BoxContents extends React.Component {
     const secondArray = boxContents.slice(FIRST_NUM)
 
     return (
-      <div className="wrap">
-        {firstArray.map((content, i) => {
-          const MyBoxContent = factoryBox(content.boxType)
-          return (
-            <div key={i} className="c">
-              <Fade>
-                <MyBoxContent {...content} />
-              </Fade>
-            </div>
-          )
-        })}
+      <section className="contents py-3">
+        <div className="wrap">
+          {firstArray.map((content, i) => {
+            const MyBoxContent = factoryBox(content.boxType)
+            return (
+              <div key={i} className="c">
+                <Fade>
+                  <MyBoxContent {...content} />
+                </Fade>
+              </div>
+            )
+          })}
 
-        {this.createSubBanners()}
+          {this.createSubBanners()}
 
-        {secondArray.map((content, i) => {
-          const MyBoxContent = factoryBox(content.boxType)
-          return (
-            <div key={i} className="c">
-              <Fade>
-                <MyBoxContent {...content} />
-              </Fade>
-            </div>
-          )
-        })}
+          {secondArray.map((content, i) => {
+            const MyBoxContent = factoryBox(content.boxType)
+            return (
+              <div key={i} className="c">
+                <Fade>
+                  <MyBoxContent {...content} />
+                </Fade>
+              </div>
+            )
+          })}
+        </div>
 
         <style jsx>{`
+          .contents {
+            background-color: #f0f0f0 !important;
+          }
+
           .c {
             padding: 0 15px;
             margin: 0 0 20px;
           }
         `}</style>
-      </div>
+      </section>
     )
   }
 
@@ -113,11 +119,7 @@ export default class BoxContents extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <main>
-          <section className="contents my-3">
-            {this.createBoxContents()}
-          </section>
-        </main>
+        <main>{this.createBoxContents()}</main>
       </React.Fragment>
     )
   }

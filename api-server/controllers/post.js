@@ -232,6 +232,8 @@ exports.fetchSearched = async (req, res) => {
     where = { ...where, id: postIds }
   }
 
+  // TODO ハッシュタグ以外の検索
+
   const posts = await services.Post.fetchList(pageNum, where, {
     perPage,
     assoc: true,
