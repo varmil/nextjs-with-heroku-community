@@ -202,7 +202,7 @@ exports.fetchMyPosts = async (req, res) => {
   const posts = await services.Post.fetchList(pageNum, where, {
     perPage,
     assoc: true,
-    userId: req.user.id
+    userId: id
   })
   res.json(posts)
 }
@@ -222,22 +222,20 @@ exports.fetchSearched = async (req, res) => {
   const { id, brand } = req.user
   const pageNum = +req.params.pageNum || 1 // 1 origin
   const word = req.params.word
-
   console.info('sended word is', word)
+
+  let where = { posterId: id, brandId: brand.id, released: true }
 
   // wordがハッシュタグなら、ハッシュタグ完全一致のみ検索
   if (word.startsWith('#')) {
-    const name = word.replace('#', '')
-    const rows = await models.Hashtag.findAll({ where: { name }, raw: true })
-    const postIds = _.map(rows, 'id')
-    console.log('postIds', postIds)
+    const postIds = await services.Post.fetchPostIdsFromHashtag(word)
+    where = { ...where, id: postIds }
   }
 
-  let where = { posterId: id, brandId: brand.id, released: true }
   const posts = await services.Post.fetchList(pageNum, where, {
     perPage,
     assoc: true,
-    userId: req.user.id
+    userId: id
   })
   res.json(posts)
 }

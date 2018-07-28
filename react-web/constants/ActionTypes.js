@@ -76,6 +76,16 @@ export const AppMypage = createTypes(
   async('FETCH')
 )
 
+// 検索画面
+export const AppSearch = createTypes(
+  'app/search/',
+  // 検索結果をつめる, RESET
+  'ADD_CONTENTS',
+  'RESET_CONTENTS',
+  // 検索結果を取得
+  async('FETCH')
+)
+
 // POST詳細画面
 export const AppPost = createTypes(
   'app/post/',
@@ -100,15 +110,6 @@ export const AppPost = createTypes(
   async('FETCH'),
   // コメント取得
   async('FETCH_COMMENTS')
-)
-
-// 検索画面
-export const AppSearch = createTypes(
-  'app/search/',
-  // 検索結果をつめる
-  'ADD_CONTENTS',
-  // 検索結果を取得
-  async('FETCH')
 )
 
 // -----

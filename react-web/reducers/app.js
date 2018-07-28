@@ -168,6 +168,9 @@ export default handleActions(
       // spread payload because it is array
       return immutable.push(state, `search.boxContents`, ...action.payload)
     },
+    [AppSearch.RESET_CONTENTS]: (state, action) => {
+      return immutable.set(state, `search.boxContents`, [])
+    },
 
     /**
      * POST
