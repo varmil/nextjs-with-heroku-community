@@ -5,9 +5,9 @@ import isEmpty from 'lodash/isEmpty'
 import uniqueId from 'lodash/uniqueId'
 import { createAction } from 'redux-actions'
 import { Link } from 'routes'
-import LinearProgress from '@material-ui/core/LinearProgress'
 import { AppPost } from 'constants/ActionTypes'
 import Avatar from 'components/atoms/Avatar'
+import ReadMoreAndLoading from 'components/molecules/ReadMoreAndLoading'
 
 // ページ番号は1から
 const INITIAL_PAGE = 1
@@ -97,37 +97,9 @@ class CommentZone extends React.Component {
     this.loadPage(this.state.nextPageNum)
   }
 
-  createReadMoreAndLoading() {
-    const { nowLoading, hasMore } = this.state
-
-    // 全コメント表示済みなら何も出さない
-    if (!hasMore) return null
-
-    // loading表示
-    if (nowLoading) {
-      return (
-        <div className="text-center">
-          <LinearProgress />
-        </div>
-      )
-    }
-
-    return (
-      <div className="load my-3 text-center" onClick={this.onClickLoad}>
-        以前のコメントを見る
-        <style jsx>{`
-          .load {
-            color: #2b6eb2;
-            font-size: 13px;
-            cursor: pointer;
-          }
-        `}</style>
-      </div>
-    )
-  }
-
   render() {
     const props = this.props
+    const { nowLoading, hasMore } = this.state
 
     // 外から渡されていればそちらを優先する
     const comments = Array.isArray(props.comments)
@@ -137,12 +109,14 @@ class CommentZone extends React.Component {
 
     return (
       <div className={`comments w-100 mx-auto ${props.className || ''}`}>
-        {this.createReadMoreAndLoading()}
+        <ReadMoreAndLoading
+          nowLoading={nowLoading}
+          hasMore={hasMore}
+          onClick={this.onClickLoad}
+        />
 
         <div className="commentsPost my-3 mb-5">
-          {/* {copiedArray.map((e, i) => ( */}
           <Comments data={copiedArray} />
-          {/* ))} */}
         </div>
 
         <style jsx>{`
