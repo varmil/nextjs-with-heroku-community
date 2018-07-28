@@ -110,12 +110,11 @@ module.exports = class Post {
     let { perPage, userId, assoc } = options
     perPage = +perPage || DEFAULT_PER_PAGE
 
-    // カテゴリ絞り込み
+    // 特殊カテゴリ（すべて）の対処
     if (
       !_.isNil(where.categoryIndex) &&
       +where.categoryIndex === Rule.ALL_CATEGORY_INDEX
     ) {
-      // 特殊カテゴリ（すべて）の対処
       delete where.categoryIndex
     }
 

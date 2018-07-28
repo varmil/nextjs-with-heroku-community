@@ -225,6 +225,14 @@ exports.fetchSearched = async (req, res) => {
 
   console.info('sended word is', word)
 
+  // wordがハッシュタグなら、ハッシュタグ完全一致のみ検索
+  if (word.startsWith('#')) {
+    const name = word.replace('#', '')
+    const rows = await models.Hashtag.findAll({ where: { name }, raw: true })
+    const postIds = _.map(rows, 'id')
+    console.log('postIds', postIds)
+  }
+
   let where = { posterId: id, brandId: brand.id, released: true }
   const posts = await services.Post.fetchList(pageNum, where, {
     perPage,

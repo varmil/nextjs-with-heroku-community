@@ -9,6 +9,7 @@ import {
   AppVoice,
   AppNews,
   AppMypage,
+  AppSearch,
   AppPost,
   AppAdminPost,
   AppAdminFan
@@ -158,6 +159,14 @@ export default handleActions(
     [AppMypage.ADD_CONTENTS]: (state, action) => {
       // spread payload because it is array
       return immutable.push(state, `mypage.boxContents`, ...action.payload)
+    },
+
+    /**
+     * SEARCH
+     */
+    [AppSearch.ADD_CONTENTS]: (state, action) => {
+      // spread payload because it is array
+      return immutable.push(state, `search.boxContents`, ...action.payload)
     },
 
     /**

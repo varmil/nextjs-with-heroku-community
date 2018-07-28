@@ -24,5 +24,5 @@ class SearchContents extends BoxContents {
 
 export default connect(state => ({
   // TALK BOX由来のページでは共通して使う。
-  boxContents: state.app.mypage.boxContents
+  boxContents: state.app.search.boxContents
 }))(SearchContents)
