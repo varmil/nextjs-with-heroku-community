@@ -238,9 +238,16 @@ exports.fetchSearched = async (req, res) => {
   if (word.startsWith('#')) {
     const postIds = await services.Post.fetchPostIdsFromHashtag(word)
     where = { id: postIds, ...where }
-  }
+  } else {
+    // TODO ハッシュタグ以外の検索
+    // ハッシュタグからの検索、titleからの検索に分けてmergeする
+    // 両方からperPage分とってきて、UNIQ + ID DESC とかでmerge
+    // HACK: 高速に検索するなら {postId, title, body, tagNames} みたいな
+    // 検索専用の全文検索テーブルをつくってそこからFETCHするのがよい
 
-  // TODO ハッシュタグ以外の検索
+    // LIKEにしたい
+    const postIds = await services.Post.fetchPostIdsFromHashtag(word)
+  }
 
   let result = await services.Post.fetchList(pageNum, where, {
     perPage,
