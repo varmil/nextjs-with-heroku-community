@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Portal } from 'react-portal'
+// import { Portal } from 'react-portal'
 import { connect } from 'react-redux'
 import isEmpty from 'lodash/isEmpty'
 import fecha from 'fecha'
-import { Link, Router } from 'routes'
+import { Router } from 'routes'
 import IconButton from '@material-ui/core/IconButton'
 import MultiLineHashtagText from 'components/atoms/MultiLineHashtagText'
 import VoteButton from 'components/atoms/VoteButton'
@@ -317,7 +317,7 @@ class BoxContent extends React.Component {
   }
 
   createCommentPortal() {
-    const node = typeof window === 'undefined' ? null : document.body
+    // const node = typeof window === 'undefined' ? null : document.body
     const isEmptyComment = this.state.comment.length === 0
 
     const onSubmitComment = e => {
@@ -338,8 +338,8 @@ class BoxContent extends React.Component {
     }
 
     return (
-      <Portal node={node}>
-        <div className="commentForm fixed-bottom input-group">
+      <React.Fragment>
+        <div className="commentForm input-group">
           <textarea
             type="text"
             rows="1"
@@ -381,7 +381,7 @@ class BoxContent extends React.Component {
             left: -1px;
           }
         `}</style>
-      </Portal>
+      </React.Fragment>
     )
   }
 
