@@ -16,16 +16,9 @@ const iconButtonStyle = {
 }
 
 class Mypage extends React.Component {
-  static async getInitialProps({ ctx }) {
-    const { mypage } = ctx.store.getState().app
-    const { dispatch } = ctx.store
-
-    if (ctx.isServer || mypage.boxContents.length === 0) {
-      dispatch(createAction(AppMypage.FETCH_REQUEST)({}))
-    }
-
-    return {}
-  }
+  // static async getInitialProps({ ctx }) {
+  //   return {}
+  // }
 
   render() {
     const props = this.props

@@ -2,18 +2,11 @@ import React from 'react'
 import range from 'lodash/range'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
-import IconButton from '@material-ui/core/IconButton'
 import { Link, Router } from 'routes'
 import { deauthenticate } from 'actions/user'
-import URL from 'constants/URL'
+import BorderedTextHeader from 'components/organisms/site/BorderedTextHeader'
 
-const iconButtonStyle = {
-  position: 'absolute',
-  left: '3%',
-  top: '15px'
-}
-
-class Mypage extends React.Component {
+class Settings extends React.Component {
   // state = {
   //   email: '',
   //   password: '',
@@ -24,17 +17,9 @@ class Mypage extends React.Component {
     const props = this.props
     return (
       <React.Fragment>
+        <BorderedTextHeader text="設定" />
+
         <div className="container">
-          <section className="header mt-4 text-center">
-            <span>設定</span>
-
-            <Link route={URL.VIEW_HOME}>
-              <IconButton style={iconButtonStyle}>
-                <i className="fas fa-chevron-left" />
-              </IconButton>
-            </Link>
-          </section>
-
           <section className="contentWrap mt-5 ml-4">
             <div
               className="text"
@@ -68,4 +53,4 @@ class Mypage extends React.Component {
 
 export default connect(state => ({
   user: state.user
-}))(Mypage)
+}))(Settings)

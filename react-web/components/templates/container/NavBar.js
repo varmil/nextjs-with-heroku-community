@@ -58,10 +58,15 @@ class NavBar extends React.Component {
             data-path={`${PATH_MAP.NAV_ICON}`}
           >
             <i className="fas fa-search mr-3 navIcon" />
-            <NotificationIcon
-              className="mr-3 navIcon"
-              color={props.navIcon.color}
-            />
+
+            <Link route={'/view/notification'} passHref>
+              <a>
+                <NotificationIcon
+                  className="mr-3 navIcon"
+                  color={props.navIcon.color}
+                />
+              </a>
+            </Link>
 
             <Link route={'/view/settings'} passHref>
               <a>

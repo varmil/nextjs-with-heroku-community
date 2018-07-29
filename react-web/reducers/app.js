@@ -27,13 +27,12 @@ const initialState = {
 
   // 検索
   search: { photos: [], boxContents: [] },
+  // 通知
+  notification: { boxContents: [] },
 
   // Admin, User兼用。記事詳細画面
-  post: {
-    data: {},
-    // voiceでは [[]] になるので注意。それ以外は１次元
-    comments: []
-  },
+  // comments: voiceでは [[]] になるので注意。それ以外は１次元
+  post: { data: {}, comments: [] },
 
   /**
    * ADMINページ
