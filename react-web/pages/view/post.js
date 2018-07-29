@@ -6,24 +6,15 @@ import BoxContent from 'components/organisms/site/BoxContent'
 import { AppPost } from 'constants/ActionTypes'
 import BoxType from '/../shared/constants/BoxType'
 
-// コメントする際にBottomに飛ばしたい
-const BOTTOM_Y = 9999
-
 // 汎用の記事詳細ページ
 class Post extends React.Component {
   // boxTypeに応じてFETCHするBoxContentを変える
   // boxType, postId などは文字列なので注意
   static async getInitialProps({ ctx }) {
     const { dispatch } = ctx.store
-    const { boxType } = ctx.query
+    const { boxType, focus } = ctx.query
     dispatch(createAction(AppPost.FETCH_REQUEST)(ctx.query))
-    return { focus: !!ctx.query.focus, boxType: +boxType }
-  }
-
-  componentDidMount() {
-    if (this.props.focus) {
-      window.scrollTo(0, BOTTOM_Y)
-    }
+    return { focus, boxType: +boxType }
   }
 
   render() {

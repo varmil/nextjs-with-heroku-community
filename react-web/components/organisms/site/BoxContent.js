@@ -20,8 +20,14 @@ import BoxType from '/../shared/constants/BoxType'
 const AVATAR_SIZE = 44
 // アンカーで飛んだときになんとなく真ん中あたりに表示するため
 const OFFSET_IMG_TOP = -100
-const SCROLL_BOTTOM = 9999
+const SCROLL_BOTTOM = 33333
 const FOOTER_FONTSIZE = 16
+
+const INITIAL_PAGE = 1
+const FOCUS_TYPE = {
+  Scroll: 'Scroll',
+  ScrollAndFocus: 'ScrollAndFocus'
+}
 
 /**
  * Voice用。
@@ -165,15 +171,21 @@ class BoxContent extends React.Component {
       autosize(this.commentInput)
     }
 
-    if (this.commentInput && this.props.focus) {
-      this.commentInput.focus()
-    }
-
     // # hash で img がついていればスクロールする
     const hash = window.location.hash.replace('#', '')
     const img = document.getElementById(hash)
     if (img) {
       window.scrollTo(0, img.offsetTop + OFFSET_IMG_TOP)
+    }
+  }
+
+  // コメントはクライアントで読み込むのでFocusするタイミングはここ
+  onLoadComment(pageNum) {
+    const { focus } = this.props
+
+    if (pageNum === INITIAL_PAGE && this.commentInput && focus) {
+      window.scrollTo(0, SCROLL_BOTTOM)
+      if (focus === FOCUS_TYPE.ScrollAndFocus) this.commentInput.focus()
     }
   }
 
@@ -258,19 +270,20 @@ class BoxContent extends React.Component {
     const { comment, showDetail, comments } = this.props
     const disableComment = comments === false
 
-    let onClick = null
+    let onClick = () => {}
     if (disableComment) {
       // do nothing
     } else if (showDetail) {
       // 記事詳細画面
-      onClick = () => {
+      onClick = shouldFocus => {
         window.scrollTo(0, SCROLL_BOTTOM)
-        this.commentInput.focus()
+        if (shouldFocus) this.commentInput.focus()
       }
     } else {
       // 一覧 --> 詳細へリンクしてさらにコメントボックスへFocus
-      onClick = async () => {
-        await Router.pushRoute(`${this.postLink}?focus=true`)
+      onClick = async shouldFocus => {
+        const q = shouldFocus ? FOCUS_TYPE.ScrollAndFocus : FOCUS_TYPE.Scroll
+        await Router.pushRoute(`${this.postLink}?focus=${q}`)
       }
     }
 
@@ -278,7 +291,7 @@ class BoxContent extends React.Component {
       if (disableComment) return null
       return (
         <span
-          onClick={onClick}
+          onClick={() => onClick(true)}
           style={{
             position: 'relative',
             top: 2
@@ -294,7 +307,7 @@ class BoxContent extends React.Component {
         <IconButton
           className="mr-2"
           style={{ fontSize: FOOTER_FONTSIZE }}
-          onClick={onClick}
+          onClick={() => onClick(false)}
         >
           <i className="fas fa-comment mr-1" /> {comment}
         </IconButton>
@@ -478,6 +491,7 @@ class BoxContent extends React.Component {
                     className="pt-2 px-5"
                     postId={props.id}
                     initialNum={INITIAL_COMMENT_NUM}
+                    onLoad={this.onLoadComment.bind(this)}
                   />
                   {this.createCommentPortal()}
                 </React.Fragment>
@@ -529,7 +543,8 @@ BoxContent.propTypes = {
   topPhoto: PropTypes.bool,
   showDetail: PropTypes.bool,
   expandBody: PropTypes.bool,
-  focus: PropTypes.bool
+  // ページ読み込み後コメントフォームへ自動でfocusするか
+  focus: PropTypes.oneOf([FOCUS_TYPE.Scroll, FOCUS_TYPE.ScrollAndFocus])
 }
 
 export default connect()(BoxContent)

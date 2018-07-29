@@ -62,7 +62,7 @@ class CommentZone extends React.Component {
   }
 
   loadPage(pageNum) {
-    const { dispatch, postId, initialNum, index } = this.props
+    const { dispatch, postId, initialNum, index, onLoad } = this.props
     const { nowLoading } = this.state
     console.log('next pageNum', pageNum, this.state)
 
@@ -77,6 +77,9 @@ class CommentZone extends React.Component {
         hasMore: Array.isArray(data) && data.length > 0,
         nowLoading: false
       })
+
+      // 読み込み終了時コールバック
+      onLoad && onLoad(pageNum)
     }
     dispatch(
       createAction(AppPost.FETCH_COMMENTS_REQUEST)({
@@ -132,14 +135,14 @@ class CommentZone extends React.Component {
 
 CommentZone.propTypes = {
   postId: PropTypes.number.isRequired,
-  // 外から渡す
-  comments: PropTypes.array,
   // storeから拾う
   defaultComments: PropTypes.array,
   // １ページ目の表示件数
   initialNum: PropTypes.number,
 
-  // 1POST内に複数の種類のコメントがある場合、そのindex（choiceIndexなど）
+  // 外から渡す（voice::choiceIndexなど）
+  comments: PropTypes.array,
+  // 1POST内に複数の種類のコメントがある場合、そのindex（voice::choiceIndexなど）
   index: PropTypes.number
 }
 
