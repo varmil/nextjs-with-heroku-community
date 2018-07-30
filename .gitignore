@@ -73,3 +73,4 @@ typings/
 bundles
 react-web/static/img/up
 docker/data
+.vagrant
