@@ -1,16 +1,18 @@
 version: '2'
 services:
   db:
-    image: mysql:5.7
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: commune
+    image: groonga/mroonga:mysql5722_mroonga803
+    # environment:
+    #   MYSQL_ROOT_PASSWORD: root
+    #   MYSQL_DATABASE: commune
     volumes:
-      - ./docker/mysql-conf:/etc/mysql/conf.d
+      - ./docker/mysql-init.sql:/commune-entry.sql
+      - ./docker/data/mysql:/var/lib/mysql
+      - ./docker/mysql-conf/my.cnf:/etc/my.cnf
     ports:
       - "3306:3306"
-    restart:
-      always
+    command: --init-file /commune-entry.sql
+    restart: always
   # nginx:
   #   image: nginx:1.13.5-alpine
   #   ports:
