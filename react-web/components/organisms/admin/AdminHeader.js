@@ -16,6 +16,9 @@ const brandStyle = {
   position: 'relative',
   top: -2
 }
+const dropdownMenuStyle = {
+  width: 350
+}
 
 const linkItemStyle = {}
 const iconSize = 42
@@ -86,11 +89,17 @@ class AdminHeader extends React.Component {
                 <span>{props.user.brand.name}</span>
               </span>
             </DropdownToggle>
-            <DropdownMenu right>
-              <DropdownItem>Option 1</DropdownItem>
-              <DropdownItem>Option 2</DropdownItem>
+            <DropdownMenu right style={dropdownMenuStyle}>
+              <div className="px-4 py-2">
+                <h5>{props.user.brand.name}</h5>
+                <div className="username">{props.user.realName}</div>
+              </div>
               <DropdownItem divider />
-              <DropdownItem>Reset</DropdownItem>
+              <DropdownItem>アカウント設定</DropdownItem>
+              <DropdownItem divider />
+              <div className="text-center py-2">
+                <div className="btn btn-outline-secondary w-75">ログアウト</div>
+              </div>
             </DropdownMenu>
           </UncontrolledDropdown>
         </Navbar>
