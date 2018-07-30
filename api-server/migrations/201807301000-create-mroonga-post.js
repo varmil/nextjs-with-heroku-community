@@ -11,6 +11,7 @@ module.exports = {
       ENGINE=Mroonga DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin
       COMMENT='default_tokenizer "TokenDelimit"';`)
 
+    // tagsはベクターカラムなので、独立して転置インデックスを付与する
     const postPromise = queryInterface.sequelize.query(`
       CREATE TABLE ${POST_TABLE_NAME} (
         id INTEGER PRIMARY KEY AUTO_INCREMENT,

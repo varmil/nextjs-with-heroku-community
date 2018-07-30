@@ -234,13 +234,15 @@ exports.fetchSearched = async (req, res) => {
     }
   }
 
-  // wordがハッシュタグなら、ハッシュタグ完全一致のみ検索
+  // wordが ハッシュタグ : ハッシュタグ完全一致のみ検索
+  //        ハッシュタグ以外 : mroongaからFETCH
   if (word.startsWith('#')) {
     const postIds = await services.Post.fetchPostIdsFromHashtag(word)
     where = { id: postIds, ...where }
   } else {
-    // TODO ハッシュタグ以外の検索
-    // mroongaからFETCH
+    const postIds = await models.MroongaPost.findPostIds(word)
+    where = { id: postIds, ...where }
+    // console.info('＃＃＃＃＃＃mroonga検索＃＃＃＃＃＃', postIds)
   }
 
   let result = await services.Post.fetchList(pageNum, where, {
@@ -262,7 +264,7 @@ exports.fetchSearched = async (req, res) => {
         }))
       })
       .value()
-    console.log('#####result #####', result)
+    // console.log('#####result #####', result)
   }
 
   res.json(result)
