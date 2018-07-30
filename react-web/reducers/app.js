@@ -10,6 +10,7 @@ import {
   AppNews,
   AppMypage,
   AppSearch,
+  AppNotification,
   AppPost,
   AppAdminPost,
   AppAdminFan
@@ -176,6 +177,18 @@ export default handleActions(
     },
     [AppSearch.RESET_PHOTOS]: (state, action) => {
       return immutable.set(state, `search.photos`, [])
+    },
+
+    /**
+     * NOTIFICATION
+     */
+    [AppNotification.ADD_CONTENTS]: (state, action) => {
+      // spread payload because it is array
+      return immutable.push(
+        state,
+        `notification.boxContents`,
+        ...action.payload
+      )
     },
 
     /**

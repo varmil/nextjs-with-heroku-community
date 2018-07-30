@@ -6,6 +6,7 @@ import {
   AppNews,
   AppMypage,
   AppSearch,
+  AppNotification,
   AppPost,
   AppSuccesses,
   AppErrors
@@ -28,6 +29,9 @@ export let addMypageContents = createAction(AppMypage.ADD_CONTENTS)
 // search/result
 export let addSearchContents = createAction(AppSearch.ADD_CONTENTS)
 export let addSearchPhotos = createAction(AppSearch.ADD_PHOTOS)
+
+// mypage
+export let addNotificationContents = createAction(AppNotification.ADD_CONTENTS)
 
 // post
 export let setPost = createAction(AppPost.SET_POST)

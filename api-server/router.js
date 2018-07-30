@@ -95,8 +95,15 @@ module.exports = function(app) {
   /**
    * USER
    */
-  app.get('/auth/code/:code', AuthController.authInvitationCode)
+  // 共通
   app.post('/signin', requireSignIn, AuthController.signin)
+  app.get('/auth/code/:code', AuthController.authInvitationCode)
+  app.get(
+    '/notification/:pageNum',
+    requireAuth,
+    UserController.fetchNotifications
+  )
+
   // 一般ユーザ
   app.post('/signup', AuthController.signup)
   app.post(
@@ -106,6 +113,7 @@ module.exports = function(app) {
     UserController.profile
   )
   app.post('/loginedat', requireAuth, UserController.updateLoginedAt)
+
   // 管理者（アイコンも同時登録）
   app.post('/signup/admin', upload.single('image'), AuthController.signup)
 

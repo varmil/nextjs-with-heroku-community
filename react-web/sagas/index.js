@@ -1,7 +1,6 @@
 // import { delay } from 'redux-saga'
 import {
   all,
-  fork,
   call,
   put,
   select,
@@ -24,6 +23,7 @@ import {
   AppNews,
   AppMypage,
   AppSearch,
+  AppNotification,
   AppPost,
   AppAdminPost,
   AppAdminFan
@@ -34,6 +34,7 @@ import {
   addNewsContents,
   addMypageContents,
   addSearchContents,
+  addNotificationContents,
   addSearchPhotos,
   // setPost,
   setCommonError
@@ -237,6 +238,10 @@ function* fetchNewsContents({ payload }) {
   yield call(func, { payload })
 }
 
+/**
+ * その他 InfiniteScroll 系
+ */
+
 function* fetchMypageContents({ payload }) {
   const { jwtToken } = yield select(getUser)
   const { perPage, pageNum, successCb } = payload
@@ -282,6 +287,24 @@ function* fetchSearchContents({ payload }) {
     // PHOTOのみなら、photosにつめる
     const action = onlyPhoto ? addSearchPhotos : addSearchContents
     yield put(action(res.data))
+    if (successCb) yield call(successCb, res)
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
+}
+
+function* fetchNotifications({ payload }) {
+  const { jwtToken } = yield select(getUser)
+  const { perPage, pageNum, successCb } = payload
+
+  try {
+    const query = qs.stringify({ perPage })
+    const res = yield call(
+      API.fetch,
+      `/notification/${pageNum || 1}?${query}`,
+      jwtToken
+    )
+    yield put(addNotificationContents(res.data))
     if (successCb) yield call(successCb, res)
   } catch (e) {
     yield put(setCommonError(e.response))
@@ -551,6 +574,7 @@ const appSaga = [
   takeLatest(AppNews.FETCH_REQUEST, fetchNewsContents),
   takeLatest(AppMypage.FETCH_REQUEST, fetchMypageContents),
   takeEvery(AppSearch.FETCH_REQUEST, fetchSearchContents),
+  takeEvery(AppNotification.FETCH_REQUEST, fetchNotifications),
 
   takeLatest(AppPost.FETCH_REQUEST, fetchPost),
   takeEvery(AppPost.FETCH_COMMENTS_REQUEST, fetchComments),

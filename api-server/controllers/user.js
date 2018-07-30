@@ -104,3 +104,16 @@ exports.saveInvitation = async (req, res, next) => {
     }
   }
 }
+
+/**
+ * 通知取得
+ */
+exports.fetchNotifications = async (req, res, next) => {
+  const { perPage } = req.query
+  const pageNum = req.params.pageNum || 1 // 1 origin
+  const brandId = req.user.brand.id
+
+  // TODO 通知取得
+
+  res.json([true, true, true])
+}

@@ -88,6 +88,13 @@ export const AppSearch = createTypes(
   async('FETCH')
 )
 
+// 通知画面
+export const AppNotification = createTypes(
+  'app/notification/',
+  'ADD_CONTENTS',
+  async('FETCH')
+)
+
 // POST詳細画面
 export const AppPost = createTypes(
   'app/post/',
