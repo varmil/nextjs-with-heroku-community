@@ -76,7 +76,7 @@ class FanTable extends React.Component {
                       <Avatar src={n.iconPath} size={40} />
                     </DensedCell>
                     <DensedCell component="th" scope="row">
-                      {n.nickname || `${n.lastName} ${n.firstName}`}
+                      {n.nickname || n.realName}
                     </DensedCell>
                     <DensedCell>{n.email}</DensedCell>
                     <DensedCell>

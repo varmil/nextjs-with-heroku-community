@@ -10,5 +10,8 @@ module.exports = {
   // ボックス名最大文字数
   BOXNAME_MAX_LENGTH: 12,
   // カテゴリ名最大文字数
-  CATNAME_MAX_LENGTH: 15
+  CATNAME_MAX_LENGTH: 15,
+
+  // 通知種別
+  NOTIFICATION_TYPE: { Default: 0, Like: 1, Comment: 2, News: 3 }
 }

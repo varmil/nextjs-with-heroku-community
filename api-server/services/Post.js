@@ -70,16 +70,24 @@ module.exports = class Post {
           { transaction }
         )
       } else {
+        // INSERT, 変数再代入が微妙か
         const post = await models.Post.create(data, { transaction })
-        // 再代入なので微妙？
         postId = post.id
       }
 
-      // bodyを舐めてhashtagを見つける。各々のタグに関して
-      // 新規タグならhashtagテーブルにINSERT。既存タグであればtagIdをfind
-      const hashtagIds = await Post.upsertHashtagsFrom(body, transaction)
-      // 中間テーブル（post_hashtag）に紐づけ
-      await Post.updatePostHashtagRelation(postId, hashtagIds, transaction)
+      // Hashtagsテーブル更新。各々のタグに関して新規:INSERT。既存:find tagId
+      const hashtags = Post.getHashtags(body)
+      {
+        const hashtagIds = await Post.upsertHashtags(hashtags, transaction)
+        await Post.updatePostHashtagRelation(postId, hashtagIds, transaction)
+      }
+
+      // mroongaへ同期（完了を待つ必要なし）
+      {
+        const { title, body } = data
+        const tags = hashtags.join(' ')
+        models.MroongaPost.upsert({ postId, title, body, tags })
+      }
 
       return postId
     } catch (e) {
@@ -281,7 +289,7 @@ module.exports = class Post {
         const isMostPopular = e.choiceIndex === mostPopularOption
         return {
           ...e,
-          percentage: Math.ceil((e.count / countSum) * 100),
+          percentage: Math.ceil(e.count / countSum * 100),
           isMostPopular
         }
       })
@@ -307,9 +315,7 @@ module.exports = class Post {
   }
 
   // 記事本文からHashtag情報を解析し、Hashtagテーブルに保存
-  static async upsertHashtagsFrom(body, transaction) {
-    const tags = Post.getHashtags(body)
-
+  static async upsertHashtags(tags, transaction) {
     // 既存タグ
     const existingTags = await models.Hashtag.findAll({
       where: { name: tags }

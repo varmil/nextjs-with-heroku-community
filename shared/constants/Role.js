@@ -4,5 +4,11 @@ module.exports = {
     ADMIN_GUEST: 100,
     ADMIN_DEVELOPER: 101,
     ADMIN_SUPER: 102
+  },
+
+  Name: {
+    100: '',
+    101: '',
+    102: ''
   }
 }

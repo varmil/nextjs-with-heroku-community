@@ -13,7 +13,8 @@ import {
   AppNotification,
   AppPost,
   AppAdminPost,
-  AppAdminFan
+  AppAdminFan,
+  AppAdminAccount
 } from 'constants/ActionTypes'
 
 const initialState = {
@@ -43,7 +44,9 @@ const initialState = {
   // Admin用。ファン一覧画面
   fans: { count: 0, item: [] },
   // Admin用。招待ファン一覧画面
-  invitedFans: { count: 0, item: [] }
+  invitedFans: { count: 0, item: [] },
+  // Admin用。管理者一覧（no-paging）
+  adminAccounts: { item: [] }
 }
 
 // すべてのboxContentsを走査して、データ更新
@@ -289,6 +292,14 @@ export default handleActions(
     },
     [AppAdminFan.SET_INVITATION_LIST]: (state, action) => {
       return immutable.set(state, `invitedFans`, action.payload)
+    },
+
+    /**
+     *  ADMIN ACCOUNTS
+     *  SET   : payload is { item }
+     */
+    [AppAdminAccount.SET_LIST]: (state, action) => {
+      return immutable.set(state, `adminAccounts`, action.payload)
     }
   },
   initialState

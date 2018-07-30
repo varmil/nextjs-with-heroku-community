@@ -234,19 +234,15 @@ exports.fetchSearched = async (req, res) => {
     }
   }
 
-  // wordがハッシュタグなら、ハッシュタグ完全一致のみ検索
+  // wordが ハッシュタグ : ハッシュタグ完全一致のみ検索
+  //        ハッシュタグ以外 : mroongaからFETCH
   if (word.startsWith('#')) {
     const postIds = await services.Post.fetchPostIdsFromHashtag(word)
     where = { id: postIds, ...where }
   } else {
-    // TODO ハッシュタグ以外の検索
-    // ハッシュタグからの検索、titleからの検索に分けてmergeする
-    // 両方からperPage分とってきて、UNIQ + ID DESC とかでmerge
-    // HACK: 高速に検索するなら {postId, title, body, tagNames} みたいな
-    // 検索専用の全文検索テーブルをつくってそこからFETCHするのがよい
-
-    // LIKEにしたい
-    const postIds = await services.Post.fetchPostIdsFromHashtag(word)
+    const postIds = await models.MroongaPost.findPostIds(word)
+    where = { id: postIds, ...where }
+    // console.info('＃＃＃＃＃＃mroonga検索＃＃＃＃＃＃', postIds)
   }
 
   let result = await services.Post.fetchList(pageNum, where, {
@@ -257,8 +253,7 @@ exports.fetchSearched = async (req, res) => {
 
   // PHOTOデータのみ返す場合
   if (onlyPhoto) {
-    result = _
-      .chain(result)
+    result = _.chain(result)
       .flatMap(row => {
         const { id, boxType } = row
         return _.map(row.images, (photo, index) => ({
@@ -269,7 +264,7 @@ exports.fetchSearched = async (req, res) => {
         }))
       })
       .value()
-    console.log('#####result #####', result)
+    // console.log('#####result #####', result)
   }
 
   res.json(result)

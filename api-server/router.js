@@ -83,8 +83,9 @@ module.exports = function(app) {
   })
 
   app.get('/user', requireAuth, function(req, res) {
-    const { id, nickname, iconPath, brand } = req.user
-    res.json({ id, nickname, iconPath, brand })
+    const { id, nickname, firstName, lastName, iconPath, brand } = req.user
+    const realName = lastName + ' ' + firstName
+    res.json({ id, nickname, realName, iconPath, brand })
   })
 
   // app.get('/admin', requireAuth, userRole.is('adminGuest'), function(req, res) {
@@ -114,8 +115,17 @@ module.exports = function(app) {
   )
   app.post('/loginedat', requireAuth, UserController.updateLoginedAt)
 
+  /**
+   * ADMIN_USER
+   */
   // 管理者（アイコンも同時登録）
   app.post('/signup/admin', upload.single('image'), AuthController.signup)
+  app.get(
+    '/admin/list',
+    requireAuth,
+    userRole.is('adminGuest'),
+    UserController.fetchAdminList
+  )
 
   /**
    * SITE （ブランドごとのデザイン）
