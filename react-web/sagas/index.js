@@ -26,7 +26,8 @@ import {
   AppSearch,
   AppPost,
   AppAdminPost,
-  AppAdminFan
+  AppAdminFan,
+  AppAdminAccount
 } from 'constants/ActionTypes'
 import {
   addTalkContents,
@@ -514,6 +515,21 @@ function* fetchInvitedFans({ payload }) {
 }
 
 /**
+ * Admin Accounts
+ */
+
+// (Admin用)一覧
+function* fetchAdminAccounts({ payload }) {
+  const { jwtToken } = yield select(getUser)
+  try {
+    const { data } = yield call(API.fetch, `/admin/list`, jwtToken)
+    yield put(createAction(AppAdminAccount.SET_LIST)(data))
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
+}
+
+/**
  * iFrame
  */
 
@@ -567,7 +583,9 @@ const appAdminSaga = [
 
   takeLatest(AppAdminFan.SAVE_INVITATION_REQUEST, saveInvitation),
   takeLatest(AppAdminFan.FETCH_LIST_REQUEST, fetchFans),
-  takeLatest(AppAdminFan.FETCH_INVITATION_LIST_REQUEST, fetchInvitedFans)
+  takeLatest(AppAdminFan.FETCH_INVITATION_LIST_REQUEST, fetchInvitedFans),
+
+  takeLatest(AppAdminAccount.FETCH_LIST_REQUEST, fetchAdminAccounts)
 ]
 
 function* rootSaga() {

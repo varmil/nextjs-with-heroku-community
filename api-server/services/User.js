@@ -303,4 +303,31 @@ module.exports = class User {
   static getCountAttr() {
     return [models.sequelize.fn('COUNT', models.sequelize.col('id')), 'count']
   }
+
+  // ブランドに紐づく管理者一覧を取得
+  static async fetchAllAdmins(brandId) {
+    if (!brandId) {
+      console.warn('[fetchAllAdmins] brandId is nil')
+      return []
+    }
+
+    try {
+      // 関連テーブルからIDフェッチ
+      const usersBrands = await models.UserBrand.findAll({
+        attributes: ['userId'],
+        where: { brandId },
+        order: [['id', 'DESC']],
+        raw: true
+      })
+      // ユーザ取得
+      const users = await models.User.findAll({
+        where: { id: _.map(usersBrands, 'userId') },
+        order: [['id', 'DESC']],
+        raw: true
+      })
+      return users
+    } catch (e) {
+      throw e
+    }
+  }
 }

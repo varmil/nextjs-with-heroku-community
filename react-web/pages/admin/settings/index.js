@@ -1,10 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {
-  Container,
-  Header,
-  Filter
-} from 'components/molecules/AdminPageContainer'
+import { Container } from 'components/molecules/AdminPageContainer'
+import { Link } from 'routes'
 import AdminHeader from 'components/organisms/admin/AdminHeader'
 import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
 import FanTable from 'components/organisms/admin/FanTable'
@@ -45,7 +42,11 @@ class AdminSettings extends React.Component {
 
         <Container>
           <section className="wrap list-group py-0 px-4">
-            <Item text="管理者情報" />
+            <Link route={'/admin/settings/account/list'} passHref>
+              <a>
+                <Item text="管理者情報" />
+              </a>
+            </Link>
             <hr className="w-100 my-1" />
             <Item text="お支払い情報" />
           </section>

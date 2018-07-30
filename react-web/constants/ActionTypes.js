@@ -144,6 +144,16 @@ export const AppAdminFan = createTypes(
   'SET_INVITATION_LIST'
 )
 
+// 管理者一覧とか追加とか更新とか
+export const AppAdminAccount = createTypes(
+  'app/admin/account/',
+  // 一覧表示用
+  async('FETCH_LIST'),
+  'SET_LIST',
+  // 追加
+  async('SAVE')
+)
+
 // -----
 // -- USER: ユーザ情報 --
 // -----

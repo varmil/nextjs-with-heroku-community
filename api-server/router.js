@@ -107,8 +107,18 @@ module.exports = function(app) {
     UserController.profile
   )
   app.post('/loginedat', requireAuth, UserController.updateLoginedAt)
+
+  /**
+   * ADMIN_USER
+   */
   // 管理者（アイコンも同時登録）
   app.post('/signup/admin', upload.single('image'), AuthController.signup)
+  app.get(
+    '/admin/list',
+    requireAuth,
+    userRole.is('adminGuest'),
+    UserController.fetchAdminList
+  )
 
   /**
    * SITE （ブランドごとのデザイン）

@@ -104,3 +104,12 @@ exports.saveInvitation = async (req, res, next) => {
     }
   }
 }
+
+/**
+ * 管理者一覧取得
+ */
+exports.fetchAdminList = async (req, res, next) => {
+  const brandId = req.user.brand.id
+  const admins = await services.User.fetchAllAdmins(brandId)
+  res.json({ item: admins })
+}
