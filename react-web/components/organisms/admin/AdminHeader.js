@@ -95,7 +95,11 @@ class AdminHeader extends React.Component {
                 <div className="username">{props.user.realName}</div>
               </div>
               <DropdownItem divider />
-              <DropdownItem>アカウント設定</DropdownItem>
+              <DropdownItem>
+                <Link route={'/admin/settings'} passHref>
+                  <a> アカウント設定</a>
+                </Link>
+              </DropdownItem>
               <DropdownItem divider />
               <div className="text-center py-2">
                 <div className="btn btn-outline-secondary w-75">ログアウト</div>
