@@ -12,6 +12,7 @@ import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import ColorButton from 'components/atoms/ColorButton'
 import IconButton from '@material-ui/core/IconButton'
+import Role from '/../shared/constants/Role'
 
 const DensedCell = props => (
   <TableCell {...props} padding="dense">
@@ -58,7 +59,7 @@ class AdminAccountTable extends React.Component {
                       {n.lastName + ' ' + n.firstName}
                     </DensedCell>
                     <DensedCell>{n.email}</DensedCell>
-                    <DensedCell>{n.roleId}</DensedCell>
+                    <DensedCell>{Role.Name[n.roleId]}</DensedCell>
                     <DensedCell>
                       <IconButton
                         style={{
