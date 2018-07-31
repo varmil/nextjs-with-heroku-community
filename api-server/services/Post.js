@@ -3,6 +3,7 @@ const _ = require('lodash')
 const hashtagRegex = require('hashtag-regex')
 const UserService = reqlib('/services/User')
 const CommentService = reqlib('/services/Comment')
+const NotificationService = reqlib('/services/Notification')
 const models = reqlib('/models')
 const Path = reqlib('/constants/Path')
 const Role = reqlib('/../shared/constants/Role')
@@ -241,6 +242,11 @@ module.exports = class Post {
         { where: { id: postId } },
         { transaction }
       )
+
+      // update Notification table (not wait the operation)
+      if (upOrDown) {
+        NotificationService.save(Rule.NOTIFICATION_TYPE.Like, postId, userId)
+      }
 
       await transaction.commit()
       return true
