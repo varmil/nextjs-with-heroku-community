@@ -113,11 +113,12 @@ exports.saveInvitation = async (req, res, next) => {
 exports.fetchNotifications = async (req, res, next) => {
   const { perPage } = req.query
   const pageNum = req.params.pageNum || 1 // 1 origin
-  const brandId = req.user.brand.id
 
-  // TODO 通知取得
-
-  res.json([true, true, true])
+  const where = { userId: req.user.id }
+  const data = await services.Notification.fetchList(pageNum, where, {
+    perPage
+  })
+  res.json(data)
 }
 
 /**

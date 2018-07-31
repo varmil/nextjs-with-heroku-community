@@ -63,29 +63,31 @@ module.exports = class Notification {
     }
   }
 
-  // 複数取得（Admin画面の一覧など）
-  // static async fetchList(pageNum, where, options = {}) {
-  //   if (!where.brandId) {
-  //     console.warn('[Invitation.fetchList] brandId is nil')
-  //     return []
-  //   }
-  //
-  //   // optionsを展開
-  //   let { perPage } = options
-  //   perPage = +perPage || DEFAULT_PER_PAGE
-  //
-  //   try {
-  //     // ユーザ取得
-  //     const invitations = await models.Invitation.findAll({
-  //       where,
-  //       limit: perPage,
-  //       offset: perPage * (pageNum - 1),
-  //       order: [['id', 'DESC']],
-  //       raw: true
-  //     })
-  //     return invitations
-  //   } catch (e) {
-  //     throw e
-  //   }
-  // }
+  // 複数取得
+  static async fetchList(pageNum, where, options = {}) {
+    if (!where.userId) {
+      console.warn('[Notification.fetchList] userId is nil')
+      return []
+    }
+
+    // optionsを展開
+    let { perPage } = options
+    perPage = +perPage || DEFAULT_PER_PAGE
+
+    try {
+      const data = await models.Notification.findAll({
+        where,
+        limit: perPage,
+        offset: perPage * (pageNum - 1),
+        order: [['id', 'DESC']],
+        raw: true
+      })
+
+      // TODO actionUserIds --> username, actionCount, type --> string, postId --> post title
+
+      return data
+    } catch (e) {
+      throw e
+    }
+  }
 }
