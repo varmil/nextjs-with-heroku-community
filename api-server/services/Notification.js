@@ -48,6 +48,21 @@ module.exports = class Notification {
     }
   }
 
+  // 通知を最新分まで既読にする
+  static async updateAllRead(userId) {
+    try {
+      await models.Notification.update(
+        { isRead: true },
+        {
+          where: { userId, isRead: false }
+        }
+      )
+      return true
+    } catch (e) {
+      throw e
+    }
+  }
+
   // 複数取得（Admin画面の一覧など）
   // static async fetchList(pageNum, where, options = {}) {
   //   if (!where.brandId) {
