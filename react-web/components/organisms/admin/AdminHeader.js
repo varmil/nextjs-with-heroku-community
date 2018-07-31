@@ -9,6 +9,7 @@ import UncontrolledDropdown from 'reactstrap/lib/UncontrolledDropdown'
 import DropdownToggle from 'reactstrap/lib/DropdownToggle'
 import DropdownMenu from 'reactstrap/lib/DropdownMenu'
 import DropdownItem from 'reactstrap/lib/DropdownItem'
+import { deauthenticate } from 'actions/user'
 import Avatar from 'components/atoms/Avatar'
 import Color from 'constants/Color'
 
@@ -97,12 +98,19 @@ class AdminHeader extends React.Component {
               <DropdownItem divider />
               <DropdownItem>
                 <Link route={'/admin/settings'} passHref>
-                  <a> アカウント設定</a>
+                  <a className="d-block"> アカウント設定</a>
                 </Link>
               </DropdownItem>
               <DropdownItem divider />
               <div className="text-center py-2">
-                <div className="btn btn-outline-secondary w-75">ログアウト</div>
+                <div
+                  className="btn btn-outline-secondary w-75"
+                  onClick={() => {
+                    props.dispatch(deauthenticate())
+                  }}
+                >
+                  ログアウト
+                </div>
               </div>
             </DropdownMenu>
           </UncontrolledDropdown>

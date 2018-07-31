@@ -29,23 +29,25 @@ export const Header = props => {
   return (
     <section className="borderB pageHeader text-center position-relative pb-3">
       <span className="title">{props.title}</span>
-      <LinkOrDiv route={props.route}>
-        <a>
-          <ColorButton
-            className="addButton w-25"
-            color="#2b6db2"
-            style={{
-              position: 'absolute',
-              top: 3,
-              right: 0,
-              borderRadius: 18
-            }}
-            icon={<i className="fas fa-plus" />}
-          >
-            {props.buttonText}
-          </ColorButton>
-        </a>
-      </LinkOrDiv>
+      {props.buttonText && (
+        <LinkOrDiv route={props.route}>
+          <a>
+            <ColorButton
+              className="addButton w-25"
+              color="#2b6db2"
+              style={{
+                position: 'absolute',
+                top: 3,
+                right: 0,
+                borderRadius: 18
+              }}
+              icon={<i className="fas fa-plus" />}
+            >
+              {props.buttonText}
+            </ColorButton>
+          </a>
+        </LinkOrDiv>
+      )}
 
       <style jsx>{`
         .borderB {
