@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
-import { AppAdminFan } from 'constants/ActionTypes'
+import { Router } from 'routes'
+import { AppAdminAccount } from 'constants/ActionTypes'
 import { Container, Header } from 'components/molecules/AdminPageContainer'
 import AdminHeader from 'components/organisms/admin/AdminHeader'
 import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
@@ -9,48 +10,31 @@ import RoundWideButton from 'components/atoms/RoundWideButton'
 import Role from '/../shared/constants/Role'
 
 class AdminAccountAdd extends React.Component {
-  static async getInitialProps({ ctx }) {
-    const { dispatch } = ctx.store
-    // one-start のページ番号
-    const pageNum = +ctx.query.pageNum || 1
-    // 1ページあたり記事数
-    const PER_PAGE = 30
+  state = { email: '', roleId: Role.User.ADMIN_GUEST, isNotified: false }
 
-    dispatch(
-      createAction(AppAdminFan.FETCH_LIST_REQUEST)({
-        pageNum,
-        perPage: PER_PAGE
-      })
-    )
-    return { pageNum, perPage: PER_PAGE }
+  handleChange = name => event => {
+    const { target } = event
+    const value = target.type === 'checkbox' ? target.checked : target.value
+    this.setState({ [name]: value })
   }
-
-  state = { emails: [] }
-
-  handleChange = (newValue, actionMeta) => {
-    console.group('Value Changed')
-    console.log(newValue)
-    // console.log(`action: ${actionMeta.action}`)
-    console.groupEnd()
-
-    const emails = newValue.map(v => v.value)
-    this.setState({ ...this.state, emails })
-  }
-
-  handleInputChange = (inputValue, actionMeta) => {}
 
   onSubmit = () => {
     console.log(this.state)
-    const { emails } = this.state
+
+    const successCb = async res => {
+      Router.pushRoute(`/admin/settings/account/list`)
+    }
     this.props.dispatch(
-      createAction(AppAdminFan.SAVE_INVITATION_REQUEST)({
-        emails
+      createAction(AppAdminAccount.SAVE_REQUEST)({
+        ...this.state,
+        successCb
       })
     )
   }
 
   render() {
-    const props = this.props
+    const { email, roleId, isNotified } = this.state
+
     return (
       <React.Fragment>
         <AdminHeader />
@@ -71,9 +55,15 @@ class AdminAccountAdd extends React.Component {
                   type="email"
                   className="form-control mb-2 mr-2 w-50"
                   placeholder="メールアドレスを入力"
+                  value={email}
+                  onChange={this.handleChange('email')}
                 />
 
-                <select className="custom-select mb-2">
+                <select
+                  className="custom-select mb-2"
+                  value={roleId}
+                  onChange={this.handleChange('roleId')}
+                >
                   <option value={Role.User.ADMIN_GUEST}>
                     {Role.Name[Role.User.ADMIN_GUEST]}
                   </option>
@@ -87,7 +77,12 @@ class AdminAccountAdd extends React.Component {
               </section>
 
               <div className="form-check">
-                <input className="form-check-input" type="checkbox" />
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  checked={isNotified}
+                  onChange={this.handleChange('isNotified')}
+                />
                 <label className="form-check-label">メールで通知する</label>
               </div>
             </div>

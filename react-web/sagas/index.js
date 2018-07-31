@@ -493,9 +493,15 @@ function* saveVote({ payload }) {
 // (Admin用)招待コード発行
 function* saveInvitation({ payload }) {
   const { jwtToken } = yield select(getUser)
-  const { emails, roleId } = payload
+  const { emails, roleId, successCb } = payload
   try {
-    yield call(API.post, '/fan/invitation', { emails, roleId }, jwtToken)
+    const res = yield call(
+      API.post,
+      '/fan/invitation',
+      { emails, roleId },
+      jwtToken
+    )
+    if (successCb) yield call(successCb, res)
   } catch (e) {
     yield put(setCommonError(e.response))
   }
@@ -547,6 +553,18 @@ function* fetchAdminAccounts({ payload }) {
   try {
     const { data } = yield call(API.fetch, `/admin/list`, jwtToken)
     yield put(createAction(AppAdminAccount.SET_LIST)(data))
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
+}
+
+// { email, roleId, isNotified } = payload
+function* saveAdminAccounts({ payload }) {
+  const { jwtToken } = yield select(getUser)
+  const { successCb, ...data } = payload
+  try {
+    const res = yield call(API.post, '/admin/add', data, jwtToken)
+    if (successCb) yield call(successCb, res)
   } catch (e) {
     yield put(setCommonError(e.response))
   }
@@ -609,7 +627,8 @@ const appAdminSaga = [
   takeLatest(AppAdminFan.FETCH_LIST_REQUEST, fetchFans),
   takeLatest(AppAdminFan.FETCH_INVITATION_LIST_REQUEST, fetchInvitedFans),
 
-  takeLatest(AppAdminAccount.FETCH_LIST_REQUEST, fetchAdminAccounts)
+  takeLatest(AppAdminAccount.FETCH_LIST_REQUEST, fetchAdminAccounts),
+  takeLatest(AppAdminAccount.SAVE_REQUEST, saveAdminAccounts)
 ]
 
 function* rootSaga() {

@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
+import { Router } from 'routes'
 import CreatableSelect from 'react-select/lib/Creatable'
 import { AppAdminFan } from 'constants/ActionTypes'
 import { Container, Header } from 'components/molecules/AdminPageContainer'
@@ -56,9 +57,14 @@ class AdminFanInvite extends React.Component {
   onSubmit = () => {
     console.log(this.state)
     const { emails } = this.state
+
+    const successCb = async res => {
+      Router.pushRoute(`/admin/fan/add`)
+    }
     this.props.dispatch(
       createAction(AppAdminFan.SAVE_INVITATION_REQUEST)({
-        emails
+        emails,
+        successCb
       })
     )
   }

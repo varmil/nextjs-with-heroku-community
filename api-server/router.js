@@ -118,8 +118,15 @@ module.exports = function(app) {
   /**
    * ADMIN_USER
    */
-  // 管理者（アイコンも同時登録）
+  // 管理者初期登録。アイコンも同時登録
   app.post('/signup/admin', upload.single('image'), AuthController.signup)
+  // 管理者追加
+  app.post(
+    '/admin/add',
+    requireAuth,
+    userRole.is('adminSuper'),
+    UserController.saveAdminAdd
+  )
   app.get(
     '/admin/list',
     requireAuth,
@@ -133,10 +140,15 @@ module.exports = function(app) {
   app.post(
     '/site/design',
     requireAuth,
-    userRole.is('adminGuest'),
+    userRole.is('adminDeveloper'),
     SiteController.saveDesign
   )
-  app.get('/site/design', requireAuth, SiteController.fetchDesign)
+  app.get(
+    '/site/design',
+    requireAuth,
+    userRole.is('adminDeveloper'),
+    SiteController.fetchDesign
+  )
 
   /**
    * POST

@@ -24,6 +24,13 @@ module.exports = class Invitation {
   }
 
   static async save(brandId, emails, defaultRole = undefined) {
+    // emailsは文字列でも配列でもOK
+    if (!_.isString(emails) && !_.isArray(emails)) {
+      console.error('emails should be string or array')
+      return
+    }
+    emails = _.isString(emails) ? [emails] : emails
+
     try {
       // codeがUNIQUEになるまで再生成し続ける
       let codes = []
