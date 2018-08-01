@@ -1,9 +1,10 @@
 const _ = require('lodash')
 const reqlib = require('app-root-path').require
 const models = reqlib('/models')
+const UserService = reqlib('/services/User')
 const moveFile = require('move-file')
 const Path = reqlib('/constants/Path')
-const moment = require('moment')
+const moment = reqlib('/utils/moment')
 const Role = reqlib('/../shared/constants/Role')
 const Rule = reqlib('/../shared/constants/Rule')
 
@@ -75,7 +76,7 @@ module.exports = class Notification {
     perPage = +perPage || DEFAULT_PER_PAGE
 
     try {
-      const data = await models.Notification.findAll({
+      let data = await models.Notification.findAll({
         where,
         limit: perPage,
         offset: perPage * (pageNum - 1),
@@ -83,9 +84,49 @@ module.exports = class Notification {
         raw: true
       })
 
-      // TODO actionUserIds --> username, actionCount, type --> string, postId --> post title
+      // flatten actionUserIds --> userObj --> add username
+      // 先頭の１名のみユーザ名が分かればOK
+      {
+        const userIds = _.uniq(_.flatMap(data, row => row.actionUserIds))
+        const userObj = await UserService.fetchAllObj(userIds)
+        data = data.map(e => ({
+          ...e,
+          firstUsername: userObj[e.actionUserIds[0]].name,
+          iconPath: userObj[e.actionUserIds[0]].iconPath
+        }))
+      }
 
-      return data
+      // add actionCount
+      data = data.map(e => ({ ...e, actionCount: e.actionUserIds.length }))
+
+      // postId --> post title
+      {
+        const rows = await models.Post.findAll({
+          attributes: ['id', 'title'],
+          where: { id: _.map(data, 'postId') }
+        })
+        data = data.map(e => ({
+          ...e,
+          title: _.find(rows, { id: e.postId }).title
+        }))
+      }
+
+      // updatedAt --> XX hours ago
+      data = data.map(e => ({
+        ...e,
+        updatedAt: moment.getMomentDiffAgo(e.updatedAt)
+      }))
+
+      return data.map(e =>
+        _.pick(e, [
+          'type',
+          'isRead',
+          'firstUsername',
+          'actionCount',
+          'title',
+          'updatedAt'
+        ])
+      )
     } catch (e) {
       throw e
     }

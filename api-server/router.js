@@ -143,12 +143,7 @@ module.exports = function(app) {
     userRole.is('adminDeveloper'),
     SiteController.saveDesign
   )
-  app.get(
-    '/site/design',
-    requireAuth,
-    userRole.is('adminDeveloper'),
-    SiteController.fetchDesign
-  )
+  app.get('/site/design', requireAuth, SiteController.fetchDesign)
 
   /**
    * POST
