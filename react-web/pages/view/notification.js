@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-// import { createAction } from 'redux-actions'
+import { createAction } from 'redux-actions'
 // import { Link, Router } from 'routes'
 import BorderedTextHeader from 'components/organisms/site/BorderedTextHeader'
 import InfiniteScroll from 'components/templates/container/InfiniteScroll'
@@ -35,7 +35,7 @@ const Contents = props => {
             {c.firstUsername}さん{actionCountToStr(c.actionCount)}が「{c.title}」に
             {NotificationTypeToStr(c.type)}しました
           </div>
-          <div className="time col-4">{c.updatedAt}</div>
+          <div className="time col-4">{c.createdAt}</div>
         </div>
       </section>
 
@@ -66,6 +66,11 @@ class Notification extends React.Component {
   // static async getInitialProps({ ctx }) {
   //   return {}
   // }
+
+  componentDidMount() {
+    // とりあえずこのページ開いたら既読に
+    this.props.dispatch(createAction(AppNotification.UPDATE_READ_REQUEST)())
+  }
 
   render() {
     const { boxContents } = this.props

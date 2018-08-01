@@ -92,7 +92,9 @@ export const AppSearch = createTypes(
 export const AppNotification = createTypes(
   'app/notification/',
   'ADD_CONTENTS',
-  async('FETCH')
+  'UPDATE_READ',
+  async('FETCH'),
+  async('UPDATE_READ')
 )
 
 // POST詳細画面

@@ -104,6 +104,11 @@ module.exports = function(app) {
     requireAuth,
     UserController.fetchNotifications
   )
+  app.post(
+    '/notification/read',
+    requireAuth,
+    UserController.saveReadNotifications
+  )
 
   // 一般ユーザ
   app.post('/signup', AuthController.signup)

@@ -122,6 +122,14 @@ exports.fetchNotifications = async (req, res, next) => {
 }
 
 /**
+ * 通知を既読に（待たない）
+ */
+exports.saveReadNotifications = async (req, res, next) => {
+  services.Notification.updateAllRead(req.user.id)
+  res.json(true)
+}
+
+/**
  * 管理者一覧取得
  */
 exports.fetchAdminList = async (req, res, next) => {

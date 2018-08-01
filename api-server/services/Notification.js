@@ -38,7 +38,7 @@ module.exports = class Notification {
           type,
           userId,
           postId,
-          actionUserId: [actionUserId],
+          actionUserIds: [actionUserId],
           isRead: false
         })
       }
@@ -111,10 +111,10 @@ module.exports = class Notification {
         }))
       }
 
-      // updatedAt --> XX hours ago
+      // createdAt --> XX hours ago
       data = data.map(e => ({
         ...e,
-        updatedAt: moment.getMomentDiffAgo(e.updatedAt)
+        createdAt: moment.getMomentDiffAgo(e.createdAt)
       }))
 
       return data.map(e =>
@@ -124,7 +124,7 @@ module.exports = class Notification {
           'firstUsername',
           'actionCount',
           'title',
-          'updatedAt'
+          'createdAt'
         ])
       )
     } catch (e) {

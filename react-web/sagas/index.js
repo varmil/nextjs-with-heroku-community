@@ -313,6 +313,21 @@ function* fetchNotifications({ payload }) {
 }
 
 /**
+ * NOTIFICATION
+ */
+
+function* saveReadNotifications({ payload }) {
+  const { jwtToken } = yield select(getUser)
+  try {
+    yield call(API.post, '/notification/read', {}, jwtToken)
+    // 既読情報をstoreに反映
+    yield put(createAction(AppNotification.UPDATE_READ)())
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
+}
+
+/**
  * POST
  */
 
@@ -608,7 +623,9 @@ const appSaga = [
   takeLatest(AppNews.FETCH_REQUEST, fetchNewsContents),
   takeLatest(AppMypage.FETCH_REQUEST, fetchMypageContents),
   takeEvery(AppSearch.FETCH_REQUEST, fetchSearchContents),
+
   takeEvery(AppNotification.FETCH_REQUEST, fetchNotifications),
+  takeEvery(AppNotification.UPDATE_READ_REQUEST, saveReadNotifications),
 
   takeLatest(AppPost.FETCH_REQUEST, fetchPost),
   takeEvery(AppPost.FETCH_COMMENTS_REQUEST, fetchComments),

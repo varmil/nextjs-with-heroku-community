@@ -193,6 +193,13 @@ export default handleActions(
         ...action.payload
       )
     },
+    [AppNotification.UPDATE_READ]: (state, action) => {
+      const updated = state.notification.boxContents.map(e => ({
+        ...e,
+        isRead: true
+      }))
+      return immutable.set(state, `notification.boxContents`, updated)
+    },
 
     /**
      * POST
