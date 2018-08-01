@@ -11,8 +11,18 @@ import CenteredContainer from 'components/molecules/CenteredContainer'
 import SignInUpHeader from 'components/molecules/SignInUpHeader'
 
 class SignupEmail extends React.Component {
+  static async getInitialProps({ ctx }) {
+    const { code } = ctx.query
+
+    // codeをもとにemail情報を取得
+    const { dispatch } = ctx.store
+    dispatch(createAction(User.FETCH_CODE_INFO_REQUEST)({ code }))
+
+    return { code }
+  }
+
   state = {
-    email: '',
+    email: this.props.email || '',
     password: ''
   }
 
@@ -24,6 +34,7 @@ class SignupEmail extends React.Component {
 
   // ERRORハンドリングしやすいのでここでPOST
   async signup(e) {
+    const { code } = this.props
     const { email, password } = this.state
     const successCb = async res => {
       Router.pushRoute(`/view/signup/complete`)
@@ -32,6 +43,7 @@ class SignupEmail extends React.Component {
       createAction(User.SIGNUP_REQUEST)({
         email,
         password,
+        code,
         successCb
       })
     )
@@ -43,7 +55,7 @@ class SignupEmail extends React.Component {
     return (
       <CenteredContainer height={430}>
         <section>
-          <SignInUpHeader text="アカウント登録" route={'/view/signup'} />
+          <SignInUpHeader text="アカウント登録" />
         </section>
 
         <section className="mt-5">
@@ -100,5 +112,5 @@ class SignupEmail extends React.Component {
 }
 
 export default connect(state => ({
-  // post: state.site.post
+  email: state.user.email
 }))(SignupEmail)

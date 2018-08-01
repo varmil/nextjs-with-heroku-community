@@ -59,7 +59,7 @@ module.exports = {
       )
       .then(() =>
         queryInterface.addIndex(tableName, {
-          fields: ['brandId', 'code'],
+          fields: ['code'],
           unique: true
         })
       )

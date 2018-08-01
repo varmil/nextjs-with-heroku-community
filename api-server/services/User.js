@@ -1,6 +1,7 @@
 const _ = require('lodash')
 const reqlib = require('app-root-path').require
 const models = reqlib('/models')
+const InvitationService = reqlib('/services/Invitation')
 const Path = reqlib('/constants/Path')
 const Role = reqlib('/../shared/constants/Role')
 const { moveImage } = reqlib('/utils/image')
@@ -93,14 +94,14 @@ module.exports = class User {
     }
   }
 
-  static async createNormalUser(email, password, brandId) {
+  static async createUser(code, email, password, brandId, roleId) {
     const trans = await models.sequelize.transaction()
     try {
       const user = await models.User.create(
         {
           email,
           passwordHash: await models.User.generateHash(password),
-          roleId: Role.User.NORMAL
+          roleId: roleId || Role.User.NORMAL
         },
         {
           transaction: trans
@@ -116,6 +117,32 @@ module.exports = class User {
           transaction: trans
         }
       )
+
+      // 管理者特有処理
+      if (roleId >= Role.User.ADMIN_GUEST) {
+        const admin = await models.Admin.create(
+          {
+            userId: user.id
+          },
+          {
+            transaction: trans
+          }
+        )
+
+        await models.AdminBrand.create(
+          {
+            adminId: admin.id,
+            brandId: brandId
+          },
+          {
+            transaction: trans
+          }
+        )
+      }
+
+      // Invitationテーブル更新
+      await InvitationService.joinUser(code, trans)
+
       trans.commit()
       return user
     } catch (e) {
@@ -124,7 +151,7 @@ module.exports = class User {
     }
   }
 
-  static async createAdmin(
+  static async createFirstAdmin(
     email,
     password,
     brandName,

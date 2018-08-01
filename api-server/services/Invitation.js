@@ -61,6 +61,22 @@ module.exports = class Invitation {
     }
   }
 
+  // 招待ユーザが登録完了した際に呼ぶ
+  static async joinUser(code, trans) {
+    try {
+      await models.Invitation.update(
+        {
+          status: ConstInvitation.JOINED,
+          joinedAt: new Date()
+        },
+        { where: { code } }
+      )
+      return true
+    } catch (e) {
+      throw e
+    }
+  }
+
   // 複数取得（Admin画面の一覧など）
   static async fetchList(pageNum, where, options = {}) {
     if (!where.brandId) {

@@ -13,7 +13,7 @@ export default class SignUp extends React.Component {
   static async getInitialProps({ ctx }) {
     const { dispatch } = ctx.store
     const { code } = ctx.query
-    dispatch(createAction(User.FETCH_CODE_INFO_REQUEST)({ code }))
+    // dispatch(createAction(User.FETCH_CODE_INFO_REQUEST)({ code }))
     return {}
   }
 

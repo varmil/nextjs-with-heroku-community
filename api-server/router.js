@@ -98,6 +98,7 @@ module.exports = function(app) {
    */
   // 共通
   app.post('/signin', requireSignIn, AuthController.signin)
+  app.post('/signup', AuthController.signup)
   app.get('/auth/code/:code', AuthController.authInvitationCode)
   app.get(
     '/notification/count',
@@ -116,7 +117,6 @@ module.exports = function(app) {
   )
 
   // 一般ユーザ
-  app.post('/signup', AuthController.signup)
   app.post(
     '/user/profile',
     requireAuth,
@@ -128,7 +128,7 @@ module.exports = function(app) {
   /**
    * ADMIN_USER
    */
-  // 管理者初期登録。アイコンも同時登録
+  // 管理者初期登録（新規ブランド追加時）。アイコンも同時登録
   app.post('/signup/admin', upload.single('image'), AuthController.signup)
   // 管理者追加
   app.post(

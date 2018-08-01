@@ -64,9 +64,14 @@ function* signin({ payload }) {
 
 // 通常ユーザのsignup
 function* signupUser({ payload }) {
-  const { email, password, successCb } = payload
+  const { email, password, code, successCb } = payload
+  if (!code) {
+    console.warn('Invitation code is null', code)
+    return
+  }
+
   try {
-    const res = yield call(API.post, '/signup', { email, password })
+    const res = yield call(API.post, '/signup', { email, password, code })
     yield call(setUserInfo, res.data.token)
     yield call(successCb, res)
   } catch (e) {
@@ -156,7 +161,7 @@ function* fetchCodeInfo({ payload }) {
   const { code } = payload
   try {
     const { data } = yield call(API.fetch, `/auth/code/${code}`)
-    // 招待コードもStoreに保存しておいてsignup時に一緒にPOSTする
+    // 招待コードもStoreに保存しておく（signup時に一緒にPOSTするのに使うかも）
     yield put(createAction(User.SET)({ email: data, invitationCode: code }))
   } catch (e) {
     console.warn('failed fetch user info', e.response.statusText)
