@@ -4,7 +4,7 @@ import { Link } from 'routes'
 
 export const Container = props => {
   return (
-    <div className="container py-4 mt-3">
+    <div className="container py-4 mt-3" style={{ ...props.style }}>
       {props.children}
       <style jsx>{`
         .container {

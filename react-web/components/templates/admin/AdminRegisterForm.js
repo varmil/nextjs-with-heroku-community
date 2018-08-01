@@ -100,6 +100,8 @@ class AdminRegisterForm extends React.Component {
           </div>
         </div>
 
+        {this.props.optionNode || ''}
+
         <section className="mt-5 text-center">
           <ColorButton
             className="w-25"
