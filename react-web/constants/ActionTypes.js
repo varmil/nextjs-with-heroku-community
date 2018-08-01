@@ -92,8 +92,10 @@ export const AppSearch = createTypes(
 export const AppNotification = createTypes(
   'app/notification/',
   'ADD_CONTENTS',
+  'SET_NOT_READ_COUNT',
   'UPDATE_READ',
   async('FETCH'),
+  async('FETCH_NOT_READ_COUNT'),
   async('UPDATE_READ')
 )
 

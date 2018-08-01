@@ -30,7 +30,7 @@ const initialState = {
   // 検索
   search: { photos: [], boxContents: [] },
   // 通知
-  notification: { boxContents: [] },
+  notification: { notReadCount: 0, boxContents: [] },
 
   // Admin, User兼用。記事詳細画面
   // comments: voiceでは [[]] になるので注意。それ以外は１次元
@@ -192,6 +192,9 @@ export default handleActions(
         `notification.boxContents`,
         ...action.payload
       )
+    },
+    [AppNotification.SET_NOT_READ_COUNT]: (state, action) => {
+      return immutable.set(state, `notification.notReadCount`, action.payload)
     },
     [AppNotification.UPDATE_READ]: (state, action) => {
       const updated = state.notification.boxContents.map(e => ({

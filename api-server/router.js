@@ -100,14 +100,19 @@ module.exports = function(app) {
   app.post('/signin', requireSignIn, AuthController.signin)
   app.get('/auth/code/:code', AuthController.authInvitationCode)
   app.get(
-    '/notification/:pageNum',
+    '/notification/count',
     requireAuth,
-    UserController.fetchNotifications
+    UserController.fetchNewNotificationCount
   )
   app.post(
     '/notification/read',
     requireAuth,
     UserController.saveReadNotifications
+  )
+  app.get(
+    '/notification/:pageNum',
+    requireAuth,
+    UserController.fetchNotifications
   )
 
   // 一般ユーザ

@@ -122,6 +122,19 @@ exports.fetchNotifications = async (req, res, next) => {
 }
 
 /**
+ * 未読通知数取得
+ */
+exports.fetchNewNotificationCount = async (req, res, next) => {
+  const count = await models.Notification.count({
+    where: {
+      userId: req.user.id,
+      isRead: false
+    }
+  })
+  res.json(count)
+}
+
+/**
  * 通知を既読に（待たない）
  */
 exports.saveReadNotifications = async (req, res, next) => {

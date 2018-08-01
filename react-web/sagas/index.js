@@ -316,6 +316,16 @@ function* fetchNotifications({ payload }) {
  * NOTIFICATION
  */
 
+function* fetchNewNotificationCount({ payload }) {
+  const { jwtToken } = yield select(getUser)
+  try {
+    const res = yield call(API.fetch, `/notification/count`, jwtToken)
+    yield put(createAction(AppNotification.SET_NOT_READ_COUNT)(res.data))
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
+}
+
 function* saveReadNotifications({ payload }) {
   const { jwtToken } = yield select(getUser)
   try {
@@ -625,7 +635,11 @@ const appSaga = [
   takeEvery(AppSearch.FETCH_REQUEST, fetchSearchContents),
 
   takeEvery(AppNotification.FETCH_REQUEST, fetchNotifications),
-  takeEvery(AppNotification.UPDATE_READ_REQUEST, saveReadNotifications),
+  takeLatest(
+    AppNotification.FETCH_NOT_READ_COUNT_REQUEST,
+    fetchNewNotificationCount
+  ),
+  takeLatest(AppNotification.UPDATE_READ_REQUEST, saveReadNotifications),
 
   takeLatest(AppPost.FETCH_REQUEST, fetchPost),
   takeEvery(AppPost.FETCH_COMMENTS_REQUEST, fetchComments),
