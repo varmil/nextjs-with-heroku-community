@@ -36,7 +36,7 @@ exports.signup = async function(req, res, next) {
 
   // 必須チェック
   const { email, password, code } = req.body
-  if (!email || !password || password.length < Rule.PASS_MIN_LENGTH || !code) {
+  if (!email || !password || password.length < Rule.PASS_MIN_LENGTH) {
     return res.status(422).json(E_EMAIL_PASSWORD)
   }
 
@@ -49,15 +49,6 @@ exports.signup = async function(req, res, next) {
   }
 
   try {
-    // code正当性チェック
-    const invitation = await models.Invitation.find({
-      where: { code },
-      raw: true
-    })
-    if (!invitation) {
-      return res.status(422).json(E_INVALID_CODE)
-    }
-
     // emailが使われていないか
     {
       const existingUser = await models.User.findOne({
@@ -69,7 +60,7 @@ exports.signup = async function(req, res, next) {
       }
     }
 
-    // create admin record if the user is admin
+    // create first admin record if the user registers from admin signup page
     let user
     if (isFirstAdmin) {
       user = await services.User.createFirstAdmin(
@@ -81,6 +72,15 @@ exports.signup = async function(req, res, next) {
         req.file
       )
     } else {
+      // code正当性チェック
+      const invitation = await models.Invitation.find({
+        where: { code },
+        raw: true
+      })
+      if (!invitation) {
+        return res.status(422).json(E_INVALID_CODE)
+      }
+      // 登録
       const { brandId, roleId } = invitation
       user = await services.User.createUser(
         code,
@@ -110,5 +110,6 @@ exports.authInvitationCode = async function(req, res, next) {
   if (!invitation) {
     return res.status(422).json(E_INVALID_CODE)
   }
-  res.json(invitation.email)
+  const { email, roleId } = invitation
+  res.json({ email, roleId })
 }

@@ -4,7 +4,7 @@ module.exports = function(sequelize, DataTypes) {
   var AdminBrand = sequelize.define(
     'AdminBrand',
     {
-      adminId: DataTypes.INTEGER,
+      userId: DataTypes.INTEGER,
       brandId: DataTypes.INTEGER
     },
     {

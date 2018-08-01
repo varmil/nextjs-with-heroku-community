@@ -5,6 +5,7 @@ import { createAction } from 'redux-actions'
 import { User } from 'constants/ActionTypes'
 import Input from 'reactstrap/lib/Input'
 import FormFeedback from 'reactstrap/lib/FormFeedback'
+import Role from '/../shared/constants/Role'
 import Rule from '/../shared/constants/Rule'
 import ColorButton from 'components/atoms/ColorButton'
 import CenteredContainer from 'components/molecules/CenteredContainer'
@@ -32,12 +33,16 @@ class SignupEmail extends React.Component {
     })
   }
 
-  // ERRORハンドリングしやすいのでここでPOST
   async signup(e) {
-    const { code } = this.props
+    const { code, roleId } = this.props
     const { email, password } = this.state
-    const successCb = async res => {
-      Router.pushRoute(`/view/signup/complete`)
+    const successCb = res => {
+      // 管理者アカウント or 一般ユーザで遷移先を変える
+      const to =
+        roleId >= Role.User.ADMIN_GUEST
+          ? `/admin/settings/account/edit`
+          : `/view/signup/complete`
+      Router.pushRoute(to)
     }
     this.props.dispatch(
       createAction(User.SIGNUP_REQUEST)({
@@ -112,5 +117,6 @@ class SignupEmail extends React.Component {
 }
 
 export default connect(state => ({
-  email: state.user.email
+  email: state.user.email,
+  roleId: state.user.roleId
 }))(SignupEmail)

@@ -120,18 +120,9 @@ module.exports = class User {
 
       // 管理者特有処理
       if (roleId >= Role.User.ADMIN_GUEST) {
-        const admin = await models.Admin.create(
-          {
-            userId: user.id
-          },
-          {
-            transaction: trans
-          }
-        )
-
         await models.AdminBrand.create(
           {
-            adminId: admin.id,
+            userId: user.id,
             brandId: brandId
           },
           {
@@ -190,18 +181,9 @@ module.exports = class User {
         }
       )
 
-      const admin = await models.Admin.create(
-        {
-          userId: user.id
-        },
-        {
-          transaction: trans
-        }
-      )
-
       await models.AdminBrand.create(
         {
-          adminId: admin.id,
+          userId: user.id,
           brandId: brand.id
         },
         {
@@ -341,7 +323,7 @@ module.exports = class User {
     try {
       // 関連テーブルからIDフェッチ
       const adminsBrands = await models.AdminBrand.findAll({
-        attributes: ['adminId'],
+        attributes: ['userId'],
         where: { brandId },
         order: [['id', 'DESC']],
         raw: true
@@ -349,7 +331,7 @@ module.exports = class User {
       // ユーザ取得
       const users = await models.User.findAll({
         where: {
-          id: _.map(adminsBrands, 'adminId'),
+          id: _.map(adminsBrands, 'userId'),
           roleId: {
             [models.Sequelize.Op.gte]: Role.User.ADMIN_GUEST
           }

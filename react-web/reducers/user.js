@@ -12,7 +12,8 @@ const initialState = {
 
   // 招待コードとそれに紐づく情報
   invitationCode: null,
-  email: null
+  email: null,
+  roleId: undefined
 
   // NOTE: これらは分ける必要ないかも？
   // (Admin) 所有するブランド一覧
