@@ -313,15 +313,20 @@ module.exports = class User {
 
     try {
       // 関連テーブルからIDフェッチ
-      const usersBrands = await models.UserBrand.findAll({
-        attributes: ['userId'],
+      const adminsBrands = await models.AdminBrand.findAll({
+        attributes: ['adminId'],
         where: { brandId },
         order: [['id', 'DESC']],
         raw: true
       })
       // ユーザ取得
       const users = await models.User.findAll({
-        where: { id: _.map(usersBrands, 'userId') },
+        where: {
+          id: _.map(adminsBrands, 'adminId'),
+          roleId: {
+            [models.Sequelize.Op.gte]: Role.User.ADMIN_GUEST
+          }
+        },
         order: [['id', 'DESC']],
         raw: true
       })
