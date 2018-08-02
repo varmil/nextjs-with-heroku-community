@@ -36,8 +36,7 @@ class SignupProfile extends React.Component {
     this.props.dispatch(
       createAction(User.SAVE_PROFILE_REQUEST)({
         successCb,
-        nickname,
-        files
+        data: { nickname, files }
       })
     )
   }

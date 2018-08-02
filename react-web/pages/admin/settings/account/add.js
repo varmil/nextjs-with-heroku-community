@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
-import { Router } from 'routes'
+import { Router, Link } from 'routes'
 import { AppAdminAccount } from 'constants/ActionTypes'
 import { Container, Header } from 'components/molecules/AdminPageContainer'
 import AdminHeader from 'components/organisms/admin/AdminHeader'
@@ -40,8 +40,12 @@ class AdminAccountAdd extends React.Component {
         <AdminHeader />
 
         <WhiteBreadcrumb>
-          <li className="breadcrumb-item">アカウント設定</li>
-          <li className="breadcrumb-item">管理者一覧</li>
+          <Link route={`/admin/settings`} passHref>
+            <a className="breadcrumb-item">アカウント設定</a>
+          </Link>
+          <Link route={`/admin/settings/account/list`} passHref>
+            <a className="breadcrumb-item">管理者一覧</a>
+          </Link>
           <li className="breadcrumb-item active">管理者追加</li>
         </WhiteBreadcrumb>
 

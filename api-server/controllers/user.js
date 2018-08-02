@@ -31,21 +31,22 @@ exports.fetch = async (req, res, next) => {
  */
 exports.profile = async (req, res, next) => {
   console.log('[profilesave]body', req.body)
-  console.log('[profilesave]file', req.files)
-  const { nickname, fromServerFiles } = req.body
-  const userId = req.user.id
+  console.log('[profilesave]file', req.file)
+  const { userId, nickname, lastName, firstName } = req.body
+  const meId = req.user.id
 
-  if (!nickname) {
+  // ニックネーム or 本名は必須
+  if (!nickname && (!firstName || !lastName)) {
     return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
   }
 
+  // もし他人のページを変更しようとする場合はAdmin権限チェック
+  if (meId !== +userId && req.user.roleId < Role.User.ADMIN_SUPER) {
+    return res.status(401).json(Message.E_NOT_ALLOWED)
+  }
+
   try {
-    await services.User.updateProfile(
-      userId,
-      nickname,
-      req.file,
-      fromServerFiles
-    )
+    await services.User.updateProfile(userId, req.file, req.body)
     res.json(true)
   } catch (e) {
     return next(e)

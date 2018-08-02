@@ -122,10 +122,30 @@ function* setUserInfo(token) {
 // （初期登録、プロフィール編集？）
 function* saveUserProfile({ payload }) {
   const { jwtToken } = yield select(getUser)
-  const { nickname, files, successCb } = payload
+  const { data, successCb } = payload
+  const {
+    // 共通
+    email,
+    password,
+    files,
+    // 一般ユーザ
+    nickname,
+    // 管理者
+    userId,
+    lastName,
+    firstName,
+    roleId
+  } = data
+
   let formData = new FormData()
-  formData.append('nickname', nickname)
   utilFiles.append(formData, files)
+  email && formData.append('email', email)
+  password && formData.append('password', password)
+  nickname && formData.append('nickname', nickname)
+  userId && formData.append('userId', userId)
+  lastName && formData.append('lastName', lastName)
+  firstName && formData.append('firstName', firstName)
+  roleId && formData.append('roleId', roleId)
 
   try {
     const res = yield call(API.post, '/user/profile', formData, jwtToken)

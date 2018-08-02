@@ -70,8 +70,22 @@ module.exports = class User {
     return dbPath
   }
 
-  static async updateProfile(userId, nickname, file, fromServerFiles) {
+  static async updateProfile(userId, file, body) {
+    const {
+      // 共通
+      email,
+      password,
+      fromServerFiles,
+      // 一般ユーザ
+      nickname,
+      // 管理者
+      lastName,
+      firstName,
+      roleId
+    } = body
+
     try {
+      // プロフィール画像は毎回更新かけておく
       let dbPath = await User.moveProfileIcon(file)
       if (!dbPath) {
         if (fromServerFiles && fromServerFiles.length > 0) {
@@ -83,12 +97,34 @@ module.exports = class User {
         }
       }
 
-      await models.User.update(
-        { nickname: sanitizer.html(nickname), iconPath: dbPath },
-        {
-          where: { id: userId }
+      // UPDATE項目追加していく
+      let data = { iconPath: dbPath }
+      if (email) {
+        data = { ...data, email }
+      }
+      if (password) {
+        data = {
+          ...data,
+          passwordHash: await models.User.generateHash(password)
         }
-      )
+      }
+      if (nickname) {
+        data = { ...data, nickname: sanitizer.html(nickname) }
+      }
+      if (lastName) {
+        data = { ...data, lastName }
+      }
+      if (firstName) {
+        data = { ...data, firstName }
+      }
+      if (roleId) {
+        data = { ...data, roleId: +roleId }
+      }
+
+      // DB更新
+      await models.User.update(data, {
+        where: { id: userId }
+      })
     } catch (e) {
       throw e
     }

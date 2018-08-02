@@ -2,8 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Router, Link } from 'routes'
 import { createAction } from 'redux-actions'
-import { AppAdminAccount } from 'constants/ActionTypes'
-import { Container, Header } from 'components/molecules/AdminPageContainer'
+import { User, AppAdminAccount } from 'constants/ActionTypes'
+import { Container } from 'components/molecules/AdminPageContainer'
 import AdminHeader from 'components/organisms/admin/AdminHeader'
 import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
 import AdminEditForm from 'components/templates/admin/AdminEditForm'
@@ -20,24 +20,29 @@ class AdminAccountList extends React.Component {
       createAction(AppAdminAccount.FETCH_OTHER_ADMIN_REQUEST)({ userId })
     )
 
-    return {}
+    return { userId }
   }
 
   onSave(state) {
     console.info('state', state)
-    // const successCb = async res => {
-    //   Router.pushRoute(`/admin/settings/account/list`)
-    // }
-    // this.props.dispatch(
-    //   createAction(User.AUTH_ADMIN_REQUEST)({
-    //     ...state,
-    //     successCb
-    //   })
-    // )
+    const { me, user } = this.props
+
+    const successCb = async res => {
+      Router.pushRoute(`/admin/settings/account/list`)
+    }
+    this.props.dispatch(
+      createAction(User.SAVE_PROFILE_REQUEST)({
+        successCb,
+        // userIdは更新対象者のID（undefinedなら自分）
+        // 面倒なので全部渡してSAGAでフィルタリングする
+        data: { ...state, userId: user.id }
+      })
+    )
   }
 
   render() {
-    const { user } = this.props
+    // userは編集対象。meは自分自身
+    const { me, user } = this.props
     return (
       <React.Fragment>
         <AdminHeader />
@@ -64,7 +69,7 @@ class AdminAccountList extends React.Component {
               email={user.email}
               // SUPER管理者以外は権限変更不可能
               roleId={user.roleId}
-              roleIdDisabled={user.roleId !== Role.User.ADMIN_SUPER}
+              roleIdDisabled={me.roleId !== Role.User.ADMIN_SUPER}
             />
           </section>
         </Container>
@@ -80,5 +85,6 @@ class AdminAccountList extends React.Component {
 }
 
 export default connect(state => ({
+  me: state.user,
   user: state.app.otherAdminInfo
 }))(AdminAccountList)

@@ -1,9 +1,11 @@
 import React from 'react'
 import TallTextInput from 'components/atoms/TallTextInput'
+import FormFeedback from 'reactstrap/lib/FormFeedback'
 import ProfileIconSelector from 'components/atoms/ProfileIconSelector'
 import ColorButton from 'components/atoms/ColorButton'
 import Color from 'constants/Color'
 import * as utilFiles from 'utils/files'
+import Rule from '/../shared/constants/Rule'
 
 const mbStyle = { marginBottom: 20 }
 
@@ -46,6 +48,7 @@ class AdminRegisterForm extends React.Component {
   render() {
     const { brandNameDisabled } = this.props
     const state = this.state
+    const passLength = state.password.length
     return (
       <div>
         <div className="box" style={{}}>
@@ -107,7 +110,11 @@ class AdminRegisterForm extends React.Component {
               style={mbStyle}
               value={state.password}
               onChange={this.handleChange('password')}
+              invalid={passLength > 0 && passLength < Rule.PASS_MIN_LENGTH}
             />
+            <FormFeedback>
+              {Rule.PASS_MIN_LENGTH}文字以上入力してください
+            </FormFeedback>
           </div>
         </div>
 
