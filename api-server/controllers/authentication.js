@@ -21,7 +21,7 @@ const E_INVALID_CODE = {
 
 function tokenForUser(user) {
   const timestamp = new Date().getTime()
-  return jwt.encode({ sub: { id: user.id }, iat: timestamp }, secret)
+  return jwt.encode({ sub: user.id, iat: timestamp }, secret)
 }
 
 exports.signin = function(req, res) {

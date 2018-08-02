@@ -83,9 +83,26 @@ module.exports = function(app) {
   })
 
   app.get('/user', requireAuth, function(req, res) {
-    const { id, nickname, firstName, lastName, iconPath, brand } = req.user
-    const realName = lastName + ' ' + firstName
-    res.json({ id, nickname, realName, iconPath, brand })
+    const {
+      id,
+      email,
+      nickname,
+      firstName,
+      lastName,
+      iconPath,
+      brand,
+      roleId
+    } = req.user
+    res.json({
+      id,
+      email,
+      nickname,
+      firstName,
+      lastName,
+      iconPath,
+      brand,
+      roleId
+    })
   })
 
   // app.get('/admin', requireAuth, userRole.is('adminGuest'), function(req, res) {

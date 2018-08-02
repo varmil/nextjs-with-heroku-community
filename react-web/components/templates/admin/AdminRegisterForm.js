@@ -8,10 +8,10 @@ const mbStyle = { marginBottom: 20 }
 
 class AdminRegisterForm extends React.Component {
   state = {
-    brandName: '',
-    lastName: '',
-    firstName: '',
-    email: '',
+    brandName: this.props.brandName,
+    lastName: this.props.lastName || '',
+    firstName: this.props.firstName || '',
+    email: this.props.email || '',
     password: '',
     files: [],
     errorMessage: ''
@@ -35,6 +35,7 @@ class AdminRegisterForm extends React.Component {
   }
 
   render() {
+    const { brandNameDisabled } = this.props
     const state = this.state
     return (
       <div>
@@ -58,6 +59,7 @@ class AdminRegisterForm extends React.Component {
               value={state.brandName}
               onChange={this.handleChange('brandName')}
               required
+              disabled={brandNameDisabled}
             />
           </div>
 
@@ -100,7 +102,7 @@ class AdminRegisterForm extends React.Component {
           </div>
         </div>
 
-        {this.props.optionNode || ''}
+        {this.props.children}
 
         <section className="mt-5 text-center">
           <ColorButton

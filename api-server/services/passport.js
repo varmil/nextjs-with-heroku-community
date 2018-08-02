@@ -35,7 +35,7 @@ const jwtOptions = {
 
 const jwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
   try {
-    const user = await models.User.findById(payload.sub.id, { raw: true })
+    const user = await models.User.findById(payload.sub, { raw: true })
 
     if (user) {
       const { id } = user

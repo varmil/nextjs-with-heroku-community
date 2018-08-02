@@ -27,6 +27,8 @@ const iconSize = 42
 class AdminHeader extends React.Component {
   render() {
     const props = this.props
+    const { firstName, lastName } = this.props.user
+    const realName = lastName + ' ' + firstName
     return (
       <div
         className={this.props.className}
@@ -93,7 +95,7 @@ class AdminHeader extends React.Component {
             <DropdownMenu right style={dropdownMenuStyle}>
               <div className="px-4 py-2">
                 <h5>{props.user.brand.name}</h5>
-                <div className="username">{props.user.realName}</div>
+                <div className="username">{realName}</div>
               </div>
               <DropdownItem divider />
               <DropdownItem>

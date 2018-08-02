@@ -8,7 +8,7 @@ import AdminRegisterForm from 'components/templates/admin/AdminRegisterForm'
 const mbStyle = { marginBottom: 20 }
 
 // 管理者アカウント編集
-function iiHOC(WrappedComponent) {
+function HOC(WrappedComponent) {
   return class extends React.Component {
     state = {
       roleId: undefined,
@@ -24,9 +24,10 @@ function iiHOC(WrappedComponent) {
     }
 
     render() {
+      const props = this.props
       return (
         <React.Fragment>
-          <WrappedComponent onSave={this.onSave.bind(this)}>
+          <WrappedComponent {...props} onSave={this.onSave.bind(this)}>
             <div>HELLO</div>
           </WrappedComponent>
         </React.Fragment>
@@ -35,5 +36,5 @@ function iiHOC(WrappedComponent) {
   }
 }
 
-const Foo = iiHOC(AdminRegisterForm)
+const Foo = HOC(AdminRegisterForm)
 export default Foo

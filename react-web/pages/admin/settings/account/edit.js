@@ -9,7 +9,7 @@ import WhiteBreadcrumb from 'components/organisms/admin/WhiteBreadcrumb'
 import AdminEditForm from 'components/templates/admin/AdminEditForm'
 
 class AdminAccountList extends React.Component {
-  // 管理者はそんなに居ないだろうからページングなし
+  // 既存情報FETCH
   static async getInitialProps({ ctx }) {
     const { dispatch } = ctx.store
     // dispatch(createAction(AppAdminAccount.FETCH_LIST_REQUEST)())
@@ -30,7 +30,7 @@ class AdminAccountList extends React.Component {
   }
 
   render() {
-    const props = this.props
+    const { user } = this.props
     return (
       <React.Fragment>
         <AdminHeader />
@@ -43,7 +43,15 @@ class AdminAccountList extends React.Component {
 
         <Container style={{ maxWidth: 650 }}>
           <section className="mt-3">
-            <AdminEditForm onSave={this.onSave.bind(this)} />
+            <AdminEditForm
+              onSave={this.onSave.bind(this)}
+              brandName={user.brand.name}
+              brandNameDisabled
+              lastName={user.lastName}
+              firstName={user.firstName}
+              email={user.email}
+              roleId={user.roleId}
+            />
           </section>
         </Container>
 
@@ -58,5 +66,5 @@ class AdminAccountList extends React.Component {
 }
 
 export default connect(state => ({
-  adminAccounts: state.app.adminAccounts
+  user: state.user
 }))(AdminAccountList)
