@@ -68,7 +68,7 @@ class AdminAccountTable extends React.Component {
             <TableBody>
               {data.map(n => {
                 return (
-                  <TableRow key={n.id}>
+                  <TableRow key={n.email + n.id}>
                     <DensedCell component="th" scope="row">
                       {isNotJoined(n) ? (
                         <span className="text-secondary">招待中</span>

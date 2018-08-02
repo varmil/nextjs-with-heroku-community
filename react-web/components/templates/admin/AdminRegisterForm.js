@@ -3,18 +3,27 @@ import TallTextInput from 'components/atoms/TallTextInput'
 import ProfileIconSelector from 'components/atoms/ProfileIconSelector'
 import ColorButton from 'components/atoms/ColorButton'
 import Color from 'constants/Color'
+import * as utilFiles from 'utils/files'
 
 const mbStyle = { marginBottom: 20 }
 
 class AdminRegisterForm extends React.Component {
-  state = {
-    brandName: this.props.brandName,
-    lastName: this.props.lastName || '',
-    firstName: this.props.firstName || '',
-    email: this.props.email || '',
-    password: '',
-    files: [],
-    errorMessage: ''
+  constructor(props) {
+    super(props)
+
+    const { brandName, lastName, firstName, email, iconPath } = props
+    const state = {
+      brandName,
+      lastName: lastName || '',
+      firstName: firstName || '',
+      email: email || '',
+      password: '',
+      files: iconPath
+        ? [{ [utilFiles.FROM_SERVER_KEY]: true, preview: this.props.iconPath }]
+        : [],
+      errorMessage: ''
+    }
+    this.state = state
   }
 
   handleChange = name => event => {
