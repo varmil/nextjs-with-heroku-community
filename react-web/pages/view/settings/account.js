@@ -1,9 +1,9 @@
 import React from 'react'
-import range from 'lodash/range'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
 import { Link, Router } from 'routes'
-import { deauthenticate } from 'actions/user'
+import * as utilFiles from 'utils/files'
+import ProfileIconSelector from 'components/atoms/ProfileIconSelector'
 import BorderedTextHeader from 'components/organisms/site/BorderedTextHeader'
 
 const Item = props => (
@@ -27,28 +27,47 @@ const Item = props => (
 )
 
 class Account extends React.Component {
-  // state = {
-  //   email: '',
-  //   password: '',
-  //   errorMessage: ''
-  // }
+  constructor(props) {
+    super(props)
+
+    const { brandName, nickname, description, email, iconPath } = props
+    const state = {
+      brandName,
+      nickname: nickname || '',
+      description: description || '',
+      email: email || '',
+      password: '',
+      files: iconPath
+        ? [{ [utilFiles.FROM_SERVER_KEY]: true, preview: this.props.iconPath }]
+        : [],
+      errorMessage: ''
+    }
+    this.state = state
+  }
+
+  onDrop(files) {
+    if (files.length > 1) {
+      files = files.slice(0, 1)
+    }
+    this.setState({ ...this.state, files: files })
+  }
 
   render() {
     const props = this.props
+    const { files } = this.state
     return (
       <React.Fragment>
-        <BorderedTextHeader text="設定" />
+        <BorderedTextHeader text="アカウント設定" />
 
         <div className="container">
-          <section className="contentWrap mt-5 ml-4">
-            <Item
-              className="my-4"
-              onClick={() => {
-                props.dispatch(deauthenticate())
-              }}
-            >
-              ログアウト
-            </Item>
+          <section className="contentWrap mt-3 text-center">
+            <div className="mt-3 mx-auto" style={{ width: 150 }}>
+              <ProfileIconSelector
+                size={100}
+                files={files}
+                onDrop={this.onDrop.bind(this)}
+              />
+            </div>
           </section>
         </div>
 
