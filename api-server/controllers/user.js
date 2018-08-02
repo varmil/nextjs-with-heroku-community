@@ -32,7 +32,8 @@ exports.fetch = async (req, res, next) => {
 exports.profile = async (req, res, next) => {
   console.log('[profilesave]body', req.body)
   console.log('[profilesave]file', req.file)
-  const { userId, nickname, lastName, firstName } = req.body
+  const { nickname, lastName, firstName } = req.body
+  const userId = req.body.userId || req.user.id
   const meId = req.user.id
 
   // ニックネーム or 本名は必須
