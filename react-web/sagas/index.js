@@ -114,7 +114,7 @@ function* signupAdmin({ payload }) {
 function* setUserInfo(token) {
   setCookie(Rule.COOKIE_JWT_TOKEN, token)
   yield put(createAction(User.AUTHENTICATE)(token))
-  yield put(createAction(User.FETCH_REQUEST)(token))
+  yield put(createAction(User.FETCH_REQUEST)())
   yield put(createAction(SiteState.FETCH_REQUEST)())
   yield put(createAction(User.UPDATE_LOGINED_AT_REQUEST)())
 }
@@ -130,20 +130,37 @@ function* saveUserProfile({ payload }) {
   try {
     const res = yield call(API.post, '/user/profile', formData, jwtToken)
     // 冗長だが、再度最新のUser情報をfetch
-    yield put(createAction(User.FETCH_REQUEST)(jwtToken))
+    yield put(createAction(User.FETCH_REQUEST)())
     yield call(successCb, res)
   } catch (e) {
     yield put(setCommonError(e.response))
   }
 }
 
-// payload is token
+// my user info
 function* fetchUser({ payload }) {
   try {
-    const res = yield call(API.fetch, '/user', payload)
+    const { token } = payload || {}
+    const jwtToken = token || (yield select(getUser)).jwtToken
+    const res = yield call(API.fetch, `/user`, jwtToken)
     yield put(createAction(User.SET)({ ...res.data }))
   } catch (e) {
     console.warn('failed fetch user info', e.response.statusText)
+  }
+}
+
+// other user info
+function* fetchOtherUser({ payload }) {
+  try {
+    console.log('FOSAFOASFO')
+    const { userId, token } = payload || {}
+    const jwtToken = token || (yield select(getUser)).jwtToken
+    console.log('FOSAFOASFO')
+    const path = userId ? `/user/${userId}` : `/user`
+    const res = yield call(API.fetch, path, jwtToken)
+    yield put(createAction(AppAdminAccount.SET_OTHER_ADMIN)({ ...res.data }))
+  } catch (e) {
+    yield put(setCommonError(e.response))
   }
 }
 
@@ -664,8 +681,9 @@ const appAdminSaga = [
   takeLatest(AppAdminFan.FETCH_LIST_REQUEST, fetchFans),
   takeLatest(AppAdminFan.FETCH_INVITATION_LIST_REQUEST, fetchInvitedFans),
 
+  takeLatest(AppAdminAccount.SAVE_REQUEST, saveAdminAccounts),
   takeLatest(AppAdminAccount.FETCH_LIST_REQUEST, fetchAdminAccounts),
-  takeLatest(AppAdminAccount.SAVE_REQUEST, saveAdminAccounts)
+  takeLatest(AppAdminAccount.FETCH_OTHER_ADMIN_REQUEST, fetchOtherUser)
 ]
 
 function* rootSaga() {

@@ -161,6 +161,9 @@ export const AppAdminAccount = createTypes(
   // 一覧表示用
   async('FETCH_LIST'),
   'SET_LIST',
+  // 編集用
+  async('FETCH_OTHER_ADMIN'),
+  'SET_OTHER_ADMIN',
   // 追加
   async('SAVE')
 )

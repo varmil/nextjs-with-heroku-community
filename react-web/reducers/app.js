@@ -46,7 +46,9 @@ const initialState = {
   // Admin用。招待ファン一覧画面
   invitedFans: { count: 0, item: [] },
   // Admin用。管理者一覧（no-paging）
-  adminAccounts: { item: [] }
+  adminAccounts: { item: [] },
+  // Admin用。管理者情報編集（1人分）
+  otherAdminInfo: {}
 }
 
 // すべてのboxContentsを走査して、データ更新
@@ -310,6 +312,9 @@ export default handleActions(
      */
     [AppAdminAccount.SET_LIST]: (state, action) => {
       return immutable.set(state, `adminAccounts`, action.payload)
+    },
+    [AppAdminAccount.SET_OTHER_ADMIN]: (state, action) => {
+      return immutable.merge(state, `otherAdminInfo`, action.payload)
     }
   },
   initialState

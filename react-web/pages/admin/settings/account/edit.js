@@ -13,7 +13,13 @@ class AdminAccountList extends React.Component {
   // 既存情報FETCH
   static async getInitialProps({ ctx }) {
     const { dispatch } = ctx.store
-    // dispatch(createAction(AppAdminAccount.FETCH_LIST_REQUEST)())
+    const { userId } = ctx.query
+
+    // userIdがなければ自分のページ、あればそのユーザのページ
+    dispatch(
+      createAction(AppAdminAccount.FETCH_OTHER_ADMIN_REQUEST)({ userId })
+    )
+
     return {}
   }
 
@@ -70,5 +76,5 @@ class AdminAccountList extends React.Component {
 }
 
 export default connect(state => ({
-  user: state.user
+  user: state.app.otherAdminInfo
 }))(AdminAccountList)
