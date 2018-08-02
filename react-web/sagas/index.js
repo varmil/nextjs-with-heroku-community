@@ -152,10 +152,8 @@ function* fetchUser({ payload }) {
 // other user info
 function* fetchOtherUser({ payload }) {
   try {
-    console.log('FOSAFOASFO')
     const { userId, token } = payload || {}
     const jwtToken = token || (yield select(getUser)).jwtToken
-    console.log('FOSAFOASFO')
     const path = userId ? `/user/${userId}` : `/user`
     const res = yield call(API.fetch, path, jwtToken)
     yield put(createAction(AppAdminAccount.SET_OTHER_ADMIN)({ ...res.data }))

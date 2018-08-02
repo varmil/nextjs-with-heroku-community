@@ -104,6 +104,7 @@ module.exports = function(app) {
       roleId
     })
   })
+  app.get('/user/:id', requireAuth, UserController.fetch)
 
   // app.get('/admin', requireAuth, userRole.is('adminGuest'), function(req, res) {
   //   const { id, nickname, createdAt } = req.user

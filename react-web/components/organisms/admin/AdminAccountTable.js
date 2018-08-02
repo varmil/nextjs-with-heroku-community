@@ -89,16 +89,18 @@ class AdminAccountTable extends React.Component {
                       <DensedCell />
                     ) : (
                       <DensedCell>
-                        <IconButton
-                          style={{
-                            position: 'relatice',
-                            top: 0,
-                            left: 0,
-                            fontSize: '0.9rem'
-                          }}
-                        >
-                          <i className="fas fa-ellipsis-v" />
-                        </IconButton>
+                        <Link route={`/admin/settings/account/edit/${n.id}`}>
+                          <IconButton
+                            style={{
+                              position: 'relative',
+                              top: 0,
+                              left: 0,
+                              fontSize: '0.9rem'
+                            }}
+                          >
+                            <i className="fas fa-ellipsis-v" />
+                          </IconButton>
+                        </Link>
                       </DensedCell>
                     )}
                   </TableRow>

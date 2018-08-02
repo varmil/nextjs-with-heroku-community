@@ -7,6 +7,26 @@ const Role = reqlib('/../shared/constants/Role')
 const ConstInvitation = reqlib('/../shared/constants/Invitation')
 
 /**
+ * 特定ユーザ情報取得
+ */
+exports.fetch = async (req, res, next) => {
+  const userId = req.params.id
+  const user = await models.User.findById(userId, { raw: true })
+  const brand = await services.User.fetchBrand(userId)
+  let result = _.pick(user, [
+    'id',
+    'email',
+    'nickname',
+    'firstName',
+    'lastName',
+    'iconPath',
+    'roleId'
+  ])
+  result = { ...result, brand }
+  res.json(result)
+}
+
+/**
  * Profile編集
  */
 exports.profile = async (req, res, next) => {
