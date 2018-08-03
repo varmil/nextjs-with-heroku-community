@@ -64,9 +64,14 @@ function* signin({ payload }) {
 
 // 通常ユーザのsignup
 function* signupUser({ payload }) {
-  const { email, password, successCb } = payload
+  const { email, password, code, successCb } = payload
+  if (!code) {
+    console.warn('Invitation code is null', code)
+    return
+  }
+
   try {
-    const res = yield call(API.post, '/signup', { email, password })
+    const res = yield call(API.post, '/signup', { email, password, code })
     yield call(setUserInfo, res.data.token)
     yield call(successCb, res)
   } catch (e) {
@@ -109,7 +114,7 @@ function* signupAdmin({ payload }) {
 function* setUserInfo(token) {
   setCookie(Rule.COOKIE_JWT_TOKEN, token)
   yield put(createAction(User.AUTHENTICATE)(token))
-  yield put(createAction(User.FETCH_REQUEST)(token))
+  yield put(createAction(User.FETCH_REQUEST)())
   yield put(createAction(SiteState.FETCH_REQUEST)())
   yield put(createAction(User.UPDATE_LOGINED_AT_REQUEST)())
 }
@@ -117,28 +122,63 @@ function* setUserInfo(token) {
 // （初期登録、プロフィール編集？）
 function* saveUserProfile({ payload }) {
   const { jwtToken } = yield select(getUser)
-  const { nickname, files, successCb } = payload
+  const { data, successCb } = payload
+  const {
+    // 共通
+    email,
+    password,
+    files,
+    // 一般ユーザ
+    nickname,
+    // 管理者
+    userId,
+    lastName,
+    firstName,
+    roleId
+  } = data
+
   let formData = new FormData()
-  formData.append('nickname', nickname)
   utilFiles.append(formData, files)
+  email && formData.append('email', email)
+  password && formData.append('password', password)
+  nickname && formData.append('nickname', nickname)
+  userId && formData.append('userId', userId)
+  lastName && formData.append('lastName', lastName)
+  firstName && formData.append('firstName', firstName)
+  roleId && formData.append('roleId', roleId)
 
   try {
     const res = yield call(API.post, '/user/profile', formData, jwtToken)
     // 冗長だが、再度最新のUser情報をfetch
-    yield put(createAction(User.FETCH_REQUEST)(jwtToken))
+    yield put(createAction(User.FETCH_REQUEST)())
     yield call(successCb, res)
   } catch (e) {
     yield put(setCommonError(e.response))
   }
 }
 
-// payload is token
+// my user info
 function* fetchUser({ payload }) {
   try {
-    const res = yield call(API.fetch, '/user', payload)
+    const { token } = payload || {}
+    const jwtToken = token || (yield select(getUser)).jwtToken
+    const res = yield call(API.fetch, `/user`, jwtToken)
     yield put(createAction(User.SET)({ ...res.data }))
   } catch (e) {
     console.warn('failed fetch user info', e.response.statusText)
+  }
+}
+
+// other user info
+function* fetchOtherUser({ payload }) {
+  try {
+    const { userId, token } = payload || {}
+    const jwtToken = token || (yield select(getUser)).jwtToken
+    const path = userId ? `/user/${userId}` : `/user`
+    const res = yield call(API.fetch, path, jwtToken)
+    yield put(createAction(AppAdminAccount.SET_OTHER_ADMIN)({ ...res.data }))
+  } catch (e) {
+    yield put(setCommonError(e.response))
   }
 }
 
@@ -156,8 +196,9 @@ function* fetchCodeInfo({ payload }) {
   const { code } = payload
   try {
     const { data } = yield call(API.fetch, `/auth/code/${code}`)
-    // 招待コードもStoreに保存しておいてsignup時に一緒にPOSTする
-    yield put(createAction(User.SET)({ email: data, invitationCode: code }))
+    const { email, roleId } = data
+    // 招待コードもStoreに保存しておく（signup時に一緒にPOSTするのに使うかも）
+    yield put(createAction(User.SET)({ email, roleId, invitationCode: code }))
   } catch (e) {
     console.warn('failed fetch user info', e.response.statusText)
   }
@@ -307,6 +348,31 @@ function* fetchNotifications({ payload }) {
     )
     yield put(addNotificationContents(res.data))
     if (successCb) yield call(successCb, res)
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
+}
+
+/**
+ * NOTIFICATION
+ */
+
+function* fetchNewNotificationCount({ payload }) {
+  const { jwtToken } = yield select(getUser)
+  try {
+    const res = yield call(API.fetch, `/notification/count`, jwtToken)
+    yield put(createAction(AppNotification.SET_NOT_READ_COUNT)(res.data))
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
+}
+
+function* saveReadNotifications({ payload }) {
+  const { jwtToken } = yield select(getUser)
+  try {
+    yield call(API.post, '/notification/read', {}, jwtToken)
+    // 既読情報をstoreに反映
+    yield put(createAction(AppNotification.UPDATE_READ)())
   } catch (e) {
     yield put(setCommonError(e.response))
   }
@@ -493,9 +559,15 @@ function* saveVote({ payload }) {
 // (Admin用)招待コード発行
 function* saveInvitation({ payload }) {
   const { jwtToken } = yield select(getUser)
-  const { emails, roleId } = payload
+  const { emails, roleId, successCb } = payload
   try {
-    yield call(API.post, '/fan/invitation', { emails, roleId }, jwtToken)
+    const res = yield call(
+      API.post,
+      '/fan/invitation',
+      { emails, roleId },
+      jwtToken
+    )
+    if (successCb) yield call(successCb, res)
   } catch (e) {
     yield put(setCommonError(e.response))
   }
@@ -552,6 +624,18 @@ function* fetchAdminAccounts({ payload }) {
   }
 }
 
+// { email, roleId, isNotified } = payload
+function* saveAdminAccounts({ payload }) {
+  const { jwtToken } = yield select(getUser)
+  const { successCb, ...data } = payload
+  try {
+    const res = yield call(API.post, '/admin/add', data, jwtToken)
+    if (successCb) yield call(successCb, res)
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
+}
+
 /**
  * iFrame
  */
@@ -590,7 +674,13 @@ const appSaga = [
   takeLatest(AppNews.FETCH_REQUEST, fetchNewsContents),
   takeLatest(AppMypage.FETCH_REQUEST, fetchMypageContents),
   takeEvery(AppSearch.FETCH_REQUEST, fetchSearchContents),
+
   takeEvery(AppNotification.FETCH_REQUEST, fetchNotifications),
+  takeLatest(
+    AppNotification.FETCH_NOT_READ_COUNT_REQUEST,
+    fetchNewNotificationCount
+  ),
+  takeLatest(AppNotification.UPDATE_READ_REQUEST, saveReadNotifications),
 
   takeLatest(AppPost.FETCH_REQUEST, fetchPost),
   takeEvery(AppPost.FETCH_COMMENTS_REQUEST, fetchComments),
@@ -609,7 +699,9 @@ const appAdminSaga = [
   takeLatest(AppAdminFan.FETCH_LIST_REQUEST, fetchFans),
   takeLatest(AppAdminFan.FETCH_INVITATION_LIST_REQUEST, fetchInvitedFans),
 
-  takeLatest(AppAdminAccount.FETCH_LIST_REQUEST, fetchAdminAccounts)
+  takeLatest(AppAdminAccount.SAVE_REQUEST, saveAdminAccounts),
+  takeLatest(AppAdminAccount.FETCH_LIST_REQUEST, fetchAdminAccounts),
+  takeLatest(AppAdminAccount.FETCH_OTHER_ADMIN_REQUEST, fetchOtherUser)
 ]
 
 function* rootSaga() {

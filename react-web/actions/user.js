@@ -9,6 +9,9 @@ export let reauthenticate = createAction(User.AUTHENTICATE)
 // removing the token
 export let deauthenticate = createAction(User.DEAUTHENTICATE, e => {
   removeCookie(Rule.COOKIE_JWT_TOKEN)
-  Router.push('/view/signin')
+
+  // State初期化したほうが良いので、単純にリダイレクト
+  // Router.push('/view/signin')
+  window.location.replace('/view/signin')
   return e
 })

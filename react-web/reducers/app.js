@@ -30,7 +30,7 @@ const initialState = {
   // 検索
   search: { photos: [], boxContents: [] },
   // 通知
-  notification: { boxContents: [] },
+  notification: { notReadCount: 0, boxContents: [] },
 
   // Admin, User兼用。記事詳細画面
   // comments: voiceでは [[]] になるので注意。それ以外は１次元
@@ -46,7 +46,9 @@ const initialState = {
   // Admin用。招待ファン一覧画面
   invitedFans: { count: 0, item: [] },
   // Admin用。管理者一覧（no-paging）
-  adminAccounts: { item: [] }
+  adminAccounts: { item: [] },
+  // Admin用。管理者情報編集（1人分）
+  otherAdminInfo: {}
 }
 
 // すべてのboxContentsを走査して、データ更新
@@ -193,6 +195,16 @@ export default handleActions(
         ...action.payload
       )
     },
+    [AppNotification.SET_NOT_READ_COUNT]: (state, action) => {
+      return immutable.set(state, `notification.notReadCount`, action.payload)
+    },
+    [AppNotification.UPDATE_READ]: (state, action) => {
+      const updated = state.notification.boxContents.map(e => ({
+        ...e,
+        isRead: true
+      }))
+      return immutable.set(state, `notification.boxContents`, updated)
+    },
 
     /**
      * POST
@@ -300,6 +312,9 @@ export default handleActions(
      */
     [AppAdminAccount.SET_LIST]: (state, action) => {
       return immutable.set(state, `adminAccounts`, action.payload)
+    },
+    [AppAdminAccount.SET_OTHER_ADMIN]: (state, action) => {
+      return immutable.merge(state, `otherAdminInfo`, action.payload)
     }
   },
   initialState

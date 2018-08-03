@@ -1,6 +1,7 @@
 const _ = require('lodash')
 const reqlib = require('app-root-path').require
 const models = reqlib('/models')
+const InvitationService = reqlib('/services/Invitation')
 const Path = reqlib('/constants/Path')
 const Role = reqlib('/../shared/constants/Role')
 const { moveImage } = reqlib('/utils/image')
@@ -69,8 +70,22 @@ module.exports = class User {
     return dbPath
   }
 
-  static async updateProfile(userId, nickname, file, fromServerFiles) {
+  static async updateProfile(userId, file, body) {
+    const {
+      // 共通
+      email,
+      password,
+      fromServerFiles,
+      // 一般ユーザ
+      nickname,
+      // 管理者
+      lastName,
+      firstName,
+      roleId
+    } = body
+
     try {
+      // プロフィール画像は毎回更新かけておく
       let dbPath = await User.moveProfileIcon(file)
       if (!dbPath) {
         if (fromServerFiles && fromServerFiles.length > 0) {
@@ -82,25 +97,47 @@ module.exports = class User {
         }
       }
 
-      await models.User.update(
-        { nickname: sanitizer.html(nickname), iconPath: dbPath },
-        {
-          where: { id: userId }
+      // UPDATE項目追加していく
+      let data = { iconPath: dbPath }
+      if (email) {
+        data = { ...data, email }
+      }
+      if (password) {
+        data = {
+          ...data,
+          passwordHash: await models.User.generateHash(password)
         }
-      )
+      }
+      if (nickname) {
+        data = { ...data, nickname: sanitizer.html(nickname) }
+      }
+      if (lastName) {
+        data = { ...data, lastName }
+      }
+      if (firstName) {
+        data = { ...data, firstName }
+      }
+      if (roleId) {
+        data = { ...data, roleId: +roleId }
+      }
+
+      // DB更新
+      await models.User.update(data, {
+        where: { id: userId }
+      })
     } catch (e) {
       throw e
     }
   }
 
-  static async createNormalUser(email, password, brandId) {
+  static async createUser(code, email, password, brandId, roleId) {
     const trans = await models.sequelize.transaction()
     try {
       const user = await models.User.create(
         {
           email,
           passwordHash: await models.User.generateHash(password),
-          roleId: Role.User.NORMAL
+          roleId: roleId || Role.User.NORMAL
         },
         {
           transaction: trans
@@ -116,6 +153,23 @@ module.exports = class User {
           transaction: trans
         }
       )
+
+      // 管理者特有処理
+      if (roleId >= Role.User.ADMIN_GUEST) {
+        await models.AdminBrand.create(
+          {
+            userId: user.id,
+            brandId: brandId
+          },
+          {
+            transaction: trans
+          }
+        )
+      }
+
+      // Invitationテーブル更新
+      await InvitationService.joinUser(code, trans)
+
       trans.commit()
       return user
     } catch (e) {
@@ -124,7 +178,7 @@ module.exports = class User {
     }
   }
 
-  static async createAdmin(
+  static async createFirstAdmin(
     email,
     password,
     brandName,
@@ -163,18 +217,9 @@ module.exports = class User {
         }
       )
 
-      const admin = await models.Admin.create(
-        {
-          userId: user.id
-        },
-        {
-          transaction: trans
-        }
-      )
-
       await models.AdminBrand.create(
         {
-          adminId: admin.id,
+          userId: user.id,
           brandId: brand.id
         },
         {
@@ -313,7 +358,7 @@ module.exports = class User {
 
     try {
       // 関連テーブルからIDフェッチ
-      const usersBrands = await models.UserBrand.findAll({
+      const adminsBrands = await models.AdminBrand.findAll({
         attributes: ['userId'],
         where: { brandId },
         order: [['id', 'DESC']],
@@ -321,7 +366,12 @@ module.exports = class User {
       })
       // ユーザ取得
       const users = await models.User.findAll({
-        where: { id: _.map(usersBrands, 'userId') },
+        where: {
+          id: _.map(adminsBrands, 'userId'),
+          roleId: {
+            [models.Sequelize.Op.gte]: Role.User.ADMIN_GUEST
+          }
+        },
         order: [['id', 'DESC']],
         raw: true
       })

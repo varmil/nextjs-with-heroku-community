@@ -1,17 +1,11 @@
-const Index = props => (
-  <div style={props.style}>
-    <input
-      {...props}
-      type={props.type || 'text'}
-      className={`form-control ${props.className}`}
-    />
+import Input from 'reactstrap/lib/Input'
 
-    <style jsx>{`
-      input {
-        height: 50px;
-        border-radius: 0px;
-      }
-    `}</style>
-  </div>
+const Index = props => (
+  <Input
+    {...props}
+    type={props.type || 'text'}
+    className={`form-control ${props.className}`}
+    style={{ ...props.style, height: 50, borderRadius: 0 }}
+  />
 )
 export default Index

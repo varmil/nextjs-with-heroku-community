@@ -1,5 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { createAction } from 'redux-actions'
+import { AppNotification } from 'constants/ActionTypes'
 import withIFrameable from 'components/templates/withIFrameable'
 import TopPage from 'components/templates/edit_view_shared/TopPage'
 // import { createAction } from 'redux-actions'
@@ -16,7 +18,10 @@ class Home extends React.Component {
   static async getInitialProps({ ctx }) {
     // ctx.query contains URL params
     const { edit, slug } = ctx.query
-    // const { dispatch } = ctx.store
+
+    // Notifications関連
+    const { dispatch } = ctx.store
+    dispatch(createAction(AppNotification.FETCH_NOT_READ_COUNT_REQUEST)())
 
     /**
      * edit:

@@ -6,6 +6,37 @@ import { Link, Router } from 'routes'
 import { deauthenticate } from 'actions/user'
 import BorderedTextHeader from 'components/organisms/site/BorderedTextHeader'
 
+const LinkOrDiv = props =>
+  props.route ? (
+    <Link route={props.route} passHref>
+      {props.children}
+    </Link>
+  ) : (
+    <div>{props.children}</div>
+  )
+
+const Item = props => (
+  <LinkOrDiv route={props.to}>
+    <div
+      className={`row ${props.className || ''}`}
+      onClick={props.onClick || (() => {})}
+    >
+      <div className="col-9">{props.children}</div>
+      <div className="col-2">
+        <i className="fas fa-chevron-right" />
+      </div>
+
+      <style jsx>{`
+        .row {
+          font-size: 17px;
+          font-weight: bold;
+          color: #4b4b4b;
+        }
+      `}</style>
+    </div>
+  </LinkOrDiv>
+)
+
 class Settings extends React.Component {
   // state = {
   //   email: '',
@@ -21,14 +52,20 @@ class Settings extends React.Component {
 
         <div className="container">
           <section className="contentWrap mt-5 ml-4">
-            <div
-              className="text"
+            <Item to="/view/settings/account" className="my-4">
+              アカウント設定
+            </Item>
+            <Item className="my-4">お問い合わせ</Item>
+            <Item className="my-4">会員規約</Item>
+            <Item className="my-4">プライバシーポリシー</Item>
+            <Item
+              className="my-4"
               onClick={() => {
                 props.dispatch(deauthenticate())
               }}
             >
               ログアウト
-            </div>
+            </Item>
           </section>
         </div>
 

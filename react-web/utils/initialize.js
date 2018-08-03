@@ -14,7 +14,7 @@ export default function(ctx) {
         // store token
         ctx.store.dispatch(reauthenticate(token))
         // fetch and set user basic info from API server with token
-        ctx.store.dispatch(createAction(User.FETCH_REQUEST)(token))
+        ctx.store.dispatch(createAction(User.FETCH_REQUEST)())
         // HACK: low performance, fetch design of the brand
         ctx.store.dispatch(createAction(SiteState.FETCH_REQUEST)())
         // update

@@ -1,8 +1,10 @@
+const jwt = require('jwt-simple')
+const reqlib = require('app-root-path').require
 const services = require('../services')
 const models = require('../models')
 const Message = require('../constants/Message')
-const jwt = require('jwt-simple')
 const { secret } = require('../config/server')
+const Rule = reqlib('/../shared/constants/Rule')
 
 const E_EMAIL_PASSWORD = {
   error: 'メールアドレスとパスワードを正しく入力してください。'
@@ -13,9 +15,13 @@ const E_EMAIL_TAKEN = {
     'このメールアドレスはすでに利用されています。別のメールアドレスをご利用ください。'
 }
 
+const E_INVALID_CODE = {
+  error: 'この招待コードは不正です。間違いがないか再度ご確認ください。'
+}
+
 function tokenForUser(user) {
   const timestamp = new Date().getTime()
-  return jwt.encode({ sub: { id: user.id }, iat: timestamp }, secret)
+  return jwt.encode({ sub: user.id, iat: timestamp }, secret)
 }
 
 exports.signin = function(req, res) {
@@ -25,36 +31,39 @@ exports.signin = function(req, res) {
 exports.signup = async function(req, res, next) {
   console.log('[profile]body', req.body)
   console.log('[profile]file', req.file)
-  // bodyにこのkeyがなければ「ユーザ」として登録（非管理者）
-  const isAdmin = req.body.isAdmin === 'true'
+  // bodyにこのkeyがあれば「新しいブランドの１人目の管理者」として登録
+  const isFirstAdmin = req.body.isAdmin === 'true'
 
   // 必須チェック
-  const { email, password } = req.body
-  if (!email || !password || password.length < 8) {
+  const { email, password, code } = req.body
+  if (!email || !password || password.length < Rule.PASS_MIN_LENGTH) {
     return res.status(422).json(E_EMAIL_PASSWORD)
   }
 
   // 必須チェック（管理者）
   const { brandName, lastName, firstName } = req.body
-  if (isAdmin) {
+  if (isFirstAdmin) {
     if (!brandName || !lastName || !firstName) {
       return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
     }
   }
 
   try {
-    const existingUser = await models.User.findOne({
-      where: { email: email },
-      raw: true
-    })
-    if (existingUser) {
-      return res.status(422).json(E_EMAIL_TAKEN)
+    // emailが使われていないか
+    {
+      const existingUser = await models.User.findOne({
+        where: { email },
+        raw: true
+      })
+      if (existingUser) {
+        return res.status(422).json(E_EMAIL_TAKEN)
+      }
     }
 
-    // create admin record if the user is admin
+    // create first admin record if the user registers from admin signup page
     let user
-    if (isAdmin) {
-      user = await services.User.createAdmin(
+    if (isFirstAdmin) {
+      user = await services.User.createFirstAdmin(
         email,
         password,
         brandName,
@@ -63,10 +72,25 @@ exports.signup = async function(req, res, next) {
         req.file
       )
     } else {
-      // TODO: 本来は招待URLからサーバ側でbrandIdを付与。とりま定数
-      const brandId = 1
-      user = await services.User.createNormalUser(email, password, brandId)
+      // code正当性チェック
+      const invitation = await models.Invitation.find({
+        where: { code },
+        raw: true
+      })
+      if (!invitation) {
+        return res.status(422).json(E_INVALID_CODE)
+      }
+      // 登録
+      const { brandId, roleId } = invitation
+      user = await services.User.createUser(
+        code,
+        email,
+        password,
+        brandId,
+        roleId
+      )
     }
+
     console.log('user created ! { id, roleId } : ', user.id, user.roleId)
     res.json({ token: tokenForUser(user) })
   } catch (e) {
@@ -75,9 +99,17 @@ exports.signup = async function(req, res, next) {
   }
 }
 
+// codeからemail情報を取得する
 exports.authInvitationCode = async function(req, res, next) {
-  // TODO email情報を拾って返す。
   // レコードが存在しない == 招待されてないユーザ
-  // codeを使ったチェックは実際には POST /signup 時に行う
-  res.json(true)
+  const code = req.params.code
+  const invitation = await models.Invitation.find({
+    where: { code },
+    raw: true
+  })
+  if (!invitation) {
+    return res.status(422).json(E_INVALID_CODE)
+  }
+  const { email, roleId } = invitation
+  res.json({ email, roleId })
 }

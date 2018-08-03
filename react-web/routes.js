@@ -29,3 +29,9 @@ routes.add('/admin/post/add/:boxType/:postId', '/admin/post/add')
 
 // （admin）ファン一覧
 routes.add('/admin/fan/list/:pageNum', '/admin/fan/list')
+
+// （admin）アカウント編集（自他）
+routes.add(
+  '/admin/settings/account/edit/:userId',
+  '/admin/settings/account/edit'
+)

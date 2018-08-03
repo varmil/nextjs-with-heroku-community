@@ -59,14 +59,19 @@ class NavBar extends React.Component {
           >
             <i className="fas fa-search mr-3 navIcon" />
 
-            <Link route={'/view/notification'} passHref>
-              <a>
-                <NotificationIcon
-                  className="mr-3 navIcon"
-                  color={props.navIcon.color}
-                />
-              </a>
-            </Link>
+            <div className="d-inline-block position-relative">
+              <Link route={'/view/notification'} passHref>
+                <a>
+                  <NotificationIcon
+                    className="mr-3 navIcon"
+                    color={props.navIcon.color}
+                  />
+                </a>
+              </Link>
+              {props.notReadCount > 0 && (
+                <span className="badge badge-danger">{props.notReadCount}</span>
+              )}
+            </div>
 
             <Link route={'/view/settings'} passHref>
               <a>
@@ -86,7 +91,11 @@ class NavBar extends React.Component {
             color: black;
           }
 
-          .icons .icon {
+          .badge {
+            position: absolute;
+            top: 0;
+            right: 7px;
+            font-size: 10px;
           }
 
           .navIcon {
@@ -103,5 +112,7 @@ export default connect(state => ({
   logo: objectPath.get(state.site, `${PATH_MAP.LOGO}`),
   navIcon: objectPath.get(state.site, `${PATH_MAP.NAV_ICON}`),
   // ユーザ
-  user: state.user
+  user: state.user,
+  // 未読アイコン
+  notReadCount: state.app.notification.notReadCount
 }))(NavBar)

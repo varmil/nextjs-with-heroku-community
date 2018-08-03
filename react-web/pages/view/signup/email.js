@@ -5,14 +5,25 @@ import { createAction } from 'redux-actions'
 import { User } from 'constants/ActionTypes'
 import Input from 'reactstrap/lib/Input'
 import FormFeedback from 'reactstrap/lib/FormFeedback'
+import Role from '/../shared/constants/Role'
 import Rule from '/../shared/constants/Rule'
 import ColorButton from 'components/atoms/ColorButton'
 import CenteredContainer from 'components/molecules/CenteredContainer'
 import SignInUpHeader from 'components/molecules/SignInUpHeader'
 
 class SignupEmail extends React.Component {
+  static async getInitialProps({ ctx }) {
+    const { code } = ctx.query
+
+    // codeをもとにemail情報を取得
+    const { dispatch } = ctx.store
+    dispatch(createAction(User.FETCH_CODE_INFO_REQUEST)({ code }))
+
+    return { code }
+  }
+
   state = {
-    email: '',
+    email: this.props.email || '',
     password: ''
   }
 
@@ -22,16 +33,22 @@ class SignupEmail extends React.Component {
     })
   }
 
-  // ERRORハンドリングしやすいのでここでPOST
   async signup(e) {
+    const { code, roleId } = this.props
     const { email, password } = this.state
-    const successCb = async res => {
-      Router.pushRoute(`/view/signup/complete`)
+    const successCb = res => {
+      // 管理者アカウント or 一般ユーザで遷移先を変える
+      const to =
+        roleId >= Role.User.ADMIN_GUEST
+          ? `/admin/settings/account/edit`
+          : `/view/signup/complete`
+      Router.pushRoute(to)
     }
     this.props.dispatch(
       createAction(User.SIGNUP_REQUEST)({
         email,
         password,
+        code,
         successCb
       })
     )
@@ -43,7 +60,7 @@ class SignupEmail extends React.Component {
     return (
       <CenteredContainer height={430}>
         <section>
-          <SignInUpHeader text="アカウント登録" route={'/view/signup'} />
+          <SignInUpHeader text="アカウント登録" />
         </section>
 
         <section className="mt-5">
@@ -100,5 +117,6 @@ class SignupEmail extends React.Component {
 }
 
 export default connect(state => ({
-  // post: state.site.post
+  email: state.user.email,
+  roleId: state.user.roleId
 }))(SignupEmail)

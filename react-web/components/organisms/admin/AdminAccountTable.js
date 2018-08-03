@@ -12,6 +12,7 @@ import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import ColorButton from 'components/atoms/ColorButton'
 import IconButton from '@material-ui/core/IconButton'
+import { getBaseDomain } from 'utils/API'
 import Role from '/../shared/constants/Role'
 
 const DensedCell = props => (
@@ -34,6 +35,18 @@ const styles = theme => ({
   }
 })
 
+const getRealName = (lastName, firstName) => {
+  if (!lastName && !firstName) {
+    return ''
+  }
+  return lastName + ' ' + firstName
+}
+
+// 招待しただけで未参加ならTRUE。参加済みならFALSE
+const isNotJoined = data => {
+  return data.code
+}
+
 class AdminAccountTable extends React.Component {
   render() {
     const props = this.props
@@ -48,30 +61,48 @@ class AdminAccountTable extends React.Component {
                 <DensedCell>名前</DensedCell>
                 <DensedCell>メールアドレス</DensedCell>
                 <DensedCell>権限</DensedCell>
+                <DensedCell>リンクURL</DensedCell>
                 <DensedCell />
               </TableRow>
             </TableHead>
             <TableBody>
               {data.map(n => {
                 return (
-                  <TableRow key={n.id}>
+                  <TableRow key={n.email + n.id}>
                     <DensedCell component="th" scope="row">
-                      {n.lastName + ' ' + n.firstName}
+                      {isNotJoined(n) ? (
+                        <span className="text-secondary">招待中</span>
+                      ) : (
+                        getRealName(n.lastName, n.firstName)
+                      )}
                     </DensedCell>
                     <DensedCell>{n.email}</DensedCell>
                     <DensedCell>{Role.Name[n.roleId]}</DensedCell>
-                    <DensedCell>
-                      <IconButton
-                        style={{
-                          position: 'relatice',
-                          top: 0,
-                          left: 0,
-                          fontSize: '0.9rem'
-                        }}
-                      >
-                        <i className="fas fa-ellipsis-v" />
-                      </IconButton>
-                    </DensedCell>
+                    {isNotJoined(n) ? (
+                      <DensedCell>{`${getBaseDomain()}:3000/view/signup/${
+                        n.code
+                      }`}</DensedCell>
+                    ) : (
+                      <DensedCell />
+                    )}
+                    {isNotJoined(n) ? (
+                      <DensedCell />
+                    ) : (
+                      <DensedCell>
+                        <Link route={`/admin/settings/account/edit/${n.id}`}>
+                          <IconButton
+                            style={{
+                              position: 'relative',
+                              top: 0,
+                              left: 0,
+                              fontSize: '0.9rem'
+                            }}
+                          >
+                            <i className="fas fa-ellipsis-v" />
+                          </IconButton>
+                        </Link>
+                      </DensedCell>
+                    )}
                   </TableRow>
                 )
               })}

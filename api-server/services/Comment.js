@@ -1,6 +1,7 @@
 const reqlib = require('app-root-path').require
 const _ = require('lodash')
 const UserService = reqlib('/services/User')
+const NotificationService = reqlib('/services/Notification')
 const models = reqlib('/models')
 const Path = reqlib('/constants/Path')
 const Rule = reqlib('/../shared/constants/Rule')
@@ -26,6 +27,9 @@ module.exports = class Comment {
         { where: { id: postId } },
         { transaction }
       )
+
+      // update Notification table (not wait the operation)
+      NotificationService.save(Rule.NOTIFICATION_TYPE.Comment, postId, userId)
 
       await transaction.commit()
       const merged = (await Comment.associateWithUser([comment.dataValues]))[0]

@@ -92,7 +92,11 @@ export const AppSearch = createTypes(
 export const AppNotification = createTypes(
   'app/notification/',
   'ADD_CONTENTS',
-  async('FETCH')
+  'SET_NOT_READ_COUNT',
+  'UPDATE_READ',
+  async('FETCH'),
+  async('FETCH_NOT_READ_COUNT'),
+  async('UPDATE_READ')
 )
 
 // POST詳細画面
@@ -157,6 +161,9 @@ export const AppAdminAccount = createTypes(
   // 一覧表示用
   async('FETCH_LIST'),
   'SET_LIST',
+  // 編集用
+  async('FETCH_OTHER_ADMIN'),
+  'SET_OTHER_ADMIN',
   // 追加
   async('SAVE')
 )

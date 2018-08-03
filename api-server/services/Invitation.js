@@ -24,6 +24,13 @@ module.exports = class Invitation {
   }
 
   static async save(brandId, emails, defaultRole = undefined) {
+    // emailsは文字列でも配列でもOK
+    if (!_.isString(emails) && !_.isArray(emails)) {
+      console.error('emails should be string or array')
+      return
+    }
+    emails = _.isString(emails) ? [emails] : emails
+
     try {
       // codeがUNIQUEになるまで再生成し続ける
       let codes = []
@@ -49,6 +56,22 @@ module.exports = class Invitation {
         }
       })
       return await models.Invitation.bulkCreate(data)
+    } catch (e) {
+      throw e
+    }
+  }
+
+  // 招待ユーザが登録完了した際に呼ぶ
+  static async joinUser(code, trans) {
+    try {
+      await models.Invitation.update(
+        {
+          status: ConstInvitation.JOINED,
+          joinedAt: new Date()
+        },
+        { where: { code } }
+      )
+      return true
     } catch (e) {
       throw e
     }

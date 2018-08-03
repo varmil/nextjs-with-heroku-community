@@ -1,20 +1,31 @@
 import React from 'react'
 import TallTextInput from 'components/atoms/TallTextInput'
+import FormFeedback from 'reactstrap/lib/FormFeedback'
 import ProfileIconSelector from 'components/atoms/ProfileIconSelector'
 import ColorButton from 'components/atoms/ColorButton'
 import Color from 'constants/Color'
+import * as utilFiles from 'utils/files'
+import Rule from '/../shared/constants/Rule'
 
 const mbStyle = { marginBottom: 20 }
 
 class AdminRegisterForm extends React.Component {
-  state = {
-    brandName: '',
-    lastName: '',
-    firstName: '',
-    email: '',
-    password: '',
-    files: [],
-    errorMessage: ''
+  constructor(props) {
+    super(props)
+
+    const { brandName, lastName, firstName, email, iconPath } = props
+    const state = {
+      brandName,
+      lastName: lastName || '',
+      firstName: firstName || '',
+      email: email || '',
+      password: '',
+      files: iconPath
+        ? [{ [utilFiles.FROM_SERVER_KEY]: true, preview: this.props.iconPath }]
+        : [],
+      errorMessage: ''
+    }
+    this.state = state
   }
 
   handleChange = name => event => {
@@ -35,7 +46,9 @@ class AdminRegisterForm extends React.Component {
   }
 
   render() {
+    const { brandNameDisabled } = this.props
     const state = this.state
+    const passLength = state.password.length
     return (
       <div>
         <div className="box" style={{}}>
@@ -58,6 +71,7 @@ class AdminRegisterForm extends React.Component {
               value={state.brandName}
               onChange={this.handleChange('brandName')}
               required
+              disabled={brandNameDisabled}
             />
           </div>
 
@@ -96,9 +110,15 @@ class AdminRegisterForm extends React.Component {
               style={mbStyle}
               value={state.password}
               onChange={this.handleChange('password')}
+              invalid={passLength > 0 && passLength < Rule.PASS_MIN_LENGTH}
             />
+            <FormFeedback>
+              {Rule.PASS_MIN_LENGTH}文字以上入力してください
+            </FormFeedback>
           </div>
         </div>
+
+        {this.props.children}
 
         <section className="mt-5 text-center">
           <ColorButton

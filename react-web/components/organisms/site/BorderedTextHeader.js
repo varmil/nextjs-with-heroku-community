@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'routes'
+import { Router, Link } from 'routes'
 import IconButton from '@material-ui/core/IconButton'
 import URL from 'constants/URL'
 
@@ -18,11 +18,11 @@ export default props => {
       <section className="header mt-4 pb-3 text-center">
         <span>{props.text}</span>
 
-        <Link route={URL.VIEW_HOME}>
-          <IconButton style={iconButtonStyle}>
-            <i className="fas fa-chevron-left" />
-          </IconButton>
-        </Link>
+        {/* <Link route={URL.VIEW_HOME}> */}
+        <IconButton style={iconButtonStyle} onClick={() => Router.back()}>
+          <i className="fas fa-chevron-left" />
+        </IconButton>
+        {/* </Link> */}
       </section>
 
       <style jsx>{`

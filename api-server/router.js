@@ -83,10 +83,28 @@ module.exports = function(app) {
   })
 
   app.get('/user', requireAuth, function(req, res) {
-    const { id, nickname, firstName, lastName, iconPath, brand } = req.user
-    const realName = lastName + ' ' + firstName
-    res.json({ id, nickname, realName, iconPath, brand })
+    const {
+      id,
+      email,
+      nickname,
+      firstName,
+      lastName,
+      iconPath,
+      brand,
+      roleId
+    } = req.user
+    res.json({
+      id,
+      email,
+      nickname,
+      firstName,
+      lastName,
+      iconPath,
+      brand,
+      roleId
+    })
   })
+  app.get('/user/:id', requireAuth, UserController.fetch)
 
   // app.get('/admin', requireAuth, userRole.is('adminGuest'), function(req, res) {
   //   const { id, nickname, createdAt } = req.user
@@ -98,7 +116,18 @@ module.exports = function(app) {
    */
   // 共通
   app.post('/signin', requireSignIn, AuthController.signin)
+  app.post('/signup', AuthController.signup)
   app.get('/auth/code/:code', AuthController.authInvitationCode)
+  app.get(
+    '/notification/count',
+    requireAuth,
+    UserController.fetchNewNotificationCount
+  )
+  app.post(
+    '/notification/read',
+    requireAuth,
+    UserController.saveReadNotifications
+  )
   app.get(
     '/notification/:pageNum',
     requireAuth,
@@ -106,7 +135,6 @@ module.exports = function(app) {
   )
 
   // 一般ユーザ
-  app.post('/signup', AuthController.signup)
   app.post(
     '/user/profile',
     requireAuth,
@@ -118,8 +146,15 @@ module.exports = function(app) {
   /**
    * ADMIN_USER
    */
-  // 管理者（アイコンも同時登録）
+  // 管理者初期登録（新規ブランド追加時）。アイコンも同時登録
   app.post('/signup/admin', upload.single('image'), AuthController.signup)
+  // 管理者追加
+  app.post(
+    '/admin/add',
+    requireAuth,
+    userRole.is('adminSuper'),
+    UserController.saveAdminAdd
+  )
   app.get(
     '/admin/list',
     requireAuth,
@@ -133,7 +168,7 @@ module.exports = function(app) {
   app.post(
     '/site/design',
     requireAuth,
-    userRole.is('adminGuest'),
+    userRole.is('adminDeveloper'),
     SiteController.saveDesign
   )
   app.get('/site/design', requireAuth, SiteController.fetchDesign)

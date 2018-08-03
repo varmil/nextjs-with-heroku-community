@@ -1,29 +1,53 @@
+const _ = require('lodash')
 const reqlib = require('app-root-path').require
 const services = reqlib('/services')
 const models = reqlib('/models')
 const Message = reqlib('/constants/Message')
 const Role = reqlib('/../shared/constants/Role')
+const ConstInvitation = reqlib('/../shared/constants/Invitation')
+
+/**
+ * 特定ユーザ情報取得
+ */
+exports.fetch = async (req, res, next) => {
+  const userId = req.params.id
+  const user = await models.User.findById(userId, { raw: true })
+  const brand = await services.User.fetchBrand(userId)
+  let result = _.pick(user, [
+    'id',
+    'email',
+    'nickname',
+    'firstName',
+    'lastName',
+    'iconPath',
+    'roleId'
+  ])
+  result = { ...result, brand }
+  res.json(result)
+}
 
 /**
  * Profile編集
  */
 exports.profile = async (req, res, next) => {
   console.log('[profilesave]body', req.body)
-  console.log('[profilesave]file', req.files)
-  const { nickname, fromServerFiles } = req.body
-  const userId = req.user.id
+  console.log('[profilesave]file', req.file)
+  const { nickname, lastName, firstName } = req.body
+  const userId = req.body.userId || req.user.id
+  const meId = req.user.id
 
-  if (!nickname) {
+  // ニックネーム or 本名は必須
+  if (!nickname && (!firstName || !lastName)) {
     return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
   }
 
+  // もし他人のページを変更しようとする場合はAdmin権限チェック
+  if (meId !== +userId && req.user.roleId < Role.User.ADMIN_SUPER) {
+    return res.status(401).json(Message.E_NOT_ALLOWED)
+  }
+
   try {
-    await services.User.updateProfile(
-      userId,
-      nickname,
-      req.file,
-      fromServerFiles
-    )
+    await services.User.updateProfile(userId, req.file, req.body)
     res.json(true)
   } catch (e) {
     return next(e)
@@ -68,7 +92,7 @@ exports.fetchInvitedFans = async (req, res, next) => {
 
   const invitedFans = await services.Invitation.fetchList(
     pageNum,
-    { brandId },
+    { brandId, roleId: Role.User.NORMAL },
     { perPage }
   )
   const count = await models.Invitation.count({ where: { brandId }, raw: true })
@@ -79,7 +103,7 @@ exports.fetchInvitedFans = async (req, res, next) => {
  * 招待発行
  */
 exports.saveInvitation = async (req, res, next) => {
-  console.log('[profilesave]body', req.body)
+  console.log('[saveInvitation]body', req.body)
   const { emails, roleId } = req.body
   const brandId = req.user.brand.id
 
@@ -111,11 +135,33 @@ exports.saveInvitation = async (req, res, next) => {
 exports.fetchNotifications = async (req, res, next) => {
   const { perPage } = req.query
   const pageNum = req.params.pageNum || 1 // 1 origin
-  const brandId = req.user.brand.id
 
-  // TODO 通知取得
+  const where = { userId: req.user.id }
+  const data = await services.Notification.fetchList(pageNum, where, {
+    perPage
+  })
+  res.json(data)
+}
 
-  res.json([true, true, true])
+/**
+ * 未読通知数取得
+ */
+exports.fetchNewNotificationCount = async (req, res, next) => {
+  const count = await models.Notification.count({
+    where: {
+      userId: req.user.id,
+      isRead: false
+    }
+  })
+  res.json(count)
+}
+
+/**
+ * 通知を既読に（待たない）
+ */
+exports.saveReadNotifications = async (req, res, next) => {
+  services.Notification.updateAllRead(req.user.id)
+  res.json(true)
 }
 
 /**
@@ -123,6 +169,50 @@ exports.fetchNotifications = async (req, res, next) => {
  */
 exports.fetchAdminList = async (req, res, next) => {
   const brandId = req.user.brand.id
+
+  // 登録済み
   const admins = await services.User.fetchAllAdmins(brandId)
-  res.json({ item: admins })
+
+  // 招待済み管理者（招待コードがほしいので）。ページングしないので適当に
+  const invited = await services.Invitation.fetchList(
+    1,
+    {
+      brandId,
+      roleId: {
+        [models.Sequelize.Op.gte]: Role.User.ADMIN_GUEST
+      },
+      status: ConstInvitation.NOT_JOINED
+    },
+    { perPage: 10000 }
+  )
+
+  // 連結してソート
+  const sorted = _.orderBy(_.concat(admins, invited), ['createdAt'], ['desc'])
+  // console.log('sorted @@@@@@@@@@', sorted)
+  res.json({ item: sorted })
+}
+
+/**
+ * 管理者アカウント追加
+ */
+exports.saveAdminAdd = async (req, res, next) => {
+  console.log('[saveAdminAdd]body', req.body)
+  const { email, roleId, isNotified } = req.body
+  const brandId = req.user.brand.id
+
+  if (!email || !roleId) {
+    return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
+  }
+
+  try {
+    // ファン招待と同じく招待コードを使う
+    await services.Invitation.save(brandId, email, roleId)
+    res.json(true)
+  } catch (e) {
+    if (e.name === 'SequelizeUniqueConstraintError') {
+      return res.status(500).json('そのメールアドレスは既に招待済みです。')
+    } else {
+      return res.status(500).json(e.name)
+    }
+  }
 }

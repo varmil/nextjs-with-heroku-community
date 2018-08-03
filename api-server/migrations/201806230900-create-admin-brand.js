@@ -11,7 +11,7 @@ module.exports = {
           primaryKey: true,
           type: Sequelize.INTEGER
         },
-        adminId: {
+        userId: {
           allowNull: false,
           defaultValue: 0,
           type: Sequelize.INTEGER
@@ -31,7 +31,7 @@ module.exports = {
           type: Sequelize.DATE
         }
       })
-      .then(() => queryInterface.addIndex(tableName, { fields: ['adminId'] }))
+      .then(() => queryInterface.addIndex(tableName, { fields: ['userId'] }))
       .then(() => queryInterface.addIndex(tableName, { fields: ['brandId'] }))
   },
   down: function(queryInterface, Sequelize) {
