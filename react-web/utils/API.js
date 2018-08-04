@@ -2,20 +2,21 @@ import axios from 'axios'
 import env from '.env.json'
 
 const HTTP_SCHEMA = 'http://'
-const LOCALHOST = env.DEV_API_SERVER_URL || 'localhost'
+const SERVER_LOCALHOST = 'localhost'
+const DEV_SERVER = env.DEV_API_SERVER_URL || 'localhost'
 const PRODUCTION_SERVER = env.PROD_API_SERVER_URL || '35.200.117.204'
 const PORT = 5000
 
 export const getBaseDomain = () => {
   // server
   const isServer = typeof window === 'undefined'
-  if (isServer) return `${HTTP_SCHEMA}${LOCALHOST}`
+  if (isServer) return `${HTTP_SCHEMA}${SERVER_LOCALHOST}`
 
   // browser
   if (process.env.NODE_ENV === 'production') {
     return `${HTTP_SCHEMA}${PRODUCTION_SERVER}`
   } else {
-    return `${HTTP_SCHEMA}${LOCALHOST}`
+    return `${HTTP_SCHEMA}${DEV_SERVER}`
   }
 }
 
