@@ -14,6 +14,7 @@ import ColorButton from 'components/atoms/ColorButton'
 import IconButton from '@material-ui/core/IconButton'
 import { getBaseDomain } from 'utils/API'
 import Role from '/../shared/constants/Role'
+import url from 'constants/URL'
 
 const DensedCell = props => (
   <TableCell {...props} padding="dense">
@@ -79,9 +80,9 @@ class AdminAccountTable extends React.Component {
                     <DensedCell>{n.email}</DensedCell>
                     <DensedCell>{Role.Name[n.roleId]}</DensedCell>
                     {isNotJoined(n) ? (
-                      <DensedCell>{`${getBaseDomain()}:3000/view/signup/${
-                        n.code
-                      }`}</DensedCell>
+                      <DensedCell>{`${getBaseDomain()}:3000${
+                        url.SIGNUP_EMAIL
+                      }/${n.code}`}</DensedCell>
                     ) : (
                       <DensedCell />
                     )}

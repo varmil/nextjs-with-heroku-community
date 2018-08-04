@@ -13,6 +13,7 @@ import TablePagination from '@material-ui/core/TablePagination'
 import Paper from '@material-ui/core/Paper'
 import { getBaseDomain } from 'utils/API'
 import Invitation from '/../shared/constants/Invitation'
+import url from 'constants/URL'
 
 const StatusLabel = props => {
   if (props.status === Invitation.NOT_SEND) {
@@ -91,7 +92,7 @@ class FanTable extends React.Component {
                         ? fecha.format(new Date(n.joinedAt), 'YYYY-MM-DD')
                         : null}
                     </DensedCell>
-                    <DensedCell>{`${getBaseDomain()}:3000/view/signup/${
+                    <DensedCell>{`${getBaseDomain()}:3000${url.SIGNUP_EMAIL}/${
                       n.code
                     }`}</DensedCell>
                   </TableRow>

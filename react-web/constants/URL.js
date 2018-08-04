@@ -1,5 +1,6 @@
 export default {
   ADMIN_SITE_EDIT: '/admin/site/edit',
+  SIGNUP_EMAIL: '/view/signup/email',
   VIEW_HOME: '/view/home',
   BOX_BASE_SLUG: 'home',
 
