@@ -5,6 +5,12 @@
 * `MySQL >= 5.7` (for api-server)
 
 ## How to Use (dev)
+### 0. env
+```sh
+cd react-web
+cp .env.sample.json .env.json
+# please modify env variables to suit your environment
+```
 
 ### 1. client + web-server
 ```sh
