@@ -1,8 +1,9 @@
 import axios from 'axios'
+import env from '/.env.json'
 
 const HTTP_SCHEMA = 'http://'
-const LOCALHOST = 'localhost'
-const PRODUCTION_SERVER = '35.200.117.204'
+const LOCALHOST = env.DEV_API_SERVER_URL || 'localhost'
+const PRODUCTION_SERVER = env.PROD_API_SERVER_URL || '35.200.117.204'
 const PORT = 5000
 
 export const getBaseDomain = () => {

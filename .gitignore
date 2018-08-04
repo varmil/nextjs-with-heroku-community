@@ -74,3 +74,4 @@ bundles
 react-web/static/img/up
 docker/data
 .vagrant
+.env.json
