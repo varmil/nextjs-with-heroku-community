@@ -1,14 +1,18 @@
 version: '2'
 services:
   db:
-    build: docker/mysql
+    image: groonga/mroonga:mysql5722_mroonga803
     volumes:
       - ./docker/mysql/mysql-init.sql:/commune-entry.sql
       - ~/docker/data/mysql:/var/lib/mysql
       # - ./docker/mysql-conf/my.cnf:/etc/my.cnf
     ports:
       - "3306:3306"
-    command: --init-file /commune-entry.sql --innodb-use-native-aio=0
+    command:
+      "--init-file /commune-entry.sql \
+       --innodb_buffer_pool_size=2G \
+       --innodb-use-native-aio=0 \
+       --skip-name-resolve"
     restart: always
   # nginx:
   #   image: nginx:1.13.5-alpine
