@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "ubuntu/xenial64"
+  config.vm.box = "ubuntu/trusty64"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -40,8 +40,8 @@ Vagrant.configure("2") do |config|
   # config.vm.synced_folder ".", "/vagrant", disabled: true
   # config.vm.synced_folder "./", "/home/vagrant/sync", type: "rsync",
   #   rsync__exclude: [".git/", "node_modules/"]
-  config.vm.synced_folder ".", "/vagrant", type: "rsync",
-    rsync__exclude: [".git/", "node_modules/"]
+  # config.vm.synced_folder ".", "/vagrant", type: "rsync",
+  #   rsync__exclude: [".git/", "node_modules/"]
 
 
   # Provider-specific configuration so you can fine-tune various

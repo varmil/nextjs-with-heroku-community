@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const HTTP_SCHEMA = 'http://'
 const LOCALHOST = 'localhost'
-const PRODUCTION_SERVER = '35.200.99.144'
+const PRODUCTION_SERVER = '35.200.117.204'
 const PORT = 5000
 
 export const getBaseDomain = () => {
