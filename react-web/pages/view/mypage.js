@@ -48,7 +48,7 @@ class Mypage extends React.Component {
             どうぞよろしくお願いいたします！
           </section>
 
-          <section className="act mt-4 row justify-content-center">
+          {/* <section className="act mt-4 row justify-content-center">
             <div className="entity text-center">
               <div className="n">140</div>
               <div className="d">投稿</div>
@@ -61,7 +61,7 @@ class Mypage extends React.Component {
               <div className="n">24k</div>
               <div className="d">コメント</div>
             </div>
-          </section>
+          </section> */}
 
           <section className="badges mt-2 row justify-content-center">
             {range(6).map(i => (

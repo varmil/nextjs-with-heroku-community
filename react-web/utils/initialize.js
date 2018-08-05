@@ -29,7 +29,7 @@ function redirectIfNeeded(ctx, token) {
   // 現在ログイン状態でこれらのページにアクセスしたらリダイレクト
   const redirectToHomeIfNeeded = ctx => {
     const shouldRedirect = ONLY_GUEST_ROUTES.some(r => ctx.pathname.includes(r))
-    console.log('TO HOME', ctx.pathname, shouldRedirect)
+    // console.log('TO HOME', ctx.pathname, shouldRedirect)
     if (shouldRedirect) {
       redirect(ctx.res, url.VIEW_HOME)
       return true
@@ -40,7 +40,7 @@ function redirectIfNeeded(ctx, token) {
   // 現在未ログイン状態なら、signin, signup関連のページのみ表示許可
   const redirectToSigninIfNeeded = ctx => {
     const isSafePath = ONLY_GUEST_ROUTES.some(r => ctx.pathname.includes(r))
-    console.log('TO SIGNIN', ctx.pathname, isSafePath)
+    // console.log('TO SIGNIN', ctx.pathname, isSafePath)
     if (!isSafePath) {
       redirect(ctx.res, '/view/signin')
       return true
