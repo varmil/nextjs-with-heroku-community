@@ -26,6 +26,15 @@ function dispatchUserInit(ctx, token) {
 }
 
 function redirectIfNeeded(ctx, token) {
+  const redirect = (res, to) => {
+    if (res) {
+      ctx.res.writeHead(302, { Location: to })
+      ctx.res.end()
+    } else {
+      Router.push(to)
+    }
+  }
+
   // 現在ログイン状態でこれらのページにアクセスしたらリダイレクト
   const redirectToHomeIfNeeded = ctx => {
     const shouldRedirect = ONLY_GUEST_ROUTES.some(r => ctx.pathname.includes(r))
@@ -46,15 +55,6 @@ function redirectIfNeeded(ctx, token) {
       return true
     }
     return false
-  }
-
-  const redirect = (res, to) => {
-    if (res) {
-      ctx.res.writeHead(302, { Location: to })
-      ctx.res.end()
-    } else {
-      Router.push(to)
-    }
   }
 
   // tokenが正しいかはわからないが、tokenありなしでリダイレクト挙動を分ける
