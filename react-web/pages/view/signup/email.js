@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Router } from 'routes'
+import { Router, Link } from 'routes'
 import { createAction } from 'redux-actions'
 import { User } from 'constants/ActionTypes'
 import Input from 'reactstrap/lib/Input'
@@ -55,10 +55,11 @@ class SignupEmail extends React.Component {
   }
 
   render() {
+    const { code } = this.props
     const { email, password } = this.state
     const passLength = password.length
     return (
-      <CenteredContainer height={430}>
+      <CenteredContainer height={450}>
         <section>
           <SignInUpHeader text="アカウント登録" />
         </section>
@@ -104,11 +105,23 @@ class SignupEmail extends React.Component {
           <a>利用規約</a> に同意したことになります。
         </section>
 
+        <section className="login mt-4 text-center">
+          <Link route={`/view/signin?code=${code}`}>
+            <a>アカウントをお持ちの方はログインへ</a>
+          </Link>
+        </section>
+
         <style jsx>{`
           .regNote,
           label,
           .alert {
             font-size: 12px;
+          }
+
+          .login a {
+            font-size: 12px;
+            color: #909090;
+            text-decoration: underline;
           }
         `}</style>
       </CenteredContainer>

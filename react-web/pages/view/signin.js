@@ -8,20 +8,18 @@ import ColorButton from 'components/atoms/ColorButton'
 import CenteredContainer from 'components/molecules/CenteredContainer'
 import SignInUpHeader from 'components/molecules/SignInUpHeader'
 import Rule from '/../shared/constants/Rule'
-
-// import RoundWideButton from 'components/atoms/RoundWideButton'
-// const btnStyle = {
-//   width: '100%'
-// }
-// const inputStyle = {
-//   borderRadius: 15,
-//   padding: '10px 20px'
-// }
+import url from 'constants/URL'
 
 const E_MESSAGE =
   'メールアドレスかパスワードが間違っています。再度入力し直してください。'
 
 class Signin extends React.Component {
+  static async getInitialProps({ ctx }) {
+    // アカウント登録画面から遷移したときはクエリストリングにcodeをつける
+    const { code } = ctx.query
+    return { code }
+  }
+
   state = {
     email: '',
     password: ''
@@ -50,13 +48,17 @@ class Signin extends React.Component {
   }
 
   render() {
+    const { code } = this.props
     const { email, password } = this.state
 
     return (
       <React.Fragment>
         <CenteredContainer height={430}>
           <section>
-            <SignInUpHeader text="ログイン" route={'/view/signup/top/foobar'} />
+            <SignInUpHeader
+              text="ログイン"
+              route={`${url.SIGNUP_EMAIL}/${code}`}
+            />
           </section>
 
           {/* <section className="oauth mt-5">

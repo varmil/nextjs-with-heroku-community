@@ -108,7 +108,7 @@ exports.authInvitationCode = async function(req, res, next) {
     raw: true
   })
   if (!invitation) {
-    return res.status(422).json(E_INVALID_CODE)
+    return res.status(401).json(E_INVALID_CODE)
   }
   const { email, roleId } = invitation
   res.json({ email, roleId })
