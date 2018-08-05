@@ -3,10 +3,11 @@ import { reauthenticate } from 'actions/user'
 import { createAction } from 'redux-actions'
 import { User, SiteState } from 'constants/ActionTypes'
 import { getCookie } from 'utils/cookie'
-import { Router } from 'routes'
+import Router from 'next/router'
 import Rule from 'constants/Rule'
 import url from 'constants/URL'
 
+// 部分一致。これらがpathnameの一部に含まれていればGUESTでもアクセス可能
 const ONLY_GUEST_ROUTES = [
   '/view/signin',
   '/view/signup',
@@ -26,21 +27,33 @@ function dispatchUserInit(ctx, token) {
 
 function redirectIfNeeded(ctx, token) {
   // 現在ログイン状態でこれらのページにアクセスしたらリダイレクト
-  function redirectToHomeIfNeeded(ctx) {
+  const redirectToHomeIfNeeded = ctx => {
     const shouldRedirect = ONLY_GUEST_ROUTES.some(r => ctx.pathname.includes(r))
-    console.info('TO HOME', ctx.pathname, shouldRedirect)
+    console.log('TO HOME', ctx.pathname, shouldRedirect)
     if (shouldRedirect) {
-      console.log('you are already logined')
-      Router.replaceRoute(url.VIEW_HOME)
+      redirect(ctx.res, url.VIEW_HOME)
+      return true
     }
+    return false
   }
 
   // 現在未ログイン状態なら、signin, signup関連のページのみ表示許可
-  function redirectToSigninIfNeeded(ctx) {
+  const redirectToSigninIfNeeded = ctx => {
     const isSafePath = ONLY_GUEST_ROUTES.some(r => ctx.pathname.includes(r))
-    console.info('TO SIGNIN', ctx.pathname, isSafePath)
+    console.log('TO SIGNIN', ctx.pathname, isSafePath)
     if (!isSafePath) {
-      return Router.pushRoute('/view/signin')
+      redirect(ctx.res, '/view/signin')
+      return true
+    }
+    return false
+  }
+
+  const redirect = (res, to) => {
+    if (res) {
+      ctx.res.writeHead(302, { Location: to })
+      ctx.res.end()
+    } else {
+      Router.push(to)
     }
   }
 
@@ -53,13 +66,15 @@ function redirectIfNeeded(ctx, token) {
 }
 
 // checks if the page is being loaded on the server, and if so, get auth token from the cookie:
-export default function(ctx) {
+export default ctx => {
   if (ctx.isServer) {
-    if (ctx.req.headers.cookie) {
-      const token = getCookie(Rule.COOKIE_JWT_TOKEN, ctx.req)
-      if (token) {
-        dispatchUserInit(ctx, token)
-      }
+    const token = getCookie(Rule.COOKIE_JWT_TOKEN, ctx.req)
+
+    const isRedirected = redirectIfNeeded(ctx, token)
+    if (isRedirected) return
+
+    if (token) {
+      dispatchUserInit(ctx, token)
     }
   } else {
     const token = ctx.store.getState().user.jwtToken

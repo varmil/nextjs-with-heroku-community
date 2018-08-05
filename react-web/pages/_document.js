@@ -17,7 +17,7 @@ class MyDocument extends Document {
         <Head>
           <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-          <link rel="stylesheet" href="/_next/static/style.css" />
+          {/* <link rel="stylesheet" href="/_next/static/style.css" /> */}
           <link
             href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
             rel="stylesheet"
