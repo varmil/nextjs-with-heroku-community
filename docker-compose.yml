@@ -1,5 +1,16 @@
 version: '2'
 services:
+  https-portal:
+    image: steveltn/https-portal:1
+    ports:
+      - '80:80'
+      - '443:443'
+    restart: always
+    environment:
+      DOMAINS: 'commune.dayone.jp -> http://dockerhost:3000'
+      # STAGE: 'production'
+      # FORCE_RENEW: 'true'
+
   db:
     image: groonga/mroonga:mysql5722_mroonga803
     volumes:
