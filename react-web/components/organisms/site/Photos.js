@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import LazyLoad from 'react-lazyload'
 import { Router } from 'routes'
-import Fade from 'react-reveal/Fade'
 
 /**
  * 一覧用の個別画像
@@ -11,18 +10,16 @@ export const PreviewImage = props => {
   const HEIGHT = 110
   return (
     <React.Fragment>
-      <Fade>
-        <div
-          onClick={async () => {
-            const id = `img${props.index}`
-            await Router.pushRoute(`${props.route}#${id}`)
-          }}
-        >
-          <LazyLoad height={HEIGHT} once>
-            <img className="card-img-top" src={props.src} alt="" />
-          </LazyLoad>
-        </div>
-      </Fade>
+      <div
+        onClick={async () => {
+          const id = `img${props.index}`
+          await Router.pushRoute(`${props.route}#${id}`)
+        }}
+      >
+        <LazyLoad height={HEIGHT} once>
+          <img className="card-img-top" src={props.src} alt="" />
+        </LazyLoad>
+      </div>
 
       <style jsx>{`
         img {
