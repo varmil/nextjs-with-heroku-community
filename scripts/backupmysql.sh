@@ -11,11 +11,11 @@ dirpath='/home/commune/backup'
 filename=`date +%y%m%d`
 
 # 指定したDBのスキーマおよびデータをすべて吐き出す
-docker exec node-commune_db_1 mysqldump -uroot commune > $dirpath/$filename.sql
+docker exec node-commune_db_1 mysqldump -uroot commune | gzip > $dirpath/$filename.sql.gz
 
 # パーミッション変更
-chmod 700 $dirpath/$filename.sql
+chmod 700 $dirpath/$filename.sql.gz
 
 # 保存期間を過ぎたバックアップを削除
 oldfile=`date --date "$period days ago" +%y%m%d`
-rm -f $dirpath/$oldfile.sql
+rm -f $dirpath/$oldfile.sql.gz
