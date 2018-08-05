@@ -1,4 +1,5 @@
 #!/bin/sh
+cd `dirname $0`
 
 # バックアップの保存期間（days）
 period=7
@@ -10,7 +11,7 @@ dirpath='/home/commune/backup'
 filename=`date +%y%m%d`
 
 # 指定したDBのスキーマおよびデータをすべて吐き出す
-docker exec -it node-commune_db_1 mysqldump -uroot commune > $dirpath/$filename.sql
+docker exec node-commune_db_1 mysqldump -uroot commune > $dirpath/$filename.sql
 
 # パーミッション変更
 chmod 700 $dirpath/$filename.sql
