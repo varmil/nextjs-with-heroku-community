@@ -78,6 +78,7 @@ module.exports = class User {
       fromServerFiles,
       // 一般ユーザ
       nickname,
+      introduction,
       // 管理者
       lastName,
       firstName,
@@ -110,6 +111,9 @@ module.exports = class User {
       }
       if (nickname) {
         data = { ...data, nickname: sanitizer.html(nickname) }
+      }
+      if (introduction) {
+        data = { ...data, introduction: sanitizer.html(introduction) }
       }
       if (lastName) {
         data = { ...data, lastName }
@@ -338,7 +342,8 @@ module.exports = class User {
   }
 
   static arrToObj(arr, key, value) {
-    return _.chain(arr)
+    return _
+      .chain(arr)
       .keyBy(key)
       .mapValues(value)
       .value()

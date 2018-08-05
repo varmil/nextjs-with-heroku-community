@@ -2,11 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
 import { Link, Router } from 'routes'
+import { User } from 'constants/ActionTypes'
 import Input from 'reactstrap/lib/Input'
 import FormFeedback from 'reactstrap/lib/FormFeedback'
 import * as utilFiles from 'utils/files'
+import ColorButton from 'components/atoms/ColorButton'
 import ProfileIconSelector from 'components/atoms/ProfileIconSelector'
 import BorderedTextHeader from 'components/organisms/site/BorderedTextHeader'
+import Color from 'constants/Color'
 import Rule from '/../shared/constants/Rule'
 
 const NULL_FEEDBACK = '1文字以上入力してください。'
@@ -19,15 +22,14 @@ class Account extends React.Component {
   constructor(props) {
     super(props)
 
-    const { brandName, nickname, description, email, iconPath } = props
+    const { nickname, introduction, email, iconPath } = props.user
     const state = {
-      brandName,
       nickname: nickname || '',
-      description: description || '',
+      introduction: introduction || '',
       email: email || '',
       password: '',
       files: iconPath
-        ? [{ [utilFiles.FROM_SERVER_KEY]: true, preview: this.props.iconPath }]
+        ? [{ [utilFiles.FROM_SERVER_KEY]: true, preview: iconPath }]
         : [],
       errorMessage: ''
     }
@@ -47,15 +49,30 @@ class Account extends React.Component {
     this.setState({ ...this.state, files: files })
   }
 
+  onSubmit = () => {
+    console.info('state', this.state)
+
+    const successCb = async res => {
+      Router.back()
+    }
+    this.props.dispatch(
+      createAction(User.SAVE_PROFILE_REQUEST)({
+        successCb,
+        // 面倒なので全部渡してSAGAでフィルタリングする
+        data: { ...this.state }
+      })
+    )
+  }
+
   render() {
     const props = this.props
-    const { files, nickname, description, email, password } = this.state
+    const { files, nickname, introduction, email, password } = this.state
     const passLength = password.length
     return (
       <React.Fragment>
         <BorderedTextHeader text="アカウント設定" />
 
-        <div className="container">
+        <div className="container mb-3">
           <section className="contentWrap mt-3 text-center">
             <div className="mt-3 mx-auto" style={{ width: 150 }}>
               <ProfileIconSelector
@@ -84,8 +101,8 @@ class Account extends React.Component {
               type="textarea"
               rows={3}
               style={inputStyle}
-              value={description}
-              onChange={this.handleChange('description')}
+              value={introduction}
+              onChange={this.handleChange('introduction')}
             />
           </section>
 
@@ -113,6 +130,16 @@ class Account extends React.Component {
             <FormFeedback>
               {Rule.PASS_MIN_LENGTH}文字以上入力してください
             </FormFeedback>
+          </section>
+
+          <section className="mt-4 text-center">
+            <ColorButton
+              className="w-50"
+              color={Color.MAIN_BLUE}
+              onClick={this.onSubmit}
+            >
+              保存する
+            </ColorButton>
           </section>
         </div>
 

@@ -130,6 +130,7 @@ function* saveUserProfile({ payload }) {
     files,
     // 一般ユーザ
     nickname,
+    introduction,
     // 管理者
     userId,
     lastName,
@@ -142,6 +143,7 @@ function* saveUserProfile({ payload }) {
   email && formData.append('email', email)
   password && formData.append('password', password)
   nickname && formData.append('nickname', nickname)
+  introduction && formData.append('introduction', introduction)
   userId && formData.append('userId', userId)
   lastName && formData.append('lastName', lastName)
   firstName && formData.append('firstName', firstName)

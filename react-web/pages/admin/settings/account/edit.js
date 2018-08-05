@@ -25,7 +25,7 @@ class AdminAccountList extends React.Component {
 
   onSave(state) {
     console.info('state', state)
-    const { me, user } = this.props
+    const { user } = this.props
 
     const successCb = async res => {
       Router.pushRoute(`/admin/settings/account/list`)

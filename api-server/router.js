@@ -1,4 +1,5 @@
 const express = require('express')
+const _ = require('lodash')
 const ConnectRoles = require('connect-roles')
 const multer = require('multer')
 const uuidv1 = require('uuid/v1')
@@ -83,26 +84,18 @@ module.exports = function(app) {
   })
 
   app.get('/user', requireAuth, function(req, res) {
-    const {
-      id,
-      email,
-      nickname,
-      firstName,
-      lastName,
-      iconPath,
-      brand,
-      roleId
-    } = req.user
-    res.json({
-      id,
-      email,
-      nickname,
-      firstName,
-      lastName,
-      iconPath,
-      brand,
-      roleId
-    })
+    const result = _.pick(req.user, [
+      'id',
+      'email',
+      'nickname',
+      'introduction',
+      'firstName',
+      'lastName',
+      'iconPath',
+      'brand',
+      'roleId'
+    ])
+    res.json(result)
   })
   app.get('/user/:id', requireAuth, UserController.fetch)
 
