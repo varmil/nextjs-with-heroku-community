@@ -15,6 +15,8 @@ const STATE = {
 
 // 本当は画像パスを帰すようなAPIをサーバに実装して、ここではそのpropsを受け取る
 const IMAGE_SRCS = [
+  '/static/img/template/flap-banner.jpg',
+  '/static/img/template/flap-logo.png',
   'https://dummyimage.com/1140x220/000/fff.png',
   'https://dummyimage.com/500x180/000/fff.png',
   '/static/img/welcome-bg.png',
