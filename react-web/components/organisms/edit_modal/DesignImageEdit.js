@@ -48,6 +48,10 @@ export default class DesignImageEdit extends React.Component {
     this.state = { toggleState: STATE.EXISTING }
   }
 
+  onDrop(files) {
+    console.log(files)
+  }
+
   addSelectedIfMatch(state) {
     return state === this.state.toggleState
   }
@@ -83,7 +87,7 @@ export default class DesignImageEdit extends React.Component {
         <div className="col-10">
           <div className="row">
             <div className="col-6">
-              <ImageUploadButton className="mb-3" />
+              <ImageUploadButton className="mb-3" onDrop={this.onDrop} />
             </div>
             <div className="ml-auto mr-5">
               <MultipleToggleGroup>

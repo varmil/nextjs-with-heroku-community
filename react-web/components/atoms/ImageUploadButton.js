@@ -1,7 +1,19 @@
+import Dropzone from 'react-dropzone'
+const dropzoneStyle = {
+  display: 'block',
+  textAlign: 'center',
+  color: '#919191',
+  cursor: 'pointer',
+  // this is important !
+  overflow: 'hidden'
+}
+
 // from pera
 const Index = props => (
   <button type="button" className={`imgUploaderButton ${props.className}`}>
-    <i className="fa fa-folder-open" /> 画像を選択してアップロード
+    <Dropzone accept="image/*" onDrop={props.onDrop} style={dropzoneStyle}>
+      <i className="fa fa-folder-open" /> 画像を選択してアップロード
+    </Dropzone>
     <style jsx>{`
       .imgUploaderButton {
         background-color: transparent;
