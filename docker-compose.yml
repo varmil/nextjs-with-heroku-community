@@ -1,14 +1,20 @@
-version: '2'
+version: '3'
 services:
   https-portal:
     image: steveltn/https-portal:1
+    # user: root
     ports:
       - '80:80'
       - '443:443'
+    extra_hosts:
+      - 'commune.dayone.jp:127.0.0.1'
+      - 'apicommune.dayone.jp:127.0.0.1'
     restart: always
     environment:
-      DOMAINS: 'commune.dayone.jp -> http://dockerhost:3000'
-      # STAGE: 'production'
+      DOMAINS: >-
+        commune.dayone.jp -> http://dockerhost:3000,
+        apicommune.dayone.jp -> http://dockerhost:5000
+      STAGE: 'production'
       # FORCE_RENEW: 'true'
 
   db:
