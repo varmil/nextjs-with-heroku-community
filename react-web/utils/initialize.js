@@ -10,7 +10,7 @@ import url from 'constants/URL'
 // 部分一致。これらがpathnameの一部に含まれていればGUESTでもアクセス可能
 const ONLY_GUEST_ROUTES = [
   '/view/signin',
-  '/view/signup',
+  '/view/signup/email',
   'admin/site/edit/welcome/signup'
 ]
 
