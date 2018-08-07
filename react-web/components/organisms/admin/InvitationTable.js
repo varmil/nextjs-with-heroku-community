@@ -11,7 +11,7 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import TablePagination from '@material-ui/core/TablePagination'
 import Paper from '@material-ui/core/Paper'
-import { getBaseDomain } from 'utils/API'
+import { getWebServerDomain } from 'utils/API'
 import Invitation from '/../shared/constants/Invitation'
 import url from 'constants/URL'
 
@@ -92,7 +92,7 @@ class FanTable extends React.Component {
                         ? fecha.format(new Date(n.joinedAt), 'YYYY-MM-DD')
                         : null}
                     </DensedCell>
-                    <DensedCell>{`${getBaseDomain()}:3000${url.SIGNUP_EMAIL}/${
+                    <DensedCell>{`${getWebServerDomain()}${url.SIGNUP_EMAIL}/${
                       n.code
                     }`}</DensedCell>
                   </TableRow>

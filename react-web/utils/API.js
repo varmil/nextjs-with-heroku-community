@@ -4,31 +4,34 @@ import env from '/.env.json'
 const HTTP_SCHEMA = 'http://'
 const HTTPS_SCHEMA = 'https://'
 const SERVER_LOCALHOST = 'localhost'
-const DEV_SERVER = env.DEV_API_SERVER_URL || 'localhost'
-const PRODUCTION_SERVER = env.PROD_API_SERVER_URL || 'apicommune.dayone.jp'
-const PORT = 5000
+const API_SERVER_PORT = 5000
+const WEB_SERVER_PORT = 3000
 
-export const getBaseDomain = () => {
+// APIサーバのURL
+const getApiServerDomain = () => {
   // server
   const isServer = typeof window === 'undefined'
-  if (isServer) return `${HTTP_SCHEMA}${SERVER_LOCALHOST}:${PORT}`
+  if (isServer) return `${HTTP_SCHEMA}${SERVER_LOCALHOST}:${API_SERVER_PORT}`
 
   // browser
   if (process.env.NODE_ENV === 'production') {
     // use domain and SSL
-    return `${HTTPS_SCHEMA}${PRODUCTION_SERVER}`
+    return `${HTTPS_SCHEMA}${env.PROD_API_SERVER_URL}`
   } else {
-    return `${HTTP_SCHEMA}${DEV_SERVER}:${PORT}`
+    return `${HTTP_SCHEMA}${env.DEV_API_SERVER_URL}:${API_SERVER_PORT}`
   }
 }
 
-const getBaseURL = () => {
-  return getBaseDomain()
+// WEBサーバのURL
+export const getWebServerDomain = () => {
+  return process.env.NODE_ENV === 'production'
+    ? `${HTTPS_SCHEMA}${env.PROD_WEB_SERVER_URL}`
+    : `${HTTP_SCHEMA}${env.DEV_WEB_SERVER_URL}:${WEB_SERVER_PORT}`
 }
 
 // serverではシングルトンなので注意
 const instance = axios.create({
-  baseURL: getBaseURL(),
+  baseURL: getApiServerDomain(),
   withCredentials: true
 })
 
