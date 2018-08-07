@@ -45,3 +45,10 @@ npm run db:install
 npm run db:init
 ```
 * port: `3306`, db: `commune` で外部から接続できる環境が予め必要です。
+
+
+## Trouble-shooting
+
+###### Q. HTTPS-PORTAL cannot sign the domain
+change dockerd settings, `"userland-proxy": false`  
+https://stackoverflow.com/a/44414882  
