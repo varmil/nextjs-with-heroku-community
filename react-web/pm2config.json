@@ -1,6 +1,7 @@
 {
   "name": "react-web",
   "script": "server.js",
+  "log_date_format": "DD-MM HH:mm:ss.SSS",
 
   "env": {
     "NODE_ENV": "development",
