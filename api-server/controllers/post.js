@@ -224,7 +224,7 @@ exports.fetchSearched = async (req, res) => {
   const word = req.params.word
   console.info('sended word is', word)
 
-  let where = { posterId: id, brandId: brand.id, released: true }
+  let where = { brandId: brand.id, released: true }
 
   // onlyPhotoの場合は、画像があるPOSTのみ取得
   if (onlyPhoto) {
