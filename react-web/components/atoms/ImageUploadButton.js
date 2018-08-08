@@ -1,4 +1,7 @@
+import React from 'react'
 import Dropzone from 'react-dropzone'
+import LinearProgress from '@material-ui/core/LinearProgress'
+
 const dropzoneStyle = {
   display: 'block',
   textAlign: 'center',
@@ -8,13 +11,30 @@ const dropzoneStyle = {
   overflow: 'hidden'
 }
 
-// from pera
 const Index = props => (
   <button type="button" className={`imgUploaderButton ${props.className}`}>
-    <Dropzone accept="image/*" onDrop={props.onDrop} style={dropzoneStyle}>
-      <i className="fa fa-folder-open" /> 画像を選択してアップロード
+    <Dropzone
+      accept="image/*"
+      onDrop={props.onDrop}
+      style={dropzoneStyle}
+      disabled={props.nowUploading}
+    >
+      {props.nowUploading ? (
+        <div className="text-center">
+          <LinearProgress />
+        </div>
+      ) : (
+        <React.Fragment>
+          <i className="fa fa-folder-open" /> 画像を選択してアップロード
+        </React.Fragment>
+      )}
     </Dropzone>
     <style jsx>{`
+      button {
+        width: 260.2px;
+        height: 38px;
+      }
+
       .imgUploaderButton {
         background-color: transparent;
         border: none;

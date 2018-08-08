@@ -4,11 +4,11 @@ const hashtagRegex = require('hashtag-regex')
 const UserService = reqlib('/services/User')
 const CommentService = reqlib('/services/Comment')
 const NotificationService = reqlib('/services/Notification')
+const { moveImage, moveImages } = reqlib('/utils/image')
 const models = reqlib('/models')
 const Path = reqlib('/constants/Path')
 const Role = reqlib('/../shared/constants/Role')
 const Rule = reqlib('/../shared/constants/Rule')
-const { moveImage } = reqlib('/utils/image')
 const BoxType = reqlib('/../shared/constants/BoxType')
 const sanitizer = reqlib('/utils/sanitizer')
 
@@ -17,22 +17,6 @@ const sanitizer = reqlib('/utils/sanitizer')
 const DEFAULT_PER_PAGE = 20
 
 module.exports = class Post {
-  // 投稿画像を一括して移動
-  static async moveImages(files) {
-    if (Array.isArray(files)) {
-      const promises = files.map(async file => {
-        const { path, filename } = file
-        const dbPath = `${Path.POST_IMG_DIR}/${filename}`
-        const fullPath = `${Path.STATIC_BASE_DIR}${dbPath}`
-        await moveImage(path, fullPath)
-        return dbPath
-      })
-      return Promise.all(promises)
-    } else {
-      return []
-    }
-  }
-
   static async save(
     postId,
     userId,
@@ -60,7 +44,7 @@ module.exports = class Post {
         data = { ...data, categoryIndex }
       }
       // save images if needed (union)
-      const newImages = await Post.moveImages(files)
+      const newImages = await moveImages(files, Path.POST_IMG_DIR)
       data = { ...data, images: _.union(fromServerFiles, newImages) }
 
       // Postテーブルへの変更

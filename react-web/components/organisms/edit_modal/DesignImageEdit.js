@@ -1,4 +1,7 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { createAction } from 'redux-actions'
+import { AppAdminLibrary } from 'constants/ActionTypes'
 import ImageUploadButton from 'components/atoms/ImageUploadButton'
 import {
   MultipleToggleGroup,
@@ -30,7 +33,7 @@ const IMAGE_SRCS = [
 ]
 
 // ロゴやバナーなどリンクできる画像を編集するモーダル
-export default class DesignImageEdit extends React.Component {
+class DesignImageEdit extends React.Component {
   static TYPE_EXISTING() {
     return { id: STATE.EXISTING, text: 'ライブラリ' }
   }
@@ -43,13 +46,27 @@ export default class DesignImageEdit extends React.Component {
     return { id: STATE.BACKGROUND_COLOR, text: '背景色' }
   }
 
+  state = {
+    nowUploading: false
+  }
+
   constructor(props) {
     super(props)
     this.state = { toggleState: STATE.EXISTING }
   }
 
-  onDrop(files) {
+  // 問答無用でサーバへファイルアップロード
+  onDrop = files => {
     console.log(files)
+
+    this.setState({ ...this.state, nowUploading: true })
+
+    const successCb = res => {
+      this.setState({ ...this.state, nowUploading: false })
+    }
+    this.props.dispatch(
+      createAction(AppAdminLibrary.SAVE_REQUEST)({ files, successCb })
+    )
   }
 
   addSelectedIfMatch(state) {
@@ -59,7 +76,6 @@ export default class DesignImageEdit extends React.Component {
   createContents() {
     switch (this.state.toggleState) {
       case STATE.EXISTING:
-        // return createExistingImages(IMAGE_SRCS, this.props.onClickImage)
         return (
           <ImageContainer
             srcs={IMAGE_SRCS}
@@ -87,7 +103,11 @@ export default class DesignImageEdit extends React.Component {
         <div className="col-10">
           <div className="row">
             <div className="col-6">
-              <ImageUploadButton className="mb-3" onDrop={this.onDrop} />
+              <ImageUploadButton
+                className="mb-3"
+                onDrop={this.onDrop}
+                nowUploading={this.state.nowUploading}
+              />
             </div>
             <div className="ml-auto mr-5">
               <MultipleToggleGroup>
@@ -121,3 +141,5 @@ export default class DesignImageEdit extends React.Component {
     )
   }
 }
+
+export default connect()(DesignImageEdit)

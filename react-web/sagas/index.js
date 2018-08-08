@@ -27,7 +27,8 @@ import {
   AppPost,
   AppAdminPost,
   AppAdminFan,
-  AppAdminAccount
+  AppAdminAccount,
+  AppAdminLibrary
 } from 'constants/ActionTypes'
 import {
   addTalkContents,
@@ -639,6 +640,35 @@ function* saveAdminAccounts({ payload }) {
 }
 
 /**
+ * Library
+ */
+
+// { files } = payload
+function* saveLibraries({ payload }) {
+  const { jwtToken } = yield select(getUser)
+  const { successCb, files } = payload
+  try {
+    let formData = new FormData()
+    utilFiles.append(formData, files)
+
+    const res = yield call(API.post, '/site/library', formData, jwtToken)
+    if (successCb) yield call(successCb, res)
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
+}
+
+function* fetchLibraries({ payload }) {
+  const { jwtToken } = yield select(getUser)
+  try {
+    const { data } = yield call(API.fetch, `/site/library`, jwtToken)
+    // yield put(createAction(AppAdminAccount.SET_LIST)(data))
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
+}
+
+/**
  * iFrame
  */
 
@@ -703,7 +733,10 @@ const appAdminSaga = [
 
   takeLatest(AppAdminAccount.SAVE_REQUEST, saveAdminAccounts),
   takeLatest(AppAdminAccount.FETCH_LIST_REQUEST, fetchAdminAccounts),
-  takeLatest(AppAdminAccount.FETCH_OTHER_ADMIN_REQUEST, fetchOtherUser)
+  takeLatest(AppAdminAccount.FETCH_OTHER_ADMIN_REQUEST, fetchOtherUser),
+
+  takeLatest(AppAdminLibrary.FETCH_LIST_REQUEST, fetchLibraries),
+  takeLatest(AppAdminLibrary.SAVE_REQUEST, saveLibraries)
 ]
 
 function* rootSaga() {

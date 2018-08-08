@@ -167,6 +167,18 @@ module.exports = function(app) {
   app.get('/site/design', requireAuth, SiteController.fetchDesign)
 
   /**
+   * SITE Library （ブランドごとのライブラリ）
+   */
+  app.post(
+    '/site/library',
+    requireAuth,
+    userRole.is('adminDeveloper'),
+    upload.array('image'),
+    SiteController.saveLibraries
+  )
+  app.get('/site/library', requireAuth, SiteController.fetchLibraries)
+
+  /**
    * POST
    */
   app.post('/post', requireAuth, upload.array('image'), PostController.save)

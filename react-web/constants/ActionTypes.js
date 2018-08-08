@@ -168,6 +168,16 @@ export const AppAdminAccount = createTypes(
   async('SAVE')
 )
 
+// サイト編集に使うライブラリ画像
+export const AppAdminLibrary = createTypes(
+  'app/admin/library/',
+  // 一覧表示用
+  async('FETCH_LIST'),
+  'SET_LIST',
+  // 追加
+  async('SAVE')
+)
+
 // -----
 // -- USER: ユーザ情報 --
 // -----
