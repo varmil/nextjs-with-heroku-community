@@ -2,11 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { AppSearch } from 'constants/ActionTypes'
 import { createAction } from 'redux-actions'
-import isEmpty from 'lodash/isEmpty'
+// import isEmpty from 'lodash/isEmpty'
 import SearchInput from 'components/organisms/SearchInput'
 import SearchPhoto from 'components/organisms/SearchPhoto'
 import SearchContents from 'components/templates/edit_view_shared/SearchContents'
-import BoxType from '/../shared/constants/BoxType'
+// import BoxType from '/../shared/constants/BoxType'
 
 // 検索結果表示ページ
 class SearchResult extends React.Component {
@@ -41,6 +41,4 @@ class SearchResult extends React.Component {
   }
 }
 
-export default connect(state => ({
-  // boxContents: state.app.search.boxContents
-}))(SearchResult)
+export default connect()(SearchResult)

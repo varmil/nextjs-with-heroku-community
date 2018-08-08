@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createAction } from 'redux-actions'
-import { SiteState } from 'constants/ActionTypes'
-import OverlayEdit from 'components/organisms/OverlayEdit'
-import objectPath from 'object-path'
+// import { createAction } from 'redux-actions'
+// import { SiteState } from 'constants/ActionTypes'
+// import OverlayEdit from 'components/organisms/OverlayEdit'
+// import objectPath from 'object-path'
 import { Link } from '/routes'
 import IconButton from '@material-ui/core/IconButton'
 

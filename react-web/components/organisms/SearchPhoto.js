@@ -2,8 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
 import { AppSearch } from 'constants/ActionTypes'
-import objectPath from 'object-path'
-import IconButton from '@material-ui/core/IconButton'
+// import objectPath from 'object-path'
+// import IconButton from '@material-ui/core/IconButton'
 import ReadMoreAndLoading from 'components/molecules/ReadMoreAndLoading'
 import { PreviewImage } from 'components/organisms/site/Photos'
 
@@ -98,10 +98,6 @@ class SearchPhoto extends React.Component {
             onClick={this.onClickLoad}
           />
         </section>
-        <style jsx>{`
-          .wrap {
-          }
-        `}</style>
       </React.Fragment>
     )
   }
