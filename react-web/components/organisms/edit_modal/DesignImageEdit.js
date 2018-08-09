@@ -16,22 +16,6 @@ const STATE = {
   BACKGROUND_COLOR: 2
 }
 
-// 本当は画像パスを帰すようなAPIをサーバに実装して、ここではそのpropsを受け取る
-const IMAGE_SRCS = [
-  '/static/img/template/flap-banner.jpg',
-  '/static/img/template/flap-logo.png',
-  'https://dummyimage.com/1140x220/000/fff.png',
-  'https://dummyimage.com/500x180/000/fff.png',
-  '/static/img/welcome-bg.png',
-  '/static/img/logo-blue.png',
-  '/static/stub/logo-white.png',
-  '/static/img/logo.jpg',
-  '/static/stub/p770x405.png',
-  '/static/stub/p800x390.png',
-  '/static/stub/p1326x860.png',
-  '/static/stub/p1626x1530.png'
-]
-
 // ロゴやバナーなどリンクできる画像を編集するモーダル
 class DesignImageEdit extends React.Component {
   static TYPE_EXISTING() {
@@ -55,18 +39,24 @@ class DesignImageEdit extends React.Component {
     this.state = { toggleState: STATE.EXISTING }
   }
 
+  // 適当にここでFETCH
+  componentDidMount = () => {
+    this.props.dispatch(createAction(AppAdminLibrary.FETCH_LIST_REQUEST)())
+  }
+
   // 問答無用でサーバへファイルアップロード
   onDrop = files => {
     console.log(files)
+    const { dispatch } = this.props
 
     this.setState({ ...this.state, nowUploading: true })
 
     const successCb = res => {
       this.setState({ ...this.state, nowUploading: false })
+      // UPLOAD成功後にFETCH
+      dispatch(createAction(AppAdminLibrary.FETCH_LIST_REQUEST)())
     }
-    this.props.dispatch(
-      createAction(AppAdminLibrary.SAVE_REQUEST)({ files, successCb })
-    )
+    dispatch(createAction(AppAdminLibrary.SAVE_REQUEST)({ files, successCb }))
   }
 
   addSelectedIfMatch(state) {
@@ -74,11 +64,12 @@ class DesignImageEdit extends React.Component {
   }
 
   createContents() {
+    const { library } = this.props
     switch (this.state.toggleState) {
       case STATE.EXISTING:
         return (
           <ImageContainer
-            srcs={IMAGE_SRCS}
+            srcs={library}
             selectedSrc={this.props.selectedImgSrc}
             onClick={this.props.onClickImage}
           />
@@ -142,4 +133,6 @@ class DesignImageEdit extends React.Component {
   }
 }
 
-export default connect()(DesignImageEdit)
+export default connect(state => ({
+  library: state.app.adminLibrary.item
+}))(DesignImageEdit)

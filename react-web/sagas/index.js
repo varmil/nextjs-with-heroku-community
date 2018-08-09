@@ -659,10 +659,12 @@ function* saveLibraries({ payload }) {
 }
 
 function* fetchLibraries({ payload }) {
+  const { successCb } = payload || {}
   const { jwtToken } = yield select(getUser)
   try {
     const { data } = yield call(API.fetch, `/site/library`, jwtToken)
-    // yield put(createAction(AppAdminAccount.SET_LIST)(data))
+    yield put(createAction(AppAdminLibrary.SET_LIST)(data))
+    if (successCb) yield call(successCb, data)
   } catch (e) {
     yield put(setCommonError(e.response))
   }

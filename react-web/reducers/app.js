@@ -14,7 +14,8 @@ import {
   AppPost,
   AppAdminPost,
   AppAdminFan,
-  AppAdminAccount
+  AppAdminAccount,
+  AppAdminLibrary
 } from 'constants/ActionTypes'
 
 const initialState = {
@@ -48,7 +49,9 @@ const initialState = {
   // Admin用。管理者一覧（no-paging）
   adminAccounts: { item: [] },
   // Admin用。管理者情報編集（1人分）
-  otherAdminInfo: {}
+  otherAdminInfo: {},
+  // Admin用。画像ライブラリ
+  adminLibrary: { item: [] }
 }
 
 // すべてのboxContentsを走査して、データ更新
@@ -315,6 +318,14 @@ export default handleActions(
     },
     [AppAdminAccount.SET_OTHER_ADMIN]: (state, action) => {
       return immutable.merge(state, `otherAdminInfo`, action.payload)
+    },
+
+    /**
+     *  ADMIN LIBRARY
+     *  SET   : payload is { item }
+     */
+    [AppAdminLibrary.SET_LIST]: (state, action) => {
+      return immutable.set(state, `adminLibrary.item`, action.payload)
     }
   },
   initialState

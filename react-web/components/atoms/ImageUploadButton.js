@@ -31,7 +31,7 @@ const Index = props => (
     </Dropzone>
     <style jsx>{`
       button {
-        width: 260.2px;
+        width: 265px;
         height: 38px;
       }
 

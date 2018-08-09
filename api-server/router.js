@@ -176,7 +176,12 @@ module.exports = function(app) {
     upload.array('image'),
     SiteController.saveLibraries
   )
-  app.get('/site/library', requireAuth, SiteController.fetchLibraries)
+  app.get(
+    '/site/library',
+    requireAuth,
+    userRole.is('adminGuest'),
+    SiteController.fetchLibraries
+  )
 
   /**
    * POST

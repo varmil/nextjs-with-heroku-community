@@ -1,10 +1,6 @@
 import React from 'react'
 import range from 'lodash/range'
 
-/**
- * Components
- */
-
 // 2x2 image container
 export class ImageContainer extends React.Component {
   isSelected(src) {
@@ -78,27 +74,3 @@ export const Image = props => {
     </div>
   )
 }
-
-/**
- * Util functions
- */
-// export function createExistingImages(srcs, onClick) {
-//   const images = range(srcs.length).map(i => (
-//     <Image
-//       key={`LIModalImg${i}`}
-//       className="mb-2"
-//       src={srcs[i]}
-//       onClick={onClick}
-//     />
-//   ))
-//   return (
-//     <ImageContainer className="mb-4">
-//       <Image
-//         className="mb-2"
-//         src={`/static/img/transparent.png`}
-//         onClick={onClick}
-//       />
-//       {images}
-//     </ImageContainer>
-//   )
-// }

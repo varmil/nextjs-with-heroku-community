@@ -66,10 +66,11 @@ exports.saveLibraries = async (req, res, next) => {
  * fetch design
  */
 exports.fetchLibraries = async (req, res) => {
-  // const brandId = req.user.brand.id
-  // const { design } = await models.Brand.findById(brandId, {
-  //   attributes: ['design'],
-  //   raw: true
-  // })
-  // res.json({ design })
+  const brandId = req.user.brand.id
+  const rows = await models.BrandLibrary.findAll({
+    where: { brandId },
+    order: [['id', 'DESC']],
+    raw: true
+  })
+  res.json(_.map(rows, 'path'))
 }
