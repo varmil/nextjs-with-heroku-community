@@ -107,6 +107,7 @@ export default class BoxContents extends React.Component {
             src={subBanner[i].src}
             backgroundColor={subBanner[i].backgroundColor}
             href={subBanner[i].href}
+            blank={subBanner[i].blank}
             action={this.subBanner.action}
             index={i}
             propsPath={`${this.subBanner.propsPath}.${i}`}

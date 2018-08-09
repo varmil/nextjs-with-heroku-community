@@ -49,6 +49,7 @@ class TalkRoomContents extends BoxContents {
             src={mainBanner[i].src}
             backgroundColor={mainBanner[i].backgroundColor}
             href={mainBanner[i].href}
+            blank={mainBanner[i].blank}
             index={i}
             propsPath={`${PATH_MAP.MAIN_BANNER}.${i}`}
           />

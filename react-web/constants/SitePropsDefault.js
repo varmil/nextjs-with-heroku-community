@@ -15,41 +15,6 @@ export const NavIconColorDefault = {
   color: '#4B4B4B'
 }
 
-// export const MenuBarPC = {
-//   style: {
-//     color: '#333',
-//     backgroundColor: '#fff',
-//     textAlign: 'left'
-//   },
-//   item: [
-//     {
-//       index: 0,
-//       text: 'トークルーム',
-//       href: ''
-//     },
-//     {
-//       index: 1,
-//       text: '企業発信',
-//       href: ''
-//     },
-//     {
-//       index: 2,
-//       text: '企業ストーリー',
-//       href: ''
-//     },
-//     {
-//       index: 3,
-//       text: '投票・アンケート',
-//       href: ''
-//     },
-//     {
-//       index: 4,
-//       text: 'お知らせ',
-//       href: ''
-//     }
-//   ]
-// }
-
 export const MenuBar = {
   style: {
     color: '#fff',
@@ -61,15 +26,33 @@ export const ColorDefault = {
   backgroundColor: 'red'
 }
 
+/**
+ * BANNER
+ */
+
 export const MainBanner = [
   {
     index: 0,
     contentState: null,
     src: 'https://dummyimage.com/1140x220/000/fff.png',
     backgroundColor: '#fff',
-    href: ''
+    href: '',
+    blank: false // 別ウィンドウで開く
   }
 ]
+
+export const SubBanner = range(1).map(i => ({
+  index: i,
+  contentState: null,
+  src: 'https://dummyimage.com/500x180/000/fff.png',
+  backgroundColor: '#fff',
+  href: '',
+  blank: false // 別ウィンドウで開く
+}))
+
+/**
+ * BOXES
+ */
 
 const boxesBase = range(3).map(i => ({
   id: '', // サーバで管理しているスレッドID（URLに使う？）
@@ -108,14 +91,6 @@ export const Boxes = {
   ]
 }
 
-export const SubBanner = range(1).map(i => ({
-  index: i,
-  contentState: null,
-  src: 'https://dummyimage.com/500x180/000/fff.png',
-  backgroundColor: '#fff',
-  href: ''
-}))
-
 // export const Footer = {
 //   style: {
 //     color: '#fff',
@@ -128,26 +103,6 @@ export const SubBanner = range(1).map(i => ({
 //       text: 'トークルーム',
 //       href: ''
 //     },
-//     {
-//       index: 1,
-//       text: '企業発信',
-//       href: ''
-//     },
-//     {
-//       index: 2,
-//       text: '企業ストーリー',
-//       href: ''
-//     },
-//     {
-//       index: 3,
-//       text: '投票・アンケート',
-//       href: ''
-//     },
-//     {
-//       index: 4,
-//       text: 'お知らせ',
-//       href: ''
-//     }
 //   ]
 // }
 

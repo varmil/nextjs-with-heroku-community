@@ -12,6 +12,8 @@ export default class MainBanner extends React.Component {
       <a
         className={`bg container ${Classes.EDITABLE} ${props.className}`}
         href={props.href}
+        target={props.blank ? '_blank' : ''}
+        rel="noreferrer noopener"
         data-modal={`TextBGImageModal`}
         data-action={SiteTop.SET_MAIN_BANNER}
         data-index={props.index}

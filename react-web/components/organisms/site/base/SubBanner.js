@@ -11,6 +11,8 @@ export default class SubBanner extends React.Component {
       <a
         className={`bg container ${Classes.EDITABLE} ${props.className}`}
         href={props.href}
+        target={props.blank ? '_blank' : ''}
+        rel="noreferrer noopener"
         data-modal={`TextBGImageModal`}
         data-action={props.action}
         data-index={props.index}

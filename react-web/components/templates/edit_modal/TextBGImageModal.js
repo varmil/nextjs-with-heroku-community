@@ -5,7 +5,7 @@ import ModalBody from 'reactstrap/lib/ModalBody'
 import TextEditor from 'components/atoms/TextEditor'
 import withSaveCancelFooter from 'components/organisms/modal/withSaveCancelFooter'
 import DesignImageEdit from 'components/organisms/edit_modal/DesignImageEdit'
-import LinkEditor from 'components/molecules/edit_modal/LinkEditor'
+import OnlyHrefLinkEditor from 'components/molecules/edit_modal/OnlyHrefLinkEditor'
 
 // テキスト編集可能なモーダル。
 // src             --> 背景画像
@@ -23,7 +23,11 @@ class TextBGImageModal extends React.Component {
     }
     // optional state
     if (props.href !== undefined) {
-      initialState = { ...initialState, href: props.href }
+      initialState = {
+        ...initialState,
+        href: props.href || '',
+        blank: props.blank || false
+      }
     }
 
     this.state = initialState
@@ -53,14 +57,25 @@ class TextBGImageModal extends React.Component {
     )
   }
 
-  createLinkEditorIfNeeded() {
+  handleChange = name => event => {
+    const { target } = event
+    const value = target.type === 'checkbox' ? target.checked : target.value
+    this.setState({ [name]: value })
+  }
+
+  createOnlyHrefLinkEditorIfNeeded() {
     if (this.props.href === undefined) return null
 
     return (
       <div className="form-group row">
         <label className="col-2 col-form-label">リンク</label>
         <div className="col-10">
-          <LinkEditor />
+          <OnlyHrefLinkEditor
+            href={this.state.href}
+            onChangeHref={this.handleChange('href')}
+            blank={this.state.blank}
+            onChangeBlank={this.handleChange('blank')}
+          />
         </div>
       </div>
     )
@@ -94,7 +109,7 @@ class TextBGImageModal extends React.Component {
             />
           </div>
 
-          {this.createLinkEditorIfNeeded()}
+          {this.createOnlyHrefLinkEditorIfNeeded()}
         </ModalBody>
       </React.Fragment>
     )
