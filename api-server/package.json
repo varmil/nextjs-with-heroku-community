@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "db:install": "sequelize db:migrate",
+    "db:undo": "sequelize db:migrate:undo",
     "db:uninstall": "sequelize db:migrate:undo:all",
     "db:init": "npm run db:uninstall && npm run db:install",
     "db:seed": "sequelize db:seed:undo:all && sequelize db:seed:all",
