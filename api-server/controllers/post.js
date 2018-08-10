@@ -105,7 +105,13 @@ exports.saveLike = async (req, res, next) => {
     return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
   }
   const userId = req.user.id
-  const success = await services.Post.saveLike(postId, userId, upOrDown)
+  const brandId = req.user.brand.id
+  const success = await services.Post.saveLike(
+    postId,
+    userId,
+    brandId,
+    upOrDown
+  )
   res.json(success)
 }
 

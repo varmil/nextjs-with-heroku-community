@@ -8,11 +8,13 @@ const ConstBadge = reqlib('/../shared/constants/Badge')
 // const moment = require('moment')
 
 module.exports = class Badge {
-  static async incrementValue(userId, brandId, badgeType) {
+  static async incrementValue(userId, brandId, badgeType, { transaction }) {
     if (_.isNil(userId) || _.isNil(brandId) || _.isNil(badgeType)) {
       console.warn('required param is null', userId, brandId, badgeType)
       return false
     }
+
+    const option = transaction ? { transaction } : {}
 
     try {
       const row = await models.Badge.findOne({
@@ -22,21 +24,27 @@ module.exports = class Badge {
       // 存在すればUPDATE, なければINSERT
       if (row) {
         const nextValue = row.currentValue + 1
-        await row.update({
-          // 一度到達したlevelは下がらない
-          level: Math.max(row.level, Badge.getLevel(badgeType, nextValue)),
-          currentValue: nextValue
-        })
+        await row.update(
+          {
+            // 一度到達したlevelは下がらない
+            level: Math.max(row.level, Badge.getLevel(badgeType, nextValue)),
+            currentValue: nextValue
+          },
+          option
+        )
       } else {
         // 初期レベル設定。valueは１固定。ほかあるかも
         const nextValue = 1
-        await models.Badge.create({
-          userId,
-          brandId,
-          badgeType,
-          level: Badge.getLevel(badgeType, nextValue),
-          currentValue: nextValue
-        })
+        await models.Badge.create(
+          {
+            userId,
+            brandId,
+            badgeType,
+            level: Badge.getLevel(badgeType, nextValue),
+            currentValue: nextValue
+          },
+          option
+        )
       }
     } catch (e) {
       throw e

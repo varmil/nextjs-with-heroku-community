@@ -2,6 +2,7 @@ const reqlib = require('app-root-path').require
 const _ = require('lodash')
 const hashtagRegex = require('hashtag-regex')
 const UserService = reqlib('/services/User')
+const BadgeService = reqlib('/services/Badge')
 const CommentService = reqlib('/services/Comment')
 const NotificationService = reqlib('/services/Notification')
 const { moveImage, moveImages } = reqlib('/utils/image')
@@ -10,6 +11,7 @@ const Path = reqlib('/constants/Path')
 const Role = reqlib('/../shared/constants/Role')
 const Rule = reqlib('/../shared/constants/Rule')
 const BoxType = reqlib('/../shared/constants/BoxType')
+const { BadgeType } = reqlib('/../shared/constants/Badge')
 const sanitizer = reqlib('/utils/sanitizer')
 
 // リストで取得する際に、1ページあたりの初期値
@@ -207,10 +209,10 @@ module.exports = class Post {
   }
 
   // Like（UPDATE対応済）
-  static async saveLike(postId, userId, upOrDown) {
+  static async saveLike(postId, userId, brandId, upOrDown) {
     const transaction = await models.sequelize.transaction()
     try {
-      await models.PostLike.upsert(
+      const created = await models.PostLike.upsert(
         {
           postId,
           userId,
@@ -230,6 +232,13 @@ module.exports = class Post {
       // update Notification table (not wait the operation)
       if (upOrDown) {
         NotificationService.save(Rule.NOTIFICATION_TYPE.Like, postId, userId)
+      }
+
+      // 初回LIKE時 (not wait the operation)
+      if (created) {
+        BadgeService.incrementValue(userId, brandId, BadgeType.LIKE, {
+          transaction
+        })
       }
 
       await transaction.commit()
