@@ -16,104 +16,105 @@ const Color = {
   GOLD: 2
 }
 
+// 条件達成判定を楽にするため items は level 高い順に定義
 const Badge = {
   [BadgeType.CONTINUOUS_LOGIN]: {
     desc: '連続ログイン（日）',
     items: [
-      { level: 1, value: 7, color: Color.BRONZE },
-      { level: 2, value: 14, color: Color.BRONZE },
-      { level: 3, value: 30, color: Color.BRONZE },
-      { level: 4, value: 45, color: Color.SILVER },
+      { level: 6, value: 90, color: Color.GOLD },
       { level: 5, value: 60, color: Color.SILVER },
-      { level: 6, value: 90, color: Color.GOLD }
+      { level: 4, value: 45, color: Color.SILVER },
+      { level: 3, value: 30, color: Color.BRONZE },
+      { level: 2, value: 14, color: Color.BRONZE },
+      { level: 1, value: 7, color: Color.BRONZE }
     ]
   },
   [BadgeType.LIKE]: {
     desc: 'いいねをする',
     items: [
-      { level: 1, value: 1, color: Color.BRONZE },
-      { level: 2, value: 50, color: Color.BRONZE },
-      { level: 3, value: 300, color: Color.BRONZE },
-      { level: 4, value: 500, color: Color.SILVER },
+      { level: 6, value: 2000, color: Color.GOLD },
       { level: 5, value: 1000, color: Color.SILVER },
-      { level: 6, value: 2000, color: Color.GOLD }
+      { level: 4, value: 500, color: Color.SILVER },
+      { level: 3, value: 300, color: Color.BRONZE },
+      { level: 2, value: 50, color: Color.BRONZE },
+      { level: 1, value: 1, color: Color.BRONZE }
     ]
   },
   [BadgeType.COMMENT]: {
     desc: 'コメントをする',
     items: [
-      { level: 1, value: 1, color: Color.BRONZE },
-      { level: 2, value: 10, color: Color.BRONZE },
-      { level: 3, value: 20, color: Color.BRONZE },
-      { level: 4, value: 100, color: Color.SILVER },
+      { level: 6, value: 500, color: Color.GOLD },
       { level: 5, value: 300, color: Color.SILVER },
-      { level: 6, value: 500, color: Color.GOLD }
+      { level: 4, value: 100, color: Color.SILVER },
+      { level: 3, value: 20, color: Color.BRONZE },
+      { level: 2, value: 10, color: Color.BRONZE },
+      { level: 1, value: 1, color: Color.BRONZE }
     ]
   },
   [BadgeType.SURVEY]: {
     desc: 'アンケートに答える',
     items: [
-      { level: 1, value: 1, color: Color.BRONZE },
-      { level: 2, value: 5, color: Color.BRONZE },
-      { level: 3, value: 10, color: Color.BRONZE },
-      { level: 4, value: 20, color: Color.SILVER },
+      { level: 6, value: 50, color: Color.GOLD },
       { level: 5, value: 30, color: Color.SILVER },
-      { level: 6, value: 50, color: Color.GOLD }
+      { level: 4, value: 20, color: Color.SILVER },
+      { level: 3, value: 10, color: Color.BRONZE },
+      { level: 2, value: 5, color: Color.BRONZE },
+      { level: 1, value: 1, color: Color.BRONZE }
     ]
   },
   [BadgeType.POST]: {
     desc: '累積投稿',
     items: [
-      { level: 1, value: 1, color: Color.BRONZE },
-      { level: 2, value: 10, color: Color.BRONZE },
-      { level: 3, value: 30, color: Color.BRONZE },
-      { level: 4, value: 50, color: Color.SILVER },
+      { level: 6, value: 300, color: Color.GOLD },
       { level: 5, value: 100, color: Color.SILVER },
-      { level: 6, value: 300, color: Color.GOLD }
+      { level: 4, value: 50, color: Color.SILVER },
+      { level: 3, value: 30, color: Color.BRONZE },
+      { level: 2, value: 10, color: Color.BRONZE },
+      { level: 1, value: 1, color: Color.BRONZE }
     ]
   },
   [BadgeType.PHOTO]: {
     desc: '写真投稿',
     items: [
-      { level: 1, value: 1, color: Color.BRONZE },
-      { level: 2, value: 5, color: Color.BRONZE },
-      { level: 3, value: 10, color: Color.BRONZE },
-      { level: 4, value: 30, color: Color.SILVER },
+      { level: 6, value: 100, color: Color.GOLD },
       { level: 5, value: 50, color: Color.SILVER },
-      { level: 6, value: 100, color: Color.GOLD }
+      { level: 4, value: 30, color: Color.SILVER },
+      { level: 3, value: 10, color: Color.BRONZE },
+      { level: 2, value: 5, color: Color.BRONZE },
+      { level: 1, value: 1, color: Color.BRONZE }
     ]
   },
   [BadgeType.MOVIE]: {
     desc: '動画投稿',
     items: [
-      { level: 1, value: 1, color: Color.BRONZE },
-      { level: 2, value: 5, color: Color.BRONZE },
-      { level: 3, value: 10, color: Color.BRONZE },
-      { level: 4, value: 20, color: Color.SILVER },
+      { level: 6, value: 80, color: Color.GOLD },
       { level: 5, value: 40, color: Color.SILVER },
-      { level: 6, value: 80, color: Color.GOLD }
+      { level: 4, value: 20, color: Color.SILVER },
+      { level: 3, value: 10, color: Color.BRONZE },
+      { level: 2, value: 5, color: Color.BRONZE },
+      { level: 1, value: 1, color: Color.BRONZE }
     ]
   },
   [BadgeType.GET_LIKE]: {
     desc: '累積獲得いいね',
     items: [
-      { level: 1, value: 1, color: Color.BRONZE },
-      { level: 2, value: 50, color: Color.BRONZE },
-      { level: 3, value: 100, color: Color.BRONZE },
-      { level: 4, value: 200, color: Color.SILVER },
+      { level: 6, value: 1000, color: Color.GOLD },
       { level: 5, value: 400, color: Color.SILVER },
-      { level: 6, value: 1000, color: Color.GOLD }
+      { level: 4, value: 200, color: Color.SILVER },
+      { level: 3, value: 100, color: Color.BRONZE },
+      { level: 2, value: 50, color: Color.BRONZE },
+      { level: 1, value: 1, color: Color.BRONZE }
     ]
   },
   [BadgeType.GET_COMMENT]: {
     desc: '累積獲得コメント',
     items: [
-      { level: 1, value: 1, color: Color.BRONZE },
-      { level: 2, value: 10, color: Color.BRONZE },
-      { level: 3, value: 30, color: Color.BRONZE },
-      { level: 4, value: 50, color: Color.SILVER },
+      { level: 6, value: 300, color: Color.GOLD },
       { level: 5, value: 100, color: Color.SILVER },
-      { level: 6, value: 300, color: Color.GOLD }
+      { level: 4, value: 50, color: Color.SILVER },
+      { level: 3, value: 30, color: Color.BRONZE },
+      { level: 2, value: 10, color: Color.BRONZE },
+      { level: 1, value: 1, color: Color.BRONZE }
     ]
   }
 }

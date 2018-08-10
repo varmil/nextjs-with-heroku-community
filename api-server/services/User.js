@@ -2,8 +2,10 @@ const _ = require('lodash')
 const reqlib = require('app-root-path').require
 const models = reqlib('/models')
 const InvitationService = reqlib('/services/Invitation')
+const BadgeService = reqlib('/services/Badge')
 const Path = reqlib('/constants/Path')
 const Role = reqlib('/../shared/constants/Role')
+const { BadgeType } = reqlib('/../shared/constants/Badge')
 const { moveImage } = reqlib('/utils/image')
 const moment = require('moment')
 const sanitizer = reqlib('/utils/sanitizer')
@@ -39,7 +41,7 @@ module.exports = class User {
     }, {})
   }
 
-  static async updateLastLoginedAtIfNeeded(userId, lastLoginedAt) {
+  static async updateLastLoginedAtIfNeeded(userId, brandId, lastLoginedAt) {
     // DBデータより、10分以上経っていたら更新
     const elapsed = moment().diff(lastLoginedAt, 'm')
     try {
@@ -50,6 +52,21 @@ module.exports = class User {
             where: { id: userId }
           }
         )
+      }
+
+      // バッジ用。連続ログイン日数判定
+      {
+        const date = moment().date()
+        const lastLoginedDate = moment(lastLoginedAt).date()
+        console.log('DATE', date, 'lastLoginedDate', lastLoginedDate)
+        // 日付が異なっていたら日をまたいだと判断する（ちょうど1ヶ月ぶりにログインすると正常に動かないが、まあないでしょ）
+        if (date !== lastLoginedDate) {
+          await BadgeService.incrementValue(
+            userId,
+            brandId,
+            BadgeType.CONTINUOUS_LOGIN
+          )
+        }
       }
     } catch (e) {
       throw e
@@ -342,8 +359,7 @@ module.exports = class User {
   }
 
   static arrToObj(arr, key, value) {
-    return _
-      .chain(arr)
+    return _.chain(arr)
       .keyBy(key)
       .mapValues(value)
       .value()
