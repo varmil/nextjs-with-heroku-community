@@ -45,9 +45,17 @@ module.exports = class Post {
       if (categoryIndex) {
         data = { ...data, categoryIndex }
       }
+
       // save images if needed (union)
-      const newImages = await moveImages(files, Path.POST_IMG_DIR)
-      data = { ...data, images: _.union(fromServerFiles, newImages) }
+      {
+        const newImages = await moveImages(files, Path.POST_IMG_DIR)
+        data = { ...data, images: _.union(fromServerFiles, newImages) }
+        if (!_.isEmpty(newImages)) {
+          await BadgeService.incrementValue(userId, brandId, BadgeType.PHOTO, {
+            transaction
+          })
+        }
+      }
 
       // Postテーブルへの変更
       if (postId) {
@@ -60,7 +68,6 @@ module.exports = class Post {
         // INSERT, 変数再代入が微妙か
         const post = await models.Post.create(data, { transaction })
         postId = post.id
-
         // badge
         await BadgeService.incrementValue(userId, brandId, BadgeType.POST, {
           transaction
