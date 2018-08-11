@@ -141,6 +141,78 @@ class FoldText extends React.Component {
 }
 
 /**
+ * LIKE FIXME: なぜかLIKEするたびにBoxContentがUnmountされる
+ * https://reactjs.org/blog/2015/12/16/ismounted-antipattern.html
+ */
+class LikeButton extends React.Component {
+  state = {
+    nowLoading: false
+  }
+
+  componentDidMount() {
+    // callbackされるときにUnmountedなことがあるので。
+    this._mounted = true
+  }
+
+  componentWillUnmount() {
+    this._mounted = false
+  }
+
+  onLikeToggle(e) {
+    const { dispatch, id, PostLikes } = this.props
+    let upOrDown = null
+
+    this.setState({ nowLoading: true })
+
+    // 最初のLIKE or current is DOWN
+    if (isEmpty(PostLikes) || !PostLikes[0].upOrDown) {
+      // console.log('next state is UP')
+      upOrDown = true
+    } else {
+      // console.log('next state is DOWN')
+      upOrDown = false
+    }
+
+    const successCb = res => {
+      this._mounted && this.setState({ nowLoading: false })
+    }
+    dispatch(
+      createAction(AppPost.SAVE_LIKE_REQUEST)({
+        postId: id,
+        upOrDown,
+        successCb
+      })
+    )
+  }
+
+  getIconClass() {
+    return this.state.nowLoading ? 'fa-spinner' : 'fa-heart'
+  }
+
+  render() {
+    const { PostLikes, like } = this.props
+    const { nowLoading } = this.state
+    return (
+      <IconButton
+        className="mr-1"
+        style={{
+          fontSize: FOOTER_FONTSIZE,
+          // LIKE済みなら青色に
+          color:
+            !isEmpty(PostLikes) && PostLikes[0].upOrDown
+              ? Color.MAIN_BLUE
+              : 'inherit'
+        }}
+        onClick={this.onLikeToggle.bind(this)}
+        disabled={nowLoading}
+      >
+        <i className={`fas ${this.getIconClass()} mr-1`} /> {like}
+      </IconButton>
+    )
+  }
+}
+
+/**
  * 記事一覧用と詳細表示双方を担う
  */
 class BoxContent extends React.Component {
@@ -423,30 +495,8 @@ class BoxContent extends React.Component {
     return props.topPhoto ? [Photo, Body] : [Body, Photo]
   }
 
-  onLikeToggle(e) {
-    const { dispatch, id, PostLikes } = this.props
-    let upOrDown = null
-
-    // 最初のLIKE or current is DOWN
-    if (isEmpty(PostLikes) || !PostLikes[0].upOrDown) {
-      console.log('next state is UP')
-      upOrDown = true
-    } else {
-      console.log('next state is DOWN')
-      upOrDown = false
-    }
-
-    dispatch(
-      createAction(AppPost.SAVE_LIKE_REQUEST)({
-        postId: id,
-        upOrDown
-      })
-    )
-  }
-
   render() {
     const props = this.props
-    const { PostLikes } = this.props
     const INITIAL_COMMENT_NUM = 3
 
     return (
@@ -462,20 +512,7 @@ class BoxContent extends React.Component {
           {this.createGoingVote()}
 
           <div className="card-footer text-center p-2">
-            <IconButton
-              className="mr-1"
-              style={{
-                fontSize: FOOTER_FONTSIZE,
-                // LIKE済みなら青色に
-                color:
-                  !isEmpty(PostLikes) && PostLikes[0].upOrDown
-                    ? Color.MAIN_BLUE
-                    : 'inherit'
-              }}
-              onClick={this.onLikeToggle.bind(this)}
-            >
-              <i className="fas fa-heart mr-1" /> {props.like}
-            </IconButton>
+            <LikeButton {...props} />
             {this.createCommentButtonAndText()}
           </div>
 
