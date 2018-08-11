@@ -89,6 +89,7 @@ exports.saveVote = async (req, res, next) => {
   const isFirstVote = await services.Post.saveVote(
     postId,
     voterId,
+    req.user.brand.id,
     choiceIndex,
     comment
   )
@@ -259,7 +260,8 @@ exports.fetchSearched = async (req, res) => {
 
   // PHOTOデータのみ返す場合
   if (onlyPhoto) {
-    result = _.chain(result)
+    result = _
+      .chain(result)
       .flatMap(row => {
         const { id, boxType } = row
         return _.map(row.images, (photo, index) => ({

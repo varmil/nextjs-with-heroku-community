@@ -82,6 +82,7 @@ module.exports = class Post {
     }
   }
 
+  // VOICEへ投稿したとき（管理者が）
   static async saveVoice(postId, options, deadline, trans) {
     try {
       const created = await models.Voice.upsert(
@@ -157,7 +158,7 @@ module.exports = class Post {
   }
 
   // 投票（UPDATE対応済）
-  static async saveVote(postId, voterId, choiceIndex, comment) {
+  static async saveVote(postId, voterId, brandId, choiceIndex, comment) {
     // 初投票ならtrue, 更新ならfalse
     let isFirstVote = false
     const transaction = await models.sequelize.transaction()
@@ -176,7 +177,12 @@ module.exports = class Post {
         // NOTE: ネストしたトランザクションになるけど大丈夫か？
         let commentId = 0
         if (comment) {
-          const created = await CommentService.save(postId, voterId, comment)
+          const created = await CommentService.save(
+            postId,
+            voterId,
+            brandId,
+            comment
+          )
           commentId = created.id
         }
 
@@ -197,6 +203,11 @@ module.exports = class Post {
           { where: { postId } },
           { transaction }
         )
+
+        // badge
+        await BadgeService.incrementValue(voterId, brandId, BadgeType.SURVEY, {
+          transaction
+        })
       }
 
       await transaction.commit()
@@ -281,6 +292,7 @@ module.exports = class Post {
         order: [['choiceIndex', 'ASC']],
         raw: true
       })
+      if (_.isEmpty(choiceCounts)) return []
 
       const countSum = _.sumBy(choiceCounts, 'count')
       const mostPopularOption = _.maxBy(choiceCounts, 'count').choiceIndex
