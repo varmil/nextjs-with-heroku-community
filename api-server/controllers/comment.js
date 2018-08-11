@@ -13,13 +13,14 @@ exports.save = async (req, res, next) => {
   console.log('[saveComment]body', req.body)
   const { postId, body } = req.body
   const userId = req.user.id
+  const brandId = req.user.brand.id
 
   if (!postId || !body) {
     return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
   }
 
   try {
-    const result = await services.Comment.save(postId, userId, body)
+    const result = await services.Comment.save(postId, userId, brandId, body)
     res.json(result)
   } catch (e) {
     return next(e)

@@ -1,16 +1,18 @@
 const reqlib = require('app-root-path').require
 const _ = require('lodash')
 const UserService = reqlib('/services/User')
+const BadgeService = reqlib('/services/Badge')
 const NotificationService = reqlib('/services/Notification')
 const models = reqlib('/models')
 const Path = reqlib('/constants/Path')
+const { BadgeType } = reqlib('/../shared/constants/Badge')
 const Rule = reqlib('/../shared/constants/Rule')
 const sanitizer = reqlib('/utils/sanitizer')
 
 const DEFAULT_PER_PAGE = 6
 
 module.exports = class Comment {
-  static async save(postId, userId, body) {
+  static async save(postId, userId, brandId, body) {
     const transaction = await models.sequelize.transaction()
     try {
       const comment = await models.Comment.create(
@@ -30,6 +32,11 @@ module.exports = class Comment {
 
       // update Notification table (not wait the operation)
       NotificationService.save(Rule.NOTIFICATION_TYPE.Comment, postId, userId)
+
+      // badge
+      await BadgeService.incrementValue(userId, brandId, BadgeType.COMMENT, {
+        transaction
+      })
 
       await transaction.commit()
       const merged = (await Comment.associateWithUser([comment.dataValues]))[0]
