@@ -236,7 +236,7 @@ module.exports = class Post {
 
       // 初回LIKE時 (not wait the operation)
       if (created) {
-        BadgeService.incrementValue(userId, brandId, BadgeType.LIKE, {
+        await BadgeService.incrementValue(userId, brandId, BadgeType.LIKE, {
           transaction
         })
       }
@@ -288,7 +288,7 @@ module.exports = class Post {
         const isMostPopular = e.choiceIndex === mostPopularOption
         return {
           ...e,
-          percentage: Math.ceil(e.count / countSum * 100),
+          percentage: Math.ceil((e.count / countSum) * 100),
           isMostPopular
         }
       })

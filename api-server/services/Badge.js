@@ -30,6 +30,7 @@ module.exports = class Badge {
             level: Math.max(row.level, Badge.getLevel(badgeType, nextValue)),
             currentValue: nextValue
           },
+          {},
           option
         )
       } else {
