@@ -30,8 +30,14 @@ module.exports = class Comment {
         { transaction }
       )
 
-      // update Notification table (not wait the operation)
-      NotificationService.save(Rule.NOTIFICATION_TYPE.Comment, postId, userId)
+      // update Notification table
+      await NotificationService.save(
+        Rule.NOTIFICATION_TYPE.Comment,
+        postId,
+        userId,
+        brandId,
+        { transaction }
+      )
 
       // badge
       await BadgeService.incrementValue(userId, brandId, BadgeType.COMMENT, {

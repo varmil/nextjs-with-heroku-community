@@ -2,11 +2,10 @@ const _ = require('lodash')
 const reqlib = require('app-root-path').require
 const models = reqlib('/models')
 const UserService = reqlib('/services/User')
-const moveFile = require('move-file')
-const Path = reqlib('/constants/Path')
+const BadgeService = reqlib('/services/Badge')
 const moment = reqlib('/utils/moment')
-const Role = reqlib('/../shared/constants/Role')
 const Rule = reqlib('/../shared/constants/Rule')
+const { BadgeType } = reqlib('/../shared/constants/Badge')
 
 // リストで取得する際に、1ページあたりの初期値
 // パラメタによって指定した場合はこの値は無効
@@ -14,7 +13,7 @@ const DEFAULT_PER_PAGE = 20
 
 module.exports = class Notification {
   // 通知を更新 / 新規保存
-  static async save(type, postId, actionUserId) {
+  static async save(type, postId, actionUserId, brandId, option) {
     try {
       // postIdから投稿者取得
       const userId = (await models.Post.findById(postId, { raw: true }))
@@ -41,6 +40,23 @@ module.exports = class Notification {
           actionUserIds: [actionUserId],
           isRead: false
         })
+      }
+
+      // badge
+      {
+        let badgeType
+        switch (type) {
+          case Rule.NOTIFICATION_TYPE.Like:
+            badgeType = BadgeType.GET_LIKE
+            break
+          case Rule.NOTIFICATION_TYPE.Comment:
+            badgeType = BadgeType.GET_COMMENT
+            break
+          default:
+        }
+        if (!_.isNil(badgeType)) {
+          await BadgeService.incrementValue(userId, brandId, badgeType, option)
+        }
       }
 
       return true

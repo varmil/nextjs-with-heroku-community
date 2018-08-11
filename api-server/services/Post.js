@@ -252,13 +252,17 @@ module.exports = class Post {
         { transaction }
       )
 
-      // update Notification table (not wait the operation)
-      if (upOrDown) {
-        NotificationService.save(Rule.NOTIFICATION_TYPE.Like, postId, userId)
-      }
-
-      // 初回LIKE時 (not wait the operation)
+      // 初回LIKE時
       if (created) {
+        // update Notification table (not wait the operation)
+        await NotificationService.save(
+          Rule.NOTIFICATION_TYPE.Like,
+          postId,
+          userId,
+          brandId,
+          { transaction }
+        )
+
         await BadgeService.incrementValue(userId, brandId, BadgeType.LIKE, {
           transaction
         })
