@@ -60,6 +60,11 @@ module.exports = class Post {
         // INSERT, 変数再代入が微妙か
         const post = await models.Post.create(data, { transaction })
         postId = post.id
+
+        // badge
+        await BadgeService.incrementValue(userId, brandId, BadgeType.POST, {
+          transaction
+        })
       }
 
       // Hashtagsテーブル更新。各々のタグに関して新規:INSERT。既存:find tagId
