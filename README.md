@@ -52,6 +52,22 @@ npm run dev
 ```
 
 
+## URL Example
+```
+# 管理者Signup画面
+http://localhost:3000/admin/site/edit/welcome/signup
+
+# 管理者投稿管理画面
+http://localhost:3000/admin/post/list
+
+# ユーザ、管理者Signin画面
+http://localhost:3000/view/signin
+
+# ユーザHome画面
+http://localhost:3000/view/home
+```
+
+
 ## Trouble-shooting
 
 ###### Q. HTTPS-PORTAL cannot sign the domain
