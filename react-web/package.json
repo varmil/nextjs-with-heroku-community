@@ -58,6 +58,7 @@
     "react-reveal": "^1.2.2",
     "react-scroll": "^1.7.9",
     "react-select": "^2.0.0-beta.7",
+    "react-slick": "^0.23.1",
     "react-sortable-hoc": "^0.8.3",
     "react-swipeable-views": "^0.12.14",
     "reactstrap": "^6.1.0",
