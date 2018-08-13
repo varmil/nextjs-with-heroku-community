@@ -125,6 +125,13 @@ export const AppPost = createTypes(
   async('FETCH_COMMENTS')
 )
 
+// バッジ
+export const AppBadge = createTypes(
+  'app/badge/',
+  'SET_LIST',
+  async('FETCH_LIST')
+)
+
 // -----
 // -- APP_ADMIN: AdminViewで詰めるデータ --
 // -----

@@ -20,6 +20,7 @@ const Color = {
 const Badge = {
   [BadgeType.CONTINUOUS_LOGIN]: {
     desc: '連続ログイン（日）',
+    imgname: 'continuous-login-',
     items: [
       { level: 6, value: 90, color: Color.GOLD },
       { level: 5, value: 60, color: Color.SILVER },
@@ -31,6 +32,7 @@ const Badge = {
   },
   [BadgeType.LIKE]: {
     desc: 'いいねをする',
+    imgname: 'like-',
     items: [
       { level: 6, value: 2000, color: Color.GOLD },
       { level: 5, value: 1000, color: Color.SILVER },
@@ -42,6 +44,7 @@ const Badge = {
   },
   [BadgeType.COMMENT]: {
     desc: 'コメントをする',
+    imgname: 'comment-',
     items: [
       { level: 6, value: 500, color: Color.GOLD },
       { level: 5, value: 300, color: Color.SILVER },
@@ -53,6 +56,7 @@ const Badge = {
   },
   [BadgeType.SURVEY]: {
     desc: 'アンケートに答える',
+    imgname: 'survey-',
     items: [
       { level: 6, value: 50, color: Color.GOLD },
       { level: 5, value: 30, color: Color.SILVER },
@@ -64,6 +68,7 @@ const Badge = {
   },
   [BadgeType.POST]: {
     desc: '累積投稿',
+    imgname: 'post-',
     items: [
       { level: 6, value: 300, color: Color.GOLD },
       { level: 5, value: 100, color: Color.SILVER },
@@ -75,6 +80,7 @@ const Badge = {
   },
   [BadgeType.PHOTO]: {
     desc: '写真投稿',
+    imgname: 'photo-',
     items: [
       { level: 6, value: 100, color: Color.GOLD },
       { level: 5, value: 50, color: Color.SILVER },
@@ -86,6 +92,7 @@ const Badge = {
   },
   [BadgeType.MOVIE]: {
     desc: '動画投稿',
+    imgname: 'movie-',
     items: [
       { level: 6, value: 80, color: Color.GOLD },
       { level: 5, value: 40, color: Color.SILVER },
@@ -97,6 +104,7 @@ const Badge = {
   },
   [BadgeType.GET_LIKE]: {
     desc: '累積獲得いいね',
+    imgname: 'get-like-',
     items: [
       { level: 6, value: 1000, color: Color.GOLD },
       { level: 5, value: 400, color: Color.SILVER },
@@ -108,6 +116,7 @@ const Badge = {
   },
   [BadgeType.GET_COMMENT]: {
     desc: '累積獲得コメント',
+    imgname: 'get-comment-',
     items: [
       { level: 6, value: 300, color: Color.GOLD },
       { level: 5, value: 100, color: Color.SILVER },

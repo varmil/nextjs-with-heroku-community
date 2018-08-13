@@ -12,6 +12,7 @@ import {
   AppSearch,
   AppNotification,
   AppPost,
+  AppBadge,
   AppAdminPost,
   AppAdminFan,
   AppAdminAccount,
@@ -27,6 +28,9 @@ const initialState = {
   voice: { boxContents: [] },
   news: { activeCategoryIndex: undefined, boxContents: [] },
   mypage: { boxContents: [] },
+
+  // バッジ（マイページなど）
+  badge: { item: [] },
 
   // 検索
   search: { photos: [], boxContents: [] },
@@ -276,6 +280,13 @@ export default handleActions(
       // LIKE総数を増加
       newState = findAllAndUpdate(state, +postId, `comment`, c => c + 1)
       return newState
+    },
+
+    /**
+     *  BADGE
+     */
+    [AppBadge.SET_LIST]: (state, action) => {
+      return immutable.set(state, `badge.item`, action.payload)
     },
 
     /**

@@ -4,69 +4,48 @@ import range from 'lodash/range'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
 import Slider from 'react-slick'
+import chunk from 'lodash/chunk'
+import uniqueId from 'lodash/uniqueId'
 import IconButton from '@material-ui/core/IconButton'
 import { Link, Router } from 'routes'
 import Avatar from 'components/atoms/Avatar'
+import BadgeSlick from 'components/molecules/BadgeSlick'
 import MypageContents from 'components/templates/edit_view_shared/MypageContents'
-import { AppMypage } from 'constants/ActionTypes'
+import { AppBadge } from 'constants/ActionTypes'
 import URL from 'constants/URL'
 
 class SimpleSlider extends React.Component {
   render() {
-    const { className } = this.props
-    var settings = {
+    const { className, data } = this.props
+    const chunks = chunk(data, 8)
+
+    const settings = {
       dots: true,
       speed: 500,
       slidesToShow: 1,
-      slidesToScroll: 1
+      slidesToScroll: 1,
+      onSwipe: () => console.log('SWIPED')
     }
+
+    // TODO レベル高い順に表示とか
     return (
       <React.Fragment>
         <Slider className={`${className || ''}`} {...settings}>
-          <div>
-            <div className="row justify-content-center">
-              {range(6).map(i => (
-                <div key={i} className="badge col-3 py-2">
-                  <img src="/static/stub/badges/001.png" />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h3>2</h3>
-          </div>
-
-          <div>
-            <h3>3</h3>
-          </div>
-
-          <div>
-            <h3>4</h3>
-          </div>
+          {chunks.map((chunk, i) => <BadgeSlick key={i} chunk={chunk} />)}
         </Slider>
 
         <style global jsx>{`
+          .slick-slider {
+            overflow: hidden !important;
+          }
+
           .slick-dots {
             top: -5px;
-            bottom: initial;
+            bottom: initial !important;
           }
 
           .slick-dots li {
-            margin: 0 0px;
-          }
-        `}</style>
-
-        <style jsx>{`
-          .row {
-            width: 270px;
-            margin: 0 auto;
-          }
-
-          .badge img {
-            width: 52px;
-            height: 73px;
-            object-fit: cover;
+            margin: 0 !important;
           }
         `}</style>
       </React.Fragment>
@@ -81,9 +60,11 @@ const iconButtonStyle = {
 }
 
 class Mypage extends React.Component {
-  // static async getInitialProps({ ctx }) {
-  //   return {}
-  // }
+  static async getInitialProps({ ctx }) {
+    const { dispatch } = ctx.store
+    dispatch(createAction(AppBadge.FETCH_LIST_REQUEST)())
+    return {}
+  }
 
   render() {
     const props = this.props
@@ -148,7 +129,7 @@ class Mypage extends React.Component {
               <div className="badgeLink">詳しく見る</div>
             </Link>
 
-            <SimpleSlider className="pt-4 mb-4" />
+            <SimpleSlider data={props.badges} className="pt-4 mb-4" />
           </section>
         </div>
 
@@ -218,5 +199,6 @@ class Mypage extends React.Component {
 }
 
 export default connect(state => ({
-  user: state.user
+  user: state.user,
+  badges: state.app.badge.item
 }))(Mypage)

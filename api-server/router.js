@@ -10,6 +10,7 @@ const UserController = reqlib('/controllers/user')
 const SiteController = reqlib('/controllers/site')
 const PostController = reqlib('/controllers/post')
 const CommentController = reqlib('/controllers/comment')
+const BadgeController = reqlib('/controllers/badge')
 
 const passport = require('passport')
 require('./services/passport')
@@ -240,4 +241,9 @@ module.exports = function(app) {
     userRole.is('adminGuest'),
     UserController.fetchInvitedFans
   )
+
+  /**
+   * BADGE
+   */
+  app.get('/badge', requireAuth, BadgeController.fetchList)
 }

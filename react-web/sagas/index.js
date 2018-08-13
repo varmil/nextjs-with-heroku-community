@@ -25,6 +25,7 @@ import {
   AppSearch,
   AppNotification,
   AppPost,
+  AppBadge,
   AppAdminPost,
   AppAdminFan,
   AppAdminAccount,
@@ -412,9 +413,6 @@ function* fetchPost({ payload }) {
     const { data } = yield call(API.fetch, `/post/${postId}`, jwtToken)
     const action = createAction(AppAdminPost.SET)
     yield put(action({ ...data }))
-
-    // fetch-set comments
-    // yield call(fetchComments, { payload: { postId, reset: true } })
     if (successCb) yield call(successCb, data)
   } catch (e) {
     yield put(setCommonError(e.response))
@@ -550,6 +548,20 @@ function* saveVote({ payload }) {
       jwtToken
     )
     yield call(successCb, res)
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
+}
+
+/**
+ * Badges
+ */
+
+function* fetchBadges({ payload }) {
+  const { jwtToken } = yield select(getUser)
+  try {
+    const { data } = yield call(API.fetch, `/badge`, jwtToken)
+    yield put(createAction(AppBadge.SET_LIST)(data))
   } catch (e) {
     yield put(setCommonError(e.response))
   }
@@ -721,7 +733,9 @@ const appSaga = [
   takeLatest(AppPost.SAVE_REQUEST, savePost),
   takeLatest(AppPost.SAVE_COMMENT_REQUEST, saveComment),
   takeLatest(AppPost.SAVE_LIKE_REQUEST, saveLike),
-  takeLatest(AppPost.SAVE_VOTE_REQUEST, saveVote)
+  takeLatest(AppPost.SAVE_VOTE_REQUEST, saveVote),
+
+  takeLatest(AppBadge.FETCH_LIST_REQUEST, fetchBadges)
 ]
 
 const appAdminSaga = [
