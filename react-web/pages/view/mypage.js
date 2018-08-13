@@ -187,6 +187,7 @@ class Mypage extends React.Component {
             top: 5px;
             right: 10%;
             font-size: 11px;
+            z-index: 1;
           }
 
           .desc {
