@@ -1,75 +1,44 @@
 import React from 'react'
 import Head from 'next/head'
+import map from 'lodash/map'
 import range from 'lodash/range'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
 import Slider from 'react-slick'
 import IconButton from '@material-ui/core/IconButton'
 import { Link, Router } from 'routes'
-import Avatar from 'components/atoms/Avatar'
-import MypageContents from 'components/templates/edit_view_shared/MypageContents'
+import { SimpleSlider } from 'components/molecules/BadgeSlick'
 import { AppMypage } from 'constants/ActionTypes'
 import URL from 'constants/URL'
+import { Badge } from '/../shared/constants/Badge'
 
-// TODO
-class SimpleSlider extends React.Component {
-  render() {
-    const { className } = this.props
-    var settings = {
-      dots: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1
-    }
-    return (
-      <React.Fragment>
-        <Slider className={`${className || ''}`} {...settings}>
-          <div>
-            <div className="row justify-content-center">
-              {range(6).map(i => (
-                <div key={i} className="badge col-3 py-2">
-                  <img src="/static/stub/badges/001.png" />
-                </div>
-              ))}
+const BadgeSlick = props => (
+  <div>
+    {map(Badge, (v, badgeType) => {
+      return (
+        <div key={v.imgname} className="row justify-content-center text-center">
+          {range(props.fromLevel, props.toLevel + 1).map(level => (
+            <div key={v.imgname + level} className="badge col-4 py-2">
+              <img src={`/static/img/badge/png/${v.imgname}0${level}.png`} />
             </div>
-          </div>
+          ))}
+        </div>
+      )
+    })}
 
-          <div>
-            <h3>2</h3>
-          </div>
-        </Slider>
+    <style jsx>{`
+      .row {
+        width: 80%;
+        margin: 0 auto;
+      }
 
-        <style global jsx>{`
-          .slick-slider {
-            overflow: hidden !important;
-          }
-
-          .slick-dots {
-            top: -5px;
-            bottom: initial !important;
-          }
-
-          .slick-dots li {
-            margin: 0 !important;
-          }
-        `}</style>
-
-        <style jsx>{`
-          .row {
-            width: 270px;
-            margin: 0 auto;
-          }
-
-          .badge img {
-            width: 52px;
-            height: 73px;
-            object-fit: cover;
-          }
-        `}</style>
-      </React.Fragment>
-    )
-  }
-}
+      .badge img {
+        width: 100%;
+        object-fit: cover;
+      }
+    `}</style>
+  </div>
+)
 
 const iconButtonStyle = {
   position: 'relative',
@@ -77,13 +46,14 @@ const iconButtonStyle = {
   top: '0px'
 }
 
-class Mypage extends React.Component {
+class BadgePage extends React.Component {
   // static async getInitialProps({ ctx }) {
   //   return {}
   // }
 
   render() {
     const props = this.props
+    const { badges } = props
     return (
       <React.Fragment>
         <Head>
@@ -109,7 +79,10 @@ class Mypage extends React.Component {
           </section>
 
           <section className="badges position-relative mt-1">
-            <SimpleSlider className="pt-4 mb-4" />
+            <SimpleSlider className="pt-4 mb-4">
+              <BadgeSlick fromLevel={1} toLevel={3} />
+              <BadgeSlick fromLevel={4} toLevel={6} />
+            </SimpleSlider>
           </section>
         </div>
       </React.Fragment>
@@ -118,5 +91,6 @@ class Mypage extends React.Component {
 }
 
 export default connect(state => ({
-  user: state.user
-}))(Mypage)
+  user: state.user,
+  badges: state.app.badge.item
+}))(BadgePage)

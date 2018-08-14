@@ -1,3 +1,5 @@
+import React from 'react'
+import Slider from 'react-slick'
 import { Badge } from '/../shared/constants/Badge'
 
 export default props => (
@@ -27,3 +29,40 @@ export default props => (
     `}</style>
   </div>
 )
+
+export class SimpleSlider extends React.Component {
+  render() {
+    const { className, children } = this.props
+
+    const settings = {
+      dots: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1
+    }
+
+    // TODO レベル高い順に表示とか
+    return (
+      <React.Fragment>
+        <Slider className={`${className || ''}`} {...settings}>
+          {children}
+        </Slider>
+
+        <style global jsx>{`
+          .slick-slider {
+            overflow: hidden !important;
+          }
+
+          .slick-dots {
+            top: -5px;
+            bottom: initial !important;
+          }
+
+          .slick-dots li {
+            margin: 0 !important;
+          }
+        `}</style>
+      </React.Fragment>
+    )
+  }
+}

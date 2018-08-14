@@ -3,55 +3,15 @@ import Head from 'next/head'
 import range from 'lodash/range'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
-import Slider from 'react-slick'
 import chunk from 'lodash/chunk'
 import uniqueId from 'lodash/uniqueId'
 import IconButton from '@material-ui/core/IconButton'
 import { Link, Router } from 'routes'
 import Avatar from 'components/atoms/Avatar'
-import BadgeSlick from 'components/molecules/BadgeSlick'
+import BadgeSlick, { SimpleSlider } from 'components/molecules/BadgeSlick'
 import MypageContents from 'components/templates/edit_view_shared/MypageContents'
 import { AppBadge } from 'constants/ActionTypes'
 import URL from 'constants/URL'
-
-class SimpleSlider extends React.Component {
-  render() {
-    const { className, data } = this.props
-    const chunks = chunk(data, 8)
-
-    const settings = {
-      dots: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      onSwipe: () => console.log('SWIPED')
-    }
-
-    // TODO レベル高い順に表示とか
-    return (
-      <React.Fragment>
-        <Slider className={`${className || ''}`} {...settings}>
-          {chunks.map((chunk, i) => <BadgeSlick key={i} chunk={chunk} />)}
-        </Slider>
-
-        <style global jsx>{`
-          .slick-slider {
-            overflow: hidden !important;
-          }
-
-          .slick-dots {
-            top: -5px;
-            bottom: initial !important;
-          }
-
-          .slick-dots li {
-            margin: 0 !important;
-          }
-        `}</style>
-      </React.Fragment>
-    )
-  }
-}
 
 const iconButtonStyle = {
   position: 'absolute',
@@ -68,6 +28,8 @@ class Mypage extends React.Component {
 
   render() {
     const props = this.props
+    const chunks = chunk(props.badges, 8)
+
     return (
       <React.Fragment>
         <Head>
@@ -129,7 +91,9 @@ class Mypage extends React.Component {
               <div className="badgeLink">詳しく見る</div>
             </Link>
 
-            <SimpleSlider data={props.badges} className="pt-4 mb-4" />
+            <SimpleSlider className="pt-4 mb-4">
+              {chunks.map((chunk, i) => <BadgeSlick key={i} chunk={chunk} />)}
+            </SimpleSlider>
           </section>
         </div>
 
