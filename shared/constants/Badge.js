@@ -31,7 +31,7 @@ const Badge = {
     ]
   },
   [BadgeType.LIKE]: {
-    desc: 'いいねをする',
+    desc: 'いいね',
     imgname: 'like-',
     items: [
       { level: 6, value: 2000, color: Color.GOLD },
@@ -43,7 +43,7 @@ const Badge = {
     ]
   },
   [BadgeType.COMMENT]: {
-    desc: 'コメントをする',
+    desc: 'コメント',
     imgname: 'comment-',
     items: [
       { level: 6, value: 500, color: Color.GOLD },
@@ -55,7 +55,7 @@ const Badge = {
     ]
   },
   [BadgeType.SURVEY]: {
-    desc: 'アンケートに答える',
+    desc: 'アンケート回答',
     imgname: 'survey-',
     items: [
       { level: 6, value: 50, color: Color.GOLD },
