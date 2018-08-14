@@ -7,7 +7,6 @@ import { connect } from 'react-redux'
 import { Portal } from 'react-portal'
 import { createAction } from 'redux-actions'
 import Modal from 'reactstrap/lib/Modal'
-import ModalHeader from 'reactstrap/lib/ModalHeader'
 import ModalBody from 'reactstrap/lib/ModalBody'
 import IconButton from '@material-ui/core/IconButton'
 import { Link, Router } from 'routes'
@@ -16,7 +15,7 @@ import { AppBadge } from 'constants/ActionTypes'
 import URL from 'constants/URL'
 import { Badge } from '/../shared/constants/Badge'
 
-class BadgeSlick extends React.Component {
+class BadgeSlide extends React.Component {
   state = {
     modalIsOpen: false,
     modalImage: '',
@@ -73,7 +72,6 @@ class BadgeSlick extends React.Component {
             isOpen={this.state.modalIsOpen}
             toggle={this.toggle}
             centered={true}
-            // backdrop={true}
           >
             <ModalBody>
               <div className="w-50 mx-auto">
@@ -144,8 +142,8 @@ class BadgePage extends React.Component {
 
           <section className="badges position-relative mt-1">
             <SimpleSlider className="pt-4 mb-4">
-              <BadgeSlick badges={badges} fromLevel={1} toLevel={3} />
-              <BadgeSlick badges={badges} fromLevel={4} toLevel={6} />
+              <BadgeSlide badges={badges} fromLevel={1} toLevel={3} />
+              <BadgeSlide badges={badges} fromLevel={4} toLevel={6} />
             </SimpleSlider>
           </section>
         </div>

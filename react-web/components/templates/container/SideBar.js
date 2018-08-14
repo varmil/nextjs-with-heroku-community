@@ -126,23 +126,6 @@ class SideBar extends React.Component {
     return (
       <nav className="bg-faded sidebar" style={{ width: this.props.width }}>
         <ul className="sidebarActions">
-          <li title="⌘+s" className="">
-            <a href="javascript:void(0);" className="save">
-              <i className="far fa-save" />
-              <span className="saveBtn_txt">保存する</span>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0);" className="publish">
-              <i className="fas fa-globe" />
-              <span className="publishTxt">公開する</span>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0);">
-              <i className="fas fa-cog" />ページ情報編集
-            </a>
-          </li>
           <li>
             <Link href="/view/top">
               <a>
@@ -150,9 +133,14 @@ class SideBar extends React.Component {
               </a>
             </Link>
           </li>
+          <li>
+            <a href="javascript:void(0);">
+              <i className="fas fa-font" />フォント変更
+            </a>
+          </li>
         </ul>
 
-        <ul className="sidebarUndoRedo">
+        {/* <ul className="sidebarUndoRedo">
           <li title="⌘+z">
             <a className="undo_btn grayout" href="javascript:void(0);">
               <i className="fas fa-undo" />
@@ -165,9 +153,9 @@ class SideBar extends React.Component {
               操作を<br />1つ進める
             </a>
           </li>
-        </ul>
+        </ul> */}
 
-        <ul id="editor-size-controller" className="sidebarDevice">
+        {/* <ul id="editor-size-controller" className="sidebarDevice">
           <SideBarDevice
             selected={this.isSelectedDevice(Device.PC)}
             type={Device.PC}
@@ -183,15 +171,15 @@ class SideBar extends React.Component {
             type={Device.MOBILE}
             onClick={this.onClickDevice.bind(this)}
           />
-        </ul>
+        </ul> */}
 
-        <section>
+        {/* <section>
           <ToggleSideSecond
             icon="fa-clipboard-list"
             text="テーマカラー変更"
             selected={false}
           />
-        </section>
+        </section> */}
 
         <section className="hierarchy mt-3">
           <div className="my-2">
@@ -256,7 +244,7 @@ class SideBar extends React.Component {
           }
 
           .sidebarActions {
-            display: inline-block;
+            // display: inline-block;
           }
 
           .sidebarActions li:nth-child(odd) {
@@ -264,9 +252,9 @@ class SideBar extends React.Component {
           }
 
           .sidebarActions li {
-            float: left;
+            // float: left;
             display: block;
-            width: 50%;
+            width: 100%;
             margin: 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;

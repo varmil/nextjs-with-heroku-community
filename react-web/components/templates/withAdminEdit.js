@@ -9,7 +9,7 @@ import Classes from 'constants/Classes'
 const IS_SERVER = typeof window === 'undefined'
 // side bar
 const SIDEBAR_WIDTH = 180
-const OFFSET_TOP_SIDEBAR = 106
+const OFFSET_TOP_SIDEBAR = 114
 const OFFSET_TOP_MAINBODY = 135
 // device
 const MOBILE_HEIGHT = 667
