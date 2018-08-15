@@ -19,7 +19,8 @@ export const SiteCommon = createTypes(
   'site/common/',
   'SET_LOGO',
   'SET_NAV_ICON_COLOR',
-  'SET_BG_COLOR'
+  'SET_BG_COLOR',
+  'SET_FONT_FAMILY'
 )
 
 export const SiteTop = createTypes('site/top/', 'SET_MAIN_BANNER', 'SET_BOXES')

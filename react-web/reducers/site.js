@@ -8,6 +8,7 @@ import {
   Logo as LogoDefault,
   NavIconColorDefault,
   ColorDefault,
+  FontFamilyDefault,
   MainBanner as MainBannerDefault,
   Boxes as BoxesDefault,
   SubBanner as SubBannerDefault,
@@ -35,7 +36,9 @@ const initialState = {
     logo: LogoDefault,
     navIcon: NavIconColorDefault,
     // 汎用で使う背景色（テーマ色みたいな）
-    color: ColorDefault
+    color: ColorDefault,
+    // 汎用で使うフォント
+    fontFamily: FontFamilyDefault
   },
 
   top: {
@@ -60,6 +63,7 @@ const initialState = {
 export const PATH_MAP = {
   WELCOME: 'welcome',
   COLOR: 'common.color',
+  FONT_FAMILY: 'common.fontFamily',
   MAIN_BANNER: `top.mainBanner`,
   LOGO: `common.logo`,
   NAV_ICON: `common.navIcon`,
@@ -107,6 +111,9 @@ export default handleActions(
       // remove falsy key (ex) index: undefined
       const filtered = pickBy(action.payload, identity)
       return immutable.merge(state, `${PATH_MAP.COLOR}`, filtered)
+    },
+    [SiteCommon.SET_FONT_FAMILY]: (state, action) => {
+      return immutable.set(state, `${PATH_MAP.FONT_FAMILY}`, action.payload)
     },
 
     /**

@@ -26,6 +26,8 @@ export const ColorDefault = {
   backgroundColor: 'red'
 }
 
+export const FontFamilyDefault = ''
+
 /**
  * BANNER
  */
