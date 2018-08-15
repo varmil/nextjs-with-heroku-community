@@ -8,7 +8,6 @@ import { setDevice } from 'actions/site'
 import ActiveLink from 'components/atoms/ActiveLink'
 import URL from 'constants/URL'
 import Color from 'constants/Color'
-// import ToggleSideSecond from 'components/molecules/edit_modal/ToggleSideSecond'
 // import Device from 'constants/Device'
 
 // editor size controller
@@ -133,7 +132,7 @@ class SideBar extends React.Component {
             </ActiveLink>
           </li>
           <li>
-            <a href="javascript:void(0);">
+            <a href="javascript:void(0);" onClick={props.onClickFontChange}>
               <i className="fas fa-font" />フォント変更
             </a>
           </li>

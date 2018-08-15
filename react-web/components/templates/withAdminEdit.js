@@ -2,6 +2,7 @@ import React from 'react'
 // import { connect } from 'react-redux'
 import OverlayEditWithModal from 'components/organisms/OverlayEditWithModal'
 import SideBar from 'components/templates/admin/SideBar'
+import SideBarFont from 'components/templates/admin/SideBarFont'
 import Device from 'constants/Device'
 import Classes from 'constants/Classes'
 
@@ -15,11 +16,40 @@ const OFFSET_TOP_MAINBODY = 135
 const MOBILE_HEIGHT = 667
 const MOBILE_WIDTH = 375
 
+class SideBarWrap extends React.Component {
+  state = {
+    isOpenSideBarFont: false
+  }
+
+  toggle = () => {
+    const { isOpenSideBarFont } = this.state
+    this.setState({ isOpenSideBarFont: !isOpenSideBarFont })
+  }
+
+  render() {
+    const { isOpenSideBarFont } = this.state
+    return (
+      <React.Fragment>
+        <SideBar
+          width={SIDEBAR_WIDTH}
+          offsetTop={OFFSET_TOP_SIDEBAR}
+          onClickFontChange={this.toggle}
+        />
+        <SideBarFont isOpen={isOpenSideBarFont} onToggle={this.toggle} />
+      </React.Fragment>
+    )
+  }
+}
+
 export default function ppHOC(WrappedComponent) {
   return class Edit extends React.Component {
     constructor(props) {
       super(props)
-      this.state = { show: false, iframeHeight: 0, overlayElements: [] }
+      this.state = {
+        show: false,
+        iframeHeight: 0,
+        overlayElements: []
+      }
     }
 
     componentDidMount() {
@@ -142,7 +172,7 @@ export default function ppHOC(WrappedComponent) {
       return (
         <div className="container-fluid">
           <div className="mainBody">
-            <SideBar width={SIDEBAR_WIDTH} offsetTop={OFFSET_TOP_SIDEBAR} />
+            <SideBarWrap />
 
             {!IS_SERVER ? (
               <section style={this.addDeviceStyle()}>
