@@ -1,7 +1,7 @@
 import React from 'react'
 // import { connect } from 'react-redux'
 import OverlayEditWithModal from 'components/organisms/OverlayEditWithModal'
-import SideBar from 'components/templates/container/SideBar'
+import SideBar from 'components/templates/admin/SideBar'
 import Device from 'constants/Device'
 import Classes from 'constants/Classes'
 
