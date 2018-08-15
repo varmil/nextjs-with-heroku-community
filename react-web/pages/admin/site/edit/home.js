@@ -10,8 +10,8 @@ const Edit = withAdminEdit(<React.Fragment />)
 
 class EditHome extends React.Component {
   static async getInitialProps({ ctx }) {
-    const { slug } = ctx.query
-    return { slug: slug || '' }
+    const { slug, previewMode } = ctx.query
+    return { slug: slug || '', previewMode }
   }
 
   render() {
@@ -31,7 +31,9 @@ class EditHome extends React.Component {
 
         <Edit
           {...props}
-          iframeSrc={`${URL.VIEW_HOME}${iframeSlug}?edit=true`}
+          iframeSrc={`${URL.VIEW_HOME}${iframeSlug}?${
+            props.previewMode ? '' : 'edit=true'
+          }`}
         />
       </React.Fragment>
     )

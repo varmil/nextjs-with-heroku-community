@@ -19,7 +19,6 @@ export default function ppHOC(WrappedComponent) {
   return class Edit extends React.Component {
     constructor(props) {
       super(props)
-      // console.info('EDIT', props)
       this.state = { show: false, iframeHeight: 0, overlayElements: [] }
     }
 
@@ -53,7 +52,7 @@ export default function ppHOC(WrappedComponent) {
 
     componentWillUnmount() {
       console.log('clear timer', this.timer)
-      clearInterval(this.timer)
+      this.timer && clearInterval(this.timer)
     }
 
     // map from elements in iframe to react component
@@ -152,12 +151,19 @@ export default function ppHOC(WrappedComponent) {
                   style={this.addIFrameStyle()}
                   src={props.iframeSrc}
                 />
-                <div
-                  id="editableOverlayContainer"
-                  style={this.addOverlayContainerStyle()}
-                >
-                  {state.overlayElements}
-                </div>
+
+                {/*
+                  querystringに "preview=true" があったらオーバーレイしない
+                  （iframe表示の際はEditモードと、Previewモードの２種類がある）
+                */}
+                {props.previewMode !== 'true' && (
+                  <div
+                    id="editableOverlayContainer"
+                    style={this.addOverlayContainerStyle()}
+                  >
+                    {state.overlayElements}
+                  </div>
+                )}
               </section>
             ) : null}
           </div>

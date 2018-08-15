@@ -127,7 +127,7 @@ class SideBar extends React.Component {
       <nav className="bg-faded sidebar" style={{ width: this.props.width }}>
         <ul className="sidebarActions">
           <li>
-            <Link href="/view/top">
+            <Link route={`${URL.ADMIN_SITE_EDIT}/home?previewMode=true`}>
               <a>
                 <i className="fas fa-shoe-prints" />プレビュー
               </a>
