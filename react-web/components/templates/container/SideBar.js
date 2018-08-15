@@ -1,70 +1,69 @@
 import React from 'react'
 import { Link } from 'routes'
 import { connect } from 'react-redux'
+import { withRouter } from 'next/router'
 import objectPath from 'object-path'
 import { PATH_MAP } from 'reducers/site'
 import { setDevice } from 'actions/site'
 import ActiveLink from 'components/atoms/ActiveLink'
-import ToggleSideSecond from 'components/molecules/edit_modal/ToggleSideSecond'
-import Device from 'constants/Device'
 import URL from 'constants/URL'
 import Color from 'constants/Color'
-
-import { withRouter } from 'next/router'
+// import ToggleSideSecond from 'components/molecules/edit_modal/ToggleSideSecond'
+// import Device from 'constants/Device'
 
 // editor size controller
-const SideBarDevice = props => {
-  let iconString
-  switch (props.type) {
-    case Device.PC:
-      iconString = 'fa-desktop'
-      break
-    case Device.TABLET:
-      iconString = 'fa-tablet-alt'
-      break
-    case Device.MOBILE:
-      iconString = 'fa-mobile-alt'
-      break
-  }
-
-  const selectedClass = props.selected ? 'selected' : ''
-
-  return (
-    <li onClick={() => props.onClick(props.type)}>
-      <a className={`${selectedClass}`} href="javascript:void(0);">
-        <i className={`fas ${iconString}`} />
-      </a>
-
-      <style jsx>{`
-        li {
-          display: block;
-          float: left;
-          width: 33.3333%;
-          height: 60px;
-        }
-
-        a:hover,
-        a.selected {
-          color: #fff;
-          background-color: ${Color.PERA_BLUE};
-        }
-
-        a {
-          display: block;
-          height: 100%;
-          text-align: center;
-        }
-
-        .fa,
-        .far,
-        .fas {
-          font-size: 30px;
-          line-height: 60px;
-        }
-      `}</style>
-    </li>
-  )
-}
+// const SideBarDevice = props => {
+//   let iconString
+//   switch (props.type) {
+//     case Device.PC:
+//       // iconString = 'fa-desktop'
+//       break
+//     case Device.TABLET:
+//       iconString = 'fa-tablet-alt'
+//       break
+//     case Device.MOBILE:
+//       iconString = 'fa-mobile-alt'
+//       break
+//   }
+//
+//   const selectedClass = props.selected ? 'selected' : ''
+//
+//   return (
+//     <li onClick={() => props.onClick(props.type)}>
+//       <a className={`${selectedClass}`} href="javascript:void(0);">
+//         <i className={`fas ${iconString}`} />
+//       </a>
+//
+//       <style jsx>{`
+//         li {
+//           display: block;
+//           float: left;
+//           width: 33.3333%;
+//           height: 60px;
+//         }
+//
+//         a:hover,
+//         a.selected {
+//           color: #fff;
+//           background-color: ${Color.PERA_BLUE};
+//         }
+//
+//         a {
+//           display: block;
+//           height: 100%;
+//           text-align: center;
+//         }
+//
+//         .fa,
+//         .far,
+//         .fas {
+//           font-size: 30px;
+//           line-height: 60px;
+//         }
+//       `}</style>
+//     </li>
+//   )
+// }
 
 // page item
 const PageItem = props => {
@@ -96,10 +95,10 @@ const PageItem = props => {
 }
 
 class SideBar extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
+  // constructor(props) {
+  //   super(props)
+  //   this.state = {}
+  // }
 
   isSelectedDevice(type) {
     return type === this.props.preview.device
@@ -124,14 +123,14 @@ class SideBar extends React.Component {
   render() {
     const props = this.props
     return (
-      <nav className="bg-faded sidebar" style={{ width: this.props.width }}>
+      <nav className="bg-faded sidebar" style={{ width: props.width }}>
         <ul className="sidebarActions">
           <li>
-            <Link route={`${URL.ADMIN_SITE_EDIT}/home?previewMode=true`}>
+            <ActiveLink route={`${URL.ADMIN_SITE_EDIT}/home?previewMode=true`}>
               <a>
                 <i className="fas fa-shoe-prints" />プレビュー
               </a>
-            </Link>
+            </ActiveLink>
           </li>
           <li>
             <a href="javascript:void(0);">
@@ -218,7 +217,7 @@ class SideBar extends React.Component {
         <style jsx>{`
           .sidebar {
             position: fixed;
-            top: ${this.props.offsetTop}px;
+            top: ${props.offsetTop}px;
             bottom: 0;
             left: 0;
             z-index: 1000;
@@ -243,16 +242,11 @@ class SideBar extends React.Component {
             list-style-type: none;
           }
 
-          .sidebarActions {
-            // display: inline-block;
-          }
-
           .sidebarActions li:nth-child(odd) {
             border-right: 1px solid rgba(255, 255, 255, 0.1);
           }
 
           .sidebarActions li {
-            // float: left;
             display: block;
             width: 100%;
             margin: 0;
@@ -267,7 +261,8 @@ class SideBar extends React.Component {
             padding-top: 29px;
           }
 
-          .sidebarActions li a:hover {
+          .sidebarActions li a:hover,
+          .sidebarActions li a.active {
             background-color: ${Color.PERA_BLUE};
             border-color: ${Color.PERA_BLUE};
             color: #fff;
@@ -286,7 +281,7 @@ class SideBar extends React.Component {
         `}</style>
 
         {/* UndoRedo */}
-        <style jsx>{`
+        {/* <style jsx>{`
           .sidebarUndoRedo {
             overflow: hidden;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -330,10 +325,10 @@ class SideBar extends React.Component {
             padding: 12px 0;
             background-repeat: no-repeat;
           }
-        `}</style>
+        `}</style> */}
 
         {/* Editor size controller */}
-        <style jsx>{`
+        {/* <style jsx>{`
           .sidebarDevice {
             position: relative;
             top: -1px;
@@ -341,7 +336,7 @@ class SideBar extends React.Component {
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
           }
-        `}</style>
+        `}</style> */}
 
         {/* page link */}
         <style jsx>{`
