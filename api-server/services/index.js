@@ -1,15 +1,12 @@
-const User = require('./User')
-const Post = require('./Post')
-const Badge = require('./Badge')
-const Comment = require('./Comment')
-const Invitation = require('./Invitation')
-const Notification = require('./Notification')
+const fs = require('fs');
+const path = require('path');
+const _ = require('lodash');
 
-module.exports = {
-  User,
-  Post,
-  Badge,
-  Comment,
-  Invitation,
-  Notification
-}
+// services配下にあるfileをexports登録
+_.forEach(fs.readdirSync(__dirname), (filename) => {
+  if (path.extname(filename) !== '.js' || filename === 'index.js' || filename === 'passports.js') {
+    return;
+  }
+  const jsname = path.basename(filename, '.js');
+  module.exports[jsname] = require(`./${filename}`);
+});

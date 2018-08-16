@@ -2,6 +2,7 @@ const reqlib = require('app-root-path').require
 const _ = require('lodash')
 const UserService = reqlib('/services/User')
 const BadgeService = reqlib('/services/Badge')
+const HashtagService = reqlib('/services/Hashtag') 
 const NotificationService = reqlib('/services/Notification')
 const models = reqlib('/models')
 const Path = reqlib('/constants/Path')
@@ -29,6 +30,14 @@ module.exports = class Comment {
         { where: { id: postId } },
         { transaction }
       )
+
+      // commentの中身から使われているhashtagを取得
+      const hashtags = HashtagService.findTagsFrom(body)
+      {
+        const hashtagIds = await HashtagService.upsert(hashtags, transaction)
+        // TODO: commentとhashtagの関係性をどうするか？
+        await Comment.updateCommentHashtagRelation(comment.id, hashtagIds, transaction)
+      }
 
       // update Notification table
       await NotificationService.save(
@@ -124,5 +133,24 @@ module.exports = class Comment {
       return { ...c, name, iconPath }
     })
     return merged
+  }
+
+  static async updateCommentHashtagRelation(commentId, hashtagIds, transaction) {
+    const data = hashtagIds.map(hashtagId => {
+      return {
+        commentId,
+        hashtagId
+      }
+    })
+    await models.CommentHashtag.bulkCreate(data, { transaction })
+  }
+
+  static async fetchPostIds(commentIds) {
+    const comments = await models.Comment.findAll({
+      where: { id: commentIds },
+      raw: true
+    })
+
+    return _.uniq(_.map(comments, 'postId'))
   }
 }
