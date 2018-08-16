@@ -159,17 +159,6 @@ module.exports = class Post {
     }
   }
 
-  // static async fetchPostIdsFromHashtag(word) {
-  //   const name = word.replace('#', '')
-  //   const tags = await models.Hashtag.findAll({ where: { name }, raw: true })
-  //   const tagIds = _.map(tags, 'id')
-  //   const postsTags = await models.PostHashtag.findAll({
-  //     where: { hashtagId: tagIds },
-  //     raw: true
-  //   })
-  //   return _.uniq(_.map(postsTags, 'postId'))
-  // }
-
   // 投票（UPDATE対応済）
   static async saveVote(postId, voterId, brandId, choiceIndex, comment) {
     // 初投票ならtrue, 更新ならfalse

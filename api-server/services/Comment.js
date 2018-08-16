@@ -35,7 +35,6 @@ module.exports = class Comment {
       const hashtags = HashtagService.findTagsFrom(body)
       {
         const hashtagIds = await HashtagService.upsert(hashtags, transaction)
-        // TODO: commentとhashtagの関係性をどうするか？
         await Comment.updateCommentHashtagRelation(comment.id, hashtagIds, transaction)
       }
 

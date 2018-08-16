@@ -96,7 +96,7 @@ module.exports = class HashTag {
 
   /**
    * タグからPostIdsを取得する
-   * @param {string} tag
+   * @param {string} name
    * @returns {Array<int>} postIds 
    */
   static async fetchPostIds(name) {
@@ -111,7 +111,7 @@ module.exports = class HashTag {
 
   /**
    * タグが使われているコメントのIDのリストを取得
-   * @param {string} tag 
+   * @param {string} name 
    * @returns {Array<int>} commentIds
    */
   static async fetchCommentIds(name) {
