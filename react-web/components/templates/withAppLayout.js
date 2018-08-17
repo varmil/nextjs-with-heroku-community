@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Head from 'next/head'
 import LoadingHeader from 'components/organisms/LoadingHeader'
+import URL from 'constants/URL'
 
 export default function withAppLayout(ComposedComponent) {
   class AppLayout extends Component {
@@ -11,14 +12,22 @@ export default function withAppLayout(ComposedComponent) {
         pageProps = await ComposedComponent.getInitialProps(props)
       }
 
-      return { ...pageProps }
+      const isAdminPage = props.ctx.pathname.startsWith(URL.ADMIN_BASE_SLUG)
+      return { ...pageProps, isAdminPage }
+    }
+
+    // 管理者画面フォントや、そもそもデフォルト指定の場合時などは規定フォント
+    shouldUseDefaultFont() {
+      const { store, isAdminPage } = this.props
+      const { common } = store.getState().site || {}
+      return isAdminPage || (!common || !common.fontFamily)
     }
 
     loadWebfontIfSet() {
-      const { common } = this.props.store.getState().site || {}
-      if (!common || !common.fontFamily || !common.fontFamily.cssName) {
-        return null
-      }
+      const { store } = this.props
+      const { common } = store.getState().site || {}
+
+      if (this.shouldUseDefaultFont()) return null
       return (
         <link
           href={`https://fonts.googleapis.com/earlyaccess/${
@@ -30,10 +39,12 @@ export default function withAppLayout(ComposedComponent) {
     }
 
     setWebfontFamilyIfSet() {
-      const { common } = this.props.store.getState().site || {}
-      return common.fontFamily
-        ? `'${common.fontFamily.familyName}' !important`
-        : 'inherit'
+      const { store } = this.props
+      const { common } = store.getState().site || {}
+
+      return this.shouldUseDefaultFont()
+        ? 'inherit'
+        : `'${common.fontFamily.familyName}' !important`
     }
 
     render() {

@@ -27,12 +27,20 @@ const FONTS = [
 ]
 
 const FontItemLi = props => (
-  <li className="webfont-list wf" onClick={() => props.onClick(props.font)}>
+  <li
+    className={`webfont-list wf ${
+      (props.currentFont && props.currentFont.cssName) ===
+      (props.font && props.font.cssName)
+        ? 'current'
+        : ''
+    }`}
+    onClick={() => props.onClick(props.font)}
+  >
     {props.children}
 
     <style jsx>{`
       .wf {
-        font-family: ${props.font ? `'${props.font.familyName}'` : 'inherit'};
+        font-family: ${props.font ? `'${props.font.familyName}'` : 'initial'};
 
         margin-bottom: 10px;
         border-bottom: none;
@@ -52,31 +60,6 @@ const FontItemLi = props => (
 )
 
 class SideBarFont extends React.Component {
-  // constructor(props) {
-  //   super(props)
-  //   this.state = {}
-  // }
-
-  // isSelectedDevice(type) {
-  //   return type === this.props.preview.device
-  // }
-  //
-  // onClickDevice(type) {
-  //   this.props.dispatch(setDevice({ device: type }))
-  // }
-  //
-  // createPageHierarchy() {
-  //   return this.props.boxes.map((box, i) => (
-  //     <React.Fragment key={i}>
-  //       <PageItem
-  //         level={2}
-  //         slug={`${URL.BOX_BASE_SLUG}/${box.slug}`}
-  //         text={box.header.text}
-  //       />
-  //     </React.Fragment>
-  //   ))
-  // }
-
   // font === NULLはデフォルトフォントを意味する
   onClick = font => {
     console.log('font selected', font)
@@ -87,6 +70,7 @@ class SideBarFont extends React.Component {
 
   render() {
     const props = this.props
+    const { fontFamily } = this.props
 
     if (!props.isOpen) return null
 
@@ -115,36 +99,68 @@ class SideBarFont extends React.Component {
           </div>
 
           <ul className="fonts mt-3">
-            <FontItemLi onClick={this.onClick} font={null}>
+            <FontItemLi
+              currentFont={fontFamily}
+              onClick={this.onClick}
+              font={null}
+            >
               デフォルト
             </FontItemLi>
 
             <li className="webfont-list webfont-list--caption">Noto系</li>
-            <FontItemLi onClick={this.onClick} font={FONTS[6]}>
+            <FontItemLi
+              currentFont={fontFamily}
+              onClick={this.onClick}
+              font={FONTS[6]}
+            >
               Noto Sans JP
             </FontItemLi>
 
             <li className="webfont-list webfont-list--caption">ゴシック系</li>
-            <FontItemLi onClick={this.onClick} font={FONTS[5]}>
+            <FontItemLi
+              currentFont={fontFamily}
+              onClick={this.onClick}
+              font={FONTS[5]}
+            >
               さわらびゴシック
             </FontItemLi>
 
             <li className="webfont-list webfont-list--caption">明朝系</li>
-            <FontItemLi onClick={this.onClick} font={FONTS[2]}>
+            <FontItemLi
+              currentFont={fontFamily}
+              onClick={this.onClick}
+              font={FONTS[2]}
+            >
               はんなり明朝
             </FontItemLi>
-            <FontItemLi onClick={this.onClick} font={FONTS[3]}>
+            <FontItemLi
+              currentFont={fontFamily}
+              onClick={this.onClick}
+              font={FONTS[3]}
+            >
               こころ明朝
             </FontItemLi>
-            <FontItemLi onClick={this.onClick} font={FONTS[4]}>
+            <FontItemLi
+              currentFont={fontFamily}
+              onClick={this.onClick}
+              font={FONTS[4]}
+            >
               さわらび明朝
             </FontItemLi>
 
             <li className="webfont-list webfont-list--caption">その他</li>
-            <FontItemLi onClick={this.onClick} font={FONTS[0]}>
+            <FontItemLi
+              currentFont={fontFamily}
+              onClick={this.onClick}
+              font={FONTS[0]}
+            >
               M+ 1p
             </FontItemLi>
-            <FontItemLi onClick={this.onClick} font={FONTS[1]}>
+            <FontItemLi
+              currentFont={fontFamily}
+              onClick={this.onClick}
+              font={FONTS[1]}
+            >
               Rounded M+ 1c
             </FontItemLi>
           </ul>
@@ -203,4 +219,6 @@ class SideBarFont extends React.Component {
   }
 }
 
-export default connect(state => ({}))(SideBarFont)
+export default connect(state => ({
+  fontFamily: state.site.common.fontFamily
+}))(SideBarFont)
