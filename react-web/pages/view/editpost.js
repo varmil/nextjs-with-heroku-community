@@ -6,6 +6,7 @@ import Select from 'react-select'
 import omit from 'lodash/omit'
 import { withStyles } from '@material-ui/core/styles'
 import Input from '@material-ui/core/Input'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import PostDropzone from 'components/molecules/PostDropzone'
 import { AppPost } from 'constants/ActionTypes'
 import BoxType from '/../shared/constants/BoxType'
@@ -40,7 +41,9 @@ class Editpost extends React.Component {
     title: '',
     body: '',
     category: this.createCatOptions()[0],
-    files: []
+    files: [],
+
+    submitting: false
   }
 
   createCatOptions() {
@@ -58,12 +61,17 @@ class Editpost extends React.Component {
   }
 
   onSubmit() {
+    // avoid double submitting
+    if (this.state.submitting) return
+    this.setState({ submitting: true })
+
     let data = this.state
     data = { ...data, categoryIndex: this.state.category.value }
-    // category objectは不要なので省く
-    data = omit(data, 'category')
+    // category や submittingは不要なので省く
+    data = omit(data, 'category', 'submitting')
 
     const successCb = async res => {
+      this.setState({ submitting: false })
       Router.pushRoute(`/view/home`)
     }
     this.props.dispatch(
@@ -88,11 +96,13 @@ class Editpost extends React.Component {
             <Link route={URL.VIEW_HOME}>
               <span style={{ color: 'black' }}>キャンセル</span>
             </Link>
-            <div className="">
+            <div>
+              {state.submitting && <CircularProgress size={20} />}
               <button
                 className="btn btn-link my-2 my-sm-0"
                 type="submit"
                 onClick={this.onSubmit.bind(this)}
+                disabled={state.submitting}
               >
                 投稿する
               </button>
