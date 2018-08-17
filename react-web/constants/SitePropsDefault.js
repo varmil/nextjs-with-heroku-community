@@ -26,7 +26,8 @@ export const ColorDefault = {
   backgroundColor: 'red'
 }
 
-export const FontFamilyDefault = ''
+// { cssName, familyName, isWebfont } みたいな？
+export const FontFamilyDefault = null
 
 /**
  * BANNER

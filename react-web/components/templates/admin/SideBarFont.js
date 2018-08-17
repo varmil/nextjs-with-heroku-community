@@ -1,19 +1,55 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import map from 'lodash/map'
 import Head from 'next/head'
 import IconButton from '@material-ui/core/IconButton'
-import objectPath from 'object-path'
-import { PATH_MAP } from 'reducers/site'
+import { createAction } from 'redux-actions'
+import { SiteState, SiteCommon } from 'constants/ActionTypes'
+// import objectPath from 'object-path'
+// import { PATH_MAP } from 'reducers/site'
 
-const CSS_NAMES = [
-  'mplus1p',
-  'roundedmplus1c',
-  'hannari',
-  'kokoro',
-  'sawarabimincho',
-  'sawarabigothic',
-  'notosansjapanese'
+const FONTS = [
+  { isWebfont: true, cssName: 'mplus1p', familyName: 'Mplus 1p' },
+  {
+    isWebfont: true,
+    cssName: 'roundedmplus1c',
+    familyName: 'Rounded Mplus 1c'
+  },
+  { isWebfont: true, cssName: 'hannari', familyName: 'Hannari' },
+  { isWebfont: true, cssName: 'kokoro', familyName: 'Kokoro' },
+  { isWebfont: true, cssName: 'sawarabimincho', familyName: 'Sawarabi Mincho' },
+  { isWebfont: true, cssName: 'sawarabigothic', familyName: 'Sawarabi Gothic' },
+  {
+    isWebfont: true,
+    cssName: 'notosansjapanese',
+    familyName: 'Noto Sans Japanese'
+  }
 ]
+
+const FontItemLi = props => (
+  <li className="webfont-list wf" onClick={() => props.onClick(props.font)}>
+    {props.children}
+
+    <style jsx>{`
+      .wf {
+        font-family: ${props.font ? `'${props.font.familyName}'` : 'inherit'};
+
+        margin-bottom: 10px;
+        border-bottom: none;
+        cursor: pointer;
+
+        height: 20px;
+        width: 160px;
+        padding-left: 10px;
+      }
+
+      .wf:hover,
+      .wf.current {
+        box-shadow: 0 0 0 2px #1cbbd0;
+      }
+    `}</style>
+  </li>
+)
 
 class SideBarFont extends React.Component {
   // constructor(props) {
@@ -41,6 +77,14 @@ class SideBarFont extends React.Component {
   //   ))
   // }
 
+  // font === NULLはデフォルトフォントを意味する
+  onClick = font => {
+    console.log('font selected', font)
+    // ここで dispatch してしまってSAVE
+    const action = createAction(SiteCommon.SET_FONT_FAMILY)(font)
+    this.props.dispatch(createAction(SiteState.SAVE_REQUEST)({ action }))
+  }
+
   render() {
     const props = this.props
 
@@ -51,7 +95,7 @@ class SideBarFont extends React.Component {
         <Head>
           <title>フォント変更: commune</title>
 
-          {CSS_NAMES.map(n => (
+          {map(FONTS, 'cssName').map(n => (
             <link
               key={n}
               href={`https://fonts.googleapis.com/earlyaccess/${n}.css`}
@@ -71,57 +115,40 @@ class SideBarFont extends React.Component {
           </div>
 
           <ul className="fonts mt-3">
-            <li className="webfont-list">デフォルト</li>
+            <FontItemLi onClick={this.onClick} font={null}>
+              デフォルト
+            </FontItemLi>
 
             <li className="webfont-list webfont-list--caption">Noto系</li>
-            <li className="webfont-list wf-notosansjapanese">
-              Noto Sans Japanese
-            </li>
+            <FontItemLi onClick={this.onClick} font={FONTS[6]}>
+              Noto Sans JP
+            </FontItemLi>
 
             <li className="webfont-list webfont-list--caption">ゴシック系</li>
-            <li className="webfont-list wf-sawarabigothic">さわらびゴシック</li>
+            <FontItemLi onClick={this.onClick} font={FONTS[5]}>
+              さわらびゴシック
+            </FontItemLi>
 
             <li className="webfont-list webfont-list--caption">明朝系</li>
-            <li className="webfont-list wf-hannari">はんなり明朝</li>
-            <li className="webfont-list wf-kokoro">こころ明朝</li>
-            <li className="webfont-list wf-sawarabimincho">さわらび明朝</li>
+            <FontItemLi onClick={this.onClick} font={FONTS[2]}>
+              はんなり明朝
+            </FontItemLi>
+            <FontItemLi onClick={this.onClick} font={FONTS[3]}>
+              こころ明朝
+            </FontItemLi>
+            <FontItemLi onClick={this.onClick} font={FONTS[4]}>
+              さわらび明朝
+            </FontItemLi>
 
             <li className="webfont-list webfont-list--caption">その他</li>
-            <li className="webfont-list wf-mplus1p">M+ 1p</li>
-            <li className="webfont-list wf-roundedmplus1c">Rounded M+ 1c</li>
+            <FontItemLi onClick={this.onClick} font={FONTS[0]}>
+              M+ 1p
+            </FontItemLi>
+            <FontItemLi onClick={this.onClick} font={FONTS[1]}>
+              Rounded M+ 1c
+            </FontItemLi>
           </ul>
         </div>
-
-        {/* FONT */}
-        <style jsx>{`
-          .wf-mplus1p {
-            font-family: 'Mplus 1p';
-          }
-          .wf-roundedmplus1c {
-            font-family: 'Rounded Mplus 1c';
-          }
-
-          .wf-hannari {
-            font-family: 'Hannari';
-          }
-          .wf-kokoro {
-            font-family: 'Kokoro';
-          }
-          .wf-sawarabimincho {
-            font-family: 'Sawarabi Mincho';
-          }
-
-          .wf-sawarabigothic {
-            font-family: 'Sawarabi Gothic';
-          }
-
-          .wf-notosansjapanese {
-            font-family: 'Noto Sans Japanese';
-          }
-          .noto {
-            font-family: 'Noto Sans Japanese';
-          }
-        `}</style>
 
         {/* UI */}
         <style jsx>{`
@@ -133,6 +160,11 @@ class SideBarFont extends React.Component {
 
           .secondContents > ul {
             padding-left: 0;
+          }
+
+          .secondContents > ul li {
+            margin-bottom: 10px;
+            border-bottom: none;
           }
 
           .secondContents {
@@ -148,28 +180,8 @@ class SideBarFont extends React.Component {
             top: 114px;
           }
 
-          .webfont-list:first-of-type {
-            padding-left: 0;
-          }
-
-          .secondContents > ul li {
-            margin-bottom: 10px;
-            border-bottom: none;
-            cursor: pointer;
-          }
-
           .secondContents > ul .webfont-list--caption:hover {
             box-shadow: none;
-          }
-
-          .secondContents > ul li:hover,
-          .secondContents > ul li.current {
-            box-shadow: 0 0 0 2px #1cbbd0;
-          }
-
-          .webfont-list {
-            height: 20px;
-            width: 160px;
           }
 
           .secondContents > ul .webfont-list--caption {
