@@ -11,6 +11,10 @@ import {
 // A theme with custom primary and secondary color.
 // It's optional.
 const theme = createMuiTheme({
+  typography: {
+    fontFamily: 'inherit'
+  }
+
   // palette: {
   //   primary: {
   //     light: purple[300],
