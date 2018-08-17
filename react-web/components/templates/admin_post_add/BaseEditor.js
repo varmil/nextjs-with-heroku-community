@@ -71,7 +71,9 @@ class AdminBaseEditor extends React.Component {
           images.map(src => {
             return { [utilFiles.FROM_SERVER_KEY]: true, preview: src }
           })) ||
-        []
+        [],
+
+      submitting: false
     }
   }
 
@@ -94,19 +96,21 @@ class AdminBaseEditor extends React.Component {
 
   // stateまるごと通知
   onSubmit(released) {
-    let data = this.state
+    // avoid double submitting
+    if (this.state.submitting) return
+    this.setState({ submitting: true })
 
     // 下書き情報追加
+    let data = this.state
     data = { ...data, released }
-
     // カテゴリがあるBOXならば追加
     if (data.category) {
       data = { ...data, released, categoryIndex: this.state.category.value }
     }
-    // category objectは不要なので省く
-    data = omit(data, 'category')
+    // category や submittingは不要なので省く
+    data = omit(data, 'category', 'submitting')
 
-    this.props.onSubmit(data)
+    this.props.onSubmit(data, () => this.setState({ submitting: false }))
   }
 
   render() {
