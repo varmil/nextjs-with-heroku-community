@@ -7,11 +7,11 @@ const models = reqlib('/models')
  * Tagの管理用service
  */
 module.exports = class HashTag {
-    /**
-     * 記事本文からHashtag情報を解析し、Hashtagテーブルに保存
-     * @param {*} tags 
-     * @param {*} transaction 
-     */
+  /**
+   * 記事本文からHashtag情報を解析し、Hashtagテーブルに保存
+   * @param {*} tags
+   * @param {*} transaction
+   */
   static async upsert(tags, transaction) {
     // 既存タグ
     const existingTags = await models.Hashtag.findAll({
@@ -31,16 +31,15 @@ module.exports = class HashTag {
         transaction
       }
     )
-    const newTgsIds = _.map(newTagRows, 'id')
-    // console.log('newTgsIds', newTgsIds)
+    const newTagsIds = _.map(newTagRows, 'id')
 
-    return [...existingTagIds, ...newTgsIds]
+    return [...existingTagIds, ...newTagsIds]
   }
 
   /**
    * bodyに含まれている # から始まる 文字列のリストを取得
    * # から始まって （半角|全角）スペース で終わる文字列をハッシュタグとして認識する
-   * @param {String} body 
+   * @param {String} body
    * @returns {Array<String>} タグリスト
    */
   static findTagsFrom(text) {
@@ -58,9 +57,9 @@ module.exports = class HashTag {
 
   /**
    * TagとPostの紐づけ
-   * @param {int} postId 
-   * @param {Array<int>} tagIds 
-   * @param {*} transaction 
+   * @param {int} postId
+   * @param {Array<int>} tagIds
+   * @param {*} transaction
    */
   static async updatePostHashtag(postId, tagIds, transaction) {
     // まず既存のタグ関係を削除
@@ -77,9 +76,9 @@ module.exports = class HashTag {
 
   /**
    * CommentとTagの紐づけ
-   * @param {int} commentId 
-   * @param {Array<int>} tagIds 
-   * @param {*} transaction 
+   * @param {int} commentId
+   * @param {Array<int>} tagIds
+   * @param {*} transaction
    */
   static async updateCommentHashtag(commentId, tagIds, transaction) {
     // まず既存のタグ関係を削除
@@ -97,7 +96,7 @@ module.exports = class HashTag {
   /**
    * タグからPostIdsを取得する
    * @param {string} name
-   * @returns {Array<int>} postIds 
+   * @returns {Array<int>} postIds
    */
   static async fetchPostIds(name) {
     const tags = await models.Hashtag.findAll({ where: { name }, raw: true })
@@ -111,7 +110,7 @@ module.exports = class HashTag {
 
   /**
    * タグが使われているコメントのIDのリストを取得
-   * @param {string} name 
+   * @param {string} name
    * @returns {Array<int>} commentIds
    */
   static async fetchCommentIds(name) {

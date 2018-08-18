@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
       hashtagId: DataTypes.INTEGER
     },
     {
-      tableName: 'CommentHashtags'
+      tableName: 'CommentsHashtags'
     }
   )
   return CommentHashtag
