@@ -2,8 +2,9 @@ const reqlib = require('app-root-path').require
 const _ = require('lodash')
 const UserService = reqlib('/services/User')
 const BadgeService = reqlib('/services/Badge')
-const HashtagService = reqlib('/services/Hashtag') 
+const HashtagService = reqlib('/services/Hashtag')
 const NotificationService = reqlib('/services/Notification')
+const MentionService = reqlib('/services/Mention')
 const models = reqlib('/models')
 const Path = reqlib('/constants/Path')
 const { BadgeType } = reqlib('/../shared/constants/Badge')
@@ -35,15 +36,35 @@ module.exports = class Comment {
       const hashtags = HashtagService.findTagsFrom(body)
       {
         const hashtagIds = await HashtagService.upsert(hashtags, transaction)
-        await Comment.updateCommentHashtagRelation(comment.id, hashtagIds, transaction)
+        await Comment.updateCommentHashtagRelation(
+          comment.id,
+          hashtagIds,
+          transaction
+        )
+      }
+
+      // mentionの処理
+      const mentions = MentionService.regex(body)
+      if (mentions) {
+        const notificationBase = {
+          type: Rule.NOTIFICATION_TYPE.Mention,
+          postId,
+          targetUserId: null,
+          actionUserId: userId,
+          brandId
+        }
+        await MentionService.sendNotifications(
+          _.uniq(mentions),
+          notificationBase,
+          { transaction }
+        )
       }
 
       // update Notification table
+      const targetUserId = await models.Post.findById(postId).posterId
       await NotificationService.save(
         Rule.NOTIFICATION_TYPE.Comment,
-        postId,
-        userId,
-        brandId,
+        { postId, actionUserId: userId, targetUserId, brandId },
         { transaction }
       )
 
@@ -134,7 +155,11 @@ module.exports = class Comment {
     return merged
   }
 
-  static async updateCommentHashtagRelation(commentId, hashtagIds, transaction) {
+  static async updateCommentHashtagRelation(
+    commentId,
+    hashtagIds,
+    transaction
+  ) {
     const data = hashtagIds.map(hashtagId => {
       return {
         commentId,

@@ -13,18 +13,31 @@ const DEFAULT_PER_PAGE = 20
 
 module.exports = class Notification {
   // 通知を更新 / 新規保存
-  static async save(type, postId, actionUserId, brandId, option) {
+  /**
+   * 指定したNotificationをtargetとなるユーザーのnotificationをして追加
+   * @param {int} type
+   * @param {Object} data
+   * @param {int} data.targetUserId 対象ユーザーID
+   * @param {int} data.actionUserId アクションしたユーザーID
+   * @param {int} data.postId 対象記事
+   * @param {int} data.brandId ブランドID
+   * @param {Object} option
+   */
+  static async save(type, data, option) {
     try {
-      // postIdから投稿者取得
-      const userId = (await models.Post.findById(postId, { raw: true }))
-        .posterId
+      if (!data) return
+
+      const { postId, actionUserId, targetUserId, brandId } = data
+
+      // 必要なデータがどれか一つでもかけていたらreturn
+      if (!postId || !actionUserId || !targetUserId || !brandId) return
 
       // 自分で自分の投稿にアクションした場合は何もしない
-      if (+actionUserId === userId) return
+      if (actionUserId === targetUserId) return
 
       // 未読通知があるならUPDATE、なければINSERT
       const existingRow = await models.Notification.findOne({
-        where: { userId, postId, type, isRead: false }
+        where: { userId: targetUserId, postId, type, isRead: false }
       })
 
       if (existingRow) {
@@ -35,7 +48,7 @@ module.exports = class Notification {
       } else {
         await models.Notification.create({
           type,
-          userId,
+          userId: targetUserId,
           postId,
           actionUserIds: [actionUserId],
           isRead: false

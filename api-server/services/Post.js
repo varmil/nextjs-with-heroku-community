@@ -5,6 +5,7 @@ const BadgeService = reqlib('/services/Badge')
 const CommentService = reqlib('/services/Comment')
 const HashtagService = reqlib('/services/Hashtag')
 const NotificationService = reqlib('/services/Notification')
+const MentionService = reqlib('/services/Mention')
 const { moveImage, moveImages } = reqlib('/utils/image')
 const models = reqlib('/models')
 const Path = reqlib('/constants/Path')
@@ -79,6 +80,23 @@ module.exports = class Post {
       {
         const hashtagIds = await HashtagService.upsert(hashtags, transaction)
         await Post.updatePostHashtagRelation(postId, hashtagIds, transaction)
+      }
+
+      // mentionの処理
+      const mentions = MentionService.regex(body)
+      if (mentions) {
+        const notificationBase = {
+          type: Rule.NOTIFICATION_TYPE.Mention,
+          postId,
+          targetUserId: null,
+          actionUserId: userId,
+          brandId
+        }
+        await MentionService.sendNotifications(
+          _.uniq(mentions),
+          notificationBase,
+          { transaction }
+        )
       }
 
       // mroongaへ同期（完了を待つ必要なし）
@@ -245,11 +263,12 @@ module.exports = class Post {
       // 初回LIKE時
       if (created) {
         // update Notification table (not wait the operation)
+
+        // TODO 'models.Post.update' でもデータ取れるか確認する
+        const targetUserId = await models.Post.findById(postId).posterId
         await NotificationService.save(
           Rule.NOTIFICATION_TYPE.Like,
-          postId,
-          userId,
-          brandId,
+          { postId, targetUserId, actionUserId: userId, brandId },
           { transaction }
         )
 
