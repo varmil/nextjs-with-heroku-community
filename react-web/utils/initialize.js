@@ -7,7 +7,10 @@ import Router from 'next/router'
 import Rule from 'constants/Rule'
 import url from 'constants/URL'
 
-// 部分一致。これらがpathnameの一部に含まれていればGUESTでもアクセス可能
+// 部分一致。これらがpathnameの一部に含まれていれば誰でもアクセス可能
+const PUBLIC_ROUTES = ['/view/settings/privacy_policy']
+
+// 部分一致。これらがpathnameの一部に含まれていればGUESTのみアクセス可能
 const ONLY_GUEST_ROUTES = [
   '/view/signin',
   '/view/signup/email',
@@ -35,7 +38,7 @@ function redirectIfNeeded(ctx, token) {
     }
   }
 
-  // 現在ログイン状態でこれらのページにアクセスしたらリダイレクト
+  // 現在ログイン状態でONLY_GUEST_ROUTESにアクセスしたらリダイレクト
   const redirectToHomeIfNeeded = ctx => {
     const shouldRedirect = ONLY_GUEST_ROUTES.some(r => ctx.pathname.includes(r))
     // console.log('TO HOME', ctx.pathname, shouldRedirect)
@@ -46,13 +49,22 @@ function redirectIfNeeded(ctx, token) {
     return false
   }
 
-  // 現在未ログイン状態なら、signin, signup関連のページのみ表示許可
+  // 現在未ログイン状態なら、PUBLIC_ROUTES, ONLY_GUEST_ROUTESのみ表示許可
   const redirectToSigninIfNeeded = ctx => {
-    const isSafePath = ONLY_GUEST_ROUTES.some(r => ctx.pathname.includes(r))
-    // console.log('TO SIGNIN', ctx.pathname, isSafePath)
-    if (!isSafePath) {
-      redirect(ctx.res, '/view/signin')
-      return true
+    // PUBLIC_ROUTES
+    {
+      const isSafePath = PUBLIC_ROUTES.some(r => ctx.pathname.includes(r))
+      if (isSafePath) return false
+    }
+
+    // ONLY_GUEST_ROUTES
+    {
+      const isSafePath = ONLY_GUEST_ROUTES.some(r => ctx.pathname.includes(r))
+      // console.log('TO SIGNIN', ctx.pathname, isSafePath)
+      if (!isSafePath) {
+        redirect(ctx.res, '/view/signin')
+        return true
+      }
     }
     return false
   }

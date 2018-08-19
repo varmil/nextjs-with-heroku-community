@@ -244,10 +244,10 @@ exports.fetchSearched = async (req, res) => {
   // wordが ハッシュタグ : ハッシュタグ完全一致のみ検索
   //        ハッシュタグ以外 : mroongaからFETCH
   if (word.startsWith('#')) {
-    const tag = word.replace('#', '') 
-    const postIds = await services.HashTag.fetchPostIds(tag)
-    const commentIds = await services.HashTag.fetchCommentIds(tag)
-    const commentPostIds = await services.Comment.fetchPostIds(commentIds) 
+    const tag = word.replace('#', '')
+    const postIds = await services.Hashtag.fetchPostIds(tag)
+    const commentIds = await services.Hashtag.fetchCommentIds(tag)
+    const commentPostIds = await services.Comment.fetchPostIds(commentIds)
     const targetPostIds = _.uniq([...postIds, ...commentPostIds])
     where = { id: targetPostIds, ...where }
   } else {
