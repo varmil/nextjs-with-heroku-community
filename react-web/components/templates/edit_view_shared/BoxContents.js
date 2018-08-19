@@ -23,7 +23,7 @@ export default class BoxContents extends React.Component {
   createCategorySelect() {
     // hide categories in VOICE
     if (!this.categories) return null
-    const { pageData, activeCategoryIndex } = this.props
+    const { pageData, activeCategoryIndex, onTouchCategory } = this.props
 
     return (
       <section className="cat py-3 bg-white">
@@ -34,6 +34,7 @@ export default class BoxContents extends React.Component {
           // 現在アクティブなカテゴリ
           categoryIndex={activeCategoryIndex}
           onClick={i => this.onChangeCategory(i)}
+          onTouch={onTouchCategory}
         />
       </section>
     )

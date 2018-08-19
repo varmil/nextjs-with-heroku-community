@@ -63,6 +63,8 @@ class CategorySelect extends React.Component {
         data-modal={`CategoryListModal`}
         data-action={props.action}
         data-path={props.propsPath}
+        onTouchMove={() => props.onTouch(true)}
+        onTouchEnd={() => props.onTouch(false)}
       >
         <ul className="scroll_lst">
           {/* default all */}

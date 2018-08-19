@@ -54,7 +54,12 @@ class TopPage extends React.Component {
       )
     }
 
-    this.state = { tabIndex: activeTabIndex, mainHeight: 0 }
+    this.state = {
+      tabIndex: activeTabIndex,
+      mainHeight: 0,
+      // iOSだとカテゴリの横スクロールとSwipeableViewが競合するため
+      isScrollingCategory: false
+    }
   }
 
   setContentsHeight() {
@@ -85,6 +90,13 @@ class TopPage extends React.Component {
     this.setState({ tabIndex })
   }
 
+  // TouchMoveされている間呼ばれ続ける。指を離すとFALSE
+  setScrollingCategory = isScrollingCategory => {
+    // 現在のStateと一致したら何もしない
+    if (this.state.isScrollingCategory === isScrollingCategory) return
+    this.setState({ isScrollingCategory })
+  }
+
   // 引数のindexが現在のActiveTabIndexと一致すればtrue
   isActive(targetTabIndex) {
     return targetTabIndex === this.state.tabIndex
@@ -93,6 +105,7 @@ class TopPage extends React.Component {
   render() {
     const props = this.props
     const { classes } = this.props
+    const { isScrollingCategory } = this.state
 
     return (
       <React.Fragment>
@@ -144,15 +157,18 @@ class TopPage extends React.Component {
             index={this.state.tabIndex}
             onChangeIndex={this.handleChangeIndex}
             onTransitionEnd={() => this.setContentsHeight()}
+            disabled={isScrollingCategory}
           >
             <VoiceContents disabled={!this.isActive(0)} />
             <TalkRoomContents
               disabled={!this.isActive(1)}
               onCategoryChanged={() => this.setContentsHeight()}
+              onTouchCategory={this.setScrollingCategory}
             />
             <NewsContents
               disabled={!this.isActive(2)}
               onCategoryChanged={() => this.setContentsHeight()}
+              onTouchCategory={this.setScrollingCategory}
             />
           </SwipeableViews>
 
