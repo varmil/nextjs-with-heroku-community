@@ -96,7 +96,7 @@ class PrivacyPolicy extends React.Component {
             </span>
           </p>
           <p>
-            <span>info@dayone.co.jp</span>
+            <span>info@dayone.jp</span>
           </p>
           <h3>&nbsp;</h3>
           <h3>
@@ -153,7 +153,7 @@ class PrivacyPolicy extends React.Component {
           <p>&nbsp;</p>
           <div>Dayone株式会社</div>
           <div>東京都文京区小石川 3丁目 12番 5号 A室</div>
-          <div>info@dayone.co.jp</div>
+          <div>info@dayone.jp</div>
         </div>
 
         <style jsx>{`
