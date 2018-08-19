@@ -12,23 +12,27 @@ module.exports = class Mention {
    */
   static regex(text) {
     const pattern = /\B@[a-z0-9_-]+/gi
-    return text.match(pattern).map(mention => mention.replace('@', ''))
+    const list = text.match(pattern)
+
+    if (!list) return null
+    return list.map(mention => mention.replace('@', ''))
   }
 
   /**
    *
-   * @param {*} targetUserIds
-   * @param {*} data,
+   * @param {Array<string>} targets
+   * @param {Object} data,
    * @param {Object} options
    * @param {Object} options.transaction
    */
-  static async sendNotifications(targetUserIds, data, options) {
+  static async sendNotifications(targets, data, options) {
     if (!data) return false
+
+    // 現状nicknameはuniqueではないので意図しないユーザーに送られてしまうこともある
     const userIds = await models.User.findAll({
-      where: { id: targetUserIds }
+      where: { nickname: targets }
     }).map(data => data.id)
 
-    console.log(targetUserIds, userIds)
     await userIds.forEach(targetUserId => {
       NotificationService.save(
         Rule.NOTIFICATION_TYPE.Mention,
