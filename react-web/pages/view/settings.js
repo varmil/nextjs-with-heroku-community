@@ -57,7 +57,9 @@ class Settings extends React.Component {
             </Item>
             <Item className="my-4">お問い合わせ</Item>
             <Item className="my-4">会員規約</Item>
-            <Item className="my-4">プライバシーポリシー</Item>
+            <Item to="/view/settings/privacy_policy" className="my-4">
+              プライバシーポリシー
+            </Item>
             <Item
               className="my-4"
               onClick={() => {
