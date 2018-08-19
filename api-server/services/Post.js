@@ -1,9 +1,9 @@
 const reqlib = require('app-root-path').require
 const _ = require('lodash')
-const hashtagRegex = require('hashtag-regex')
 const UserService = reqlib('/services/User')
 const BadgeService = reqlib('/services/Badge')
 const CommentService = reqlib('/services/Comment')
+const HashtagService = reqlib('/services/HashTag')
 const NotificationService = reqlib('/services/Notification')
 const { moveImage, moveImages } = reqlib('/utils/image')
 const models = reqlib('/models')
@@ -75,9 +75,9 @@ module.exports = class Post {
       }
 
       // Hashtagsテーブル更新。各々のタグに関して新規:INSERT。既存:find tagId
-      const hashtags = Post.getHashtags(body)
+      const hashtags = HashtagService.findTagsFrom(body)
       {
-        const hashtagIds = await Post.upsertHashtags(hashtags, transaction)
+        const hashtagIds = await HashtagService.upsert(hashtags, transaction)
         await Post.updatePostHashtagRelation(postId, hashtagIds, transaction)
       }
 
@@ -157,16 +157,6 @@ module.exports = class Post {
     } catch (e) {
       console.error(e)
     }
-  }
-
-  static async fetchPostIdsFromHashtag(word) {
-    const name = word.replace('#', '')
-    const tags = await models.Hashtag.findAll({ where: { name }, raw: true })
-    const postsTags = await models.PostHashtag.findAll({
-      where: { hashtagId: _.map(tags, 'id') },
-      raw: true
-    })
-    return _.map(postsTags, 'postId')
   }
 
   // 投票（UPDATE対応済）
@@ -339,47 +329,6 @@ module.exports = class Post {
   // sequelizeで count クエリを発行するための関数
   static getCountAttr() {
     return [models.sequelize.fn('COUNT', models.sequelize.col('id')), 'count']
-  }
-
-  // 記事本文からHashtag情報を解析し、Hashtagテーブルに保存
-  static async upsertHashtags(tags, transaction) {
-    // 既存タグ
-    const existingTags = await models.Hashtag.findAll({
-      where: { name: tags }
-    })
-    const existingTagIds = _.map(existingTags, 'id')
-    // console.log('existingTagIds', existingTagIds)
-
-    // 新規タグ（入力タグから、既存タグの差をとったものを新規とみなす）
-    const newTagNames = _.difference(tags, _.map(existingTags, 'name'))
-    const newTagRows = await models.Hashtag.bulkCreate(
-      newTagNames.map(str => {
-        return { name: str }
-      }),
-      {
-        raw: true,
-        transaction
-      }
-    )
-    const newTgsIds = _.map(newTagRows, 'id')
-    // console.log('newTgsIds', newTgsIds)
-
-    return [...existingTagIds, ...newTgsIds]
-  }
-
-  // # から始まって （半角|全角）スペース で終わる文字列をハッシュタグとして認識する
-  static getHashtags(body) {
-    let result = []
-    const regex = hashtagRegex()
-
-    let match
-    while ((match = regex.exec(body))) {
-      // # 記号は省く
-      result.push(match[0].replace('#', ''))
-    }
-    console.log('Hashtag parsed', result)
-
-    return _.uniq(result)
   }
 
   static async updatePostHashtagRelation(postId, hashtagIds, transaction) {

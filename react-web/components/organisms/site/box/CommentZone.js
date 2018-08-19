@@ -8,6 +8,7 @@ import { Link } from 'routes'
 import { AppPost } from 'constants/ActionTypes'
 import Avatar from 'components/atoms/Avatar'
 import ReadMoreAndLoading from 'components/molecules/ReadMoreAndLoading'
+import MultiLineHashtagText from 'components/atoms/MultiLineHashtagText'
 
 // ページ番号は1から
 const INITIAL_PAGE = 1
@@ -28,7 +29,9 @@ class Comments extends React.Component {
           <Link route={`/view/mypage/${e.commenterId}`}>
             <a>{e.name}</a>
           </Link>
-          <div>{e.body}</div>
+          <div>
+            <MultiLineHashtagText>{e.body}</MultiLineHashtagText>
+          </div>
         </div>
 
         <style jsx>{`
