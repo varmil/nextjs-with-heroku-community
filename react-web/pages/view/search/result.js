@@ -31,7 +31,8 @@ class SearchResult extends React.Component {
 
     return (
       <React.Fragment>
-        <SearchInput route={`/view/search/query`} word={word} />
+        {/* <SearchInput route={`/view/search/query`} word={word} /> */}
+        <SearchInput route={`/view/home`} word={word} />
         <SearchPhoto key={'P' + word} word={word} />
         <SearchContents key={'C' + word + uid} word={word} />
         <style global jsx>{`
