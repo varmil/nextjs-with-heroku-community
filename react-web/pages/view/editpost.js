@@ -70,13 +70,16 @@ class Editpost extends React.Component {
     // category や submittingは不要なので省く
     data = omit(data, 'category', 'submitting')
 
-    const successCb = async res => {
-      this.setState({ submitting: false })
+    const successCb = res => {
       Router.pushRoute(`/view/home`)
+    }
+    const errCb = res => {
+      this.setState({ submitting: false })
     }
     this.props.dispatch(
       createAction(AppPost.SAVE_REQUEST)({
         successCb,
+        errCb,
         // 現状はユーザが投稿可能なのはTALKのみ。
         boxType: BoxType.index.talk,
         ...data

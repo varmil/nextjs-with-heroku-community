@@ -496,7 +496,7 @@ function* savePost({ payload }) {
     const { data } = yield call(API.fetch, `/post/${res.data.id}`, jwtToken)
     const path = `${BoxType.slug[boxType]}.boxContents`
     yield put(createAction(AppBox.PREPEND_CONTENT)({ path, data }))
-    yield call(successCb, res)
+    if (successCb) yield call(successCb, res)
   } catch (e) {
     if (errCb) yield call(errCb, e.response)
     yield put(setCommonError(e.response))

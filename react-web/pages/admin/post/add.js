@@ -30,14 +30,18 @@ class AdminPostAdd extends React.Component {
   onSubmit(state, cb) {
     console.info(state, this.props.postId)
     const { dispatch, postId, boxType } = this.props
-    const successCb = async res => {
+    const successCb = res => {
       dispatch(setSuccess())
       Router.pushRoute(`/admin/post/list`)
-      // TODO call cb even if not success
+      cb()
+    }
+    const errCb = res => {
+      cb()
     }
     this.props.dispatch(
       createAction(AppAdminPost.SAVE_REQUEST)({
         successCb,
+        errCb,
         postId,
         boxType,
         ...state
