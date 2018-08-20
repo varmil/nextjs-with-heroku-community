@@ -57,7 +57,7 @@ class NavBar extends React.Component {
             data-action={SiteCommon.SET_NAV_ICON_COLOR}
             data-path={`${PATH_MAP.NAV_ICON}`}
           >
-            <i className="fas fa-search mr-3 navIcon" />
+            {/* <i className="fas fa-search mr-3 navIcon" /> */}
 
             <div className="d-inline-block position-relative">
               <Link route={'/view/notification'} passHref>
