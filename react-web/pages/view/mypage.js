@@ -66,9 +66,8 @@ class Mypage extends React.Component {
             </Link>
           </section>
 
-          <section className="desc mt-4 text-center">
-            東京で働いています。ファッション大好き。<br />
-            どうぞよろしくお願いいたします！
+          <section className="desc mt-4 px-4 text-center">
+            {props.user.introduction}
           </section>
 
           {/* <section className="act mt-4 row justify-content-center">

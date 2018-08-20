@@ -6,7 +6,7 @@ const initialState = {
   id: undefined,
   jwtToken: null,
   nickname: '',
-  introduction: '',
+  introduction: '宜しくおねがいします。',
   iconPath: '/static/img/icon/usericon_default.png',
   // (Admin, User) 今自分が見ているブランド
   brand: { id: undefined, name: '' },
