@@ -12,7 +12,7 @@ const models = reqlib('/models')
  * バッジ取得
  */
 exports.fetchList = async (req, res, next) => {
-  const userId = req.user.id
+  const userId = req.params.userId || req.user.id
   const brandId = req.user.brand.id
 
   const rows = await models.Badge.findAll({
@@ -20,5 +20,6 @@ exports.fetchList = async (req, res, next) => {
     where: { userId, brandId },
     raw: true
   })
+
   res.json(rows)
 }

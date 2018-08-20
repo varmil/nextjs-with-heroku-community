@@ -29,13 +29,15 @@ const initialState = {
   news: { activeCategoryIndex: undefined, boxContents: [] },
   mypage: { boxContents: [] },
 
-  // バッジ（マイページなど）
-  badge: { item: [] },
-
   // 検索
   search: { photos: [], boxContents: [] },
   // 通知
   notification: { notReadCount: 0, boxContents: [] },
+
+  // 他人のマイページ表示用
+  otherFanInfo: {},
+  // バッジ（マイページなど。他人のデータもこれを使う）
+  badge: { item: [] },
 
   // Admin, User兼用。記事詳細画面
   // comments: voiceでは [[]] になるので注意。それ以外は１次元
@@ -171,6 +173,9 @@ export default handleActions(
     [AppMypage.ADD_CONTENTS]: (state, action) => {
       // spread payload because it is array
       return immutable.push(state, `mypage.boxContents`, ...action.payload)
+    },
+    [AppMypage.SET_OTHER_USER]: (state, action) => {
+      return immutable.merge(state, `otherFanInfo`, action.payload)
     },
 
     /**

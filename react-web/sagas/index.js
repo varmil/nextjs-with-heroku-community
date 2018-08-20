@@ -176,11 +176,11 @@ function* fetchUser({ payload }) {
 // other user info
 function* fetchOtherUser({ payload }) {
   try {
-    const { userId, token } = payload || {}
+    const { userId, action, token } = payload || {}
     const jwtToken = token || (yield select(getUser)).jwtToken
     const path = userId ? `/user/${userId}` : `/user`
     const res = yield call(API.fetch, path, jwtToken)
-    yield put(createAction(AppAdminAccount.SET_OTHER_ADMIN)({ ...res.data }))
+    yield put(createAction(action)({ ...res.data }))
   } catch (e) {
     yield put(setCommonError(e.response))
   }
@@ -558,9 +558,11 @@ function* saveVote({ payload }) {
  */
 
 function* fetchBadges({ payload }) {
+  const { userId } = payload || {}
   const { jwtToken } = yield select(getUser)
+  const path = userId ? `/badge/${userId}` : `/badge`
   try {
-    const { data } = yield call(API.fetch, `/badge`, jwtToken)
+    const { data } = yield call(API.fetch, path, jwtToken)
     yield put(createAction(AppBadge.SET_LIST)(data))
   } catch (e) {
     yield put(setCommonError(e.response))
@@ -735,6 +737,7 @@ const appSaga = [
   takeLatest(AppPost.SAVE_LIKE_REQUEST, saveLike),
   takeLatest(AppPost.SAVE_VOTE_REQUEST, saveVote),
 
+  takeLatest(AppMypage.FETCH_OTHER_USER_REQUEST, fetchOtherUser),
   takeLatest(AppBadge.FETCH_LIST_REQUEST, fetchBadges)
 ]
 

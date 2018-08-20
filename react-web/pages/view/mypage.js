@@ -1,17 +1,18 @@
 import React from 'react'
 import Head from 'next/head'
-import range from 'lodash/range'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
 import chunk from 'lodash/chunk'
-import uniqueId from 'lodash/uniqueId'
 import IconButton from '@material-ui/core/IconButton'
 import { Link, Router } from 'routes'
 import Avatar from 'components/atoms/Avatar'
 import BadgeSlick, { SimpleSlider } from 'components/molecules/BadgeSlick'
 import MypageContents from 'components/templates/edit_view_shared/MypageContents'
-import { AppBadge } from 'constants/ActionTypes'
+import { AppMypage, AppBadge } from 'constants/ActionTypes'
 import URL from 'constants/URL'
+
+const DEFAULT_ICON_PATH = '/static/img/icon/usericon_default.png'
+const BADGES_PER_PAGE = 8
 
 const iconButtonStyle = {
   position: 'absolute',
@@ -21,14 +22,35 @@ const iconButtonStyle = {
 
 class Mypage extends React.Component {
   static async getInitialProps({ ctx }) {
-    const { dispatch } = ctx.store
-    dispatch(createAction(AppBadge.FETCH_LIST_REQUEST)())
-    return {}
+    const { userId } = ctx.query || {}
+    return { userId }
+  }
+
+  constructor(props) {
+    super(props)
+    const { dispatch, userId } = props
+    // このタイミングじゃないとprops.meが取得できないので
+    this.isMe = !userId || +userId === props.me.id
+    // console.log('CONST this is me', this.isMe)
+
+    // 他人のデータはFETCHしないといけない。自分のならstoreにすでにある。
+    if (!this.isMe) {
+      dispatch(
+        createAction(AppMypage.FETCH_OTHER_USER_REQUEST)({
+          userId: +userId,
+          action: AppMypage.SET_OTHER_USER
+        })
+      )
+    }
+
+    const param = this.isMe ? {} : { userId: +userId }
+    dispatch(createAction(AppBadge.FETCH_LIST_REQUEST)(param))
   }
 
   render() {
     const props = this.props
-    const chunks = chunk(props.badges, 8)
+    const userInfo = this.isMe ? props.me : props.user
+    const chunks = chunk(props.badges, BADGES_PER_PAGE)
 
     return (
       <React.Fragment>
@@ -49,7 +71,7 @@ class Mypage extends React.Component {
 
         <div className="container">
           <section className="avatar mt-4 text-center">
-            <Avatar src={props.user.iconPath} size={60} />
+            <Avatar src={userInfo.iconPath || DEFAULT_ICON_PATH} size={60} />
 
             <Link route={URL.VIEW_HOME}>
               <IconButton style={iconButtonStyle}>
@@ -59,15 +81,17 @@ class Mypage extends React.Component {
           </section>
 
           <section className="name mt-2 text-center">
-            <span>{props.user.nickname || 'スタッフ'}</span>
+            <span>{userInfo.nickname || 'スタッフ'}</span>
 
-            <Link route={'/view/settings/account'}>
-              <div className="edit">編集</div>
-            </Link>
+            {this.isMe && (
+              <Link route={'/view/settings/account'}>
+                <div className="edit">編集</div>
+              </Link>
+            )}
           </section>
 
           <section className="desc mt-4 px-4 text-center">
-            {props.user.introduction}
+            {userInfo.introduction}
           </section>
 
           {/* <section className="act mt-4 row justify-content-center">
@@ -86,9 +110,11 @@ class Mypage extends React.Component {
           </section> */}
 
           <section className="badges position-relative mt-3">
-            <Link route={'/view/badge'}>
-              <div className="badgeLink">詳しく見る</div>
-            </Link>
+            {this.isMe && (
+              <Link route={'/view/badge'}>
+                <div className="badgeLink">詳しく見る</div>
+              </Link>
+            )}
 
             <SimpleSlider className="pt-4 mb-4">
               {chunks.map((chunk, i) => <BadgeSlick key={i} chunk={chunk} />)}
@@ -162,6 +188,7 @@ class Mypage extends React.Component {
 }
 
 export default connect(state => ({
-  user: state.user,
+  me: state.user,
+  user: state.app.otherFanInfo,
   badges: state.app.badge.item
 }))(Mypage)

@@ -20,6 +20,9 @@ routes.add('/view/post/:postId/voice/result', '/view/post/voice/result')
 // routes.add('/view/search/query', '/view/search/query')
 routes.add('/view/search/result/:word', '/view/search/result')
 
+// マイページ（userIdなしなら自分）
+routes.add('/view/mypage/:userId', '/view/mypage')
+
 // （admin）記事一覧
 routes.add('/admin/post/list/:pageNum', '/admin/post/list')
 // （admin）投稿編集

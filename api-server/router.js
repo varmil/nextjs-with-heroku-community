@@ -246,4 +246,5 @@ module.exports = function(app) {
    * BADGE
    */
   app.get('/badge', requireAuth, BadgeController.fetchList)
+  app.get('/badge/:userId', requireAuth, BadgeController.fetchList)
 }

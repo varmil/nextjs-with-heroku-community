@@ -74,7 +74,11 @@ export const AppNews = createTypes(
 export const AppMypage = createTypes(
   'app/mypage/',
   'ADD_CONTENTS',
-  async('FETCH')
+  async('FETCH'),
+
+  // 他人
+  'SET_OTHER_USER',
+  async('FETCH_OTHER_USER')
 )
 
 // 検索画面

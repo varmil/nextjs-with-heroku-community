@@ -17,7 +17,10 @@ class AdminAccountList extends React.Component {
 
     // userIdがなければ自分のページ、あればそのユーザのページ
     dispatch(
-      createAction(AppAdminAccount.FETCH_OTHER_ADMIN_REQUEST)({ userId })
+      createAction(AppAdminAccount.FETCH_OTHER_ADMIN_REQUEST)({
+        userId,
+        action: AppAdminAccount.SET_OTHER_ADMIN
+      })
     )
 
     return { userId }
