@@ -66,7 +66,9 @@ export default class BoxContents extends React.Component {
             )
           })}
 
-          {this.createSubBanners()}
+          {/* NOTE: 2018/08/20 アプリ申請の見栄え調整のため一旦コメントアウト。
+            peraっぽく非表示〜どこにでもバナー差し込めるのがベスト */}
+          {/* {this.createSubBanners()} */}
 
           {secondArray.map((content, i) => {
             const MyBoxContent = factoryBox(content.boxType)
