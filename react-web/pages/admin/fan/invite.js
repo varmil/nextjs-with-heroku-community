@@ -43,10 +43,10 @@ class AdminFanInvite extends React.Component {
   state = { emails: [] }
 
   handleChange = (newValue, actionMeta) => {
-    console.group('Value Changed')
-    console.log(newValue)
+    // console.group('Value Changed')
+    // console.log(newValue)
     // console.log(`action: ${actionMeta.action}`)
-    console.groupEnd()
+    // console.groupEnd()
 
     const emails = newValue.map(v => v.value)
     this.setState({ ...this.state, emails })
