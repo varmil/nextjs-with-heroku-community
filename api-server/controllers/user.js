@@ -17,6 +17,7 @@ exports.fetch = async (req, res, next) => {
     'id',
     'email',
     'nickname',
+    'introduction',
     'firstName',
     'lastName',
     'iconPath',

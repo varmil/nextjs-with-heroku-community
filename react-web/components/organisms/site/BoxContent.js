@@ -277,6 +277,7 @@ class BoxContent extends React.Component {
               size={AVATAR_SIZE}
               name={props.name}
               src={props.iconPath}
+              userId={props.posterId}
             />
           </div>
 
@@ -300,6 +301,7 @@ class BoxContent extends React.Component {
             size={AVATAR_SIZE}
             name={props.name}
             src={props.iconPath}
+            userId={props.posterId}
           />
         </React.Fragment>
       )

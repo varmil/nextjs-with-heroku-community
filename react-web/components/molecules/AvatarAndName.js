@@ -14,7 +14,7 @@ export default class extends React.Component {
 
         <div className="nameContainer">
           <span className="name font-weight-bold">
-            <Link route={'/view/account'} passHref>
+            <Link route={`/view/mypage/${props.userId}`} passHref>
               <a>{props.name || 'Your Name Here'}</a>
             </Link>
           </span>
