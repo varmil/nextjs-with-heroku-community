@@ -68,7 +68,7 @@ module.exports = class Notification {
           default:
         }
         if (!_.isNil(badgeType)) {
-          await BadgeService.incrementValue(userId, brandId, badgeType, option)
+          await BadgeService.incrementValue(targetUserId, brandId, badgeType, option)
         }
       }
 

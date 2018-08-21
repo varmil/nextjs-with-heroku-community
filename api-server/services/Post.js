@@ -264,8 +264,7 @@ module.exports = class Post {
       if (created) {
         // update Notification table (not wait the operation)
 
-        // TODO 'models.Post.update' でもデータ取れるか確認する
-        const targetUserId = await models.Post.findById(postId).posterId
+        const targetUserId = (await models.Post.findById(postId)).posterId
         await NotificationService.save(
           Rule.NOTIFICATION_TYPE.Like,
           { postId, targetUserId, actionUserId: userId, brandId },

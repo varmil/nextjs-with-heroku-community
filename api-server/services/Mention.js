@@ -19,26 +19,30 @@ module.exports = class Mention {
   }
 
   /**
-   *
+   * Notificationを送信
    * @param {Array<string>} targets
    * @param {Object} data,
    * @param {Object} options
    * @param {Object} options.transaction
+   * @returns {Array<int>} userIds
    */
   static async sendNotifications(targets, data, options) {
     if (!data) return false
 
     // 現状nicknameはuniqueではないので意図しないユーザーに送られてしまうこともある
-    const userIds = await models.User.findAll({
+    const userIds = (await models.User.findAll({
       where: { nickname: targets }
-    }).map(data => data.id)
+    })).map(data => data.id)
 
-    await userIds.forEach(targetUserId => {
+    // 同期しなくても良さそうなのでそのまま実行
+    userIds.forEach(targetUserId => {
       NotificationService.save(
         Rule.NOTIFICATION_TYPE.Mention,
         Object.assign({}, data, { targetUserId }),
         options
       )
     })
+
+    return userIds
   }
 }

@@ -61,7 +61,10 @@ module.exports = class Comment {
       }
 
       // update Notification table
-      const targetUserId = await models.Post.findById(postId).posterId
+      const targetUserId = (await models.Post.findById(postId)).posterId
+      console.log('----------------------------')
+      console.log('targetUserId in Comment.js', targetUserId)
+      console.log('----------------------------')
       await NotificationService.save(
         Rule.NOTIFICATION_TYPE.Comment,
         { postId, actionUserId: userId, targetUserId, brandId },
