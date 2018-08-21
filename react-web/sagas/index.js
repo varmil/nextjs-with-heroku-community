@@ -26,6 +26,7 @@ import {
   AppNotification,
   AppPost,
   AppBadge,
+  AppContact,
   AppAdminPost,
   AppAdminFan,
   AppAdminAccount,
@@ -577,6 +578,21 @@ function* fetchBadges({ payload }) {
 }
 
 /**
+ * Contact
+ */
+
+function* saveContact({ payload }) {
+  const { jwtToken } = yield select(getUser)
+  const { type, text, successCb } = payload
+  try {
+    const res = yield call(API.post, '/contact', { type, text }, jwtToken)
+    if (successCb) yield call(successCb, res)
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
+}
+
+/**
  * Fans
  */
 
@@ -745,7 +761,9 @@ const appSaga = [
   takeLatest(AppPost.SAVE_VOTE_REQUEST, saveVote),
 
   takeLatest(AppMypage.FETCH_OTHER_USER_REQUEST, fetchOtherUser),
-  takeLatest(AppBadge.FETCH_LIST_REQUEST, fetchBadges)
+  takeLatest(AppBadge.FETCH_LIST_REQUEST, fetchBadges),
+
+  takeLatest(AppContact.SAVE_REQUEST, saveContact)
 ]
 
 const appAdminSaga = [

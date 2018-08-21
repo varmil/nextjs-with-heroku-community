@@ -138,6 +138,9 @@ export const AppBadge = createTypes(
   async('FETCH_LIST')
 )
 
+// お問い合わせ
+export const AppContact = createTypes('app/contact/', async('SAVE'))
+
 // -----
 // -- APP_ADMIN: AdminViewで詰めるデータ --
 // -----

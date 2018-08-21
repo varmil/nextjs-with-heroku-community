@@ -11,6 +11,7 @@ const SiteController = reqlib('/controllers/site')
 const PostController = reqlib('/controllers/post')
 const CommentController = reqlib('/controllers/comment')
 const BadgeController = reqlib('/controllers/badge')
+const ContactController = reqlib('/controllers/contact')
 
 const passport = require('passport')
 require('./services/passport')
@@ -251,4 +252,9 @@ module.exports = function(app) {
    */
   app.get('/badge', requireAuth, BadgeController.fetchList)
   app.get('/badge/:userId', requireAuth, BadgeController.fetchList)
+
+  /**
+   * CONTACT
+   */
+  app.post('/contact', requireAuth, ContactController.save)
 }

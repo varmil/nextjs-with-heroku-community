@@ -946,7 +946,7 @@ class PrivacyPolicy extends React.Component {
             font-weight: 400;
             text-decoration: none;
             vertical-align: baseline;
-            font-size: 11.5pt;
+            font-size: 13px;
 
             font-style: normal;
           }

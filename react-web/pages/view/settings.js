@@ -38,12 +38,6 @@ const Item = props => (
 )
 
 class Settings extends React.Component {
-  // state = {
-  //   email: '',
-  //   password: '',
-  //   errorMessage: ''
-  // }
-
   render() {
     const props = this.props
     return (
@@ -55,7 +49,9 @@ class Settings extends React.Component {
             <Item to="/view/settings/account" className="my-4">
               アカウント設定
             </Item>
-            <Item className="my-4">お問い合わせ</Item>
+            <Item to="/view/settings/contact" className="my-4">
+              お問い合わせ
+            </Item>
             <Item to="/view/settings/membership_agreement" className="my-4">
               利用規約
             </Item>
