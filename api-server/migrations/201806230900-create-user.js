@@ -120,12 +120,6 @@ module.exports = {
       .then(() =>
         queryInterface.addIndex(tableName, { fields: ['email'], unique: true })
       )
-      .then(() =>
-        queryInterface.addIndex(tableName, {
-          fields: ['nickname']
-          // unique: true
-        })
-      )
   },
   down: function(queryInterface, Sequelize) {
     return queryInterface.dropTable(tableName)
