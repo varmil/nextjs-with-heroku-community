@@ -8,6 +8,7 @@ import { Link } from 'routes'
 import { AppPost } from 'constants/ActionTypes'
 import Avatar from 'components/atoms/Avatar'
 import ReadMoreAndLoading from 'components/molecules/ReadMoreAndLoading'
+import MoreVertMenu from 'components/molecules/MoreVertMenu'
 import MultiLineHashtagText from 'components/atoms/MultiLineHashtagText'
 
 // ページ番号は1から
@@ -20,7 +21,7 @@ const PER_PAGE = 10
  */
 class Comments extends React.Component {
   render() {
-    const { data } = this.props
+    const { data, user } = this.props
 
     const mapped = data.filter(e => !isEmpty(e)).map((e, i) => (
       <div key={e.id + uniqueId()} className="row justify-content-around my-3">
@@ -34,16 +35,33 @@ class Comments extends React.Component {
           </div>
         </div>
 
+        {/* 自分のコメントならコンテキストメニュー表示 */}
+        {e.commenterId === user.id && (
+          <div className="moreVert">
+            <MoreVertMenu size={13} />
+          </div>
+        )}
+
         <style jsx>{`
           a {
             color: #2b6eb2;
             font-weight: bold;
           }
 
+          .row {
+            position: relative;
+          }
+
           .body {
             background-color: #eff1f3;
             border-radius: 15px;
             padding: 10px 20px;
+          }
+
+          .moreVert {
+            position: absolute;
+            right: 0;
+            top: -6px;
           }
         `}</style>
       </div>
@@ -123,7 +141,7 @@ class CommentZone extends React.Component {
         />
 
         <div className="commentsPost my-3 mb-5">
-          <Comments data={copiedArray} />
+          <Comments data={copiedArray} user={props.user} />
         </div>
 
         <style jsx>{`
@@ -150,5 +168,6 @@ CommentZone.propTypes = {
 }
 
 export default connect(state => ({
+  user: state.user,
   defaultComments: state.app.post.comments
 }))(CommentZone)

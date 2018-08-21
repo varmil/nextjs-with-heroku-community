@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton'
 import MultiLineHashtagText from 'components/atoms/MultiLineHashtagText'
 import VoteButton from 'components/atoms/VoteButton'
 import AvatarAndName from 'components/molecules/AvatarAndName'
+import MoreVertMenu from 'components/molecules/MoreVertMenu'
 import Photos from 'components/organisms/site/Photos'
 import CommentZone from 'components/organisms/site/box/CommentZone'
 import { createAction } from 'redux-actions'
@@ -502,7 +503,7 @@ class BoxContent extends React.Component {
     const INITIAL_COMMENT_NUM = 3
 
     return (
-      <div style={props.style}>
+      <div className={`cardWrap`} style={props.style}>
         <div className={`card`}>
           <div className="card-header p-2">
             {this.createHeader(props.showDetail)}
@@ -539,10 +540,22 @@ class BoxContent extends React.Component {
               return null
             }
           })()}
+        </div>
 
-          <style jsx>{`
+        {/* 自分のコメントならコンテキストメニュー表示 */}
+        {props.posterId === props.user.id && (
+          <div className="moreVert">
+            <MoreVertMenu size={13} />
+          </div>
+        )}
+
+        <style jsx>{`
             .media-body span {
               font-size: 10px;
+            }
+
+            .cardWrap {
+              position: relative;
             }
 
             .card {
@@ -569,8 +582,13 @@ class BoxContent extends React.Component {
               border: none !important;
               background-color: initial !important;
             }
+
+            .moreVert {
+              position: absolute;
+              right: 10px;
+              top: 5px;
+            }
           `}</style>
-        </div>
       </div>
     )
   }
@@ -586,4 +604,6 @@ BoxContent.propTypes = {
   focus: PropTypes.oneOf([FOCUS_TYPE.Scroll, FOCUS_TYPE.ScrollAndFocus])
 }
 
-export default connect()(BoxContent)
+export default connect(state => ({
+  user: state.user
+}))(BoxContent)
