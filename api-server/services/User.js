@@ -151,6 +151,9 @@ module.exports = class User {
     }
   }
 
+  /**
+   * 1人目の管理者以外の全てのユーザ（管理者 or ファン）はこれで登録
+   */
   static async createUser(code, email, password, brandId, roleId) {
     const trans = await models.sequelize.transaction()
     try {
@@ -158,7 +161,8 @@ module.exports = class User {
         {
           email,
           passwordHash: await models.User.generateHash(password),
-          roleId: roleId || Role.User.NORMAL
+          roleId: roleId || Role.User.NORMAL,
+          iconPath: DEFAULT_ICON_PATH
         },
         {
           transaction: trans
