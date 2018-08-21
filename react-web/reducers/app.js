@@ -27,15 +27,13 @@ const initialState = {
   talk: { activeCategoryIndex: undefined, boxContents: [] },
   voice: { boxContents: [] },
   news: { activeCategoryIndex: undefined, boxContents: [] },
-  mypage: { boxContents: [] },
+  mypage: { boxContents: [], otherFanInfo: {} },
 
   // 検索
   search: { photos: [], boxContents: [] },
   // 通知
   notification: { notReadCount: 0, boxContents: [] },
 
-  // 他人のマイページ表示用
-  otherFanInfo: {},
   // バッジ（マイページなど。他人のデータもこれを使う）
   badge: { item: [] },
 
@@ -174,8 +172,11 @@ export default handleActions(
       // spread payload because it is array
       return immutable.push(state, `mypage.boxContents`, ...action.payload)
     },
+    [AppMypage.RESET_CONTENTS]: (state, action) => {
+      return immutable.set(state, `mypage.boxContents`, [])
+    },
     [AppMypage.SET_OTHER_USER]: (state, action) => {
-      return immutable.merge(state, `otherFanInfo`, action.payload)
+      return immutable.merge(state, `mypage.otherFanInfo`, action.payload)
     },
 
     /**

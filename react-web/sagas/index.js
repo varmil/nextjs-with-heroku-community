@@ -290,13 +290,20 @@ function* fetchNewsContents({ payload }) {
 
 function* fetchMypageContents({ payload }) {
   const { jwtToken } = yield select(getUser)
-  const { perPage, pageNum, successCb } = payload
+  const { perPage, pageNum, successCb, fetchOption } = payload
 
   try {
-    const query = qs.stringify({ perPage })
+    let query = { perPage }
+
+    // fetchOption展開
+    if (!isEmpty(fetchOption)) {
+      let { userId } = fetchOption
+      query = { ...query, userId }
+    }
+
     const res = yield call(
       API.fetch,
-      `/post/list/me/${pageNum || 1}?${query}`,
+      `/post/list/user/${pageNum || 1}?${qs.stringify(query)}`,
       jwtToken
     )
     yield put(addMypageContents(res.data))

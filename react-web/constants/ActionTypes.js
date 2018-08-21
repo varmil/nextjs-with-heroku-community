@@ -74,6 +74,7 @@ export const AppNews = createTypes(
 export const AppMypage = createTypes(
   'app/mypage/',
   'ADD_CONTENTS',
+  'RESET_CONTENTS',
   async('FETCH'),
 
   // 他人

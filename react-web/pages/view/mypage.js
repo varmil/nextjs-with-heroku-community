@@ -22,19 +22,12 @@ const iconButtonStyle = {
 
 class Mypage extends React.Component {
   static async getInitialProps({ ctx }) {
+    const { dispatch } = ctx.store
     const { userId } = ctx.query || {}
-    return { userId }
-  }
-
-  constructor(props) {
-    super(props)
-    const { dispatch, userId } = props
-    // このタイミングじゃないとprops.meが取得できないので
-    this.isMe = !userId || +userId === props.me.id
-    // console.log('CONST this is me', this.isMe)
 
     // 他人のデータはFETCHしないといけない。自分のならstoreにすでにある。
-    if (!this.isMe) {
+    // しかしここでは正確な判断ができないので、userIdがあればとりあえずFETCH
+    if (userId) {
       dispatch(
         createAction(AppMypage.FETCH_OTHER_USER_REQUEST)({
           userId: +userId,
@@ -42,9 +35,21 @@ class Mypage extends React.Component {
         })
       )
     }
-
-    const param = this.isMe ? {} : { userId: +userId }
+    const param = userId ? { userId: +userId } : {}
     dispatch(createAction(AppBadge.FETCH_LIST_REQUEST)(param))
+
+    // ページ開くたびにとりあえずコンテンツ初期化
+    dispatch(createAction(AppMypage.RESET_CONTENTS)())
+
+    return { userId }
+  }
+
+  constructor(props) {
+    super(props)
+    const { userId } = props
+    // このタイミングじゃないとprops.meが取得できないので
+    this.isMe = !userId || +userId === props.me.id
+    // console.log('CONST this is me', this.isMe)
   }
 
   render() {
@@ -123,7 +128,7 @@ class Mypage extends React.Component {
         </div>
 
         <section>
-          <MypageContents />
+          <MypageContents userId={userInfo.id} />
         </section>
 
         <style jsx>{`
@@ -189,6 +194,6 @@ class Mypage extends React.Component {
 
 export default connect(state => ({
   me: state.user,
-  user: state.app.otherFanInfo,
+  user: state.app.mypage.otherFanInfo,
   badges: state.app.badge.item
 }))(Mypage)

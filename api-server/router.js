@@ -193,7 +193,11 @@ module.exports = function(app) {
   app.get('/post/:postId', requireAuth, PostController.fetch)
   app.get('/post/list/count', requireAuth, PostController.countAll)
   app.get('/post/list/:pageNum', requireAuth, PostController.fetchList)
-  app.get('/post/list/me/:pageNum', requireAuth, PostController.fetchMyPosts)
+  app.get(
+    '/post/list/user/:pageNum',
+    requireAuth,
+    PostController.fetchListOfUser
+  )
   app.get(
     '/post/list/box/:boxType/:pageNum',
     requireAuth,

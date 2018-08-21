@@ -198,18 +198,20 @@ exports.fetchListOfBox = async (req, res) => {
 }
 
 /**
- * 主にUser用。Mypageで表示する記事一覧取得
+ * Mypageで表示する記事一覧取得（特定ユーザに関連するPOST一覧取得）
  */
-exports.fetchMyPosts = async (req, res) => {
-  const { perPage } = req.query
+exports.fetchListOfUser = async (req, res) => {
+  const { perPage, userId } = req.query
   const { id, brand } = req.user
   const pageNum = +req.params.pageNum || 1 // 1 origin
 
-  let where = { posterId: id, brandId: brand.id, released: true }
+  // 指定がなければ自分のPOST
+  const fetchingUserId = +userId || id
+  let where = { posterId: fetchingUserId, brandId: brand.id, released: true }
   const posts = await services.Post.fetchList(pageNum, where, {
     perPage,
     assoc: true,
-    userId: id
+    userId: fetchingUserId
   })
   res.json(posts)
 }
@@ -264,8 +266,7 @@ exports.fetchSearched = async (req, res) => {
 
   // PHOTOデータのみ返す場合
   if (onlyPhoto) {
-    result = _
-      .chain(result)
+    result = _.chain(result)
       .flatMap(row => {
         const { id, boxType } = row
         return _.map(row.images, (photo, index) => ({

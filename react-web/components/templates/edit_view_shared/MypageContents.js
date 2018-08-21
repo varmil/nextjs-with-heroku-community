@@ -6,13 +6,15 @@ import InfiniteScroll from 'components/templates/container/InfiniteScroll'
 
 class MypageContents extends BoxContents {
   render() {
-    const { boxContents } = this.props
+    const { boxContents, userId } = this.props
     return (
       <React.Fragment>
         <InfiniteScroll
+          key={userId}
           disabled={false}
           action={AppMypage.FETCH_REQUEST}
           length={boxContents.length}
+          fetchOption={{ userId }}
         >
           {super.render()}
         </InfiniteScroll>
