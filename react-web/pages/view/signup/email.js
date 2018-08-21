@@ -102,7 +102,10 @@ class SignupEmail extends React.Component {
 
         <section className="regNote mt-3 text-center">
           上のアカウント登録ボタンを押すことにより、<br />
-          <a>利用規約</a> に同意したことになります。
+          <Link route={`/view/settings/membership_agreement`}>
+            <a>利用規約</a>
+          </Link>
+          に同意したことになります。
         </section>
 
         <section className="login mt-4 text-center">

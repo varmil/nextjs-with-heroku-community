@@ -8,7 +8,10 @@ import Rule from 'constants/Rule'
 import url from 'constants/URL'
 
 // 部分一致。これらがpathnameの一部に含まれていれば誰でもアクセス可能
-const PUBLIC_ROUTES = ['/view/settings/privacy_policy']
+const PUBLIC_ROUTES = [
+  '/view/settings/privacy_policy',
+  '/view/settings/membership_agreement'
+]
 
 // 部分一致。これらがpathnameの一部に含まれていればGUESTのみアクセス可能
 const ONLY_GUEST_ROUTES = [

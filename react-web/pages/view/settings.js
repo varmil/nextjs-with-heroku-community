@@ -56,7 +56,9 @@ class Settings extends React.Component {
               アカウント設定
             </Item>
             <Item className="my-4">お問い合わせ</Item>
-            <Item className="my-4">会員規約</Item>
+            <Item to="/view/settings/membership_agreement" className="my-4">
+              利用規約
+            </Item>
             <Item to="/view/settings/privacy_policy" className="my-4">
               プライバシーポリシー
             </Item>
