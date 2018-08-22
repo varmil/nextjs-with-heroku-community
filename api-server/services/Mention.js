@@ -22,11 +22,9 @@ module.exports = class Mention {
    * Notificationを送信
    * @param {Array<string>} targets
    * @param {Object} data,
-   * @param {Object} options
-   * @param {Object} options.transaction
    * @returns {Array<int>} userIds
    */
-  static async sendNotifications(targets, data, options) {
+  static async sendNotifications(targets, data) {
     if (!data) return false
 
     // 現状nicknameはuniqueではないので意図しないユーザーに送られてしまうこともある
@@ -34,15 +32,26 @@ module.exports = class Mention {
       where: { nickname: targets }
     })).map(data => data.id)
 
+    const transaction = await models.sequelize.transaction()
     // 同期しなくても良さそうなのでそのまま実行
-    userIds.forEach(targetUserId => {
-      NotificationService.save(
+    const notifications = userIds.map(targetUserId => {
+      return NotificationService.save(
         Rule.NOTIFICATION_TYPE.Mention,
         Object.assign({}, data, { targetUserId }),
-        options
+        { transaction }
       )
     })
 
+    Promise.all(notifications).then(() => {
+      console.log('---------------------------------')
+      console.log('notifications finish! and transaction.commit() done')
+      console.log('---------------------------------')
+      return transaction.commit()
+    })
+
+    console.log('---------------------------------')
+    console.log('sendNotifications is End!')
+    console.log('---------------------------------')
     return userIds
   }
 }

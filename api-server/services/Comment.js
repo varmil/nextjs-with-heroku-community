@@ -55,8 +55,7 @@ module.exports = class Comment {
         }
         await MentionService.sendNotifications(
           _.uniq(mentions),
-          notificationBase,
-          { transaction }
+          notificationBase
         )
       }
 

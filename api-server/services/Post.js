@@ -94,8 +94,7 @@ module.exports = class Post {
         }
         await MentionService.sendNotifications(
           _.uniq(mentions),
-          notificationBase,
-          { transaction }
+          notificationBase
         )
       }
 
