@@ -119,31 +119,35 @@ exports.saveLike = async (req, res, next) => {
 /**
  * 個別記事 取得
  */
-exports.fetch = async (req, res) => {
-  const { postId } = req.params
-  if (!postId) return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
+exports.fetch = async (req, res, next) => {
+  try {
+    const { postId } = req.params
+    if (!postId) return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
 
-  // fetchListを流用（楽なので）
-  const where = { id: postId }
-  const posts = await services.Post.fetchList(1, where, {
-    assoc: true,
-    userId: req.user.id
-  })
-  let result = posts[0]
+    // fetchListを流用（楽なので）
+    const where = { id: postId }
+    const posts = await services.Post.fetchList(1, where, {
+      assoc: true,
+      userId: req.user.id
+    })
+    let result = posts[0]
 
-  if (result.boxType === BoxType.index.voice) {
-    // 自分の投票を取得
-    const voterId = req.user.id || 0
-    const choiceIndex = await services.Post.fetchVote(postId, voterId)
-    result = { ...result, Voice: { ...result.Voice, choiceIndex } }
+    if (result.boxType === BoxType.index.voice) {
+      // 自分の投票を取得
+      const voterId = req.user.id || 0
+      const choiceIndex = await services.Post.fetchVote(postId, voterId)
+      result = { ...result, Voice: { ...result.Voice, choiceIndex } }
 
-    // それぞれの得票数割合を計算
-    // [ { choiceIndex, percentage, count }, ... ]
-    const percentages = await services.Post.fetchPercentageOfVotes(postId)
-    result = { ...result, Voice: { ...result.Voice, percentages } }
+      // それぞれの得票数割合を計算
+      // [ { choiceIndex, percentage, count }, ... ]
+      const percentages = await services.Post.fetchPercentageOfVotes(postId)
+      result = { ...result, Voice: { ...result.Voice, percentages } }
+    }
+
+    res.json(result)
+  } catch (e) {
+    return next(e)
   }
-
-  res.json(result)
 }
 
 /**
@@ -266,7 +270,8 @@ exports.fetchSearched = async (req, res) => {
 
   // PHOTOデータのみ返す場合
   if (onlyPhoto) {
-    result = _.chain(result)
+    result = _
+      .chain(result)
       .flatMap(row => {
         const { id, boxType } = row
         return _.map(row.images, (photo, index) => ({

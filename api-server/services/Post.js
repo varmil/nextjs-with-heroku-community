@@ -90,7 +90,7 @@ module.exports = class Post {
 
       return postId
     } catch (e) {
-      console.error(e)
+      throw e
     }
   }
 

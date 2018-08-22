@@ -21,6 +21,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
+// error handling
+process.on('unhandledRejection', console.dir)
+
 router(app)
 
 // Answer API requests.

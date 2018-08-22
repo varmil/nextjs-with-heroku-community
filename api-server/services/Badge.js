@@ -8,13 +8,16 @@ const ConstBadge = reqlib('/../shared/constants/Badge')
 // const moment = require('moment')
 
 module.exports = class Badge {
-  static async incrementValue(userId, brandId, badgeType, { transaction }) {
+  /**
+   * 当該badgeTypeを１つカウントアップ
+   * @param {Object} options
+   * @param {Object} options.transaction
+   */
+  static async incrementValue(userId, brandId, badgeType, options = {}) {
     if (_.isNil(userId) || _.isNil(brandId) || _.isNil(badgeType)) {
       console.warn('required param is null', userId, brandId, badgeType)
       return false
     }
-
-    const option = transaction ? { transaction } : {}
 
     try {
       const row = await models.Badge.findOne({
@@ -31,7 +34,7 @@ module.exports = class Badge {
             currentValue: nextValue
           },
           {},
-          option
+          options
         )
       } else {
         // 初期レベル設定。valueは１固定。ほかあるかも
@@ -44,7 +47,7 @@ module.exports = class Badge {
             level: Badge.getLevel(badgeType, nextValue),
             currentValue: nextValue
           },
-          option
+          options
         )
       }
     } catch (e) {

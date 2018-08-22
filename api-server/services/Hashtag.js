@@ -82,7 +82,10 @@ module.exports = class Hashtag {
    */
   static async updateCommentHashtag(commentId, tagIds, transaction) {
     // まず既存のタグ関係を削除
-    await models.CommentHashtag.destroy({ where: { postId } }, { transaction })
+    await models.CommentHashtag.destroy(
+      { where: { commentId } },
+      { transaction }
+    )
     // その後INSERT
     const data = tagIds.map(tagId => {
       return {
