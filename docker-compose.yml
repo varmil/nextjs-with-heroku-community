@@ -2,7 +2,8 @@ version: '3'
 services:
   https-portal:
     image: steveltn/https-portal:1
-    # user: root
+    volumes:
+      - ./docker/https-portal/ssl.conf.erb:/var/lib/nginx-conf/default.ssl.conf.erb:ro
     ports:
       - '80:80'
       - '443:443'
