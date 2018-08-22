@@ -284,6 +284,7 @@ module.exports = class Post {
       return row.choiceIndex
     } catch (e) {
       console.error(e)
+      return null
     }
   }
 
@@ -312,6 +313,7 @@ module.exports = class Post {
       })
     } catch (e) {
       console.error(e)
+      return null
     }
   }
 
