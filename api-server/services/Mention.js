@@ -43,15 +43,9 @@ module.exports = class Mention {
     })
 
     Promise.all(notifications).then(() => {
-      console.log('---------------------------------')
-      console.log('notifications finish! and transaction.commit() done')
-      console.log('---------------------------------')
       return transaction.commit()
     })
 
-    console.log('---------------------------------')
-    console.log('sendNotifications is End!')
-    console.log('---------------------------------')
     return userIds
   }
 }
