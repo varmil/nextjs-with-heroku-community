@@ -8,6 +8,9 @@ const models = reqlib('/models')
 // const Path = reqlib('/constants/Path')
 // const { moveImages } = reqlib('/utils/image')
 
+// バッジ獲得できる最初のレベル
+const MIN_BADGE_LEVEL = 1
+
 /**
  * バッジ取得
  */
@@ -17,7 +20,13 @@ exports.fetchList = async (req, res, next) => {
 
   const rows = await models.Badge.findAll({
     attributes: ['badgeType', 'level', 'updatedAt'],
-    where: { userId, brandId },
+    where: {
+      userId,
+      brandId,
+      level: {
+        [models.Sequelize.Op.gte]: MIN_BADGE_LEVEL
+      }
+    },
     raw: true
   })
 
