@@ -15,6 +15,8 @@ const Contents = props => {
         return 'いいね！'
       case Rule.NOTIFICATION_TYPE.Comment:
         return 'コメント'
+      case Rule.NOTIFICATION_TYPE.Mention:
+        return 'メンション' // TODO: ラベルの再考慮
       default:
         return ''
     }

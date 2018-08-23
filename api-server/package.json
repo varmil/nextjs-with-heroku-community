@@ -28,6 +28,7 @@
     "hashtag-regex": "^2.0.0",
     "jwt-simple": "^0.5.1",
     "lodash": "^4.17.10",
+    "mentions-regex": "^2.0.3",
     "moment": "^2.22.2",
     "morgan": "^1.9.0",
     "move-file": "^1.0.0",
