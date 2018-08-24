@@ -103,7 +103,7 @@ class LongMenu extends React.Component {
           {options.map((option, i) => (
             <MenuItem
               key={option}
-              selected={option === 'Pyxis'}
+              // selected={option === 'Pyxis'}
               onClick={() => this.handleClickItem(i)}
             >
               {option}

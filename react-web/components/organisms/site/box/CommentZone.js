@@ -146,7 +146,10 @@ class CommentZone extends React.Component {
             user={props.user}
             onDelete={id => {
               props.dispatch(
-                createAction(AppPost.DELETE_COMMENT_REQUEST)({ id })
+                createAction(AppPost.DELETE_COMMENT_REQUEST)({
+                  postId: props.postId,
+                  commentId: id
+                })
               )
             }}
           />

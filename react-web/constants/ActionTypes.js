@@ -109,14 +109,17 @@ export const AppNotification = createTypes(
 export const AppPost = createTypes(
   'app/post/',
   'SET_POST',
+  'DELETE_POST',
   // コメント投稿直後にFetchする際に使用
   'PREPEND_COMMENT',
   'SET_COMMENTS',
   'PUSH_COMMENTS',
+  'DELETE_COMMENT',
   // ユーザアクション後、ローカル反映用
   'INCREMENT_VOTE_SUM',
   'INCREMENT_LIKE_SUM',
   'INCREMENT_COMMENT_SUM',
+  'DECREMENT_COMMENT_SUM',
   // 新規投稿
   async('SAVE'),
   // 削除

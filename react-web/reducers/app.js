@@ -241,6 +241,12 @@ export default handleActions(
       const path = !isNil(index) ? `post.comments.${index}` : `post.comments`
       return immutable.push(state, path, ...data)
     },
+    [AppPost.DELETE_COMMENT]: (state, action) => {
+      const id = action.payload
+      const index = findIndex(state.post.comments, { id })
+      if (index === -1) return state
+      return immutable.del(state, `post.comments.${index}`)
+    },
 
     /**
      * POST VOTE
@@ -283,8 +289,13 @@ export default handleActions(
     [AppPost.INCREMENT_COMMENT_SUM]: (state, action) => {
       const { postId } = action.payload
       let newState
-      // LIKE総数を増加
       newState = findAllAndUpdate(state, +postId, `comment`, c => c + 1)
+      return newState
+    },
+    [AppPost.DECREMENT_COMMENT_SUM]: (state, action) => {
+      const { postId } = action.payload
+      let newState
+      newState = findAllAndUpdate(state, +postId, `comment`, c => c - 1)
       return newState
     },
 

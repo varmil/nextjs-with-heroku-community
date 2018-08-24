@@ -574,10 +574,12 @@ function* deletePost({ payload }) {
 
 function* deleteComment({ payload }) {
   const { jwtToken } = yield select(getUser)
-  const { id } = payload
+  const { postId, commentId } = payload
   try {
-    const query = qs.stringify({ id })
+    const query = qs.stringify({ id: commentId })
     yield call(API.delete, `/comment?${query}`, jwtToken)
+    yield put(createAction(AppPost.DELETE_COMMENT)(commentId))
+    yield put(createAction(AppPost.DECREMENT_COMMENT_SUM)({ postId }))
   } catch (e) {
     yield put(setCommonError(e.response))
   }
