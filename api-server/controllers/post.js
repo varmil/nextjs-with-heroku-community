@@ -25,7 +25,7 @@ exports.save = async (req, res, next) => {
 
   // 通常ユーザがTALK以外へ投稿しようとしたら弾く
   if (req.user.roleId === Role.User.NORMAL && boxType !== BoxType.index.talk) {
-    return res.status(422).json(Message.E_NOT_ALLOWED)
+    return res.status(403).json(Message.E_NOT_ALLOWED)
   }
 
   // VOICE
@@ -70,6 +70,42 @@ exports.save = async (req, res, next) => {
 
     await trans.commit()
     res.json({ id: savedPostId })
+  } catch (e) {
+    await trans.rollback()
+    return next(e)
+  }
+}
+
+/**
+ * 記事削除
+ */
+exports.delete = async (req, res, next) => {
+  const { id } = req.query
+
+  if (!id) {
+    return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
+  }
+
+  const post = await models.Post.findById(id, { raw: true })
+  if (!post) {
+    return res.status(404).json(Message.E_NOT_FOUND)
+  }
+
+  // 通常ユーザが自分の投稿以外を削除しようとしていたら弾く
+  if (req.user.roleId < Role.User.ADMIN_GUEST && +id !== post.posterId) {
+    return res.status(403).json(Message.E_NOT_ALLOWED)
+  }
+
+  const trans = await models.sequelize.transaction()
+  try {
+    // NOTE: 記事とそれに紐づくコメントを削除
+    // PostLikeなど他の関連テーブルも削除しないと本来ダメだが、
+    // 膨大な量のテーブルがあるので必要最低限のテーブルのみ操作
+    await models.Post.destroy({ where: { id } }, { trans })
+    await models.Comment.destroy({ where: { postId: id } }, { trans })
+    await models.MroongaPost.destroy({ where: { postId: id } })
+    await trans.commit()
+    res.json(true)
   } catch (e) {
     await trans.rollback()
     return next(e)
@@ -270,8 +306,7 @@ exports.fetchSearched = async (req, res) => {
 
   // PHOTOデータのみ返す場合
   if (onlyPhoto) {
-    result = _
-      .chain(result)
+    result = _.chain(result)
       .flatMap(row => {
         const { id, boxType } = row
         return _.map(row.images, (photo, index) => ({

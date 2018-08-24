@@ -28,6 +28,34 @@ exports.save = async (req, res, next) => {
 }
 
 /**
+ * 削除
+ */
+exports.delete = async (req, res, next) => {
+  const { id } = req.query
+
+  if (!id) {
+    return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
+  }
+
+  const comment = await models.Comment.findById(id, { raw: true })
+  if (!comment) {
+    return res.status(404).json(Message.E_NOT_FOUND)
+  }
+
+  // 通常ユーザが自分のコメント以外を削除しようとしていたら弾く
+  if (req.user.roleId < Role.User.ADMIN_GUEST && +id !== comment.commenterId) {
+    return res.status(403).json(Message.E_NOT_ALLOWED)
+  }
+
+  try {
+    await models.Comment.destroy({ where: { id } })
+    res.json(true)
+  } catch (e) {
+    return next(e)
+  }
+}
+
+/**
  * まとめて 取得
  */
 exports.fetchList = async (req, res) => {

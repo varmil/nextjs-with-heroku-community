@@ -21,7 +21,7 @@ const PER_PAGE = 10
  */
 class Comments extends React.Component {
   render() {
-    const { data, user } = this.props
+    const { data, user, onDelete } = this.props
 
     const mapped = data.filter(e => !isEmpty(e)).map((e, i) => (
       <div key={e.id + uniqueId()} className="row justify-content-around my-3">
@@ -38,7 +38,7 @@ class Comments extends React.Component {
         {/* 自分のコメントならコンテキストメニュー表示 */}
         {e.commenterId === user.id && (
           <div className="moreVert">
-            <MoreVertMenu size={13} />
+            <MoreVertMenu size={13} onDelete={() => onDelete(e.id)} />
           </div>
         )}
 
@@ -141,7 +141,15 @@ class CommentZone extends React.Component {
         />
 
         <div className="commentsPost my-3 mb-5">
-          <Comments data={copiedArray} user={props.user} />
+          <Comments
+            data={copiedArray}
+            user={props.user}
+            onDelete={id => {
+              props.dispatch(
+                createAction(AppPost.DELETE_COMMENT_REQUEST)({ id })
+              )
+            }}
+          />
         </div>
 
         <style jsx>{`

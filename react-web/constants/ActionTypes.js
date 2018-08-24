@@ -119,8 +119,12 @@ export const AppPost = createTypes(
   'INCREMENT_COMMENT_SUM',
   // 新規投稿
   async('SAVE'),
+  // 削除
+  async('DELETE'),
   // 新規コメント
   async('SAVE_COMMENT'),
+  // コメント削除
+  async('DELETE_COMMENT'),
   // いいね
   async('SAVE_LIKE'),
   // 投票

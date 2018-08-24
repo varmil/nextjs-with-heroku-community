@@ -519,7 +519,7 @@ class BoxContent extends React.Component {
             {this.createCommentButtonAndText()}
           </div>
 
-          {this.props.children}
+          {props.children}
 
           {/* コメント機能がそもそも存在しないページなら非表示 */}
           {(() => {
@@ -542,10 +542,17 @@ class BoxContent extends React.Component {
           })()}
         </div>
 
-        {/* 自分のコメントならコンテキストメニュー表示 */}
+        {/* 自分の投稿記事ならコンテキストメニュー表示 */}
         {props.posterId === props.user.id && (
           <div className="moreVert">
-            <MoreVertMenu size={13} />
+            <MoreVertMenu
+              size={13}
+              onDelete={() => {
+                props.dispatch(
+                  createAction(AppPost.DELETE_REQUEST)({ id: props.id })
+                )
+              }}
+            />
           </div>
         )}
 

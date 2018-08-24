@@ -189,6 +189,7 @@ module.exports = function(app) {
    * POST
    */
   app.post('/post', requireAuth, upload.array('image'), PostController.save)
+  app.delete('/post', requireAuth, PostController.delete)
   app.post('/post/vote', requireAuth, PostController.saveVote)
   app.post('/post/like', requireAuth, PostController.saveLike)
   app.get('/post/:postId', requireAuth, PostController.fetch)
@@ -219,6 +220,7 @@ module.exports = function(app) {
    * COMMENT
    */
   app.post('/comment', requireAuth, CommentController.save)
+  app.delete('/comment', requireAuth, CommentController.delete)
   app.get(
     '/comments/:postId/:pageNum',
     requireAuth,

@@ -8,5 +8,8 @@ module.exports = {
   },
   E_NOT_ALLOWED: {
     error: '権限がありません。ログインし直すと解消する可能性があります。'
+  },
+  E_NOT_FOUND: {
+    error: '対象が見つかりませんでした'
   }
 }

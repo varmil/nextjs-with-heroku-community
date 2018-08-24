@@ -561,6 +561,28 @@ function* saveVote({ payload }) {
   }
 }
 
+function* deletePost({ payload }) {
+  const { jwtToken } = yield select(getUser)
+  const { id } = payload
+  try {
+    const query = qs.stringify({ id })
+    yield call(API.delete, `/post?${query}`, jwtToken)
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
+}
+
+function* deleteComment({ payload }) {
+  const { jwtToken } = yield select(getUser)
+  const { id } = payload
+  try {
+    const query = qs.stringify({ id })
+    yield call(API.delete, `/comment?${query}`, jwtToken)
+  } catch (e) {
+    yield put(setCommonError(e.response))
+  }
+}
+
 /**
  * Badges
  */
@@ -759,6 +781,8 @@ const appSaga = [
   takeLatest(AppPost.SAVE_COMMENT_REQUEST, saveComment),
   takeLatest(AppPost.SAVE_LIKE_REQUEST, saveLike),
   takeLatest(AppPost.SAVE_VOTE_REQUEST, saveVote),
+  takeLatest(AppPost.DELETE_REQUEST, deletePost),
+  takeLatest(AppPost.DELETE_COMMENT_REQUEST, deleteComment),
 
   takeLatest(AppMypage.FETCH_OTHER_USER_REQUEST, fetchOtherUser),
   takeLatest(AppBadge.FETCH_LIST_REQUEST, fetchBadges),

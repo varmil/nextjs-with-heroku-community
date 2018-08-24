@@ -46,6 +46,11 @@ export default class API {
     return instance.post(url, data, options)
   }
 
+  static async delete(url, jwtToken, options = {}) {
+    instance.defaults.headers.common['Authorization'] = jwtToken || null
+    return instance.delete(url, options)
+  }
+
   static isJson(str) {
     try {
       JSON.parse(str)
