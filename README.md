@@ -24,8 +24,6 @@ cp .env.sample.json .env.json
 cd api-server
 npm i
 npm run dev
-
-# curl http://localhost:5000
 ```
 
 ### 2. mysql (docker)
@@ -48,14 +46,13 @@ npm run db:init
 cd react-web
 npm i
 npm run dev
-
-# ex) http://localhost:3000/admin/site/edit/welcome/signup
 ```
 
 
 ## URL Example
 ```
-# 管理者Signup画面
+# 管理者Signup画面。まずここで最初の管理者を作成してください。
+# その後、他のページへ移動してください。
 http://localhost:3000/admin/site/edit/welcome/signup
 
 # 管理者投稿管理画面
@@ -78,3 +75,7 @@ https://stackoverflow.com/a/44414882
 
 ###### Q. Why am I getting a SSL mismatch error?
 see: [cloudflare settings](https://support.cloudflare.com/hc/en-us/articles/200170616-Why-am-I-getting-a-SSL-mismatch-error-)
+
+
+###### Q. MySQLに接続できません
+Vagrant && private_network を使用している場合、 `api-server/config/database.json` の設定を変更する必要があるかも知れません。
