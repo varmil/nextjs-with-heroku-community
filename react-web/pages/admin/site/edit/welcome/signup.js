@@ -32,7 +32,7 @@ class WelcomeSignup extends React.Component {
     console.info('state', state)
     const successCb = async res => {
       this.props.dispatch(setSuccess())
-      // Router.pushRoute(`/view/signup/complete`)
+      Router.pushRoute(`/admin/site/edit/welcome`)
     }
     this.props.dispatch(
       createAction(User.AUTH_ADMIN_REQUEST)({
