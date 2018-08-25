@@ -2,6 +2,7 @@
 
 ## Requirement
 * `Node.js 10.3.0` (for client and api-server)
+* docker-compose
 
 
 ## Note
