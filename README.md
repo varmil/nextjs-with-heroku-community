@@ -28,7 +28,7 @@ npm run dev
 
 ### 2. mysql (docker)
 ```sh
-docker-compose up -d
+docker-compose up -d db
 ```
 
 ### 3. DB migration (run it first-time and when table definition changed)
