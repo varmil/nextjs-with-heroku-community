@@ -15,7 +15,7 @@ services:
       DOMAINS: >-
         commune.dayone.jp -> http://dockerhost:3000,
         apicommune.dayone.jp -> http://dockerhost:5000
-      STAGE: 'production'
+      STAGE: local
       # FORCE_RENEW: 'true'
 
   db:
