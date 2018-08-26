@@ -79,3 +79,9 @@ see: [cloudflare settings](https://support.cloudflare.com/hc/en-us/articles/2001
 
 ###### Q. MySQLに接続できません
 Vagrant && private_network を使用している場合、 `api-server/config/database.json` の設定を変更する必要があるかも知れません。
+
+
+## deploy in production 
+```
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+```
