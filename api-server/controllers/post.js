@@ -101,9 +101,10 @@ exports.delete = async (req, res, next) => {
     // NOTE: 記事とそれに紐づくコメントを削除
     // PostLikeなど他の関連テーブルも削除しないと本来ダメだが、
     // 膨大な量のテーブルがあるので必要最低限のテーブルのみ操作
-    await models.Post.destroy({ where: { id } }, { trans })
-    await models.Comment.destroy({ where: { postId: id } }, { trans })
-    await models.MroongaPost.destroy({ where: { postId: id } })
+    const p1 = models.Post.destroy({ where: { id } }, { trans })
+    const p2 = models.Comment.destroy({ where: { postId: id } }, { trans })
+    const p3 = models.MroongaPost.destroy({ where: { postId: id } })
+    await Promise.all([p1, p2, p3])
     await trans.commit()
     res.json(true)
   } catch (e) {

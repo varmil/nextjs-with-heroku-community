@@ -62,54 +62,28 @@ const initialState = {
 function findAllAndUpdate(state, postId, path, updater) {
   let newState = state
 
-  const talk = objectPath.get(state, `talk.boxContents`)
-  const voice = objectPath.get(state, `voice.boxContents`)
-  const news = objectPath.get(state, `news.boxContents`)
-  const mypage = objectPath.get(state, `mypage.boxContents`)
-  const post = objectPath.get(state, `post.data`)
-
-  if (talk) {
-    const i = findIndex(talk, c => c.id === +postId)
-    if (i !== -1) {
-      newState = immutable.update(
-        newState,
-        `talk.boxContents.${i}.${path}`,
-        updater
-      )
+  const contentPaths = [
+    `talk.boxContents`,
+    `voice.boxContents`,
+    `news.boxContents`,
+    `mypage.boxContents`
+  ]
+  contentPaths.forEach(contentPath => {
+    const array = objectPath.get(state, contentPath)
+    if (array) {
+      const i = findIndex(array, c => c.id === +postId)
+      if (i !== -1) {
+        newState = immutable.update(
+          newState,
+          `${contentPath}.${i}.${path}`,
+          updater
+        )
+      }
     }
-  }
-  if (voice) {
-    const i = findIndex(voice, c => c.id === +postId)
-    if (i !== -1) {
-      newState = immutable.update(
-        newState,
-        `voice.boxContents.${i}.${path}`,
-        updater
-      )
-    }
-  }
-  if (news) {
-    const i = findIndex(news, c => c.id === +postId)
-    if (i !== -1) {
-      newState = immutable.update(
-        newState,
-        `news.boxContents.${i}.${path}`,
-        updater
-      )
-    }
-  }
-  if (mypage) {
-    const i = findIndex(mypage, c => c.id === +postId)
-    if (i !== -1) {
-      newState = immutable.update(
-        newState,
-        `mypage.boxContents.${i}.${path}`,
-        updater
-      )
-    }
-  }
+  })
 
   // 記事詳細は配列ではない
+  const post = objectPath.get(state, `post.data`)
   if (post) {
     if (post.id === +postId) {
       newState = immutable.update(newState, `post.data.${path}`, updater)

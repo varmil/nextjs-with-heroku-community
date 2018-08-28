@@ -567,8 +567,8 @@ function* deletePost({ payload }) {
   try {
     const query = qs.stringify({ id })
     yield call(API.delete, `/post?${query}`, jwtToken)
-    // TODO ページリロードしちゃうのが楽かも？
-    // yield put(createAction(AppPost.DELETE_POST)(id))
+    // HACK: ページリロードしちゃうのが楽なので
+    window.location.reload()
   } catch (e) {
     yield put(setCommonError(e.response))
   }
