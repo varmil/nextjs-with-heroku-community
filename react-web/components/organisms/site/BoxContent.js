@@ -6,7 +6,7 @@ import isEmpty from 'lodash/isEmpty'
 import fecha from 'fecha'
 import { Router } from 'routes'
 import IconButton from '@material-ui/core/IconButton'
-import MultiLineHashtagText from 'components/atoms/MultiLineHashtagText'
+import MultiLineHashtagMentionText from 'components/atoms/MultiLineHashtagMentionText'
 import VoteButton from 'components/atoms/VoteButton'
 import AvatarAndName from 'components/molecules/AvatarAndName'
 import MoreVertMenu from 'components/molecules/MoreVertMenu'
@@ -43,7 +43,9 @@ export const VoteCounter = props => (
 
       {props.showDeadline && (
         <div className="deadline">
-          期限：{fecha.format(new Date(props.deadline), 'YYYY-MM-DD hh:mm')}まで
+          期限：
+          {fecha.format(new Date(props.deadline), 'YYYY-MM-DD hh:mm')}
+          まで
         </div>
       )}
 
@@ -101,7 +103,9 @@ class FoldText extends React.Component {
       <React.Fragment>
         <div onClick={onClick}>
           <div id={`foldText${id}`} className={`foldText ${gradationClass}`}>
-            <MultiLineHashtagText>{children}</MultiLineHashtagText>
+            <MultiLineHashtagMentionText>
+              {children}
+            </MultiLineHashtagMentionText>
           </div>
 
           {showReadMore && <div>...もっとみる</div>}
@@ -313,7 +317,7 @@ class BoxContent extends React.Component {
     const { showDetail, body, id } = this.props
 
     if (isExpanded || showDetail) {
-      return <MultiLineHashtagText>{body}</MultiLineHashtagText>
+      return <MultiLineHashtagMentionText>{body}</MultiLineHashtagMentionText>
     } else {
       return (
         <FoldText

@@ -9,7 +9,7 @@ import { AppPost } from 'constants/ActionTypes'
 import Avatar from 'components/atoms/Avatar'
 import ReadMoreAndLoading from 'components/molecules/ReadMoreAndLoading'
 import MoreVertMenu from 'components/molecules/MoreVertMenu'
-import MultiLineHashtagText from 'components/atoms/MultiLineHashtagText'
+import MultiLineHashtagMentionText from 'components/atoms/MultiLineHashtagMentionText'
 
 // ページ番号は1から
 const INITIAL_PAGE = 1
@@ -31,7 +31,7 @@ class Comments extends React.Component {
             <a>{e.name}</a>
           </Link>
           <div>
-            <MultiLineHashtagText>{e.body}</MultiLineHashtagText>
+            <MultiLineHashtagMentionText>{e.body}</MultiLineHashtagMentionText>
           </div>
         </div>
 
