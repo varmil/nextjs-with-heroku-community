@@ -12,9 +12,8 @@ import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import ColorButton from 'components/atoms/ColorButton'
 import IconButton from '@material-ui/core/IconButton'
-import { getWebServerDomain } from 'utils/API'
 import Role from '/../shared/constants/Role'
-import url from 'constants/URL'
+import { getInvivationURL } from 'constants/URL'
 
 const DensedCell = props => (
   <TableCell {...props} padding="dense">
@@ -51,7 +50,7 @@ const isNotJoined = data => {
 class AdminAccountTable extends React.Component {
   render() {
     const props = this.props
-    const { classes, data } = props
+    const { classes, data, brandType } = props
 
     return (
       <Paper className={classes.root}>
@@ -80,9 +79,9 @@ class AdminAccountTable extends React.Component {
                     <DensedCell>{n.email}</DensedCell>
                     <DensedCell>{Role.Name[n.roleId]}</DensedCell>
                     {isNotJoined(n) ? (
-                      <DensedCell>{`${getWebServerDomain()}${
-                        url.SIGNUP_EMAIL
-                      }/${n.code}`}</DensedCell>
+                      <DensedCell>
+                        {getInvivationURL(n.code, brandType)}
+                      </DensedCell>
                     ) : (
                       <DensedCell />
                     )}

@@ -58,6 +58,8 @@ class AdminFanAdd extends React.Component {
               count={props.invitedFans.count}
               page={props.pageNum}
               rowsPerPage={props.perPage}
+              // 招待URLの変更等に使う
+              brandType={props.brandType}
             />
           </section>
         </Container>
@@ -73,5 +75,6 @@ class AdminFanAdd extends React.Component {
 }
 
 export default connect(state => ({
+  brandType: state.user.brand.type,
   invitedFans: state.app.invitedFans
 }))(AdminFanAdd)

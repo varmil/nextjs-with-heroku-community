@@ -11,9 +11,8 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import TablePagination from '@material-ui/core/TablePagination'
 import Paper from '@material-ui/core/Paper'
-import { getWebServerDomain } from 'utils/API'
 import Invitation from '/../shared/constants/Invitation'
-import url from 'constants/URL'
+import { getInvivationURL } from 'constants/URL'
 
 const StatusLabel = props => {
   if (props.status === Invitation.NOT_SEND) {
@@ -58,7 +57,7 @@ class FanTable extends React.Component {
 
   render() {
     const props = this.props
-    const { classes, data, count, page, rowsPerPage } = props
+    const { classes, data, count, page, rowsPerPage, brandType } = props
 
     return (
       <Paper className={classes.root}>
@@ -92,9 +91,9 @@ class FanTable extends React.Component {
                         ? fecha.format(new Date(n.joinedAt), 'YYYY-MM-DD')
                         : null}
                     </DensedCell>
-                    <DensedCell>{`${getWebServerDomain()}${url.SIGNUP_EMAIL}/${
-                      n.code
-                    }`}</DensedCell>
+                    <DensedCell>
+                      {getInvivationURL(n.code, brandType)}
+                    </DensedCell>
                   </TableRow>
                 )
               })}

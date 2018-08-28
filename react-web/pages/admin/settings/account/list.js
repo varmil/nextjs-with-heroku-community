@@ -37,7 +37,11 @@ class AdminAccountList extends React.Component {
           />
 
           <section className="mt-3 text-center">
-            <AdminAccountTable data={props.adminAccounts.item} />
+            <AdminAccountTable
+              data={props.adminAccounts.item}
+              // 招待URLの変更等に使う
+              brandType={props.brandType}
+            />
           </section>
         </Container>
 
@@ -52,5 +56,6 @@ class AdminAccountList extends React.Component {
 }
 
 export default connect(state => ({
+  brandType: state.user.brand.type,
   adminAccounts: state.app.adminAccounts
 }))(AdminAccountList)

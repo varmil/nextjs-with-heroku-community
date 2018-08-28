@@ -278,7 +278,7 @@ module.exports = class User {
       if (!brandId) return null
 
       const brand = await models.Brand.findById(brandId, {
-        attributes: ['id', 'name'],
+        attributes: ['id', 'name', 'type'],
         raw: true
       })
       return brand
