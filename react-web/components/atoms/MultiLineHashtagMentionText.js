@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactHashtag from 'react-hashtag'
 import { Link } from 'routes'
 import reactStringReplace from 'react-string-replace'
 
