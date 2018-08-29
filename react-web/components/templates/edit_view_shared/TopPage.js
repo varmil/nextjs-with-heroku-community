@@ -135,7 +135,9 @@ class TopPage extends React.Component {
                     <Label
                       text={box.header.text}
                       color={
-                        this.isActive(i) ? props.color.backgroundColor : ''
+                        this.isActive(i)
+                          ? props.color.backgroundColor
+                          : '#5A5A5A'
                       }
                     />
                   }

@@ -1,10 +1,13 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import isNaN from 'lodash/isNaN'
+import objectPath from 'object-path'
 import Classes from 'constants/Classes'
+import { PATH_MAP } from 'reducers/site'
 import Rule from '/../shared/constants/Rule'
 
 const Item = props => {
-  const { onClick, text, isActive } = props
+  const { onClick, text, isActive, activeColor } = props
   let btnClassName = 'btn btn-secondary'
   if (isActive) btnClassName = `${btnClassName} active`
 
@@ -37,6 +40,9 @@ const Item = props => {
           white-space: nowrap;
           text-overflow: ellipsis;
           overflow: hidden;
+
+          background-color: ${isActive ? activeColor : '#8c8c8c'} !important;
+          border-color: ${isActive ? activeColor : '#8c8c8c'} !important;
         }
       `}</style>
     </li>
@@ -79,6 +85,7 @@ class CategorySelect extends React.Component {
             text={'全て'}
             categoryIndex={Rule.ALL_CATEGORY_INDEX}
             isActive={activeCategoryIndex === Rule.ALL_CATEGORY_INDEX}
+            activeColor={props.activeColor}
           />
 
           {/* skip null text */}
@@ -90,6 +97,7 @@ class CategorySelect extends React.Component {
                 text={e.text}
                 categoryIndex={e.categoryIndex}
                 isActive={activeCategoryIndex === e.categoryIndex}
+                activeColor={props.activeColor}
               />
             )
           })}
@@ -118,4 +126,6 @@ class CategorySelect extends React.Component {
   }
 }
 
-export default CategorySelect
+export default connect(state => ({
+  activeColor: objectPath.get(state.site, `${PATH_MAP.COLOR}.backgroundColor`)
+}))(CategorySelect)
