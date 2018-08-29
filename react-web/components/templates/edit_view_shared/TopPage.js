@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Router } from 'routes'
 import { withStyles } from '@material-ui/core/styles'
 import findIndex from 'lodash/findIndex'
-import isNil from 'lodash/isNil'
+// import isNil from 'lodash/isNil'
 import SwipeableViews from 'react-swipeable-views'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
@@ -17,6 +17,7 @@ import VoiceContents from 'components/templates/edit_view_shared/VoiceContents'
 import NewsContents from 'components/templates/edit_view_shared/NewsContents'
 import Classes from 'constants/Classes'
 import BoxType from '/../shared/constants/BoxType'
+import Role from '/../shared/constants/Role'
 import URL from 'constants/URL'
 
 const styles = {
@@ -78,9 +79,19 @@ class TopPage extends React.Component {
     }
   }
 
+  // 管理者かどうか
+  isAdmin() {
+    const { user } = this.props
+    return user.roleId >= Role.User.ADMIN_GUEST
+  }
+
   // 現在アクティブになってるタブのslugをみて、penを出すか決める
   isShowPenIcon() {
-    const curSlug = this.props.boxes[this.state.tabIndex].slug
+    // 管理者なら常に表示
+    if (this.isAdmin()) return true
+
+    const { boxes } = this.props
+    const curSlug = boxes[this.state.tabIndex].slug
     return curSlug === URL.TALK_SLUG
   }
 
@@ -175,7 +186,11 @@ class TopPage extends React.Component {
           </SwipeableViews>
 
           {this.isShowPenIcon() ? (
-            <FixedButton backgroundColor={props.color.backgroundColor} />
+            <FixedButton
+              icon="fa-pen"
+              backgroundColor={props.color.backgroundColor}
+              to={this.isAdmin() ? '/admin/post/add/0' : '/view/editpost'}
+            />
           ) : null}
         </main>
 
@@ -210,6 +225,7 @@ class TopPage extends React.Component {
 // export default withStyles(uiStyles)(TopPage)
 export default withStyles(styles)(
   connect(state => ({
+    user: state.user,
     boxes: objectPath.get(state.site, `${PATH_MAP.BOXES}.item`),
     color: objectPath.get(state.site, `${PATH_MAP.COLOR}`)
   }))(TopPage)

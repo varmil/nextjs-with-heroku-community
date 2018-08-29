@@ -157,9 +157,6 @@ class AdminHeader extends React.Component {
         </Navbar>
 
         <style jsx>{`
-          .navUl {
-          }
-
           .linkItem {
             color: ${Color.MAIN_BLUE};
             font-size: 24px;

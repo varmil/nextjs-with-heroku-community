@@ -6,13 +6,14 @@ import { PATH_MAP } from 'reducers/site'
 export default props => (
   <div
     className={`fixed-action-btn ${Classes.EDITABLE} ${props.className}`}
+    style={props.style}
     data-modal={`BGColorModal`}
     data-action={SiteCommon.SET_BG_COLOR}
     data-path={`${PATH_MAP.COLOR}`}
   >
-    <Link route={'/view/editpost'}>
+    <Link route={props.to ? props.to : '/view/editpost'}>
       <div className="btn-floating btn-lg red waves-effect waves-light">
-        <i className="fas fa-pen" />
+        <i className={`fas ${props.icon}`} />
       </div>
     </Link>
 
