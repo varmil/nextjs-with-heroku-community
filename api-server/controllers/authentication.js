@@ -48,6 +48,12 @@ exports.signup = async function(req, res, next) {
     }
   }
 
+  /**
+   * Optional Params
+   * partnerUserId: 他社とAPI連携する際に使用。相手のサービス内でのユーザID
+   */
+  const { partnerUserId } = req.body
+
   try {
     // emailが使われていないか
     {
@@ -87,7 +93,8 @@ exports.signup = async function(req, res, next) {
         email,
         password,
         brandId,
-        roleId
+        roleId,
+        { partnerUserId }
       )
     }
 

@@ -3,6 +3,7 @@ const reqlib = require('app-root-path').require
 const models = reqlib('/models')
 const InvitationService = reqlib('/services/Invitation')
 const BadgeService = reqlib('/services/Badge')
+const PartnerService = reqlib('/services/Partner')
 const Path = reqlib('/constants/Path')
 const Role = reqlib('/../shared/constants/Role')
 const { BadgeType } = reqlib('/../shared/constants/Badge')
@@ -154,7 +155,14 @@ module.exports = class User {
   /**
    * 1人目の管理者以外の全てのユーザ（管理者 or ファン）はこれで登録
    */
-  static async createUser(code, email, password, brandId, roleId) {
+  static async createUser(
+    code,
+    email,
+    password,
+    brandId,
+    roleId,
+    options = {}
+  ) {
     const trans = await models.sequelize.transaction()
     try {
       const user = await models.User.create(
@@ -190,6 +198,13 @@ module.exports = class User {
             transaction: trans
           }
         )
+      }
+
+      // 他社と連携する場合
+      if (options.partnerUserId) {
+        await PartnerService.create(user.id, options.partnerUserId, brandId, {
+          transaction: trans
+        })
       }
 
       // Invitationテーブル更新

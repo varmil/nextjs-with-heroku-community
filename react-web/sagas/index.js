@@ -67,14 +67,19 @@ function* signin({ payload }) {
 
 // 通常ユーザのsignup
 function* signupUser({ payload }) {
-  const { email, password, code, successCb } = payload
+  const { email, password, code, partnerUserId, successCb } = payload
   if (!code) {
     console.warn('Invitation code is null', code)
     return
   }
 
   try {
-    const res = yield call(API.post, '/signup', { email, password, code })
+    const res = yield call(API.post, '/signup', {
+      email,
+      password,
+      code,
+      partnerUserId
+    })
     yield call(setUserInfo, res.data.token)
     yield call(successCb, res)
   } catch (e) {

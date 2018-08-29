@@ -13,13 +13,18 @@ import SignInUpHeader from 'components/molecules/SignInUpHeader'
 
 class SignupEmail extends React.Component {
   static async getInitialProps({ ctx }) {
-    const { code } = ctx.query
+    const { code, userId } = ctx.query
 
     // codeをもとにemail情報を取得
     const { dispatch } = ctx.store
     dispatch(createAction(User.FETCH_CODE_INFO_REQUEST)({ code }))
 
-    return { code }
+    return {
+      // 招待コード
+      code,
+      // 他社と連携する際に他社側で使用中のユーザID
+      partnerUserId: userId
+    }
   }
 
   state = {
@@ -34,7 +39,7 @@ class SignupEmail extends React.Component {
   }
 
   async signup(e) {
-    const { code, roleId } = this.props
+    const { code, roleId, partnerUserId } = this.props
     const { email, password } = this.state
     const successCb = res => {
       // 管理者アカウント or 一般ユーザで遷移先を変える
@@ -49,6 +54,7 @@ class SignupEmail extends React.Component {
         email,
         password,
         code,
+        partnerUserId,
         successCb
       })
     )
