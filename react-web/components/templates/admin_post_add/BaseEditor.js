@@ -208,7 +208,8 @@ class AdminBaseEditor extends React.Component {
           }
 
           .images {
-            width: 375px;
+            max-width: 375px;
+            width: 85%;
           }
         `}</style>
       </React.Fragment>

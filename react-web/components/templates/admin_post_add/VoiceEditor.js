@@ -80,7 +80,8 @@ export default class extends React.Component {
 
         <style jsx>{`
           .options {
-            width: 500px;
+            max-width: 500px;
+            width: 85%;
           }
         `}</style>
       </React.Fragment>
