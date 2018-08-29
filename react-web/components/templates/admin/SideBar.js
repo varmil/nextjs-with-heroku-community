@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'routes'
+// import { Link } from 'routes'
 import { connect } from 'react-redux'
 import { withRouter } from 'next/router'
 import objectPath from 'object-path'

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link, Router } from 'routes'
 import map from 'lodash/map'
 import omit from 'lodash/omit'
-import toUpper from 'lodash/toUpper'
+import find from 'lodash/find'
 import Select from 'react-select'
 import Button from '@material-ui/core/Button'
 import Input from '@material-ui/core/Input'
@@ -51,13 +51,6 @@ const colourStyles = bgColor => {
   }
 }
 
-const boxOptions = map(BoxType.index, (v, k) => {
-  return {
-    value: v,
-    label: <SelectLabel left="投稿先　：" right={toUpper(k)} />
-  }
-})
-
 class AdminBaseEditor extends React.Component {
   constructor(props) {
     super(props)
@@ -75,6 +68,16 @@ class AdminBaseEditor extends React.Component {
 
       submitting: false
     }
+  }
+
+  createBoxOptions = () => {
+    console.info('aaa', this.props.boxes)
+    return map(this.props.boxes, (v, i) => {
+      return {
+        value: v.type,
+        label: <SelectLabel left="投稿先　：" right={v.header.text} />
+      }
+    })
   }
 
   createCatOptions() {
@@ -116,6 +119,7 @@ class AdminBaseEditor extends React.Component {
   render() {
     const props = this.props
     const categoryOptions = this.createCatOptions()
+    const boxOptions = this.createBoxOptions()
 
     return (
       <React.Fragment>
@@ -139,7 +143,7 @@ class AdminBaseEditor extends React.Component {
           <section className="mt-3">
             <Select
               instanceId={'SSR-POSTADD001'}
-              value={boxOptions[+props.boxType]}
+              value={find(boxOptions, e => e.value === +props.boxType)}
               onChange={o => {
                 Router.replaceRoute(`/admin/post/add/${o.value}`)
               }}

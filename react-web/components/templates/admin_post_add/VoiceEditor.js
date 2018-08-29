@@ -42,11 +42,7 @@ export default class extends React.Component {
     const props = this.props
     return (
       <React.Fragment>
-        <BaseEditor
-          post={props.post}
-          boxType={props.boxType}
-          onSubmit={this.onSubmit.bind(this)}
-        >
+        <BaseEditor {...props} onSubmit={this.onSubmit.bind(this)}>
           <section className="container mt-5">
             <AdminPostFormLabel>選択肢</AdminPostFormLabel>
             <div className="options mx-auto mt-4">

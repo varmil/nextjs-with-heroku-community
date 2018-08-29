@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Router, Link } from 'routes'
 import { createAction } from 'redux-actions'
+import objectPath from 'object-path'
+import { PATH_MAP } from 'reducers/site'
 import { AppAdminPost } from 'constants/ActionTypes'
 import { setSuccess } from 'actions/application'
 import AdminHeader from 'components/organisms/admin/AdminHeader'
@@ -50,19 +52,20 @@ class AdminPostAdd extends React.Component {
   }
 
   // NOTE: いわゆるFactoryメソッド
-  createContent(boxType) {
-    const props = this.props
-    switch (boxType) {
+  createContent(argBoxType) {
+    const { boxType, post, boxes } = this.props
+    switch (argBoxType) {
       case BoxType.index.talk:
       case BoxType.index.news:
         return (
           <BaseEditor
             // https://stackoverflow.com/a/48451229
             // use key to force remount when url changed
-            key={props.boxType}
-            post={props.post}
-            boxType={props.boxType}
-            categories={this.createCategories(props.boxType)}
+            key={boxType}
+            post={post}
+            boxes={boxes}
+            boxType={boxType}
+            categories={this.createCategories(boxType)}
             onSubmit={this.onSubmit.bind(this)}
           />
         )
@@ -70,8 +73,9 @@ class AdminPostAdd extends React.Component {
       case BoxType.index.voice:
         return (
           <VoiceEditor
-            post={props.post}
-            boxType={props.boxType}
+            post={post}
+            boxes={boxes}
+            boxType={boxType}
             onSubmit={this.onSubmit.bind(this)}
           />
         )
@@ -111,6 +115,7 @@ class AdminPostAdd extends React.Component {
 
 export default connect(state => ({
   post: state.app.post.data,
+  boxes: objectPath.get(state.site, `${PATH_MAP.BOXES}.item`),
   talkCategories: state.site.talk.categories.item,
   newsCategories: state.site.news.categories.item
 }))(AdminPostAdd)
