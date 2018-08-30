@@ -1,5 +1,6 @@
 import React from 'react'
 import range from 'lodash/range'
+import isNil from 'lodash/isNil'
 // import { connect } from 'react-redux'
 // import fecha from 'fecha'
 // import Input from '@material-ui/core/Input'
@@ -38,7 +39,7 @@ export default class extends React.Component {
   }
 
   render() {
-    const state = this.state
+    const { options } = this.state
     const props = this.props
     return (
       <React.Fragment>
@@ -47,17 +48,29 @@ export default class extends React.Component {
             <AdminPostFormLabel>選択肢</AdminPostFormLabel>
             <div className="options mx-auto mt-4">
               {range(Rule.MAX_OPTIONS).map(i => (
-                <div key={i} className="form-group row">
-                  <label className="col-sm-1 col-form-label">{i + 1}.</label>
-                  <div className="col-sm-11">
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={state.options[i] || ''}
-                      onChange={e => this.handleChangeOptions(e, i)}
-                    />
+                <React.Fragment key={i}>
+                  <div className="form-group row mb-0">
+                    <label className="col-1 col-form-label">{i + 1}.</label>
+                    <div className="col-10">
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={options[i] || ''}
+                        onChange={e => {
+                          // 最大文字数を超えてる場合はそもそも発火しない
+                          if (e.target.value.length > Rule.OPTION_MAX_LENGTH) {
+                            return
+                          }
+                          this.handleChangeOptions(e, i)
+                        }}
+                      />
+                    </div>
                   </div>
-                </div>
+                  <div className="text-right mb-3 mr-4">
+                    {isNil(options[i]) ? '0' : `${options[i].length}`} /{' '}
+                    {Rule.OPTION_MAX_LENGTH}
+                  </div>
+                </React.Fragment>
               ))}
             </div>
           </section>

@@ -17,6 +17,7 @@ module.exports = {
   INTRODUCTION_MAX_LENGTH: 160,
   TITLE_MAX_LENGTH: 50,
   POST_MAX_LENGTH: 1500,
+  OPTION_MAX_LENGTH: 14,
 
   // 通知種別
   NOTIFICATION_TYPE: { Default: 0, Like: 1, Comment: 2, News: 3, Mention: 4 },
