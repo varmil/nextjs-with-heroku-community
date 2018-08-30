@@ -90,7 +90,11 @@ class AdminBaseEditor extends React.Component {
     })
   }
 
-  handleChange = name => event => {
+  handleChange = (name, maxLength = 0) => event => {
+    if (maxLength && event.target.value.length > maxLength) {
+      return
+    }
+
     this.setState({
       [name]: event.target.value
     })
@@ -181,8 +185,7 @@ class AdminBaseEditor extends React.Component {
             <AdminPostFormLabel>タイトル</AdminPostFormLabel>
             <Input
               value={this.state.title}
-              maxLength={Rule.TITLE_MAX_LENGTH}
-              onChange={this.handleChange('title')}
+              onChange={this.handleChange('title', Rule.TITLE_MAX_LENGTH)}
               fullWidth
             />
           </section>
@@ -191,8 +194,7 @@ class AdminBaseEditor extends React.Component {
             <AdminPostFormLabel>本文</AdminPostFormLabel>
             <Input
               value={this.state.body}
-              maxLength={Rule.POST_MAX_LENGTH}
-              onChange={this.handleChange('body')}
+              onChange={this.handleChange('body', Rule.POST_MAX_LENGTH)}
               rows={5}
               rowsMax={50}
               fullWidth

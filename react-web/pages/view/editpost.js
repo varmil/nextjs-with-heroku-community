@@ -55,7 +55,11 @@ class Editpost extends React.Component {
     })
   }
 
-  handleChange = name => event => {
+  handleChange = (name, maxLength = 0) => event => {
+    if (maxLength && event.target.value.length > maxLength) {
+      return
+    }
+
     this.setState({
       [name]: event.target.value
     })
@@ -130,8 +134,7 @@ class Editpost extends React.Component {
             className={classes.input}
             placeholder="タイトル"
             value={this.state.title}
-            maxLength={Rule.TITLE_MAX_LENGTH}
-            onChange={this.handleChange('title')}
+            onChange={this.handleChange('title', Rule.TITLE_MAX_LENGTH)}
             fullWidth
           />
         </section>
@@ -141,8 +144,7 @@ class Editpost extends React.Component {
             className={classes.input}
             placeholder="本文"
             value={this.state.body}
-            maxLength={Rule.POST_MAX_LENGTH}
-            onChange={this.handleChange('body')}
+            onChange={this.handleChange('body', Rule.POST_MAX_LENGTH)}
             rows={5}
             rowsMax={50}
             fullWidth
