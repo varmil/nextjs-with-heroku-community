@@ -23,17 +23,12 @@ class VoteOptions extends React.Component {
 
   render() {
     const props = this.props
-    const { count, options, deadline } = props.Voice
+    const { count, options } = props.Voice
 
     return (
       <div className="wrap">
         <section className="px-5">
-          <VoteCounter
-            className="mb-3"
-            count={count}
-            deadline={deadline}
-            showDeadline={true}
-          />
+          <VoteCounter className="mb-3" count={count} />
 
           {options.map((text, i) => {
             return (

@@ -73,7 +73,7 @@ class PostVoiceOption extends React.Component {
   render() {
     const post = this.props.post
     const { data } = post
-    const { count, deadline, options } = data.Voice
+    const { count, options } = data.Voice
 
     return (
       <React.Fragment>
@@ -84,12 +84,7 @@ class PostVoiceOption extends React.Component {
           topPhoto={true}
         >
           <section className="px-5">
-            <VoteCounter
-              className="mb-3"
-              count={count}
-              deadline={deadline}
-              showDeadline={true}
-            />
+            <VoteCounter className="mb-3" count={count} />
           </section>
 
           <section className="px-5">

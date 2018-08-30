@@ -112,13 +112,13 @@ module.exports = class Post {
   }
 
   // VOICEへ投稿したとき（管理者が）
-  static async saveVoice(postId, options, deadline, trans) {
+  static async saveVoice(postId, options, /* deadline, */ trans) {
     try {
       const created = await models.Voice.upsert(
         {
           postId,
-          options,
-          deadline
+          options
+          /* deadline */
         },
         {
           transaction: trans
@@ -149,7 +149,7 @@ module.exports = class Post {
       // アンケートの選択肢とか投票総数
       include.push({
         model: models.Voice,
-        attributes: ['options', 'deadline', 'count']
+        attributes: ['options', /* 'deadline', */ 'count']
       })
       // 自分が投票済みか VoiceLogs: [] or [{ choiceIndex }]
       include.push({

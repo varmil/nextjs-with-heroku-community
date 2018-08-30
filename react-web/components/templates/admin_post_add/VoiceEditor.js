@@ -1,8 +1,8 @@
 import React from 'react'
-// import { connect } from 'react-redux'
-import fecha from 'fecha'
 import range from 'lodash/range'
-import Input from '@material-ui/core/Input'
+// import { connect } from 'react-redux'
+// import fecha from 'fecha'
+// import Input from '@material-ui/core/Input'
 import Rule from '/../shared/constants/Rule'
 import immutable from 'object-path-immutable'
 import AdminPostFormLabel from 'components/atoms/AdminPostFormLabel'
@@ -13,10 +13,10 @@ export default class extends React.Component {
     super(props)
     const { Voice } = this.props.post
     this.state = {
-      options: (Voice && Voice.options) || [],
-      deadline:
-        (Voice && Voice.deadline) ||
-        fecha.format(new Date(), 'YYYY-MM-DDThh:mm')
+      options: (Voice && Voice.options) || []
+      // deadline:
+      //   (Voice && Voice.deadline) ||
+      //   fecha.format(new Date(), 'YYYY-MM-DDThh:mm')
     }
   }
 
@@ -62,7 +62,7 @@ export default class extends React.Component {
             </div>
           </section>
 
-          <section className="container my-5">
+          {/* <section className="container my-5">
             <AdminPostFormLabel>期限</AdminPostFormLabel>
             <div className="dead mx-auto text-center">
               <Input
@@ -71,7 +71,7 @@ export default class extends React.Component {
                 onChange={this.handleChange('deadline')}
               />
             </div>
-          </section>
+          </section> */}
         </BaseEditor>
 
         <style jsx>{`

@@ -41,13 +41,13 @@ export const VoteCounter = props => (
         <span className="voteNum ml-2">{props.count}</span>
       </div>
 
-      {props.showDeadline && (
+      {/* {props.showDeadline && (
         <div className="deadline">
           期限：
           {fecha.format(new Date(props.deadline), 'YYYY-MM-DD hh:mm')}
           まで
         </div>
-      )}
+      )} */}
 
       {props.showButton && (
         <VoteButton route={props.route} isVoted={props.isVoted} />

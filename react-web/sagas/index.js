@@ -477,8 +477,8 @@ function* savePost({ payload }) {
     files,
     categoryIndex,
     // VOICE
-    options,
-    deadline
+    options
+    // deadline
   } = payload
   const { jwtToken } = yield select(getUser)
 
@@ -499,9 +499,9 @@ function* savePost({ payload }) {
     options.forEach(option => {
       formData.append('options[]', option)
     })
-  if (!isUndefined(deadline)) {
-    formData.append('deadline', deadline)
-  }
+  // if (!isUndefined(deadline)) {
+  //   formData.append('deadline', deadline)
+  // }
 
   try {
     const res = yield call(API.post, '/post', formData, jwtToken)

@@ -28,10 +28,10 @@ exports.save = async (req, res, next) => {
     return res.status(403).json(Message.E_NOT_ALLOWED)
   }
 
-  // VOICE
-  const { options, deadline } = req.body
+  // VOICE（deadlineはなし）
+  const { options } = req.body
   if (boxType === BoxType.index.voice) {
-    if (!options || !deadline) {
+    if (!options) {
       return res.status(422).json(Message.E_NULL_REQUIRED_FIELD)
     }
   }
@@ -58,7 +58,12 @@ exports.save = async (req, res, next) => {
     switch (boxType) {
       // アンケート
       case BoxType.index.voice:
-        await services.Post.saveVoice(savedPostId, options, deadline, trans)
+        await services.Post.saveVoice(
+          savedPostId,
+          options,
+          /* deadline, */
+          trans
+        )
         break
       // 追加項目なし
       case BoxType.index.talk:
