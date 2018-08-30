@@ -8,11 +8,11 @@ import Select from 'react-select'
 import Button from '@material-ui/core/Button'
 import Input from '@material-ui/core/Input'
 import { withStyles } from '@material-ui/core/styles'
-import BoxType from '/../shared/constants/BoxType'
 import AdminPostFormLabel from 'components/atoms/AdminPostFormLabel'
 import PostDropzone from 'components/molecules/PostDropzone'
 import { Container } from 'components/molecules/AdminPageContainer'
 import * as utilFiles from 'utils/files'
+// import BoxType from '/../shared/constants/BoxType'
 
 const SelectLabel = props => (
   <div>
@@ -152,7 +152,9 @@ class AdminBaseEditor extends React.Component {
               instanceId={'SSR-POSTADD001'}
               value={find(boxOptions, e => e.value === +props.boxType)}
               onChange={o => {
-                Router.replaceRoute(`/admin/post/add/${o.value}`)
+                Router.replaceRoute(
+                  `/admin/post/add/${o.value}${location.search}`
+                )
               }}
               styles={colourStyles('#5e91c4')}
               options={boxOptions}
@@ -161,7 +163,7 @@ class AdminBaseEditor extends React.Component {
           </section>
 
           {props.categories && (
-            <section className="">
+            <section>
               <Select
                 instanceId={'SSR-POSTADD002'}
                 value={this.state.category}

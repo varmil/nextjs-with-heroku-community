@@ -34,7 +34,7 @@ export default class extends React.Component {
   // baseStateとvoiceStateをmerge
   onSubmit(state) {
     const options = this.state.options.filter(e => e)
-    this.props.onSubmit({ ...state, ...this.state, options })
+    this.props.onSubmit({ ...state, ...this.state, options }, () => {})
   }
 
   render() {
