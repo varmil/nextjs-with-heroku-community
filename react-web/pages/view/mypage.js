@@ -74,7 +74,7 @@ class Mypage extends React.Component {
           />
         </Head>
 
-        <div className="container">
+        <div className="container mb-4">
           <section className="avatar mt-4 text-center">
             <Avatar src={userInfo.iconPath || DEFAULT_ICON_PATH} size={60} />
 
@@ -115,15 +115,15 @@ class Mypage extends React.Component {
           </section> */}
 
           <section className="badges position-relative mt-3">
+            <SimpleSlider className="pt-4 mb-0">
+              {chunks.map((chunk, i) => <BadgeSlick key={i} chunk={chunk} />)}
+            </SimpleSlider>
+
             {this.isMe && (
               <Link route={'/view/badge'}>
                 <div className="badgeLink">詳しく見る</div>
               </Link>
             )}
-
-            <SimpleSlider className="pt-4 mb-4">
-              {chunks.map((chunk, i) => <BadgeSlick key={i} chunk={chunk} />)}
-            </SimpleSlider>
           </section>
         </div>
 
@@ -151,18 +151,19 @@ class Mypage extends React.Component {
           .edit {
             color: #909090;
             position: absolute;
-            bottom: 0px;
+            bottom: -10px;
             right: 10%;
             font-size: 11px;
           }
 
           .badgeLink {
             color: #909090;
-            position: absolute;
-            top: 5px;
+            position: relative;
+            bottom: 0px;
             right: 10%;
             font-size: 11px;
             z-index: 1;
+            text-align: right;
           }
 
           .desc {
