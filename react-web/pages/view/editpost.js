@@ -10,6 +10,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import PostDropzone from 'components/molecules/PostDropzone'
 import { AppPost } from 'constants/ActionTypes'
 import BoxType from '/../shared/constants/BoxType'
+import Rule from '/../shared/constants/Rule'
 import URL from 'constants/URL'
 
 const inputStyles = {
@@ -129,6 +130,7 @@ class Editpost extends React.Component {
             className={classes.input}
             placeholder="タイトル"
             value={this.state.title}
+            maxLength={Rule.TITLE_MAX_LENGTH}
             onChange={this.handleChange('title')}
             fullWidth
           />
@@ -139,6 +141,7 @@ class Editpost extends React.Component {
             className={classes.input}
             placeholder="本文"
             value={this.state.body}
+            maxLength={Rule.POST_MAX_LENGTH}
             onChange={this.handleChange('body')}
             rows={5}
             rowsMax={50}

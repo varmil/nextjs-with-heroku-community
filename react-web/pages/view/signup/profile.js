@@ -8,6 +8,7 @@ import CenteredContainer from 'components/molecules/CenteredContainer'
 import SignInUpHeader from 'components/molecules/SignInUpHeader'
 import ColorButton from 'components/atoms/ColorButton'
 import ProfileIconSelector from 'components/atoms/ProfileIconSelector'
+import Rule from '/../shared/constants/Rule'
 
 class SignupProfile extends React.Component {
   state = {
@@ -62,6 +63,7 @@ class SignupProfile extends React.Component {
               type="text"
               placeholder="ユーザ名"
               value={this.state.nickname}
+              maxLength={Rule.NICKNAME_MAX_LENGTH}
               onChange={this.handleChange('nickname')}
             />
           </div>

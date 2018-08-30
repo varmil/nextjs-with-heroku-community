@@ -12,6 +12,12 @@ module.exports = {
   // カテゴリ名最大文字数
   CATNAME_MAX_LENGTH: 15,
 
+  // 最大文字数
+  NICKNAME_MAX_LENGTH: 30,
+  INTRODUCTION_MAX_LENGTH: 160,
+  TITLE_MAX_LENGTH: 50,
+  POST_MAX_LENGTH: 1500,
+
   // 通知種別
   NOTIFICATION_TYPE: { Default: 0, Like: 1, Comment: 2, News: 3, Mention: 4 },
   // お問い合わせ

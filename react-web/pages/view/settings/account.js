@@ -89,6 +89,7 @@ class Account extends React.Component {
               type="text"
               style={inputStyle}
               value={nickname}
+              maxLength={Rule.NICKNAME_MAX_LENGTH}
               onChange={this.handleChange('nickname')}
               invalid={nickname === ''}
             />
@@ -102,6 +103,7 @@ class Account extends React.Component {
               rows={3}
               style={inputStyle}
               value={introduction}
+              maxLength={Rule.INTRODUCTION_MAX_LENGTH}
               onChange={this.handleChange('introduction')}
             />
           </section>

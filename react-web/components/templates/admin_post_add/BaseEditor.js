@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link, Router } from 'routes'
+import { Router } from 'routes'
 import map from 'lodash/map'
 import omit from 'lodash/omit'
 import find from 'lodash/find'
@@ -12,7 +12,7 @@ import AdminPostFormLabel from 'components/atoms/AdminPostFormLabel'
 import PostDropzone from 'components/molecules/PostDropzone'
 import { Container } from 'components/molecules/AdminPageContainer'
 import * as utilFiles from 'utils/files'
-// import BoxType from '/../shared/constants/BoxType'
+import Rule from '/../shared/constants/Rule'
 
 const SelectLabel = props => (
   <div>
@@ -181,6 +181,7 @@ class AdminBaseEditor extends React.Component {
             <AdminPostFormLabel>タイトル</AdminPostFormLabel>
             <Input
               value={this.state.title}
+              maxLength={Rule.TITLE_MAX_LENGTH}
               onChange={this.handleChange('title')}
               fullWidth
             />
@@ -190,6 +191,7 @@ class AdminBaseEditor extends React.Component {
             <AdminPostFormLabel>本文</AdminPostFormLabel>
             <Input
               value={this.state.body}
+              maxLength={Rule.POST_MAX_LENGTH}
               onChange={this.handleChange('body')}
               rows={5}
               rowsMax={50}
