@@ -1,7 +1,5 @@
 import React from 'react'
 import find from 'lodash/find'
-// import isEmpty from 'lodash/isEmpty'
-// import isUndefined from 'lodash/isUndefined'
 import { connect } from 'react-redux'
 import { createAction } from 'redux-actions'
 import BoxContent, { VoteCounter } from 'components/organisms/site/BoxContent'
@@ -9,7 +7,7 @@ import CommentZone from 'components/organisms/site/box/CommentZone'
 import { AppPost } from 'constants/ActionTypes'
 // import BoxType from '/../shared/constants/BoxType'
 
-const OPTION_HEIGHT = 66
+const OPTION_HEIGHT = 56
 const INITIAL_COMMENT_NUM = 1
 
 class PostVoiceOption extends React.Component {
@@ -20,10 +18,6 @@ class PostVoiceOption extends React.Component {
     dispatch(createAction(AppPost.FETCH_REQUEST)({ postId }))
     return { postId }
   }
-
-  // onVote = index => {
-  //   this.setState({ ...this.state, choiceIndex: index })
-  // }
 
   createPercentageDiv(optionIndex) {
     const { percentages } = this.props.post.data.Voice
@@ -116,10 +110,9 @@ class PostVoiceOption extends React.Component {
         <style jsx>{`
           .option {
             position: relative;
-            font-size: 20px;
+            font-size: 14px;
             text-align: center;
             height: ${OPTION_HEIGHT}px;
-            // width: 80%;
           }
 
           .option.active {

@@ -47,12 +47,12 @@ class VoteOptions extends React.Component {
 
         <style jsx>{`
           .option {
-            font-size: 20px;
+            font-size: 14px;
             font-weight: bold;
             text-align: center;
-            padding: 20px 0;
+            padding: 17px 0;
             border: 1px solid #c1c0c0;
-            box-shadow: 0px 5px 7px darkgrey;
+            box-shadow: 0px 1px 3px darkgrey;
           }
 
           .option:hover,
@@ -101,7 +101,6 @@ class PostVoiceOption extends React.Component {
   }
 
   onSubmit = () => {
-    console.log('submitted')
     const { dispatch, postId } = this.props
     const { choiceIndex, comment } = this.state
 
