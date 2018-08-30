@@ -189,7 +189,9 @@ class TopPage extends React.Component {
             <FixedButton
               icon="fa-pen"
               backgroundColor={props.color.backgroundColor}
-              to={this.isAdmin() ? '/admin/post/add/0' : '/view/editpost'}
+              to={
+                this.isAdmin() ? '/admin/post/add/0?back=1' : '/view/editpost'
+              }
             />
           ) : null}
         </main>

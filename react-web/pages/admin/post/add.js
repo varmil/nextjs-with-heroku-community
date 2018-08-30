@@ -1,4 +1,5 @@
 import React from 'react'
+import isNil from 'lodash/isNil'
 import { connect } from 'react-redux'
 import { Router, Link } from 'routes'
 import { createAction } from 'redux-actions'
@@ -24,17 +25,21 @@ class AdminPostAdd extends React.Component {
       dispatch(createAction(AppAdminPost.SET)({}))
     }
 
-    // TODO: 全ボックスのカテゴリをfetch-set
-
-    return { boxType: +ctx.query.boxType, postId }
+    // back: フラグが立っていれば操作後 /view/home に戻る
+    const { boxType, back } = ctx.query
+    return { boxType: +boxType, postId, back: !isNil(back) }
   }
 
   onSubmit(state, cb) {
     console.info(state, this.props.postId)
-    const { dispatch, postId, boxType } = this.props
+    const { dispatch, postId, boxType, back } = this.props
     const successCb = res => {
       dispatch(setSuccess())
-      Router.pushRoute(`/admin/post/list`)
+      if (back) {
+        Router.back()
+      } else {
+        Router.pushRoute(`/admin/post/list`)
+      }
       cb()
     }
     const errCb = res => {
@@ -53,7 +58,7 @@ class AdminPostAdd extends React.Component {
 
   // NOTE: いわゆるFactoryメソッド
   createContent(argBoxType) {
-    const { boxType, post, boxes } = this.props
+    const { boxType, post, boxes, back } = this.props
     switch (argBoxType) {
       case BoxType.index.talk:
       case BoxType.index.news:
@@ -67,6 +72,7 @@ class AdminPostAdd extends React.Component {
             boxType={boxType}
             categories={this.createCategories(boxType)}
             onSubmit={this.onSubmit.bind(this)}
+            back={back}
           />
         )
 

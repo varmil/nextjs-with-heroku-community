@@ -71,7 +71,6 @@ class AdminBaseEditor extends React.Component {
   }
 
   createBoxOptions = () => {
-    console.info('aaa', this.props.boxes)
     return map(this.props.boxes, (v, i) => {
       return {
         value: v.type,
@@ -126,9 +125,17 @@ class AdminBaseEditor extends React.Component {
         <Container>
           <header className="borderB">
             <nav className="navbar justify-content-between">
-              <Link route={'/admin/post/list'}>
-                <MyBigBtn>キャンセル</MyBigBtn>
-              </Link>
+              <MyBigBtn
+                onClick={() => {
+                  if (props.back) {
+                    Router.back()
+                  } else {
+                    Router.pushRoute('/admin/post/list')
+                  }
+                }}
+              >
+                キャンセル
+              </MyBigBtn>
               <div className="">
                 <MyBigBtn onClick={() => this.onSubmit(false)}>
                   下書きする
