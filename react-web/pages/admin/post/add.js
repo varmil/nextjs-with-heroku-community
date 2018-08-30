@@ -83,6 +83,7 @@ class AdminPostAdd extends React.Component {
             boxes={boxes}
             boxType={boxType}
             onSubmit={this.onSubmit.bind(this)}
+            back={back}
           />
         )
       default:
