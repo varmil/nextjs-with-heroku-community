@@ -111,7 +111,7 @@ class PostVoiceOption extends React.Component {
           .option {
             position: relative;
             font-size: 14px;
-            text-align: center;
+            text-align: right;
             height: ${OPTION_HEIGHT}px;
           }
 
@@ -126,6 +126,7 @@ class PostVoiceOption extends React.Component {
             z-index: 5;
             font-weight: bold;
             line-height: ${OPTION_HEIGHT}px;
+            margin-right: 17px;
           }
         `}</style>
       </React.Fragment>
