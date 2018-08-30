@@ -146,9 +146,17 @@ module.exports = class Post {
     // 特定条件なら関連テーブルも引っ張る
     let include = []
     if (assoc || where.boxType === BoxType.index.voice) {
+      // アンケートの選択肢とか投票総数
       include.push({
         model: models.Voice,
         attributes: ['options', 'deadline', 'count']
+      })
+      // 自分が投票済みか VoiceLogs: [] or [{ choiceIndex }]
+      include.push({
+        model: models.VoiceLog,
+        attributes: ['choiceIndex'],
+        where: { voterId: userId },
+        required: false
       })
     }
     if (assoc && userId) {
@@ -324,7 +332,7 @@ module.exports = class Post {
         const isMostPopular = e.choiceIndex === mostPopularOption
         return {
           ...e,
-          percentage: Math.ceil((e.count / countSum) * 100),
+          percentage: Math.ceil(e.count / countSum * 100),
           isMostPopular
         }
       })

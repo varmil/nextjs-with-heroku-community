@@ -21,17 +21,19 @@ const VoteButton = props => (
         style={{ ...props.style }}
         onClick={props.onClick}
       >
-        投票する
+        {props.isVoted ? '投票済み' : '投票する'}
       </button>
     </Linked>
 
     <style jsx>{`
       button {
         font-size: 12px;
+        font-weight: bold;
         width: 120px;
         border-radius: 30px;
-        color: white;
-        background-color: ${props.voteButtonColor};
+        color: ${props.isVoted ? props.voteButtonColor : 'white'};
+        background-color: ${props.isVoted ? 'white' : props.voteButtonColor};
+        border: ${props.isVoted ? '1px solid' : 'none'};
       }
     `}</style>
   </React.Fragment>

@@ -47,7 +47,9 @@ export const VoteCounter = props => (
         </div>
       )}
 
-      {props.showButton && <VoteButton route={props.route} />}
+      {props.showButton && (
+        <VoteButton route={props.route} isVoted={props.isVoted} />
+      )}
 
       <style jsx>{`
         span {
@@ -327,7 +329,7 @@ class BoxContent extends React.Component {
   }
 
   createGoingVote() {
-    const { goingVote, Voice } = this.props
+    const { goingVote, Voice, VoiceLogs } = this.props
     if (!goingVote) return null
     return (
       <div className="mt-2 mb-3 px-5">
@@ -335,6 +337,7 @@ class BoxContent extends React.Component {
           count={Voice.count || 0}
           showButton={true}
           route={this.postLink}
+          isVoted={!isEmpty(VoiceLogs)}
         />
       </div>
     )

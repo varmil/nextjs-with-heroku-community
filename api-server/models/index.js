@@ -44,6 +44,7 @@ db.Sequelize = Sequelize
 
 // relation
 db.Post.hasOne(db.Voice)
+db.Post.hasMany(db.VoiceLog)
 db.Post.hasMany(db.PostLike)
 
 module.exports = db
