@@ -6,14 +6,14 @@ const CommentService = reqlib('/services/Comment')
 const HashtagService = reqlib('/services/Hashtag')
 const NotificationService = reqlib('/services/Notification')
 const MentionService = reqlib('/services/Mention')
-const { moveImage, moveImages } = reqlib('/utils/image')
+const { moveImages } = reqlib('/utils/image')
 const models = reqlib('/models')
 const Path = reqlib('/constants/Path')
-const Role = reqlib('/../shared/constants/Role')
 const Rule = reqlib('/../shared/constants/Rule')
 const BoxType = reqlib('/../shared/constants/BoxType')
 const { BadgeType } = reqlib('/../shared/constants/Badge')
 const sanitizer = reqlib('/utils/sanitizer')
+// const Role = reqlib('/../shared/constants/Role')
 
 // リストで取得する際に、1ページあたりの初期値
 // パラメタによって指定した場合はこの値は無効
